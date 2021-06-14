@@ -38,10 +38,20 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 # Install the application server.
 RUN pip install "gunicorn==20.0.4"
 
+# Install and set up Poetry for python dependencies management
+ENV POETRY_VIRTUALENVS_CREATE=0 \
+    POETRY_VIRTUALENVS_IN_PROJECT=0 \
+    POETRY_VIRTUALENVS_PATH="/usr/venvs" \
+    POETRY_REPOSITORIES={}
+
 # Install the project requirements.
-COPY requirements.importer.txt /
-COPY requirements.txt /
-RUN pip install -r /requirements.txt
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+
+COPY ./pyproject.toml /
+COPY ./poetry.lock /
+RUN . $HOME/.poetry/env && \
+    poetry self update && \
+    poetry install
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app

@@ -17,7 +17,7 @@ from wagtail.images.models import Image
 from wagtail.core.models import Collection
 from .httpcache import session
 
-logger=logging.getLogger("importer")
+logger = logging.getLogger("importer")
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
 <p>
@@ -263,6 +263,12 @@ class RichTextBuilder:
             response = session.get("https://www.england.nhs.uk" + page_path)
             url = ""
             is_post = False
+            try:
+                response.raise_for_status()
+            except:
+                logging.warn(
+                    "HTTP Error %s when scraping %s", response.status_code, response.url
+                )
             if response:
                 url = response.url.split("/")
                 del url[-1]

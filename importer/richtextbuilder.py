@@ -234,7 +234,7 @@ class RichTextBuilder:
                 document_id = document.id
 
             except Document.DoesNotExist:
-                logger.warn("Media %s not found, linked from {}", page_path, page)
+                logger.warn("Media %s not found, linked from %s", page_path, page)
                 collection_root = Collection.get_first_root_node()
                 remote_file = session.get(page_path_live)
                 media_file = File(BytesIO(remote_file.content), name=path_list[-1])

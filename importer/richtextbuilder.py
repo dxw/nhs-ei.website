@@ -14,7 +14,9 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import Collection
+import logging
 
+logging.getLogger("importer")
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
 <p>
@@ -277,7 +279,10 @@ class RichTextBuilder:
                 del url[:3]
                 # some urls have links to news items that start 2010/09 that needs to removed to find the url
                 if (
-                    url[0].isdigit() and url[1].isdigit() and not url[2].isdigit()
+                    len(url) >= 3
+                    and url[0].isdigit()
+                    and url[1].isdigit()
+                    and not url[2].isdigit()
                 ):  # is post
                     try:
                         page = Post.objects.get(wp_link=response.url)

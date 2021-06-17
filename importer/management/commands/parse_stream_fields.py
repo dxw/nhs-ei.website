@@ -11,6 +11,7 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 import requests
 from html import unescape
+import logging
 
 
 from django.core.management import call_command
@@ -24,6 +25,8 @@ from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
 from importer.richtextbuilder import RichTextBuilder
+
+logger = logging.getLogger("importer")
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 
@@ -117,7 +120,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "mode", type=str, help="Run as development with reduced recordsets"
+            "mode",
+            type=str,
+            help="prod: Full run; dev: Reduced records; debug: One name",
         )
 
     def handle(self, *args, **options):
@@ -142,6 +147,11 @@ class Command(BaseCommand):
         if options["mode"] == "prod":
             """get all the pages"""
             pages = BasePage.objects.all()
+
+        if options["mode"] == "debug":
+            pages = BasePage.objects.all()
+            pages = [page for page in pages if "Technical and operations" in page.title]
+
         # pages_count = pages.count()
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         # counter = pages_count
@@ -406,6 +416,14 @@ class Command(BaseCommand):
             summary = expander["default_template_hidden_text_summary"]
             details = expander["default_template_hidden_text_details"]
 
+            if not details:
+                details = "<p></p>"
+                logger.warn(
+                    "Empty details expander given an empty paragraph tag on %s (%s): summary %s",
+                    page.title,
+                    page.wp_id,
+                    repr(summary),
+                )
             # for item in field['items']:
             item_detail = details
             self.block_builder.extract_links(details, page)

@@ -66,11 +66,6 @@ class RichTextBuilder:
     # <embed embedtype="image" id="10" alt="A pied wagtail" format="left" /> IMAGE
 
     def __init__(self, all_pages=None, html_content=""):
-        # theres are log files to record url problems, clean it out first
-        with open("log/parse_stream_fields_url_errors.txt", "w") as log:
-            log.write("parse_stream_field missing urls\n")
-        with open("log/parse_stream_fields_media_errors.txt", "a") as the_file:
-            the_file.write("parse_stream_field missing media\n")
         self.html_content = TEST_CONTENT
         if not all_pages:
             self.urls = self.all_pages()

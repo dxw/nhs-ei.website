@@ -324,7 +324,9 @@ class Command(BaseCommand):
                         )
                         linked_html = linked_html.replace(img_string, new_image)
                     except Image.DoesNotExist:
-                        logger.warn("Missing image: %s | %s | %s", img['src'], page, page.id)
+                        logger.warn(
+                            "Missing image: %s | %s | %s", img["src"], page, page.id
+                        )
                     if not new_image:
                         linked_html = (
                             linked_html + '<h3 style="color:red">missing image</h3>'

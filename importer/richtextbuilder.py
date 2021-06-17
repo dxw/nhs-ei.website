@@ -184,7 +184,12 @@ class RichTextBuilder:
                 )
                 self.change_links.append([link, page_link])
             except:
-                logger.warn("Stream field URL error (publication), %s | %s | %s", link, page_path, page)
+                logger.warn(
+                    "Stream field URL error (publication), %s | %s | %s",
+                    link,
+                    page_path,
+                    page,
+                )
 
         elif path_list and path_list[0] == "news":
             # find source url for news ours are all in sub sites
@@ -193,7 +198,9 @@ class RichTextBuilder:
                 page_link = self.make_page_link(link.text, post.id, post.title)
                 self.change_links.append([link, page_link])
             except:
-                logger.warn("Stream field URL error (news), %s | %s | %s", link, page_path, page)
+                logger.warn(
+                    "Stream field URL error (news), %s | %s | %s", link, page_path, page
+                )
 
         elif path_list and path_list[0] == "blog":
             # find source url for blogs
@@ -203,7 +210,9 @@ class RichTextBuilder:
                 page_link = self.make_page_link(link.text, blog.id, blog.title)
                 self.change_links.append([link, page_link])
             except:
-                logger.warn("Stream field URL error (blog), %s | %s | %s", link, page_path, page)
+                logger.warn(
+                    "Stream field URL error (blog), %s | %s | %s", link, page_path, page
+                )
 
         elif (
             path_list

@@ -20,7 +20,9 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 logger = logging.getLogger("importer")
-logger.critical("Entered parse_stream_fields_landing_pages: here be TODO dragons stacked nine high.")
+logger.critical(
+    "Entered parse_stream_fields_landing_pages: here be TODO dragons stacked nine high."
+)
 
 """TODO TODO TODO TODO TODO TODO TODO TODO TODO """
 

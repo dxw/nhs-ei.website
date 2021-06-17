@@ -1,11 +1,14 @@
 from os import unlink
 import re
+import logging
 from bs4 import BeautifulSoup
 from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
+
+logger = logging.getLogger("importer")
 
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
@@ -103,20 +106,16 @@ class RichTextBuilder:
     def prepare_links(self, link, page_path):
         path_list = page_path.split("/")
         if len(path_list[-1]):
-            pass
-            # with open('log/parse_stream_fields_media_errors.txt', 'a') as the_file:
-            #     the_file.write('{}\n'.format(page_path))
-            #     print('++++++missing media: {}'.format(page_path))
-        else:  ############ GOT TO HERE just run ./manage.py parse_stream_fields
+            logger.info(
+                "Missing media when parsing stream fields at %s? Was commented out",
+                page_path,
+            )
+        else:
             if page_path in self.urls and page_path not in SKIP_ANCHOR_URLS:
                 page_link = self.make_page_link(link.text, self.urls[page_path])
                 self.change_links.append([link, page_link])
             else:
-                with open("log/parse_stream_fields_url_errors.txt", "a") as the_file:
-                    the_file.write("{}\n".format(page_path))
-                print("++++++missing url: {}".format(page_path))
-        # if self.urls[path]:
-        #     self.change_links.append(self.urls[path]) ####### got to here
+                logger.info("Missing url at %s when parsing stream fields", page_path)
 
     def make_page_link(self, text, page_id):
         return '<a id="{}" linktype="page">{}</a>'.format(page_id, text)

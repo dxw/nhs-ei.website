@@ -86,7 +86,9 @@ class MediaFilesImporter(Importer):
                     image.save()
 
             else:
-                logger.warn("Got no response and no file has been saved: %s, %s", source_url, r)
+                logger.warn(
+                    "Got no response and no file has been saved: %s, %s", source_url, r
+                )
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

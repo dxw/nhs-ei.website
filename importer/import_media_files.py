@@ -4,6 +4,7 @@ import ast
 import os
 from io import BytesIO
 from pathlib import Path
+import logging
 
 import requests
 from django.core.files import File
@@ -13,6 +14,8 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from .importer_cls import Importer
+
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 SOURCES = {
@@ -29,8 +32,6 @@ SOURCES = {
 
 class MediaFilesImporter(Importer):
     def __init__(self):
-        with open("importer/log/import_media_files.txt", "w") as log:
-            log.write("errors found while importing media files\n")
         images = Image.objects.all()
         documents = Document.objects.all()
         if images or documents:
@@ -64,6 +65,7 @@ class MediaFilesImporter(Importer):
             response = requests.get(source_url)
             title = r.get("title")  # if the title id blank it causes an error
             if not title:
+                logger.warn("No title was available for %s, %s", source_url, r)
                 title = "No title was available"
             if response:
 
@@ -84,11 +86,7 @@ class MediaFilesImporter(Importer):
                     image.save()
 
             else:
-                sys.stdout.write(
-                    "⚠️ Got no response. Error has been logged importer/log/import_media_files.txt\n"
-                )
-                with open("importer/log/import_media_files.txt", "a") as the_file:
-                    the_file.write("{}\n".format(r))
+                logger.warn("Got no response and no file has been saved: %s, %s", source_url, r)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

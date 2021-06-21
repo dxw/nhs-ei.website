@@ -152,8 +152,9 @@ class Command(BaseCommand):
         # pages_count = pages.count()
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         # counter = pages_count
-        for page in pages:
-            sys.stdout.write("⌛️ {} processing...\n".format(page))
+        page_count = len(pages)
+        for i, page in enumerate(pages):
+            sys.stdout.write(f"⌛️ {page} processing ... ({i}/{page_count})\n")
             # keep the dates as when imported
             # if page.title == 'Join the NHS COVID-19 vaccine team':
             first_published_at = page.first_published_at

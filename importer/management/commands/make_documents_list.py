@@ -52,9 +52,9 @@ class Command(BaseCommand):
 
         """now not deleteing docuemnts they need to be found instead"""
         publications = Publication.objects.all()
-
-        for publication in publications:
-            sys.stdout.write("\n⌛️ {} processing...".format(publication))
+        pub_count = len(publications)
+        for i, publication in enumerate(publications):
+            sys.stdout.write(f"\n⌛️ {publication} processing... ({i}/{pub_count})")
             component_fields = ast.literal_eval(publication.component_fields)
             introduction = ""
             docs = []

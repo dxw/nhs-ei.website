@@ -544,9 +544,10 @@ class DocumentsBuilder:
                     return self.create_document_type(file, document, self.document)
                 else:
                     logger.warn(
-                        "make_document_list_error: %s (%s)",
+                        "make_document_list_error: no response on pub %s (%s) for URL (%s)",
                         self.publication,
                         self.publication.id,
+                        document['url'],
                     )
 
         elif self.document["type_of_publication"] == "documentlink":

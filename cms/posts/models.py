@@ -87,14 +87,9 @@ class PostIndexPage(Page):
 
 
 class PostCategoryRelationship(models.Model):
-    post = ParentalKey(
-        "posts.Post",
-        related_name="post_category_relationship",
-    )
+    post = ParentalKey("posts.Post", related_name="post_category_relationship",)
     category = ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.Category", related_name="+", on_delete=models.CASCADE,
     )
 
 

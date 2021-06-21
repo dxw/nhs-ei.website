@@ -68,11 +68,7 @@ RICHTEXT_FEATURES_ALL = [
 class RecentPostsBlock(FlattenValueContext, StructBlock):
     title = CharBlock()
     type = MultipleChoiceBlock(
-        choices=(
-            ("post", "Post"),
-            ("blog", "Blog"),
-        ),
-        default=["post", "blog"],
+        choices=(("post", "Post"), ("blog", "Blog"),), default=["post", "blog"],
     )
     num_posts = IntegerBlock(default=6, help_text="How many of each type")
     see_all_posts = BooleanBlock(default=True)

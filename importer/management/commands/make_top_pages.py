@@ -82,10 +82,7 @@ class Command(BaseCommand):
         # INTRO: Supporting our people is a priority. We want to make sure you’re well looked after, so that you can care for others. Learn about access to health and wellbeing support, the NHS pension plan, and find the latest guidance for recruitment.
 
         our_people = LandingPage(
-            title="Our People",
-            wp_id=-10,
-            source="none",
-            wp_slug="none",
+            title="Our People", wp_id=-10, source="none", wp_slug="none",
         )
 
         # making a new block as body is empty
@@ -114,10 +111,7 @@ class Command(BaseCommand):
         # new page at url 'improvement' there's pages to move below this
         # INTRO: We want to promote a culture of ongoing learning and improvement within the NHS. We aim to do this by encouraging shared learning, and through initiatives such as RightCare, the Insights Platform and Model Hospital.
         improvement = LandingPage(
-            title="Improvement",
-            wp_id=-10,
-            source="none",
-            wp_slug="none",
+            title="Improvement", wp_id=-10, source="none", wp_slug="none",
         )
 
         # making a new block as body is empty

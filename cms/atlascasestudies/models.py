@@ -103,9 +103,7 @@ class AtlasCaseStudyCategoryRelationship(models.Model):
         related_name="atlas_case_study_category_relationship",
     )
     category = models.ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.Category", related_name="+", on_delete=models.CASCADE,
     )
 
 
@@ -115,9 +113,7 @@ class AtlasCaseStudySettingRelationship(models.Model):
         related_name="atlas_case_study_setting_relationship",
     )
     setting = models.ForeignKey(
-        "categories.Setting",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.Setting", related_name="+", on_delete=models.CASCADE,
     )
 
 
@@ -127,9 +123,7 @@ class AtlasCaseStudyRegionRelationship(models.Model):
         related_name="atlas_case_study_region_relationship",
     )
     region = models.ForeignKey(
-        "categories.Region",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.Region", related_name="+", on_delete=models.CASCADE,
     )
 
 

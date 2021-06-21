@@ -266,7 +266,7 @@ class RichTextBuilder:
             try:
                 response.raise_for_status()
             except:
-                logging.warn(
+                logger.warn(
                     "HTTP Error %s when scraping %s", response.status_code, response.url
                 )
             if response:
@@ -316,10 +316,8 @@ class RichTextBuilder:
                 logger.warn("Stream fields URL error (???), %s, %s", page_path, page)
 
     def make_page_link(self, text, page_id, title):
-        return (
-            '<a id="{}" linktype="page" class="internal-link" title="{}">{}</a>'.format(
-                page_id, title, text
-            )
+        return '<a id="{}" linktype="page" class="internal-link" title="{}">{}</a>'.format(
+            page_id, title, text
         )
 
     def make_document_link(self, text, document_id, title):

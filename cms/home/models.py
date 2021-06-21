@@ -12,9 +12,7 @@ from wagtail.admin.edit_handlers import (
     PageChooserPanel,
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtailnhsukfrontend.mixins import (
-    HeroMixin,
-)
+from wagtailnhsukfrontend.mixins import HeroMixin
 
 
 class HomePage(HeroMixin, Page):

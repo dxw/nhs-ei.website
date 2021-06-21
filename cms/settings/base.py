@@ -85,9 +85,7 @@ ROOT_URLCONF = "cms.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            PROJECT_DIR / "templates",
-        ],
+        "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -125,15 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
@@ -244,9 +236,7 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django": {
-            "handlers": ["mail_admins", "console_debug_false"],
-        },
+        "django": {"handlers": ["mail_admins", "console_debug_false"],},
         "django.request": {
             "handlers": ["mail_admins"],
             "level": "ERROR",

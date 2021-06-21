@@ -575,10 +575,7 @@ class DocumentsBuilder:
     def create_heading(self, heading):
         block = {
             "type": "named_anchor",
-            "value": {
-                "heading": heading,
-                "anchor_id": slugify(heading),
-            },
+            "value": {"heading": heading, "anchor_id": slugify(heading),},
         }
 
         return block

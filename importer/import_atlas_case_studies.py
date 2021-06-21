@@ -82,9 +82,9 @@ class AtlasCaseStudiesImporter(Importer):
                 logger.warn(
                     "Page with wp_id %s has no title", atlas_case_study.get("wp_id")
                 )
-            elif len(page_title)>250:
+            elif len(page_title) > 250:
                 logger.warn("Long page_title, %s", page_title)
-                
+
             obj = AtlasCaseStudy(
                 title=page_title,
                 body=atlas_case_study.get("content"),

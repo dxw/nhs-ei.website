@@ -3,6 +3,7 @@ import requests_cache
 import sys
 import os
 import logging
+import time
 logger = logging.getLogger("__name__")
 """TODO: this should use the Django config but I haven't figured that out."""
 # from django.conf import settings
@@ -19,9 +20,7 @@ def my_request(*args, **kwargs):
         except requests.exceptions.ConnectionError as e:
             logger.critical("Aborted connection? %s", e)
             print ("\007") # beep!
-            r = input("Connection Aborted? Press Enter to retry or type something to skip.")
-            if r.strip():
-                break
+            time.sleep(300)
         except Exception as e:
             logger.critical("Error making request: %s", e)
         else:

@@ -11,6 +11,7 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 import requests
 from html import unescape
+import logging
 
 
 from django.core.management import call_command
@@ -24,6 +25,8 @@ from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
 from importer.richtextbuilder import RichTextBuilder
+
+logger = logging.getLogger("importer")
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 
@@ -112,12 +115,11 @@ class Command(BaseCommand):
 
         self.block_builder = RichTextBuilder(self.url_map)
 
-        with open("importer/log/forms_found.txt", "w") as the_file:
-            the_file.write("a list of forms found during import\n")
-
     def add_arguments(self, parser):
         parser.add_argument(
-            "mode", type=str, help="Run as development with reduced recordsets"
+            "mode",
+            type=str,
+            help="prod: Full run; dev: Reduced records; debug: One name",
         )
 
     def handle(self, *args, **options):
@@ -142,11 +144,17 @@ class Command(BaseCommand):
         if options["mode"] == "prod":
             """get all the pages"""
             pages = BasePage.objects.all()
+
+        if options["mode"] == "debug":
+            pages = BasePage.objects.all()
+            pages = [page for page in pages if "Technical and operations" in page.title]
+
         # pages_count = pages.count()
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         # counter = pages_count
-        for page in pages:
-            sys.stdout.write("⌛️ {} processing...\n".format(page))
+        page_count = len(pages)
+        for i, page in enumerate(pages):
+            sys.stdout.write(f"⌛️ {page} processing ... ({i}/{page_count})\n")
             # keep the dates as when imported
             # if page.title == 'Join the NHS COVID-19 vaccine team':
             first_published_at = page.first_published_at
@@ -157,15 +165,10 @@ class Command(BaseCommand):
             # get this to make a stream field
             raw_content = page.raw_content
 
-            # print('⚙️  {}'.format(page.title))
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
-            # no_forms = True
             if raw_content and "<form action=" in raw_content:
-                with open("importer/log/forms_found.txt", "a") as the_file:
-                    the_file.write("{} | {} | {}\n".format(page, page.id, page.wp_link))
-            #     no_forms = False
-            # if raw_content and no_forms:
+                logger.critical("FORM FOUND: %s | %s | %s", page, page.id, page.wp_link)
             if raw_content:
                 # line breaks mess up bs4 parsing, we dont need them anyway :)
                 raw_content = raw_content.replace("\n", "")
@@ -322,13 +325,9 @@ class Command(BaseCommand):
                         )
                         linked_html = linked_html.replace(img_string, new_image)
                     except Image.DoesNotExist:
-                        # print('missing image')
-                        with open(
-                            "importer/log/media_document_not_found.txt", "a"
-                        ) as the_file:
-                            the_file.write(
-                                "{} | {} | {}\n".format(img["src"], page, page.id)
-                            )
+                        logger.warn(
+                            "Missing image: %s | %s | %s", img["src"], page, page.id
+                        )
                     if not new_image:
                         linked_html = (
                             linked_html + '<h3 style="color:red">missing image</h3>'
@@ -406,6 +405,14 @@ class Command(BaseCommand):
             summary = expander["default_template_hidden_text_summary"]
             details = expander["default_template_hidden_text_details"]
 
+            if not details:
+                details = "<p></p>"
+                logger.warn(
+                    "Empty details expander given an empty paragraph tag on %s (%s): summary %s",
+                    page.title,
+                    page.wp_id,
+                    repr(summary),
+                )
             # for item in field['items']:
             item_detail = details
             self.block_builder.extract_links(details, page)

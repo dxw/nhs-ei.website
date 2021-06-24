@@ -24,10 +24,7 @@ class CoreSettings(BaseSetting, ClusterableModel):
             heading="Alert Banner",
         ),
         MultiFieldPanel(
-            [
-                FieldPanel("header_extra"),
-                FieldPanel("footer_extra"),
-            ],
+            [FieldPanel("header_extra"), FieldPanel("footer_extra"),],
             heading="Extra header and footer code",
             help_text="You can add valid html code snippets here such as analytics code or other scripts",
         ),
@@ -45,10 +42,7 @@ class CoreSettings(BaseSetting, ClusterableModel):
 
 
 class UpperFooterLinks(Orderable):
-    setting = ParentalKey(
-        CoreSettings,
-        related_name="upper_footer_links",
-    )
+    setting = ParentalKey(CoreSettings, related_name="upper_footer_links",)
     text = models.CharField(max_length=100)
     page = models.ForeignKey(
         "wagtailcore.Page",
@@ -67,10 +61,7 @@ class UpperFooterLinks(Orderable):
 
 
 class LowerFooterLinks(Orderable):
-    setting = ParentalKey(
-        CoreSettings,
-        related_name="lower_footer_links",
-    )
+    setting = ParentalKey(CoreSettings, related_name="lower_footer_links",)
     text = models.CharField(max_length=100)
     page = models.ForeignKey(
         "wagtailcore.Page",

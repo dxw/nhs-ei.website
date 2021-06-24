@@ -2,6 +2,7 @@ from os import PRIO_USER, unlink
 import requests
 import re
 import sys
+import logging
 from io import BytesIO
 from django.core.files import File
 from bs4 import BeautifulSoup
@@ -14,7 +15,9 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import Collection
+from .httpcache import session
 
+logger = logging.getLogger("importer")
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
 <p>
@@ -80,16 +83,6 @@ class RichTextBuilder:
     # <embed embedtype="image" id="10" alt="A pied wagtail" format="left" /> IMAGE
 
     def __init__(self, url_map, html_content=None):
-        # theres are log files to record url problems, clean it out first
-        with open("importer/log/parse_stream_fields_url_errors.txt", "w") as log:
-            log.write("parse_stream_field missing urls\n")
-        with open("importer/log/parse_stream_fields_media_errors.txt", "w") as the_file:
-            the_file.write("parse_stream_field missing media\n")
-        with open("importer/log/media_document_not_found.txt", "w") as the_file:
-            the_file.write(
-                "the follwing media files had to be fetched from england.nhs.uk as missing in Documents\n"
-            )
-
         self.url_map_keys = url_map.keys()
         self.url_map = url_map
         self.change_links = []
@@ -192,10 +185,12 @@ class RichTextBuilder:
                 )
                 self.change_links.append([link, page_link])
             except:
-                with open(
-                    "importer/log/parse_stream_fields_url_errors.txt", "a"
-                ) as log:
-                    log.write("{} | {} | {}\n".format(link, page_path, page))
+                logger.warn(
+                    "Stream field URL error (publication), %s | %s | %s",
+                    link,
+                    page_path,
+                    page,
+                )
 
         elif path_list and path_list[0] == "news":
             # find source url for news ours are all in sub sites
@@ -204,10 +199,9 @@ class RichTextBuilder:
                 page_link = self.make_page_link(link.text, post.id, post.title)
                 self.change_links.append([link, page_link])
             except:
-                with open(
-                    "importer/log/parse_stream_fields_url_errors.txt", "a"
-                ) as log:
-                    log.write("{} | {} | {}\n".format(link, page_path, page))
+                logger.warn(
+                    "Stream field URL error (news), %s | %s | %s", link, page_path, page
+                )
 
         elif path_list and path_list[0] == "blog":
             # find source url for blogs
@@ -217,10 +211,9 @@ class RichTextBuilder:
                 page_link = self.make_page_link(link.text, blog.id, blog.title)
                 self.change_links.append([link, page_link])
             except:
-                with open(
-                    "importer/log/parse_stream_fields_url_errors.txt", "a"
-                ) as log:
-                    log.write("{} | {} | {}\n".format(link, page_path, page))
+                logger.warn(
+                    "Stream field URL error (blog), %s | %s | %s", link, page_path, page
+                )
 
         elif (
             path_list
@@ -241,10 +234,9 @@ class RichTextBuilder:
                 document_id = document.id
 
             except Document.DoesNotExist:
-                with open("importer/log/media_document_not_found.txt", "a") as the_file:
-                    the_file.write("{} | Linked from: {}\n".format(page_path, page))
+                logger.warn("Media %s not found, linked from %s", page_path, page)
                 collection_root = Collection.get_first_root_node()
-                remote_file = requests.get(page_path_live)
+                remote_file = session.get(page_path_live)
                 media_file = File(BytesIO(remote_file.content), name=path_list[-1])
                 file = Document(
                     title=path_list[-1], file=media_file, collection=collection_root
@@ -268,16 +260,25 @@ class RichTextBuilder:
 
         else:
             # print('using live')
-            response = requests.get("https://www.england.nhs.uk" + page_path)
+            response = session.get("https://www.england.nhs.uk" + page_path)
             url = ""
             is_post = False
+            try:
+                response.raise_for_status()
+            except:
+                logger.warn(
+                    "HTTP Error %s when scraping %s", response.status_code, response.url
+                )
             if response:
                 url = response.url.split("/")
                 del url[-1]
                 del url[:3]
                 # some urls have links to news items that start 2010/09 that needs to removed to find the url
                 if (
-                    url[0].isdigit() and url[1].isdigit() and not url[2].isdigit()
+                    len(url) >= 3
+                    and url[0].isdigit()
+                    and url[1].isdigit()
+                    and not url[2].isdigit()
                 ):  # is post
                     try:
                         page = Post.objects.get(wp_link=response.url)
@@ -312,17 +313,11 @@ class RichTextBuilder:
                         print("leaving the link alone")
 
             else:
-                # print('not found')
-                with open(
-                    "importer/log/parse_stream_fields_url_errors.txt", "a"
-                ) as log:
-                    log.write("{}\n".format(page_path, page))
+                logger.warn("Stream fields URL error (???), %s, %s", page_path, page)
 
     def make_page_link(self, text, page_id, title):
-        return (
-            '<a id="{}" linktype="page" class="internal-link" title="{}">{}</a>'.format(
-                page_id, title, text
-            )
+        return '<a id="{}" linktype="page" class="internal-link" title="{}">{}</a>'.format(
+            page_id, title, text
         )
 
     def make_document_link(self, text, document_id, title):

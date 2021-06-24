@@ -85,9 +85,7 @@ ROOT_URLCONF = "cms.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            PROJECT_DIR / "templates",
-        ],
+        "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -125,15 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
@@ -214,6 +206,9 @@ LOGGING = {
                 "%(process)-5d %(thread)d %(name)-50s %(levelname)-8s " "- %(message)s"
             ),
         },
+        "tailored": {
+            "format": "%(asctime)s %(name)-5s %(levelname)-8s %(funcName)s:%(lineno)d %(message)s"
+        },
     },
     "handlers": {
         "mail_admins": {
@@ -232,16 +227,22 @@ LOGGING = {
             "filters": ["require_debug_false"],
             "class": "logging.StreamHandler",
         },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "logger.log",
+            "filters": ["require_debug_true"],
+            "formatter": "tailored",
+        },
     },
     "loggers": {
-        "django": {
-            "handlers": ["mail_admins", "console_debug_false"],
-        },
+        "django": {"handlers": ["mail_admins", "console_debug_false"],},
         "django.request": {
             "handlers": ["mail_admins"],
             "level": "ERROR",
             "propagate": True,
         },
         "cms": {"handlers": ["console"], "level": "DEBUG"},
+        "importer": {"handlers": ["file", "console"], "level": "INFO"},
     },
 }

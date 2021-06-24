@@ -144,21 +144,16 @@ class PublicationPublicationTypeRelationship(models.Model):
         related_name="publication_publication_type_relationship",
     )
     publication_type = ForeignKey(
-        "categories.PublicationType",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.PublicationType", related_name="+", on_delete=models.CASCADE,
     )
 
 
 class PublicationCategoryRelationship(models.Model):
     publication = ParentalKey(
-        "publications.Publication",
-        related_name="publication_category_relationship",
+        "publications.Publication", related_name="publication_category_relationship",
     )
     category = ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
+        "categories.Category", related_name="+", on_delete=models.CASCADE,
     )
 
 

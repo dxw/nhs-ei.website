@@ -6,7 +6,7 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from wagtail.core.models import Collection
 from wagtail.images.models import Image
-from importer.webpages import STAGING
+from importer.websites import STAGING
 
 
 class Command(BaseCommand):

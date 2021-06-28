@@ -36,6 +36,8 @@ class Command(BaseCommand):
         pages = BasePage.objects.all().order_by("-depth")
         # for BasePage models
         for page in pages:
+            if '----' not in page.slug:
+                continue
             if page.slug not in FIX_SLUGS_IGNORE:
                 first_published = page.first_published_at
                 last_published = page.last_published_at
@@ -59,7 +61,7 @@ class Command(BaseCommand):
                     page.latest_revision_created_at = latest_revision_created
                     page.save()
                     rev.publish()
-                except ValidationError:
-                    logger.warn("Slug for page %s cannot be updated!", page)
+                except ValidationError as e:
+                    logger.warn("Slug for page %s cannot be updated! %s", page, e)
 
         sys.stdout.write("\n✅  All slugs fixed\n")

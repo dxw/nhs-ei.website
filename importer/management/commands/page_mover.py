@@ -32,7 +32,7 @@ class Command(BaseCommand):
         for page in pages:
             if not page.slug in MOVE_PAGE_IGNORE:
                 sys.stdout.write("\n⌛️ {} is moving".format(page))
-
+                print (page, dir(page))
                 parent_id = Ancestry(page).get_parent()
                 if parent_id:
                     print(page.get_parent())

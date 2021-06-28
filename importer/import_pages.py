@@ -20,14 +20,18 @@ class PagesImporter(Importer):
         self.random_strings = []
         pages = BasePage.objects.all()
         if pages:
-            sys.stdout.write("⚠️  Run delete_pages before running this command\n")
-            sys.exit()
+            sys.stdout.write("⚠️  Pages already exist!\n")
 
     def parse_results(self):
 
         home_page = Page.objects.filter(title="Home")[0]
         pages = self.results  # this is json result set
 
+        RECENT = "2021-06-14T"
+        print (len(pages))
+        pages = [page for page in pages if page['date'] > RECENT or page['modified'] > RECENT]
+        print (len(pages))
+        
         for page in pages:
 
             first_published_at = page.get("date")
@@ -85,6 +89,7 @@ class PagesImporter(Importer):
                 component_fields=page.get("component_fields"),
             )
 
+            print (page.get('title'), page.get('slug'))
             home_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here
 

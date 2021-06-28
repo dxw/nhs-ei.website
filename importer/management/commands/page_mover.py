@@ -35,7 +35,11 @@ class Command(BaseCommand):
 
                 parent_id = Ancestry(page).get_parent()
                 if parent_id:
+                    print(page.get_parent())
+                    print("^^ my parent")
+                    sys.stdout.write("\n⌛️ {} is moving".format(page))
                     parent = BasePage.objects.get(id=parent_id)
+                    print("New Parent", parent)
                     page.move(parent, pos="last-child")
                     sys.stdout.write("\n✅ {} done".format(page))
 

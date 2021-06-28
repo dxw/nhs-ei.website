@@ -12,6 +12,7 @@ from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
+import importer.update
 
 # so we can match the subsite categories for the post index page
 POST_SOURCES_TO_CATEGORY_SOURCES = {
@@ -42,8 +43,7 @@ class PostsImporter(Importer):
     def __init__(self):
         posts = Post.objects.all()
         if posts:
-            sys.stdout.write("⚠️  Run delete_posts before running this command\n")
-            sys.exit()
+            sys.stdout.write("⚠️  Posts exist!\n")
 
     def parse_results(self):
         # make a posts index page for the whole site, only one to exist, call is News ...
@@ -52,6 +52,10 @@ class PostsImporter(Importer):
 
         for post in posts:
             # we need a sub_site_category for the news index page
+
+            if not update.filter(post):
+                continue
+            print (post.title)
             try:
                 sub_site_category = CategorySubSite.objects.get(
                     source=POST_SOURCES_TO_CATEGORY_SOURCES[post.get("source")]

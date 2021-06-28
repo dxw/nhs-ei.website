@@ -1,0 +1,6 @@
+brew list nodenv >> /dev/null || brew install nodenv
+if grep -q "nodenv init -" ~/.zshrc ; then
+   echo '✅ .zshrc already inits nodenv, good.'
+else
+   echo '⚠️  Manually add the following to your .zshrc: eval "$(nodenv init -)"'
+fi

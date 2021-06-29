@@ -182,13 +182,14 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 
 View the [Application Guide](docs/application.md)
 
-
 ## Developer Testing
+
 There are tests in place for each app in the cms (/cms/[appname]). The tests are inside the tests.py files.
 
 Testing is functional tests at the moment. E.g. using the known test data imported check that each test page renders and the content from blocks is rendered as expected.
 
 The following page types (models) are tested
+
 - HomePage (cms/home/models.py)
 - PublicationIndexPage and Publication (cms/publications/models.py)
 - AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudies/models.py)
@@ -201,12 +202,15 @@ To run the tests you should prepare both the database and media files.
 To copy the media files, you can either:
 
 Move to the fixtures folder and run
+
 ```
 ./copy_media.sh
 ```
+
 or, simply copy `fixtures/media` into a new folder called `media` at the root of the project
 
 Then from the root of the project run
+
 ```
 python manage.py loaddata fixtures/testdata.json
 ```
@@ -219,17 +223,23 @@ Making new testdata if you change the pages that are been tested and your test a
 
 #### 1. Open a python shell thats aware of django
 Wagtail pre renders all images and we need to remove them, we don't want them to be included in the test data. The original images will stay in place. When the page is next viewed new renders will be created from the originals. Testing doesn't test for the actual image used, just the presence of the image tag in the correct place in the HTML
+
 ```
 python manage.py shell
 ```
+
 Then run the flowing commands
+
 ```
 from wagtail.images.models import Rendition
 ```
-and 
+
+and
+
 ```
 Rendition.objects.all().delete()
 ```
+
 You can close the shell now with quit()
 
 #### 2. Copy the project root media folder (/media)
@@ -241,9 +251,11 @@ Now the media folder is a fixture that will represent the data when `./dumpdata.
 #### 3. Create a new testdata.json file
 
 From the `fixtures` folder run
+
 ```
 ./dumpdata.sh > testdata.json
 ```
+
 Now the data for all the pages in your development project has been written to `testdata.json` which you can later load again.
 
 ## Deployment

@@ -31,7 +31,6 @@ git clone https://github.com/rkhleics/nhs-ei.website [your_folder_name:optional]
 
 then use either 1 or 2 below.
 
-
 ### <a name="docker-install"></a>1. Install using a docker container!
 
 You will need 'docker' installed on your development machine. Get Docker: https://docs.docker.com/get-docker/
@@ -59,7 +58,6 @@ docker-compose up
 This will take a while to complete and will set up the environment and run the website and database service which you can then use develop on.
 
 It mirrors all the services and packages needed to run in production.
-
 
 ### 2. Install using a virtual environment [recommended for development work]
 
@@ -90,7 +88,6 @@ pipenv shell
 
 When using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
 
-
 You should now be able to run the Wagtail app. If you are using 2. [virtual environment](#virtual-environment) then you will need to install the node packages to compile the frontend assets. If you are going to work only on the python/html files then this isn't required but it does come with the benefit of auto-reload on save when you change files, it's recommended!.
 
 ### 3. <a name="front-end"></a>Install NHS.UK Frontend design system
@@ -107,7 +104,6 @@ npm install
 ```
 
 To install the node packages (they show up in a folder called node_modules in the root folder) and are not committed to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
-
 
 ### 4. <a name="#runapp"></a> Run the application
 

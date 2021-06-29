@@ -125,7 +125,7 @@ Run ...
 python manage.py createsuperuser
 ```
 
-**_ admin access is at http://localhost:3000/admin _**
+admin access is at http://localhost:3000/admin
 
 You need to run 2 applications. One for the Wagtail app and the other for the frontend assets.
 

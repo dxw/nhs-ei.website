@@ -72,6 +72,9 @@ ENV NPM_CONFIG_CACHE=/tmp/.npm
 RUN npm install
 RUN npm run build
 
+# Touch the .env file so things don't error out
+RUN touch /app/cms/settings/.env
+
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
 ENTRYPOINT ["./entrypoint.sh"]

@@ -192,7 +192,6 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 
 View the [Application Guide](docs/application.md)
 
-<<<<<<< HEAD
 ---
 
 # Developer Testing
@@ -272,4 +271,3 @@ View the [Helm chart](deployment/helm).
 # Release process
 
 See [Release process](docs/release_process.md)
->>>>>>> 0e2f44d795266cd7438815c41e37b482a8f85ce2

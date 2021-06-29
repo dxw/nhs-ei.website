@@ -221,7 +221,8 @@ A superuser login is created. Username: `admin` with password: `password123` whi
 
 Making new testdata if you change the pages that are been tested and your test are been changed
 
-#### 1. Open a python shell thats aware of django
+### 1. Open a python shell thats aware of django
+
 Wagtail pre renders all images and we need to remove them, we don't want them to be included in the test data. The original images will stay in place. When the page is next viewed new renders will be created from the originals. Testing doesn't test for the actual image used, just the presence of the image tag in the correct place in the HTML
 
 ```
@@ -242,13 +243,13 @@ Rendition.objects.all().delete()
 
 You can close the shell now with quit()
 
-#### 2. Copy the project root media folder (/media)
+### 2. Copy the project root media folder (/media)
 
 Copy the media folder from your project root and replace the one in /fixtures
 
 Now the media folder is a fixture that will represent the data when `./dumpdata.sh` is run next
 
-#### 3. Create a new testdata.json file
+### 3. Create a new testdata.json file
 
 From the `fixtures` folder run
 

@@ -23,8 +23,6 @@ Notes:
 
 ## How to install
 
----
-
 Clone this repo to your local development machine
 
 ```
@@ -33,7 +31,6 @@ git clone https://github.com/rkhleics/nhs-ei.website [your_folder_name:optional]
 
 then use either 1 or 2 below.
 
----
 
 ## <a name="docker-install"></a>1. Install using a docker container!
 
@@ -63,7 +60,6 @@ This will take a while to complete and will set up the environment and run the w
 
 It mirrors all the services and packages needed to run in production.
 
----
 
 ## 2. Install using a virtual environment [recommended for development work]
 
@@ -94,7 +90,6 @@ pipenv shell
 
 When using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
 
----
 
 You should now be able to run the Wagtail app. If you are using 2. [virtual environment](#virtual-environment) then you will need to install the node packages to compile the frontend assets. If you are going to work only on the python/html files then this isn't required but it does come with the benefit of auto-reload on save when you change files, it's recommended!.
 
@@ -113,7 +108,6 @@ npm install
 
 To install the node packages (they show up in a folder called node_modules in the root folder) and are not committed to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
 
----
 
 ## 4. <a name="#runapp"></a> Run the application
 
@@ -192,7 +186,6 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 
 View the [Application Guide](docs/application.md)
 
----
 
 # Developer Testing
 There are tests in place for each app in the cms (/cms/[appname]). The tests are inside the tests.py files.
@@ -226,8 +219,6 @@ After loading testdata.json you will see sample pages available in the frontend 
 
 A superuser login is created. Username: `admin` with password: `password123` which you can use at `http://localhost:8000/admin`
 
----
-
 Making new testdata if you change the pages that are been tested and your test are been changed
 
 ### 1. Open a python shell thats aware of django
@@ -258,7 +249,7 @@ From the `fixtures` folder run
 ./dumpdata.sh > testdata.json
 ```
 Now the data for all the pages in your development project has been written to `testdata.json` which you can later load again.
-=======
+
 # Deployment
 
 The Kubernetes infrastructure deployment is handled by Terraform, documentation relating to this

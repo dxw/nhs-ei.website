@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "nhs-ei.website"
+version = "2021-06-14"
+description = "The NHSE&I website"
+authors = []
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.6,<3.9"
+python-dateutil = "^2.8.1"
+lxml = "^4.6.3"
+Django = "^3.1, <3.2"
+wagtail = "^2.13.2"
+# Grey Panel Block and others are due to be deleted -- update wagtail-nhsuk-frontend with caution!
+# 0.7.0 was OK for nhsx but...
+wagtail-nhsuk-frontend = "0.4.4"
+django-environ = "^0.4.5"
+whitenoise = {extras = ["brotli"], version = "^5.2.0"}
+elasticsearch = "^7.13.1"
+django-storages = {extras = ["azure"], version = "^1.11.1"}
+psycopg2 = "^2.8.6"
+
+[tool.poetry.dev-dependencies]
+requests-cache = "^0.6.4"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

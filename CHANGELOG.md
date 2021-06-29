@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Changed
+- Use Poetry to handle project dependencies
+
 2021-02-08
 ### Added
 - cms/blogs/tests.py

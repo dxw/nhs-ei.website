@@ -70,9 +70,8 @@ project
 │   ... frontend assets (https://github.com/nhsuk/nhsuk-frontend)
 │
 README.md
-requirements.dev
-requirements.importer.txt
-requirements.txt
+poetry.lock
+pyproject.toml
 manage.py
 ```
 

@@ -4,7 +4,30 @@ from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.fields import RichTextField, StreamField
 from cms.core.blocks import CoreBlocks
+from wagtail.snippets.models import register_snippet
+from django import forms
+from modelcluster.fields import ParentalManyToManyField
 
+@register_snippet
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    icon = models.ForeignKey(
+        'wagtailimages.Image', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='+'
+    )
+
+    panels = [
+        FieldPanel('name'),
+        # ImageChooserPanel('icon'),
+        FieldPanel('description'),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'blog categories'
 
 class BasePage(Page):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
@@ -41,6 +64,8 @@ class BasePage(Page):
 
     author = models.CharField(max_length=255, blank=True)
 
+    categories = ParentalManyToManyField('pages.BlogCategory', blank=True)
+
     content_panels = Page.content_panels + [
         # StreamFieldPanel('body2'),
         StreamFieldPanel("body"),
@@ -51,6 +76,7 @@ class BasePage(Page):
                 FieldPanel("md_description"),
                 FieldPanel("md_gateway_ref"),
                 FieldPanel("md_pcc_reference"),
+                FieldPanel("categories", widget=forms.CheckboxSelectMultiple)
             ],
             heading="Meta Data",
             classname="collapsed collapsible",

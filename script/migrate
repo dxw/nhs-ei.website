@@ -1,0 +1,2 @@
+script/manpy makemigrations
+script/manpy migrate

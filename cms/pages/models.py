@@ -29,7 +29,22 @@ class BlogCategory(models.Model):
     class Meta:
         verbose_name_plural = 'blog categories'
 
-class BasePage(Page):
+class HasGroupsMixin(models.Model):
+    """
+    A mixin for pages that want to have groups assigned to them,
+    rather than group categories themselves: (see BlogCategory)
+    """
+    
+    class Meta:
+        abstract = True
+    groups = ParentalManyToManyField('pages.BlogCategory', blank=True)
+    
+    panels = [
+        FieldPanel("groups", widget=forms.CheckboxSelectMultiple)
+    ]
+
+
+class BasePage(Page, HasGroupsMixin):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers
     md_owner = models.TextField("Owner", blank=True)
@@ -64,19 +79,19 @@ class BasePage(Page):
 
     author = models.CharField(max_length=255, blank=True)
 
-    categories = ParentalManyToManyField('pages.BlogCategory', blank=True)
-
     content_panels = Page.content_panels + [
         # StreamFieldPanel('body2'),
         StreamFieldPanel("body"),
         FieldPanel("excerpt"),
+        MultiFieldPanel(
+            HasGroupsMixin.panels, heading='Groups'
+        ),
         MultiFieldPanel(
             [
                 FieldPanel("md_owner"),
                 FieldPanel("md_description"),
                 FieldPanel("md_gateway_ref"),
                 FieldPanel("md_pcc_reference"),
-                FieldPanel("categories", widget=forms.CheckboxSelectMultiple)
             ],
             heading="Meta Data",
             classname="collapsed collapsible",
@@ -100,7 +115,7 @@ class BasePage(Page):
             heading="wordpress data we dont need in the end",
             classname="collapsed collapsible",
         ),
-    ]
+    ] 
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)

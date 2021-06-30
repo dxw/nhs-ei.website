@@ -547,7 +547,7 @@ class DocumentsBuilder:
                         "make_document_list_error: no response on pub %s (%s) for URL (%s)",
                         self.publication,
                         self.publication.id,
-                        document['url'],
+                        document["url"],
                     )
 
         elif self.document["type_of_publication"] == "documentlink":
@@ -576,7 +576,10 @@ class DocumentsBuilder:
     def create_heading(self, heading):
         block = {
             "type": "named_anchor",
-            "value": {"heading": heading, "anchor_id": slugify(heading),},
+            "value": {
+                "heading": heading,
+                "anchor_id": slugify(heading),
+            },
         }
 
         return block

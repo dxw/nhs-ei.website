@@ -4,6 +4,7 @@ import sys
 import os
 import logging
 import time
+
 logger = logging.getLogger("__name__")
 """TODO: this should use the Django config but I haven't figured that out."""
 # from django.conf import settings
@@ -12,6 +13,7 @@ DEBUG = True
 
 CACHE_DB = "requests_cache.sqlite"
 
+
 def my_request(*args, **kwargs):
     logger.debug("REQUEST %s %s", args, kwargs)
     while True:
@@ -19,7 +21,7 @@ def my_request(*args, **kwargs):
             values = session._request(*args, **kwargs)
         except requests.exceptions.ConnectionError as e:
             logger.critical("Aborted connection? %s", e)
-            print ("\007") # beep!
+            print("\007")  # beep!
             time.sleep(300)
         except Exception as e:
             logger.critical("Error making request: %s", e)
@@ -28,12 +30,13 @@ def my_request(*args, **kwargs):
 
     return values
 
+
 if "reset" in sys.argv:
     os.remove(CACHE_DB)
     print("Removed old HTTP cache.")
 
 if DEBUG:
-    session = requests_cache.CachedSession(CACHE_DB, allowable_codes = (200, 404))
+    session = requests_cache.CachedSession(CACHE_DB, allowable_codes=(200, 404))
     session._request = session.request
     session.request = my_request
 else:

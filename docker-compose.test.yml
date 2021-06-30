@@ -7,6 +7,7 @@ services:
     environment:
       - DJANGO_SECRET_KEY=entersecretkeyhere
       - SERVER_ENV=test
+      - DJANGO_SETTINGS_MODULE=cms.settings.dev
     restart: always
     build:
       context: ./

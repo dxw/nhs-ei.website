@@ -72,9 +72,14 @@ class BlogIndexPage(Page):
 
 
 class BlogCategoryRelationship(models.Model):
-    blog = ParentalKey("blogs.Blog", related_name="blog_category_relationship",)
+    blog = ParentalKey(
+        "blogs.Blog",
+        related_name="blog_category_relationship",
+    )
     category = models.ForeignKey(
-        "categories.Category", related_name="+", on_delete=models.CASCADE,
+        "categories.Category",
+        related_name="+",
+        on_delete=models.CASCADE,
     )
 
 

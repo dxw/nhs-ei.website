@@ -3257,8 +3257,7 @@
   "pk": 13,
   "fields": {
     "page_ptr": 13,
-    "body": "<p>Publications index page content</p>",
-    "sub_site_publication_types": 1
+    "body": "<p>Publications index page content</p>"
   }
 },
 {

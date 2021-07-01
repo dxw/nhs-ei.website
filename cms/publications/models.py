@@ -27,16 +27,7 @@ class PublicationIndexPage(Page):
     subpage_types = ["publications.Publication"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    sub_site_publication_types = models.ForeignKey(
-        PublicationTypeSubSite,
-        on_delete=models.PROTECT,
-        related_name="publication_type_sub_site",
-        null=True,
-    )
-
     content_panels = Page.content_panels + [
-        FieldPanel("sub_site_publication_types"),
         FieldPanel("body"),
     ]
 
@@ -53,12 +44,8 @@ class PublicationIndexPage(Page):
         at the moment you can only choose one or the other? I think thats best to avoid lots of empty
         result sets but we will need a decision made on that.
         """
-        publication_ordering = "-first_published_at"
-        if request.GET.get("order"):
-            publication_ordering = request.GET.get("order")
         context = super().get_context(request, *args, **kwargs)
-        # sub_site_categories = Category.objects.filter(
-        #     sub_site=self.sub_site_categories.id)
+        publication_ordering = request.GET.get("order") or "-first_published_at"
 
         if request.GET.get("publication_type"):
             context["publication_type_id"] = int(request.GET.get("publication_type"))
@@ -99,19 +86,9 @@ class PublicationIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["publications"] = items
-        context["publication_types"] = PublicationType.objects.filter(
-            sub_site=self.sub_site_publication_types
-        )
-
-        if self.sub_site_publication_types.source == "publication_types":
-            sub_site_source = "categories"
-        else:
-            sub_site_source = self.sub_site_publication_types.source.replace(
-                "publication_types-", "categories-"
-            )
-
-        category_subsite = CategorySubSite.objects.get(source=sub_site_source)
-        context["categories"] = Category.objects.filter(sub_site=category_subsite.id)
+        # this will show FAR too amny categories, massaging categories together is a job for later
+        context["publication_types"] = PublicationType.objects.all()
+        context["categories"] = Category.objects.all()
         context["order"] = publication_ordering
 
         return context

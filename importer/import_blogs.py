@@ -26,7 +26,7 @@ POST_SOURCES = {
     "blogs": "NHS England & Improvement",
     # 'posts-aac': 'Accelerated Access Collaborative',
     # 'posts-commissioning': 'Commissioning',
-    # 'posts-coronavirus': 'Corovavirus',
+    # 'posts-coronavirus': 'Coronavirus',
     # 'posts-greenernhs': 'Greener NHS',
     # 'posts-improvement-hub': 'Improvement Hub',
     # 'posts-non-executive-opportunities': 'Non-executive opportunities',

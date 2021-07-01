@@ -23,7 +23,7 @@ SOURCES = {
     "media": "NHS England & Improvement",
     "media-aac": "Accelerated Access Collaborative",
     "media-commissioning": "Commissioning",
-    "media-coronavirus": "Corovavirus",
+    "media-coronavirus": "Coronavirus",
     "media-greenernhs": "Greener NHS",
     "media-improvement-hub": "Improvement Hub",
     "media-non-executive-opportunities": "Non-executive opportunities",

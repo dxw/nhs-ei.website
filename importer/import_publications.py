@@ -133,7 +133,6 @@ class PublicationsImporter(Importer):
                     title=PUBLICATION_SOURCES[publication.get("source")],
                     body="",
                     show_in_menus=True,
-                    sub_site_publication_types=sub_site_publication_type,
                 )
                 publications_index_page.add_child(
                     instance=sub_site_publication_index_page
@@ -179,15 +178,13 @@ class PublicationsImporter(Importer):
 
             # add the publication types as related many to many, found this needs to be after the save above
             # some publication types can be blank
-            if not not publication.get("publication_type"):
+            if publication.get("publication_type"):
 
                 types = publication.get("publication_type").split(
                     " "
                 )  # list of category wp_id's
 
-                publication_types = PublicationType.objects.filter(
-                    sub_site=sub_site_publication_type, wp_id__in=types
-                )
+                publication_types = PublicationType.objects.filter(wp_id__in=types)
 
                 for publication_type in publication_types:
                     rel = PublicationPublicationTypeRelationship.objects.create(
@@ -197,7 +194,7 @@ class PublicationsImporter(Importer):
                 sys.stdout.write(".")
             # add the categories (topics) as related many to many, found this needs to be after the save above
             # some categories can be blank
-            if not not publication.get("categories"):
+            if publication.get("categories"):
 
                 categories = publication.get("categories").split(
                     " "

@@ -56,22 +56,7 @@ class Category(models.Model):
 """PUBLICATION TYPES work with publications (document) and across sub sites"""
 
 
-class PublicationTypeSubSite(models.Model):
-    title = models.CharField(max_length=100)
-    """ coming across form wordpress need to keep for now"""
-    source = models.CharField(null=True, max_length=100)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ["title"]
-
-
 class PublicationType(models.Model):
-    sub_site = models.ForeignKey(
-        PublicationTypeSubSite, on_delete=models.PROTECT, null=True
-    )
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     description = models.TextField(blank=True)

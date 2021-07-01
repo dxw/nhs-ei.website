@@ -496,7 +496,7 @@ class DocumentsBuilder:
             "publications": "NHS England & Improvement",
             "publications-aac": "Accelerated Access Collaborative",
             "publications-commissioning": "Commissioning",
-            "publications-coronavirus": "Corovavirus",
+            "publications-coronavirus": "Coronavirus",
             "publications-greenernhs": "Greener NHS",
             "publications-improvement-hub": "Improvement Hub",
             "publications-non-executive-opportunities": "Non-executive opportunities",

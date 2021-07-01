@@ -101,6 +101,13 @@ class Command(BaseCommand):
             self.stdout.write("⌛️ Initialising Media Files Import \n")
             import_media_files(get_api_url("media"))
 
+        if options["app"] == "short":
+            # just do the ones that have foreign keys
+            import_categories(get_api_url("categories"))
+            import_publication_types(get_api_url("publication_types"))
+            import_settings(get_api_url("settings"))
+            import_regions(get_api_url("regions"))
+
         if options["app"] == "all":
             # the whole lot in specific order
             # BEFORE ALL OTHERS as related keys exists

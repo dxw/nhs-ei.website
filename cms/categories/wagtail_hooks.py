@@ -4,7 +4,6 @@ from cms.categories.models import (
     Category,
     CategorySubSite,
     PublicationType,
-    PublicationTypeSubSite,
     Region,
     Setting,
 )
@@ -86,28 +85,6 @@ class CategoriesAdmin(ModelAdmin):
 # modeladmin_register(CategoriesAdmin)
 
 """PUBLICATION TYPES"""
-
-
-class PublicationTypeSubSitePermissionHelper(PermissionHelper):
-    def user_can_delete_obj(self, user, obj):
-        publication_types = PublicationType.objects.filter(sub_site=obj)
-        if not publication_types:
-            return True
-
-
-class PublicationTypeSubSiteAdmin(ModelAdmin):
-    model = PublicationTypeSubSite
-    search_fields = ("title",)
-    menu_icon = "tag"
-
-    # to prevent deletion of a publication type subsite if it has any publication types belonging to it
-    permission_helper_class = PublicationTypeSubSitePermissionHelper
-
-    panels = [
-        FieldPanel("title"),
-        FieldPanel("source"),
-        # eventually hidden
-    ]
 
 
 class PublicationTypePermissionHelper(PermissionHelper):
@@ -244,7 +221,6 @@ class CategoriesAdminGroup(ModelAdminGroup):
         CategoriesAdmin,
         CategorySubSiteAdmin,
         PublicationTypeAdmin,
-        PublicationTypeSubSiteAdmin,
         SettingAdmin,
         RegionAdmin,
     )

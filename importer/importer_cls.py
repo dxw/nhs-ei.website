@@ -39,6 +39,23 @@ class Importer:
         self.results = r.get("results")
         return True
 
+    def fetch_all(self, url):
+        """
+        The intention here is to get all pages of data for a content type.
+        self.results gets overwritten each time we call fetch_url so we build
+        our own results list and put it in the same place as expected.
+        """
+
+        self.fetch_url(url)
+        all_results = self.results
+        all_count = self.count
+        while self.next:
+            self.fetch_url(self.next)
+            all_count = all_count + self.count
+            all_results.extend(self.results)
+        self.results = all_results
+        self.count = all_count
+
     def get_count(self):
         return self.count
 

@@ -11,7 +11,7 @@ from .importer_cls import Importer
 #     'categories': 'NHS England & Improvement',
 #     'categories-aac': 'Accelerated Access Collaborative',
 #     'categories-commissioning': 'Commissioning',
-#     'categories-coronavirus': 'Corovavirus',
+#     'categories-coronavirus': 'Coronavirus',
 #     'categories-greenernhs': 'Greener NHS',
 #     'categories-improvement-hub': 'Improvement Hub',
 #     'categories-non-executive-opportunities': 'Non-executive opportunities',

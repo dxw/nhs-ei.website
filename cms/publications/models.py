@@ -2,10 +2,9 @@ from urllib.parse import urlparse
 
 from cms.categories.models import (
     Category,
-    CategorySubSite,
     PublicationType,
-    PublicationTypeSubSite,
 )
+
 from cms.core.blocks import PublicationsBlocks
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -59,18 +58,20 @@ class PublicationIndexPage(Page):
                     )
                 )
             )
-        # elif request.GET.get("category"):
-        #     context["category_id"] = int(request.GET.get("category"))
-        #     publications = (
-        #         Publication.objects.child_of(self)
-        #         .live()
-        #         .order_by(publication_ordering)
-        #         .filter(
-        #             publication_category_relationship__category=request.GET.get(
-        #                 "category"
-        #             )
-        #         )
-        #     )
+        # NOTE: filtering by category was commented out but I want see if it works -- Dragon.
+        elif request.GET.get("category"):
+            context["category_id"] = int(request.GET.get("category"))
+            publications = (
+                Publication.objects.child_of(self)
+                .live()
+                .order_by(publication_ordering)
+                .filter(
+                    publication_category_relationship__category=request.GET.get(
+                        "category"
+                    )
+                )
+            )
+        # NOTE: end block for previous note -- Dragon.
         else:
             publications = (
                 Publication.objects.child_of(self).live().order_by(publication_ordering)
@@ -86,8 +87,9 @@ class PublicationIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["publications"] = items
-        # this will show FAR too amny categories, massaging categories together is a job for later
+        # this will show FAR too many categories, massaging categories together is a job for later -- Dragon.
         context["publication_types"] = PublicationType.objects.all()
+        # categories isn't exposed on the webpage at all, and contains a lot of empty categories.
         context["categories"] = Category.objects.all()
         context["order"] = publication_ordering
 

@@ -28,4 +28,4 @@ services:
         cd fixtures
         ./copy_media.sh
         cd ..
-        python manage.py test cms
+        coverage run --source='.' manage.py test cms

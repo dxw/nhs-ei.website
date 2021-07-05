@@ -32,18 +32,9 @@
   }
 },
 {
-  "model": "categories.publicationtypesubsite",
-  "pk": 1,
-  "fields": {
-    "title": "Subsite name",
-    "source": "publication_types"
-  }
-},
-{
   "model": "categories.publicationtype",
   "pk": 1,
   "fields": {
-    "sub_site": 1,
     "name": "Publication Type One",
     "slug": "publication-type-one",
     "description": "Publication type one description",
@@ -55,7 +46,6 @@
   "model": "categories.publicationtype",
   "pk": 2,
   "fields": {
-    "sub_site": 1,
     "name": "Publication Type Two",
     "slug": "publication-type-two",
     "description": "Publication type two description",

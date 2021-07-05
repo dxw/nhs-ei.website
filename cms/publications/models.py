@@ -39,9 +39,9 @@ class PublicationIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         """
-        publications can have one or more categories (topics) or publications (publiciation_type)
-        at the moment you can only choose one or the other? I think thats best to avoid lots of empty
-        result sets but we will need a decision made on that.
+        Publications can have one or more categories (topics) or publications (publication_type).
+        At the moment, you can only choose one or the other. I think that's best to avoid lots of empty
+        result sets but we will need a decision made on that. TODO.
         """
         context = super().get_context(request, *args, **kwargs)
         publication_ordering = request.GET.get("order") or "-first_published_at"
@@ -49,8 +49,7 @@ class PublicationIndexPage(Page):
         if request.GET.get("publication_type"):
             context["publication_type_id"] = int(request.GET.get("publication_type"))
             publications = (
-                Publication.objects.child_of(self)
-                .live()
+                Publication.objects.live()
                 .order_by(publication_ordering)
                 .filter(
                     publication_publication_type_relationship__publication_type=request.GET.get(
@@ -62,8 +61,7 @@ class PublicationIndexPage(Page):
         elif request.GET.get("category"):
             context["category_id"] = int(request.GET.get("category"))
             publications = (
-                Publication.objects.child_of(self)
-                .live()
+                Publication.objects.live()
                 .order_by(publication_ordering)
                 .filter(
                     publication_category_relationship__category=request.GET.get(
@@ -73,9 +71,7 @@ class PublicationIndexPage(Page):
             )
         # NOTE: end block for previous note -- Dragon.
         else:
-            publications = (
-                Publication.objects.child_of(self).live().order_by(publication_ordering)
-            )
+            publications = Publication.objects.live().order_by(publication_ordering)
 
         paginator = Paginator(publications, 16)
 

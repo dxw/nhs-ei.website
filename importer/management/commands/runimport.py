@@ -151,6 +151,7 @@ class Command(BaseCommand):
             call_command(
                 "parse_stream_fields_component_pages", "prod"
             )  # here we have url issue
+            call_command("dedupe_pubtypes")
 
         if options["app"] == "makes":
             # TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???

@@ -1,20 +1,16 @@
-import json
 import sys
 import time
 from urllib.parse import urlparse
 import logging
 
-from bs4 import BeautifulSoup
 from django.core.management import call_command
 from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
     CategorySubSite,
     PublicationType,
-    PublicationTypeSubSite,
 )
 from cms.pages.models import BasePage
-from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
 from cms.publications.models import (
     Publication,
     PublicationCategoryRelationship,
@@ -81,19 +77,6 @@ class PublicationsImporter(Importer):
         for publication in publications:
             # we need a sub_site_category to choose the publication types and categories
             source = publication.get("source")
-            try:
-                sub_site_publication_type = PublicationTypeSubSite.objects.get(
-                    source=PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES[source]
-                )
-            except PublicationTypeSubSite.DoesNotExist:
-                sys.exit(
-                    "\n😲Cannot continue... did you import the publication types first?"
-                )
-
-            # if source == 'publications':
-            #     categories_source = 'categories'
-            # else:
-            #     categories_source = source.replace('publications-','categories-')
 
             try:
                 sub_site_category = CategorySubSite.objects.get(
@@ -105,7 +88,7 @@ class PublicationsImporter(Importer):
             # lets make a publication index page if not already in place
             try:
                 # we need a pretty unique name here as some imported page have the title as News
-                # a parent for all news item index pages
+                # a parent for all publication item index pages
                 publications_index_page = BasePage.objects.get(
                     title="Publication Items Base"
                 )
@@ -149,9 +132,9 @@ class PublicationsImporter(Importer):
             page_title = publication.get("title")
             if not page_title:
                 page_title = "page has no title"
-                logger.warn("page %s has no title", page)
+                logger.warn("page %s has no title", publication)
             elif len(page_title) > 250:
-                logger.warn("long page title: %s %s", page_title, page)
+                logger.warn("long page title: %s %s", page_title, publication)
             obj = Publication(
                 title=page_title,
                 # excerpt = post.get('excerpt'),

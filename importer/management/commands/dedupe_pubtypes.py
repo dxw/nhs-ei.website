@@ -6,25 +6,32 @@ from cms.categories.models import PublicationType
 
 logger = logging.getLogger(__name__)
 
+useless_types = [58, 77, 78, 106, 112, 112, 114]
+"""
+useless_types includes briefings (58), invitations, lean,
+NHS volunteer responders referal, statistics, collaborations,
+improvement and refer to NHS volunteers.
+"""
+
 changes = {
-    60: 59,
+    60: 59,  # Case Study
     61: 59,  # Case Study
     64: 63,  # Data and statistics
     66: 65,  # Decision
-    70: 69,
+    70: 69,  # Form
     71: 69,  # Form
-    73: 72,
-    74: 72,
+    73: 72,  # Guidance
+    74: 72,  # Guidance
     75: 72,  # Guidance
     80: 79,  # Letter
     82: 81,  # Meeting papers and minutes
     85: 86,  # Newsletter -> Newsletter or bulletin
-    87: 88,
+    87: 88,  # Newsletter -> Newsletter or bulletin
     89: 88,  # Policy, Policy or strategy -> Policy and strategy
     92: 91,  # Promotional material
-    95: 94,
-    96: 94,
-    97: 94,
+    95: 94,  # Report
+    96: 94,  # Report
+    97: 94,  # Report
     98: 94,  # Report
     100: 99,  # Research
     102: 101,  # Service Specification
@@ -41,7 +48,9 @@ def delete_redundant_publicationtypes():
     length = len(pubtypes)
     count = 0
     for pubtype in pubtypes:
-        if pubtype.id in changes.keys():
+        # NOTE: useless_types could have documents associated with them but it appears Wagtail
+        # correctly cascades the delete into the foreign key removing it from the mapping table
+        if pubtype.id in changes.keys() or pubtype.id in useless_types:
             count = count + 1
             pubtype.delete()
     print(f"✅ {count} / {length} PublicationTypes deleted.")

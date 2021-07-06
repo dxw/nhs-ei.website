@@ -83,7 +83,6 @@ class PublicationIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["publications"] = items
-        # this will show FAR too many categories, massaging categories together is a job for later -- Dragon.
         context["publication_types"] = PublicationType.objects.all()
         # categories isn't exposed on the webpage at all, and contains a lot of empty categories.
         context["categories"] = Category.objects.all()
@@ -92,19 +91,11 @@ class PublicationIndexPage(Page):
         return context
 
     def get_wp_api_link(self):
-        wp_source = self.source.replace("pages-", "")
-        wp_id = self.wp_id
-        if wp_source != "pages":
-            api_url = "https://www.england.nhs.uk/{}/wp-json/wp/v2/documents/{}".format(
-                wp_source, wp_id
-            )
-        else:
-            api_url = "https://www.england.nhs.uk/wp-json/wp/v2/documents/{}".format(
-                wp_id
-            )
-        return api_url
+        # TODO: Pretty sure this is a debug feature that should be removed.
+        return f"https://www.england.nhs.uk/wp-json/wp/v2/documents/{self.wp_id}"
 
     def get_wp_live_link(self):
+        # TODO: Pretty sure this is a debug feature that should be removed.
         self_url_path = self.url
         live_url_path = urlparse(self.wp_link).path
         live_url = "https://www.england.nhs.uk{}".format(live_url_path)

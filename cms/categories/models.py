@@ -62,7 +62,6 @@ class PublicationType(models.Model):
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
     wp_id = models.PositiveIntegerField(null=True)
-    source = models.CharField(null=True, max_length=100)
 
     class Meta:
         ordering = ["name"]

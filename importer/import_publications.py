@@ -23,6 +23,8 @@ from .importer_cls import Importer
 
 logger = logging.getLogger("importer")
 
+FAKE_SOURCE = "publications"
+
 # so we can match the subsite categories for the publication index page
 PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES = {
     "publications": "publication_types",
@@ -100,6 +102,7 @@ class PublicationsImporter(Importer):
                     slug="publication-items-base",
                     wp_slug="auto-generated-publications-index",
                     wp_id=0,
+                    source = "fakesource"
                 )
                 home_page.add_child(instance=publications_index_page)
                 revision = publications_index_page.save_revision()
@@ -108,11 +111,11 @@ class PublicationsImporter(Importer):
 
             try:
                 sub_site_publication_index_page = PublicationIndexPage.objects.get(
-                    title=PUBLICATION_SOURCES[publication.get("source")]
+                    title=PUBLICATION_SOURCES[FAKE_SOURCE]
                 )
             except PublicationIndexPage.DoesNotExist:
                 sub_site_publication_index_page = PublicationIndexPage(
-                    title=PUBLICATION_SOURCES[publication.get("source")],
+                    title=PUBLICATION_SOURCES[FAKE_SOURCE],
                     body="",
                     show_in_menus=True,
                 )
@@ -142,10 +145,10 @@ class PublicationsImporter(Importer):
                 show_in_menus=True,
                 wp_id=publication.get("wp_id"),
                 author=publication.get("author"),
-                source=publication.get("source"),
                 wp_slug=publication.get("slug"),
                 wp_link=publication.get("link"),
                 component_fields=publication.get("component_fields"),
+                source = "fakesource"
             )
             sub_site_publication_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here
@@ -174,8 +177,30 @@ class PublicationsImporter(Importer):
                     )
 
                 sys.stdout.write(".")
+
+
+            # Add a category for the source.
+            try:
+                source_cat = Category.objects.get(
+                    name = PUBLICATION_SOURCES[source]+'-site'
+                )
+            except Category.DoesNotExist:
+                source_cat = Category.objects.create(
+                    # sub_site = None,
+                    name = PUBLICATION_SOURCES[source]+'-site',
+                    slug = source+"-subsite",
+                    description = "",
+                    # wp_id = None,
+                    source = "placeholder",
+                )
+
+            PublicationCategoryRelationship.objects.create(
+                publication=obj, category=source_cat
+            )
+
             # add the categories (topics) as related many to many, found this needs to be after the save above
             # some categories can be blank
+
             if publication.get("categories"):
 
                 categories = publication.get("categories").split(

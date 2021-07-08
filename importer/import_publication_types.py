@@ -37,7 +37,6 @@ class PublicationTypesImporter(Importer):
                 slug=r.get("slug"),
                 description=r.get("description"),
                 wp_id=r.get("wp_id"),
-                source=r.get("source"),
             )
             publication_type.save()
             sys.stdout.write(".")

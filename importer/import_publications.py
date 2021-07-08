@@ -100,7 +100,6 @@ class PublicationsImporter(Importer):
                     slug="publication-items-base",
                     wp_slug="auto-generated-publications-index",
                     wp_id=0,
-                    source="auto-generated-publications-index",
                 )
                 home_page.add_child(instance=publications_index_page)
                 revision = publications_index_page.save_revision()

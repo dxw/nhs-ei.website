@@ -82,8 +82,7 @@ class AtlasCaseStudyIndexPage(Page):
 
         context["atlas_case_studies"] = items
 
-        category_sub_site = CategorySubSite.objects.get(source="categories")
-        context["categories"] = Category.objects.filter(sub_site=category_sub_site)
+        context["categories"] = Category.objects.all()
 
         context["setting"] = Setting.objects.all()
 

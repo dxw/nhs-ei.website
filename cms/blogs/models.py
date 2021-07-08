@@ -58,16 +58,9 @@ class BlogIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["blogs"] = items
-        # context['categories'] = Category.objects.all()
-
-        # an experiment to get only categories that are used by blogs
-        blog_pages_ids = [x.id for x in Blog.objects.all()]
-        # print(blog_pages_ids)
-        # print(Category.objects.filter(blog_categories__in=blog_pages_ids))
-        # context['categories'] = Category.objects.filter(blog_categories__in=blog_pages_ids)
-        context["categories"] = Category.objects.filter(
-            sub_site=self.sub_site_categories.id
-        )
+        # the categories context isn't used but is tested for and we'll
+        # probably want to reinstate it.
+        context["categories"] = Category.objects.all()
         return context
 
 

@@ -52,13 +52,7 @@ class PostsImporter(Importer):
 
         for post in posts:
             # we need a sub_site_category for the news index page
-            try:
-                sub_site_category = CategorySubSite.objects.get(
-                    source=POST_SOURCES_TO_CATEGORY_SOURCES[post.get("source")]
-                )
-            except CategorySubSite.DoesNotExist:
-                sys.exit("\n😲Cannot continue... did you import the categories first?")
-
+            source = post.get("source")
             # lets make a news index page if not already in place
             try:
                 # we need a pretty unique name here as some imported page have the title as News
@@ -88,7 +82,6 @@ class PostsImporter(Importer):
                     title=POST_SOURCES[post.get("source")],
                     body="",
                     show_in_menus=True,
-                    sub_site_categories=sub_site_category,
                 )
                 news_index_page.add_child(instance=sub_site_news_index_page)
                 rev = sub_site_news_index_page.save_revision()
@@ -124,16 +117,25 @@ class PostsImporter(Importer):
             sys.stdout.write(".")
 
             # add the categories as related many to many, found this needs to be after the save above
-            if not not post.get("categories"):  # some categories are blank
-                cats = post.get("categories").split(" ")  # list of category wp_id's
-                categories = Category.objects.filter(
-                    sub_site=sub_site_category, wp_id__in=cats
-                )
-                for cat in categories:
-                    rel = PostCategoryRelationship.objects.create(
-                        post=obj, category=cat
+            if post.get("categories"):  # some categories are blank
+                category_ids = post.get("categories").split(
+                    " "
+                )  # list of category wp_id's
+
+                ###
+                for category_id in category_ids:
+                    # find matching category on id and sub_site
+                    category_object = Category.objects.get(
+                        source=POST_SOURCES_TO_CATEGORY_SOURCES[source],
+                        wp_id=int(category_id),
                     )
-                sys.stdout.write(".")
+
+                    PostCategoryRelationship.objects.create(
+                        post=obj, category=category_object
+                    )
+                ###
+
+            sys.stdout.write(".")
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

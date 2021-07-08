@@ -80,13 +80,6 @@ class PublicationsImporter(Importer):
             # we need a sub_site_category to choose the publication types and categories
             source = publication.get("source")
 
-            try:
-                sub_site_category = CategorySubSite.objects.get(
-                    source=PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source]
-                )
-            except CategorySubSite.DoesNotExist:
-                sys.exit("\n😲Cannot continue... did you import the categories first?")
-
             # lets make a publication index page if not already in place
             try:
                 # we need a pretty unique name here as some imported page have the title as News
@@ -102,7 +95,7 @@ class PublicationsImporter(Importer):
                     slug="publication-items-base",
                     wp_slug="auto-generated-publications-index",
                     wp_id=0,
-                    source = "fakesource"
+                    source="fakesource",
                 )
                 home_page.add_child(instance=publications_index_page)
                 revision = publications_index_page.save_revision()
@@ -148,7 +141,7 @@ class PublicationsImporter(Importer):
                 wp_slug=publication.get("slug"),
                 wp_link=publication.get("link"),
                 component_fields=publication.get("component_fields"),
-                source = "fakesource"
+                source="fakesource",
             )
             sub_site_publication_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here
@@ -178,20 +171,19 @@ class PublicationsImporter(Importer):
 
                 sys.stdout.write(".")
 
-
             # Add a category for the source.
             try:
                 source_cat = Category.objects.get(
-                    name = PUBLICATION_SOURCES[source]+'-site'
+                    name=PUBLICATION_SOURCES[source] + "-site"
                 )
             except Category.DoesNotExist:
                 source_cat = Category.objects.create(
                     # sub_site = None,
-                    name = PUBLICATION_SOURCES[source]+'-site',
-                    slug = source+"-subsite",
-                    description = "",
+                    name=PUBLICATION_SOURCES[source] + "-site",
+                    slug=source + "-subsite",
+                    description="",
                     # wp_id = None,
-                    source = "placeholder",
+                    source="placeholder",
                 )
 
             PublicationCategoryRelationship.objects.create(
@@ -203,18 +195,21 @@ class PublicationsImporter(Importer):
 
             if publication.get("categories"):
 
-                categories = publication.get("categories").split(
+                category_id = publication.get("categories").split(
                     " "
                 )  # list of category wp_id's
 
-                categories_objects = Category.objects.filter(
-                    sub_site=sub_site_category, wp_id__in=categories
-                )
-
-                for category in categories_objects:
-                    rel = PublicationCategoryRelationship.objects.create(
-                        publication=obj, category=category
+                for category in category_id:
+                    # find matching category on id and sub_site
+                    category_object = Category.objects.get(
+                        source=PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source],
+                        wp_id=int(category),
                     )
+
+                    PublicationCategoryRelationship.objects.create(
+                        publication=obj, category=category_object
+                    )
+
                 sys.stdout.write(".")
 
         if self.next:

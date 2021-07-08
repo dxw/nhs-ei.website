@@ -103,7 +103,7 @@ class TestBlogIndexPage(TestCase):
 
         self.assertEqual(context["title"], "Blog Index Page")
         self.assertEqual(len(context["blogs"]), 2)
-        self.assertEqual(len(context["categories"]), 2)
+        self.assertEqual(len(context["categories"]), 2, context["categories"])
 
 
 class TestBlog(TestCase):

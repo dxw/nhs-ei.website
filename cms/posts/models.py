@@ -34,16 +34,7 @@ class PostIndexPage(Page):
     subpage_types = ["posts.Post"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    sub_site_categories = models.ForeignKey(
-        CategorySubSite,
-        on_delete=models.PROTECT,
-        related_name="category_sub_site",
-        null=True,
-    )
-
     content_panels = Page.content_panels + [
-        FieldPanel("sub_site_categories"),
         FieldPanel("body"),
     ]
 
@@ -79,9 +70,7 @@ class PostIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["posts"] = items
-        context["categories"] = Category.objects.filter(
-            sub_site=self.sub_site_categories.id
-        )
+        context["categories"] = Category.objects.all()
 
         return context
 

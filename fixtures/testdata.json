@@ -1,17 +1,8 @@
 [
 {
-  "model": "categories.categorysubsite",
-  "pk": 1,
-  "fields": {
-    "title": "Subsite name",
-    "source": "categories"
-  }
-},
-{
   "model": "categories.category",
   "pk": 1,
   "fields": {
-    "sub_site": 1,
     "name": "Category One",
     "slug": "category-one",
     "description": "Category one description",
@@ -23,7 +14,6 @@
   "model": "categories.category",
   "pk": 2,
   "fields": {
-    "sub_site": 1,
     "name": "Category Two",
     "slug": "category-two",
     "description": "category two description",
@@ -2168,7 +2158,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 4, \"path\": \"000100010001\", \"depth\": 3, \"numchild\": 0, \"title\": \"Blog Index Page\", \"draft_title\": \"Blog Index Page\", \"slug\": \"blog-index-page\", \"content_type\": 16, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Index Content</p>\", \"sub_site_categories\": 1}",
+    "content_json": "{\"pk\": 4, \"path\": \"000100010001\", \"depth\": 3, \"numchild\": 0, \"title\": \"Blog Index Page\", \"draft_title\": \"Blog Index Page\", \"slug\": \"blog-index-page\", \"content_type\": 16, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Index Content</p>\"}",
     "approved_go_live_at": null
   }
 },
@@ -2266,7 +2256,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 10, \"path\": \"000100010003\", \"depth\": 3, \"numchild\": 0, \"title\": \"Post Index Page\", \"draft_title\": \"Post Index Page\", \"slug\": \"post-index-page\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post index page content</p>\", \"sub_site_categories\": 1}",
+    "content_json": "{\"pk\": 10, \"path\": \"000100010003\", \"depth\": 3, \"numchild\": 0, \"title\": \"Post Index Page\", \"draft_title\": \"Post Index Page\", \"slug\": \"post-index-page\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post index page content</p>\"}",
     "approved_go_live_at": null
   }
 },
@@ -2322,7 +2312,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 13, \"path\": \"000100010004\", \"depth\": 3, \"numchild\": 0, \"title\": \"Publications Index Page\", \"draft_title\": \"Publications Index Page\", \"slug\": \"publications-index-page\", \"content_type\": 25, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publications index page content</p>\", \"sub_site_publication_types\": 1}",
+    "content_json": "{\"pk\": 13, \"path\": \"000100010004\", \"depth\": 3, \"numchild\": 0, \"title\": \"Publications Index Page\", \"draft_title\": \"Publications Index Page\", \"slug\": \"publications-index-page\", \"content_type\": 25, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publications index page content</p>\"}",
     "approved_go_live_at": null
   }
 },
@@ -3331,8 +3321,7 @@
   "pk": 4,
   "fields": {
     "page_ptr": 4,
-    "body": "<p>Blog Index Content</p>",
-    "sub_site_categories": 1
+    "body": "<p>Blog Index Content</p>"
   }
 },
 {

@@ -2,7 +2,7 @@ import sys
 import time
 
 from cms.blogs.models import Blog, BlogIndexPage, BlogCategoryRelationship
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 from wagtail.core.models import Page
 from django.core.management import call_command
 

@@ -1,27 +1,9 @@
-import sys
-
-from django.apps import apps
-from django.core.checks import messages
-from django.core.exceptions import ValidationError
 from django.db import models
 
-"""CATEGORIES work with blogs and posts and across sub sites"""
-
-
-class CategorySubSite(models.Model):
-    title = models.CharField(max_length=100)
-    """ coming across form wordpress need to keep for now"""
-    source = models.CharField(null=True, max_length=100)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ["title"]
+"""CATEGORIES work with content types a across the site"""
 
 
 class Category(models.Model):
-    sub_site = models.ForeignKey(CategorySubSite, on_delete=models.PROTECT, null=True)
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     description = models.TextField(blank=True)
@@ -86,11 +68,6 @@ class PublicationType(models.Model):
 
 
 class Setting(models.Model):
-    # sub_site = models.ForeignKey(
-    #     CategorySubSite,
-    #     on_delete=models.PROTECT,
-    #     null=True
-    # )
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=255)
     description = models.TextField(blank=True)
@@ -108,11 +85,6 @@ class Setting(models.Model):
 
 
 class Region(models.Model):
-    # sub_site = models.ForeignKey(
-    #     CategorySubSite,
-    #     on_delete=models.PROTECT,
-    #     null=True
-    # )
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     description = models.TextField(blank=True)

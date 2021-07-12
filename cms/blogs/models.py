@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 from django import forms
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -16,16 +16,7 @@ class BlogIndexPage(Page):
     subpage_types = ["blogs.Blog"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    sub_site_categories = models.ForeignKey(
-        CategorySubSite,
-        on_delete=models.PROTECT,
-        related_name="category_blog_site",
-        null=True,
-    )
-
     content_panels = Page.content_panels + [
-        FieldPanel("sub_site_categories"),
         FieldPanel("body"),
     ]
 

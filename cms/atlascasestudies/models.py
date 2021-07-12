@@ -1,4 +1,4 @@
-from cms.categories.models import Category, CategorySubSite, Region, Setting
+from cms.categories.models import Category, Region, Setting
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from modelcluster.fields import ParentalKey
@@ -13,16 +13,7 @@ class AtlasCaseStudyIndexPage(Page):
     subpage_types = ["atlascasestudies.AtlasCaseStudy"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    # sub_site_categories = models.ForeignKey(
-    #     CategorySubSite,
-    #     on_delete=models.PROTECT,
-    #     related_name='category_blog_site',
-    #     null=True,
-    # )
-
     content_panels = Page.content_panels + [
-        # FieldPanel('sub_site_categories'),
         FieldPanel("body"),
     ]
 

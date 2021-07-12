@@ -1,8 +1,7 @@
 import sys
-import time
 
 from django.core.management.base import BaseCommand
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 
@@ -34,25 +33,4 @@ class Command(BaseCommand):
                 category.delete()
                 categories_length -= 1
 
-                # time.sleep(.3)
-
-            sys.stdout.write("\n")
-
-            """ remove category sub sites last """
-            category_sub_sites = CategorySubSite.objects.all()
-            category_sub_sites_length = len(category_sub_sites)
-
-            sys.stdout.write(
-                "Categories Sub Sites to delete: {}\n".format(category_sub_sites_length)
-            )
-
-            for category_sub_site in category_sub_sites:
-                sys.stdout.write("-")
-                category_sub_site.delete()
-                category_sub_sites_length -= 1
-
-                # time.sleep(.3)
-
-            sys.stdout.write("\n")
-
-            sys.stdout.write("✅ Complete\n")
+            sys.stdout.write("\n✅ Complete\n")

@@ -1,8 +1,7 @@
 import sys
 import time
 
-from django.core.management import call_command
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 
 from .importer_cls import Importer
 
@@ -23,8 +22,7 @@ SOURCES = {
 class CategoriesImporter(Importer):
     def __init__(self):
         categories = Category.objects.all()
-        category_sub_sites = CategorySubSite.objects.all()
-        if categories or category_sub_sites:
+        if categories:
             sys.stdout.write("⚠️  Run delete_categories before running this command\n")
             sys.exit()
 

@@ -7,7 +7,6 @@ from django.core.management import call_command
 from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
-    CategorySubSite,
     PublicationType,
 )
 from cms.pages.models import BasePage

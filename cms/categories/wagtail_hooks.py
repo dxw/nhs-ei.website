@@ -2,7 +2,6 @@ from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
 from cms.categories.models import (
     Category,
-    CategorySubSite,
     PublicationType,
     Region,
     Setting,
@@ -20,28 +19,6 @@ from wagtail.contrib.modeladmin.options import (
 """CATEGORIES"""
 
 
-class CategorySubSitePermissionHelper(PermissionHelper):
-    def user_can_delete_obj(self, user, obj):
-        categories = Category.objects.filter(sub_site=obj)
-        if not categories:
-            return True
-
-
-class CategorySubSiteAdmin(ModelAdmin):
-    model = CategorySubSite
-    search_fields = ("title",)
-    menu_icon = "tag"
-
-    # to prevent deletion of a category subsite if it has any categories belonging to it
-    permission_helper_class = CategorySubSitePermissionHelper
-
-    panels = [
-        FieldPanel("title"),
-        FieldPanel("source"),
-        # eventually hidden
-    ]
-
-
 class CategoryPermissionHelper(PermissionHelper):
     def user_can_delete_obj(self, user, obj):
         posts = Post.objects.filter(post_category_relationship__category=obj)
@@ -56,15 +33,15 @@ class CategoryPermissionHelper(PermissionHelper):
 class CategoriesAdmin(ModelAdmin):
     model = Category
     search_fields = ("name",)
-    list_display = ("name", "sub_site", "get_category_usage")
+    list_display = ("name", "get_category_usage")
     menu_icon = "folder-open-inverse"
-    list_filter = ("sub_site",)
+    # removed by Dragon
+    # list_filter = ("sub_site",)
 
     # to prevent deletion of a category if it's in use
     permission_helper_class = CategoryPermissionHelper
 
     panels = [
-        FieldPanel("sub_site"),
         FieldPanel("name"),
         # eventually hidden
         FieldPanel("slug"),
@@ -99,16 +76,15 @@ class PublicationTypePermissionHelper(PermissionHelper):
 class PublicationTypeAdmin(ModelAdmin):
     model = PublicationType
     search_fields = ("name",)
-    list_display = ("name", "sub_site", "get_publication_type_usage")
+    list_display = ("name", "get_publication_type_usage")
     # list_display = ('name', 'sub_site')
     menu_icon = "folder-open-inverse"
-    list_filter = ("sub_site",)
+    # list_filter = ("sub_site",)
 
     # to prevent deletion of a publiction type if it's in use
     permission_helper_class = PublicationTypePermissionHelper
 
     panels = [
-        FieldPanel("sub_site"),
         FieldPanel("name"),
         # eventually hidden
         FieldPanel("slug"),
@@ -214,12 +190,14 @@ class RegionAdmin(ModelAdmin):
     get_region_usage.short_description = "Usage"
 
 
+"""ADMIN GROUP"""
+
+
 class CategoriesAdminGroup(ModelAdminGroup):
     menu_label = "Classification"
     menu_icon = "folder-open-1"
     items = (
         CategoriesAdmin,
-        CategorySubSiteAdmin,
         PublicationTypeAdmin,
         SettingAdmin,
         RegionAdmin,

@@ -1,6 +1,5 @@
 from importer.import_media_files import MediaFilesImporter
 import sys
-import time
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
@@ -8,7 +7,7 @@ from importer.import_atlas_case_studies import AtlasCaseStudiesImporter
 from importer.import_blogs import BlogsImporter
 from importer.import_categories import CategoriesImporter
 from importer.import_pages import PagesImporter
-from importer.import_posts import PostsImporter, PostsParser
+from importer.import_posts import PostsImporter
 from importer.import_publication_types import PublicationTypesImporter
 from importer.import_publications import PublicationsImporter
 from importer.import_regions import RegionsImporter
@@ -174,7 +173,6 @@ class Command(BaseCommand):
             """
             python manage.py page_mover
             python manage.py fix_slugs
-            python manage.py fix_slugs_sub_sites
             python manage.py swap_page_types
             python manage.py fix_component_page_slugs
             python manage.py fix_landing_page_slugs

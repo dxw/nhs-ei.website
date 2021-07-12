@@ -87,4 +87,4 @@ Recent Posts:
     title: News and blogs
     type: post
     num posts: 3
-    see all: true 
+    see all: true

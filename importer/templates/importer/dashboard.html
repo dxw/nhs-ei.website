@@ -196,7 +196,7 @@
 <div class="text-sm margin-y-sm flex flex-wrap gap-sm">
     {% for page in url_errors %}
     <div class="">
-        <a class="btn  
+        <a class="btn
         {% if page.message %} btn--accent btn--lg{% else %} btn--subtle btn--sm{% endif %}
         {% comment %} {% if page.found %} btn--disabled{% endif %} {% endcomment %}
         " href="{{ page.page_url }}">

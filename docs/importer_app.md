@@ -8,7 +8,7 @@ We expect this app to show us the result of importing pages, categories, posts a
 
 # Importing
 
-The data is collected from https://nhsei-scrapy.rkh.co.uk/api/ 
+The data is collected from https://nhsei-scrapy.rkh.co.uk/api/
 
 ```
 Collect All Data    | python manage.py runimport all

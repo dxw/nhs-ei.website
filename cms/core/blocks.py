@@ -210,7 +210,7 @@ class CoreBlocks(StreamBlock):
     text = RichTextBlock(
         group="Custom",
         help_text="""
-            Use this block to add formatted text into a page e.g. 
+            Use this block to add formatted text into a page e.g.
             paragraph with heading and/or links and images
         """,
         template="blocks/text_block.html",

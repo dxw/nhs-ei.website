@@ -133,10 +133,10 @@ class Command(BaseCommand):
             if len(mapped_type_postitions) == 1:
                 mapped_type_postitions = mapped_type_postitions[0]
 
-            """ 
-            mapped_type_positions becomes this 
-            
-            ['anchor', ['doc'], 'anchor', ['doc', 'doc', 'doc'], 'anchor', ['doc', 'doc']] 
+            """
+            mapped_type_positions becomes this
+
+            ['anchor', ['doc'], 'anchor', ['doc', 'doc', 'doc'], 'anchor', ['doc', 'doc']]
             https://www.england.nhs.uk/publication/torbay-and-south-devon-nhs-foundation-trust/ wp_id=146041
             may be problem as very different layout
             """
@@ -185,7 +185,7 @@ class Command(BaseCommand):
 
 """
 exmaple URL https://www.england.nhs.uk/wp-json/wp/v2/documents/144645
-type_of_publication can be 
+type_of_publication can be
 document
 audiovideo
 documentlink

@@ -6,84 +6,72 @@ from cms.categories.models import PublicationType
 
 logger = logging.getLogger(__name__)
 
-useless_types = [58, 77, 78, 106, 112, 112, 114]
-"""
-useless_types includes briefings (58), invitations, lean,
-NHS volunteer responders referal, statistics, collaborations,
-improvement and refer to NHS volunteers.
-"""
+USELESS_PUBLICATIONS = [
+    "briefings",
+    "invitations",
+    "lean",
+    "nhs volunteer responders referal",
+    "statistics",
+    "collaborations",
+    "improvement",
+    "refer to nhs volunteers",
+]
 
-changes = {
-    60: 59,  # Case Study
-    61: 59,  # Case Study
-    64: 63,  # Data and statistics
-    66: 65,  # Decision
-    70: 69,  # Form
-    71: 69,  # Form
-    73: 72,  # Guidance
-    74: 72,  # Guidance
-    75: 72,  # Guidance
-    80: 79,  # Letter
-    82: 81,  # Meeting papers and minutes
-    85: 86,  # Newsletter -> Newsletter or bulletin
-    87: 88,  # Newsletter -> Newsletter or bulletin
-    89: 88,  # Policy, Policy or strategy -> Policy and strategy
-    92: 91,  # Promotional material
-    95: 94,  # Report
-    96: 94,  # Report
-    97: 94,  # Report
-    98: 94,  # Report
-    100: 99,  # Research
-    102: 101,  # Service Specification
-    104: 103,  # Standard operating procedure
-    108: 107,  # Template
+PUBLICATION_MERGERS = {
+    "Newsletter": "Newsletter or bulletin",
+    "Policy": "Policy and strategy",
+    "Policy or strategy": "Policy and strategy",
 }
-
-
-def delete_redundant_publicationtypes():
-    """Remove the publication types that should be empty, now.
-    (These are the records that give the types names and sources (if they haven't been removed)
-    """
-    pubtypes = PublicationType.objects.all()
-    length = len(pubtypes)
-    count = 0
-    for pubtype in pubtypes:
-        # NOTE: useless_types could have documents associated with them but it appears Wagtail
-        # correctly cascades the delete into the foreign key removing it from the mapping table
-        if pubtype.id in changes.keys() or pubtype.id in useless_types:
-            count = count + 1
-            pubtype.delete()
-    print(f"✅ {count} / {length} PublicationTypes deleted.")
 
 
 def deduplicate_publicationtypes():
     """Replace the publication type IDs associated with each publication with the ID
     of the publication type we're keeping."""
-    relationships = PublicationPublicationTypeRelationship.objects.all()
+    accepted_mappings = {}
+    pubtypes = PublicationType.objects.all()
     count = 0
-    for relation in relationships:
-        type_id = relation.publication_type_id
-        if type_id in changes.keys():
-            count = count + 1
-            relation.publication_type_id = changes[type_id]
-            relation.save()
-            relation.validate_unique()
+    for pubtype in pubtypes:
+        # use proper name if merging different strings and save in case changed
+        name = pubtype.name
+        if name in USELESS_PUBLICATIONS:
+            replace_publication_type(pubtype.id, None)
+            count += 1
+        name = PUBLICATION_MERGERS.get(name, name)
+        pubtype.save()
+        # use lowercase for string matching - either accept as the new mapping
+        # or change it to the pre-accepted one
+        lname = name.lower()
+        if lname in accepted_mappings:
+            replace_publication_type(pubtype.id, accepted_mappings[lname])
+            count += 1
+        else:
+            accepted_mappings[lname] = pubtype.id
 
-    print(
-        f"✅ {count} / {len(relationships)} Publication/PublicationType relationships changed."
+
+def replace_publication_type(old, new):
+    relationships = PublicationPublicationTypeRelationship.objects.filter(
+        publication_type_id=old
     )
+    if new is None:
+        assert not relationships, len(relationships)
+    print(f"{len(relationships)} move from {old} to {new}")
 
-    ##################################
-    return
+    for relation in relationships:
+        relation.publication_type_id = new
+        relation.save()
+        relation.validate_unique()
+
+    pubtype = PublicationType.objects.get(id=old)
+    print(f"deleting {old} {pubtype.name}")
+    pubtype.delete()
 
 
 class Command(BaseCommand):
     """
     Each sub_site had a different set of 'publication types', but we want to unify these.
-    help = "Deduplicate publication types"
     """
 
-    def handle(self, *args, **options):
+    help = "Deduplicate publication types"
 
+    def handle(self, *args, **options):
         deduplicate_publicationtypes()
-        delete_redundant_publicationtypes()

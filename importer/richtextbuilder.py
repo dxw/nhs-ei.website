@@ -132,11 +132,11 @@ class RichTextBuilder:
         {...}
     ]
     '/publication/nhs-england-improvement/the-okay-to-stay-programme/': {
-        'id': 9782, 
-        'slug': 'the-okay-to-stay-programme', 
+        'id': 9782,
+        'slug': 'the-okay-to-stay-programme',
         'title': 'The ‘Okay to Stay’ programme'
     },
-    
+
     on a quick interupted runimport mediafiles this is one of the documents
     documents/LeDeR-death-data-nov-27-2020-easy-read.pdf path
     d=Document.objects.get(file='documents/LeDeR-death-data-nov-27-2020-easy-read.pdf')

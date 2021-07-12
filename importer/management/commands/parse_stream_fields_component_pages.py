@@ -102,7 +102,7 @@ class Command(BaseCommand):
             'two_columns_section', # parse
             'topic_section_component', # parse
             'breadcrumbs', ###
-            'visit_nhsuk_infobar', 
+            'visit_nhsuk_infobar',
             'priorities_component'
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks

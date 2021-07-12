@@ -34,12 +34,12 @@ class PagesImporter(Importer):
             last_published_at = page.get("modified")
             latest_revision_created_at = page.get("modified")
 
-            """ 
-            Process: We need to import the pages at the top level under the home page as we don't know the 
+            """
+            Process: We need to import the pages at the top level under the home page as we don't know the
             page sitemap structure until all pages have been imported.
-            
+
             Problem: using the wordpress slugs here means wagtail wrangles them to be unique at the top level
-            
+
             Solution: we need to be able to fix these slugs later on still run into slugs we are again
             duplicating so lets set our own unique slug here so we can change back later without
             issue.

@@ -158,7 +158,7 @@ class Command(BaseCommand):
             """ other commands to add in
             # make any other pages we need
             # here we have url issue
-            make documents 
+            make documents
              # this needs to be last ones so pages are all in place
             make footer links
             """

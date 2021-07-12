@@ -10,7 +10,7 @@
               <p>file size: {{ file_size }}</p>
               <div class="nhsuk-card__description">{{ value.summary }}</div>
             </div>
-           
+
             <div class="nhsuk-grid-column-one-quarter" style="text-align: right;">
                {% if file_ext == 'pdf' %}{% include 'svg/pdf_file.svg' %}{% endif %}
                {% if file_ext == 'csv' %}{% include 'svg/csv_file.svg' %}{% endif %}

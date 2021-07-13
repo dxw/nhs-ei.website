@@ -3167,7 +3167,7 @@
   }
 },
 {
-  "model": "wagtaildocs.document",
+  "model": "core.importdocument",
   "pk": 1,
   "fields": {
     "collection": 1,
@@ -3178,7 +3178,8 @@
       "admin"
     ],
     "file_size": 7760,
-    "file_hash": "35023b7b6aaf7c81edbccb66d03ba35e12e6dee7"
+    "file_hash": "35023b7b6aaf7c81edbccb66d03ba35e12e6dee7",
+    "wp_link": "https://placekitten.com/200/200"
   }
 },
 {

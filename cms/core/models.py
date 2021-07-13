@@ -8,6 +8,22 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import ClusterableModel, Orderable, ParentalKey
+from wagtail.documents.models import Document, AbstractDocument
+
+
+class ImportDocument(AbstractDocument):
+    """
+    Preserve WordPress links in the document so we can redirect hyperlinks. Inspired by:
+    https://docs.wagtail.io/en/v2.13.4/advanced_topics/documents/custom_document_model.html
+    """
+
+    wp_link = models.CharField(
+        max_length=512,
+        blank=True,
+        null=True,
+    )
+
+    admin_form_fields = Document.admin_form_fields + ("wp_link",)
 
 
 @register_setting

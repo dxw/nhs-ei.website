@@ -191,8 +191,8 @@ STATIC_URL = "/static/"
 
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = "cms"
+WAGTAILDOCS_DOCUMENT_MODEL = "core.ImportDocument"
 
 # Email
 EMAIL_CONFIG = env.email_url("EMAIL_URL", default="smtp://user@:password@localhost:25")

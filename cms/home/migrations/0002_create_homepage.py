@@ -49,6 +49,12 @@ def remove_homepage(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
+    # see https://docs.wagtail.io/en/stable/releases/2.11.html and
+    # https://github.com/wagtail/wagtail/issues/6557
+    run_before = [
+        ('wagtailcore', '0053_locale_model'),  # added for Wagtail 2.11 compatibility
+    ]
+
     dependencies = [
         ('home', '0001_initial'),
     ]

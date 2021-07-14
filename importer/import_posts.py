@@ -113,6 +113,18 @@ class PostsImporter(Importer):
             rev.publish()
             sys.stdout.write(".")
 
+            # Create source category
+            source = post.get("source")
+            print(source)
+            if source:
+                source_category, _ = Category.objects.get_or_create(
+                    name=f"source: {source}",
+                    description=f"Content from the {source} subsite",
+                    wp_id=None,
+                    source=None,
+                )
+            PostCategoryRelationship.objects.create(post=obj, category=source_category)
+
             # add the categories as related many to many, found this needs to be after the save above
             if post.get("categories"):  # some categories are blank
                 category_ids = post.get("categories").split(

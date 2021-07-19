@@ -1,11 +1,5 @@
-import json
 import sys
 import time
-from urllib.parse import urlparse
-
-from bs4 import BeautifulSoup
-from django.core.management import call_command
-from django.utils.html import strip_tags
 from cms.atlascasestudies.models import (
     AtlasCaseStudy,
     AtlasCaseStudyCategoryRelationship,
@@ -13,9 +7,7 @@ from cms.atlascasestudies.models import (
     AtlasCaseStudySettingRelationship,
     AtlasCaseStudyRegionRelationship,
 )
-from cms.categories.models import Category, CategorySubSite, Region, Setting
-from cms.pages.models import BasePage
-from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
+from cms.categories.models import Category, Region, Setting
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
@@ -107,16 +99,16 @@ class AtlasCaseStudiesImporter(Importer):
             # add the categories as related many to many, found this needs to be after the save above
             # some categories are blank
             if not not atlas_case_study.get("categories"):
-                cats = atlas_case_study.get("categories").split(
-                    " "
-                )  # list of category wp_id's
-                sub_site_category = CategorySubSite.objects.get(source="categories")
-                categories = Category.objects.filter(
-                    sub_site=sub_site_category, wp_id__in=cats
-                )
-                for cat in categories:
-                    rel = AtlasCaseStudyCategoryRelationship.objects.create(
-                        atlas_case_study=obj, category=cat
+                category_ids = atlas_case_study.get("categories").split(" ")
+                # list of category wp_id's
+                for category in category_ids:
+                    category_object = Category.objects.get(
+                        source="categories",
+                        wp_id=int(category),
+                    )
+
+                    AtlasCaseStudyCategoryRelationship.objects.create(
+                        atlas_case_study=obj, category=category_object
                     )
                 sys.stdout.write(".")
 

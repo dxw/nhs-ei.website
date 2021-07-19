@@ -2,7 +2,7 @@ import sys
 import time
 
 from cms.blogs.models import Blog, BlogIndexPage, BlogCategoryRelationship
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 from wagtail.core.models import Page
 from django.core.management import call_command
 
@@ -10,28 +10,10 @@ from .importer_cls import Importer
 
 # blogs are not from a subsite so rewrite the source blogs to posts
 # they use the same categories
-POST_SOURCES_TO_CATEGORY_SOURCES = {
-    "blogs": "categories",
-    # 'posts-aac': 'categories-aac',
-    # 'posts-commissioning': 'categories-commissioning',
-    # 'posts-coronavirus': 'categories-coronavirus',
-    # 'posts-greenernhs': 'categories-greenernhs',
-    # 'posts-improvement-hub': 'categories-improvement-hub',
-    # 'posts-non-executive-opportunities': 'categories-non-executive-opportunities',
-    # 'posts-rightcare': 'categories-rightcare',
-}
 
-# so we can a post to a sub site and build out sub site post index pages
-POST_SOURCES = {
-    "blogs": "NHS England & Improvement",
-    # 'posts-aac': 'Accelerated Access Collaborative',
-    # 'posts-commissioning': 'Commissioning',
-    # 'posts-coronavirus': 'Coronavirus',
-    # 'posts-greenernhs': 'Greener NHS',
-    # 'posts-improvement-hub': 'Improvement Hub',
-    # 'posts-non-executive-opportunities': 'Non-executive opportunities',
-    # 'posts-rightcare': 'Right Care',
-}
+# these are used for matching to subsite because there is only one subsite.
+CATEGORY_SOURCE_NAME = "categories"
+POST_SOURCE = "NHS England & Improvement"
 
 
 class BlogsImporter(Importer):
@@ -49,13 +31,11 @@ class BlogsImporter(Importer):
         try:
             blog_index_page = BlogIndexPage.objects.get(title="Blog Items Base")
         except Page.DoesNotExist:
-            sub_site_category = CategorySubSite.objects.get(title=POST_SOURCES["blogs"])
             blog_index_page = BlogIndexPage(
                 title="Blog Items Base",
                 body="theres a place here for some text",
                 show_in_menus=True,
                 slug="blog-items-base",
-                sub_site_categories=sub_site_category,
             )
             home_page.add_child(instance=blog_index_page)
             rev = blog_index_page.save_revision()
@@ -64,9 +44,6 @@ class BlogsImporter(Importer):
 
         blogs = self.results  # this is json result set
         for blog in blogs:
-            sub_site_category = CategorySubSite.objects.get(
-                source=POST_SOURCES_TO_CATEGORY_SOURCES[blog.get("source")]
-            )
             first_published_at = blog.get("date")
             last_published_at = blog.get("modified")
             latest_revision_created_at = blog.get("modified")
@@ -95,15 +72,17 @@ class BlogsImporter(Importer):
 
             # add the categories as related many to many, found this needs to be after the save above
             if not not blog.get("categories"):  # some categories are blank
-                cats = blog.get("categories").split(" ")  # list of category wp_id's
-                categories = Category.objects.filter(
-                    sub_site=sub_site_category, wp_id__in=cats
-                )
-                for cat in categories:
-                    rel = BlogCategoryRelationship.objects.create(
-                        blog=obj, category=cat
+                cat_ids = blog.get("categories").split(" ")  # list of category wp_id's
+                for cat_id in cat_ids:
+                    # find matching category on id and sub_site
+                    category_object = Category.objects.get(
+                        source=CATEGORY_SOURCE_NAME,
+                        wp_id=int(cat_id),
                     )
-                sys.stdout.write(".")
+
+                    BlogCategoryRelationship.objects.create(
+                        blog=obj, category=category_object
+                    )
 
             sys.stdout.write(".")
 

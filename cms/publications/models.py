@@ -2,10 +2,9 @@ from urllib.parse import urlparse
 
 from cms.categories.models import (
     Category,
-    CategorySubSite,
     PublicationType,
-    PublicationTypeSubSite,
 )
+
 from cms.core.blocks import PublicationsBlocks
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -27,16 +26,7 @@ class PublicationIndexPage(Page):
     subpage_types = ["publications.Publication"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    sub_site_publication_types = models.ForeignKey(
-        PublicationTypeSubSite,
-        on_delete=models.PROTECT,
-        related_name="publication_type_sub_site",
-        null=True,
-    )
-
     content_panels = Page.content_panels + [
-        FieldPanel("sub_site_publication_types"),
         FieldPanel("body"),
     ]
 
@@ -49,22 +39,17 @@ class PublicationIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         """
-        publications can have one or more categories (topics) or publications (publiciation_type)
-        at the moment you can only choose one or the other? I think thats best to avoid lots of empty
-        result sets but we will need a decision made on that.
+        Publications can have one or more categories (topics) or publications (publication_type).
+        At the moment, you can only choose one or the other. I think that's best to avoid lots of empty
+        result sets but we will need a decision made on that. TODO.
         """
-        publication_ordering = "-first_published_at"
-        if request.GET.get("order"):
-            publication_ordering = request.GET.get("order")
         context = super().get_context(request, *args, **kwargs)
-        # sub_site_categories = Category.objects.filter(
-        #     sub_site=self.sub_site_categories.id)
+        publication_ordering = request.GET.get("order") or "-first_published_at"
 
         if request.GET.get("publication_type"):
             context["publication_type_id"] = int(request.GET.get("publication_type"))
             publications = (
-                Publication.objects.child_of(self)
-                .live()
+                Publication.objects.live()
                 .order_by(publication_ordering)
                 .filter(
                     publication_publication_type_relationship__publication_type=request.GET.get(
@@ -72,22 +57,21 @@ class PublicationIndexPage(Page):
                     )
                 )
             )
-        # elif request.GET.get("category"):
-        #     context["category_id"] = int(request.GET.get("category"))
-        #     publications = (
-        #         Publication.objects.child_of(self)
-        #         .live()
-        #         .order_by(publication_ordering)
-        #         .filter(
-        #             publication_category_relationship__category=request.GET.get(
-        #                 "category"
-        #             )
-        #         )
-        #     )
-        else:
+        # NOTE: filtering by category was commented out but I want see if it works -- Dragon.
+        elif request.GET.get("category"):
+            context["category_id"] = int(request.GET.get("category"))
             publications = (
-                Publication.objects.child_of(self).live().order_by(publication_ordering)
+                Publication.objects.live()
+                .order_by(publication_ordering)
+                .filter(
+                    publication_category_relationship__category=request.GET.get(
+                        "category"
+                    )
+                )
             )
+        # NOTE: end block for previous note -- Dragon.
+        else:
+            publications = Publication.objects.live().order_by(publication_ordering)
 
         paginator = Paginator(publications, 16)
 
@@ -99,37 +83,19 @@ class PublicationIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["publications"] = items
-        context["publication_types"] = PublicationType.objects.filter(
-            sub_site=self.sub_site_publication_types
-        )
-
-        if self.sub_site_publication_types.source == "publication_types":
-            sub_site_source = "categories"
-        else:
-            sub_site_source = self.sub_site_publication_types.source.replace(
-                "publication_types-", "categories-"
-            )
-
-        category_subsite = CategorySubSite.objects.get(source=sub_site_source)
-        context["categories"] = Category.objects.filter(sub_site=category_subsite.id)
+        context["publication_types"] = PublicationType.objects.all()
+        # categories isn't exposed on the webpage at all, and contains a lot of empty categories.
+        context["categories"] = Category.objects.all()
         context["order"] = publication_ordering
 
         return context
 
     def get_wp_api_link(self):
-        wp_source = self.source.replace("pages-", "")
-        wp_id = self.wp_id
-        if wp_source != "pages":
-            api_url = "https://www.england.nhs.uk/{}/wp-json/wp/v2/documents/{}".format(
-                wp_source, wp_id
-            )
-        else:
-            api_url = "https://www.england.nhs.uk/wp-json/wp/v2/documents/{}".format(
-                wp_id
-            )
-        return api_url
+        # TODO: Pretty sure this is a debug feature that should be removed.
+        return f"https://www.england.nhs.uk/wp-json/wp/v2/documents/{self.wp_id}"
 
     def get_wp_live_link(self):
+        # TODO: Pretty sure this is a debug feature that should be removed.
         self_url_path = self.url
         live_url_path = urlparse(self.wp_link).path
         live_url = "https://www.england.nhs.uk{}".format(live_url_path)

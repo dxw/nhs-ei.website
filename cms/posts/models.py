@@ -1,31 +1,11 @@
-from cms.blogs.models import BlogIndexPage
-from cms.categories.models import Category, CategorySubSite
+from cms.categories.models import Category
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
-
-
-class FilteredInlinePanel(InlinePanel):
-    def on_model_bound(self):
-        # print(self.model)
-        super().on_model_bound()
-
-    def on_form_bound(self):
-        # post_index_page_sub_site = PostIndexPage.objects.get(id=self.instance.get_parent().id).sub_site_categories
-        # categories = Category.objects.filter(sub_site=post_index_page_sub_site)
-        # print(categories)
-        # print(self.categories)
-        # print(self.model.queryset)
-        # choices = self.model.get_category_inline_field_choices(self.model)
-        # choices = None
-        # self.form.fields['postcategoryrelationship'].queryset = categories
-        # self.form.fields['postcategoryrelationship'].empty_label = None
-        super().on_form_bound()
 
 
 class PostIndexPage(Page):
@@ -34,16 +14,7 @@ class PostIndexPage(Page):
     subpage_types = ["posts.Post"]
     body = RichTextField(blank=True)
 
-    # so we can filter available categories based on the sub site as well as the
-    sub_site_categories = models.ForeignKey(
-        CategorySubSite,
-        on_delete=models.PROTECT,
-        related_name="category_sub_site",
-        null=True,
-    )
-
     content_panels = Page.content_panels + [
-        FieldPanel("sub_site_categories"),
         FieldPanel("body"),
     ]
 
@@ -53,8 +24,6 @@ class PostIndexPage(Page):
     def get_context(self, request, *args, **kwargs):
         post_ordering = "-first_published_at"
         context = super().get_context(request, *args, **kwargs)
-        # sub_site_categories = Category.objects.filter(
-        #     sub_site=self.sub_site_categories.id)
 
         if request.GET.get("category"):
             context["chosen_category_id"] = int(request.GET.get("category"))
@@ -79,9 +48,7 @@ class PostIndexPage(Page):
             items = paginator.page(paginator.num_pages)
 
         context["posts"] = items
-        context["categories"] = Category.objects.filter(
-            sub_site=self.sub_site_categories.id
-        )
+        context["categories"] = Category.objects.all()
 
         return context
 
@@ -137,13 +104,3 @@ class Post(Page):
             classname="collapsed collapsible",
         ),
     ]
-
-    # def get_category_inline_field_choices(self):
-    #     # need to limit the category inline panel choices to
-    #     # categories belonging to the parent page sub_site_categories
-    #     parent = PostIndexPage.objects.parent_of(self.id)
-    #     # print(parent)
-    #     # print(parent)
-    #     # parent_sub_site = parent.sub_site_categories
-
-    #     return Category.objects.filter(sub_site=self.get_parent().sub_site)

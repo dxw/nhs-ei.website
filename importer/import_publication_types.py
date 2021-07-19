@@ -2,7 +2,7 @@ import sys
 import time
 
 from django.core.management import call_command
-from cms.categories.models import PublicationType, PublicationTypeSubSite
+from cms.categories.models import PublicationType
 
 from .importer_cls import Importer
 
@@ -23,8 +23,7 @@ SOURCES = {
 class PublicationTypesImporter(Importer):
     def __init__(self):
         publication_type = PublicationType.objects.all()
-        publication_type_sub_sites = PublicationTypeSubSite.objects.all()
-        if publication_type or publication_type_sub_sites:
+        if publication_type:
             sys.stdout.write(
                 "⚠️  Run delete_publication_types before running this command\n"
             )
@@ -33,26 +32,11 @@ class PublicationTypesImporter(Importer):
     def parse_results(self):
         publication_types = self.results
         for r in publication_types:
-            # if the subsite parent for this category does not exits make it once
-            try:
-                publication_type_sub_site = PublicationTypeSubSite.objects.get(
-                    source=r.get("source")
-                )
-            except PublicationTypeSubSite.DoesNotExist:
-                title = SOURCES.get(r.get("source"))
-                sys.stdout.write(".")
-                publication_type_sub_site = PublicationTypeSubSite(
-                    title=title, source=r.get("source")
-                )
-                publication_type_sub_site.save()
-
             publication_type = PublicationType(
                 name=r.get("name"),
                 slug=r.get("slug"),
                 description=r.get("description"),
                 wp_id=r.get("wp_id"),
-                source=r.get("source"),
-                sub_site=publication_type_sub_site,
             )
             publication_type.save()
             sys.stdout.write(".")

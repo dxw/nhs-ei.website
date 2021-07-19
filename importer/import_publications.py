@@ -1,20 +1,15 @@
-import json
 import sys
 import time
 from urllib.parse import urlparse
 import logging
 
-from bs4 import BeautifulSoup
 from django.core.management import call_command
 from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
-    CategorySubSite,
     PublicationType,
-    PublicationTypeSubSite,
 )
 from cms.pages.models import BasePage
-from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
 from cms.publications.models import (
     Publication,
     PublicationCategoryRelationship,
@@ -26,6 +21,8 @@ from wagtail.core.models import Page
 from .importer_cls import Importer
 
 logger = logging.getLogger("importer")
+
+FAKE_SOURCE = "publications"
 
 # so we can match the subsite categories for the publication index page
 PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES = {
@@ -81,31 +78,11 @@ class PublicationsImporter(Importer):
         for publication in publications:
             # we need a sub_site_category to choose the publication types and categories
             source = publication.get("source")
-            try:
-                sub_site_publication_type = PublicationTypeSubSite.objects.get(
-                    source=PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES[source]
-                )
-            except PublicationTypeSubSite.DoesNotExist:
-                sys.exit(
-                    "\n😲Cannot continue... did you import the publication types first?"
-                )
-
-            # if source == 'publications':
-            #     categories_source = 'categories'
-            # else:
-            #     categories_source = source.replace('publications-','categories-')
-
-            try:
-                sub_site_category = CategorySubSite.objects.get(
-                    source=PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source]
-                )
-            except CategorySubSite.DoesNotExist:
-                sys.exit("\n😲Cannot continue... did you import the categories first?")
 
             # lets make a publication index page if not already in place
             try:
                 # we need a pretty unique name here as some imported page have the title as News
-                # a parent for all news item index pages
+                # a parent for all publication item index pages
                 publications_index_page = BasePage.objects.get(
                     title="Publication Items Base"
                 )
@@ -117,7 +94,7 @@ class PublicationsImporter(Importer):
                     slug="publication-items-base",
                     wp_slug="auto-generated-publications-index",
                     wp_id=0,
-                    source="auto-generated-publications-index",
+                    source="fakesource",
                 )
                 home_page.add_child(instance=publications_index_page)
                 revision = publications_index_page.save_revision()
@@ -126,14 +103,13 @@ class PublicationsImporter(Importer):
 
             try:
                 sub_site_publication_index_page = PublicationIndexPage.objects.get(
-                    title=PUBLICATION_SOURCES[publication.get("source")]
+                    title=PUBLICATION_SOURCES[FAKE_SOURCE]
                 )
             except PublicationIndexPage.DoesNotExist:
                 sub_site_publication_index_page = PublicationIndexPage(
-                    title=PUBLICATION_SOURCES[publication.get("source")],
+                    title=PUBLICATION_SOURCES[FAKE_SOURCE],
                     body="",
                     show_in_menus=True,
-                    sub_site_publication_types=sub_site_publication_type,
                 )
                 publications_index_page.add_child(
                     instance=sub_site_publication_index_page
@@ -150,9 +126,9 @@ class PublicationsImporter(Importer):
             page_title = publication.get("title")
             if not page_title:
                 page_title = "page has no title"
-                logger.warn("page %s has no title", page)
+                logger.warn("page %s has no title", publication)
             elif len(page_title) > 250:
-                logger.warn("long page title: %s %s", page_title, page)
+                logger.warn("long page title: %s %s", page_title, publication)
             obj = Publication(
                 title=page_title,
                 # excerpt = post.get('excerpt'),
@@ -161,10 +137,10 @@ class PublicationsImporter(Importer):
                 show_in_menus=True,
                 wp_id=publication.get("wp_id"),
                 author=publication.get("author"),
-                source=publication.get("source"),
                 wp_slug=publication.get("slug"),
                 wp_link=publication.get("link"),
                 component_fields=publication.get("component_fields"),
+                source="fakesource",
             )
             sub_site_publication_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here
@@ -179,15 +155,13 @@ class PublicationsImporter(Importer):
 
             # add the publication types as related many to many, found this needs to be after the save above
             # some publication types can be blank
-            if not not publication.get("publication_type"):
+            if publication.get("publication_type"):
 
                 types = publication.get("publication_type").split(
                     " "
                 )  # list of category wp_id's
 
-                publication_types = PublicationType.objects.filter(
-                    sub_site=sub_site_publication_type, wp_id__in=types
-                )
+                publication_types = PublicationType.objects.filter(wp_id__in=types)
 
                 for publication_type in publication_types:
                     rel = PublicationPublicationTypeRelationship.objects.create(
@@ -195,22 +169,46 @@ class PublicationsImporter(Importer):
                     )
 
                 sys.stdout.write(".")
+
+            # Add a category for the source.
+            try:
+                source_cat = Category.objects.get(
+                    name=PUBLICATION_SOURCES[source] + "-site"
+                )
+            except Category.DoesNotExist:
+                source_cat = Category.objects.create(
+                    # sub_site = None,
+                    name=PUBLICATION_SOURCES[source] + "-site",
+                    slug=source + "-subsite",
+                    description="",
+                    # wp_id = None,
+                    source="placeholder",
+                )
+
+            PublicationCategoryRelationship.objects.create(
+                publication=obj, category=source_cat
+            )
+
             # add the categories (topics) as related many to many, found this needs to be after the save above
             # some categories can be blank
-            if not not publication.get("categories"):
 
-                categories = publication.get("categories").split(
+            if publication.get("categories"):
+
+                category_id = publication.get("categories").split(
                     " "
                 )  # list of category wp_id's
 
-                categories_objects = Category.objects.filter(
-                    sub_site=sub_site_category, wp_id__in=categories
-                )
-
-                for category in categories_objects:
-                    rel = PublicationCategoryRelationship.objects.create(
-                        publication=obj, category=category
+                for category in category_id:
+                    # find matching category on id and sub_site
+                    category_object = Category.objects.get(
+                        source=PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source],
+                        wp_id=int(category),
                     )
+
+                    PublicationCategoryRelationship.objects.create(
+                        publication=obj, category=category_object
+                    )
+
                 sys.stdout.write(".")
 
         if self.next:

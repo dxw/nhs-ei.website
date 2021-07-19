@@ -12,7 +12,7 @@ SOURCES = {
     "publication_types": "NHS England & Improvement",
     "publication_types-aac": "Accelerated Access Collaborative",
     "publication_types-commissioning": "Commissioning",
-    "publication_types-coronavirus": "Corovavirus",
+    "publication_types-coronavirus": "Coronavirus",
     "publication_types-greenernhs": "Greener NHS",
     "publication_types-improvement-hub": "Improvement Hub",
     "publication_types-non-executive-opportunities": "Non-executive opportunities",

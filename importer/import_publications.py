@@ -170,23 +170,17 @@ class PublicationsImporter(Importer):
 
                 sys.stdout.write(".")
 
-            # Add a category for the source.
-            try:
-                source_cat = Category.objects.get(
-                    name=PUBLICATION_SOURCES[source] + "-site"
+            # Create source category
+            source = publication.get("source")
+            if source:
+                source_category, _ = Category.objects.get_or_create(
+                    name=f"source: {source}",
+                    description=f"Content from the {source} subsite",
+                    wp_id=None,
+                    source=None,
                 )
-            except Category.DoesNotExist:
-                source_cat = Category.objects.create(
-                    # sub_site = None,
-                    name=PUBLICATION_SOURCES[source] + "-site",
-                    slug=source + "-subsite",
-                    description="",
-                    # wp_id = None,
-                    source="placeholder",
-                )
-
             PublicationCategoryRelationship.objects.create(
-                publication=obj, category=source_cat
+                publication=obj, category=source_category
             )
 
             # add the categories (topics) as related many to many, found this needs to be after the save above

@@ -112,6 +112,18 @@ class AtlasCaseStudiesImporter(Importer):
                     )
                 sys.stdout.write(".")
 
+            # Tag the Atlas Case Studies as such.
+            atlas_category, _ = Category.objects.get_or_create(
+                name="Atlas Case Studies",
+                slug="atlas-case-studies",
+                description="Atlas of Shared Learning: Case Studies",
+                wp_id=None,
+                source=None,
+            )
+            AtlasCaseStudyCategoryRelationship.objects.create(
+                atlas_case_study=obj, category=atlas_category
+            )
+
             # add the settings as related many to many, found this needs to be after the save above
             # some settings are blank
             if not not atlas_case_study.get("settings"):

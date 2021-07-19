@@ -64,50 +64,50 @@ class Command(BaseCommand):
             self.stdout.write("⌛️ Initialising Categories Import \n")
             import_categories(get_api_url("categories"))
 
-        if options["app"] == "publication_types":  # publications types
+        elif options["app"] == "publication_types":  # publications types
             self.stdout.write("⌛️ Initialising Publication Types Import \n")
             import_publication_types(get_api_url("publication_types"))
 
-        if options["app"] == "settings":  # settings
+        elif options["app"] == "settings":  # settings
             self.stdout.write("⌛️ Initialising Settings Import \n")
             import_settings(get_api_url("settings"))
 
-        if options["app"] == "regions":  # regions
+        elif options["app"] == "regions":  # regions
             self.stdout.write("⌛️ Initialising Regions Import \n")
             import_regions(get_api_url("regions"))
 
-        if options["app"] == "posts":  # posts
+        elif options["app"] == "posts":  # posts
             self.stdout.write("⌛️ Initialising Posts Import \n")
             import_posts(get_api_url("posts"))
 
-        if options["app"] == "publications":  # publications
+        elif options["app"] == "publications":  # publications
             self.stdout.write("⌛️ Initialising Publications Import \n")
             import_publications(get_api_url("publications"))
 
-        if options["app"] == "atlas_case_studies":  # atlas case studies
+        elif options["app"] == "atlas_case_studies":  # atlas case studies
             self.stdout.write("⌛️ Initialising Atlas Case Studies Import \n")
             import_atlas_case_studies(get_api_url("atlas_case_studies"))
 
-        if options["app"] == "pages":  # pages
+        elif options["app"] == "pages":  # pages
             self.stdout.write("⌛️ Initialising Pages Import \n")
             import_pages(get_api_url("pages"))
 
-        if options["app"] == "blogs":  # blogs
+        elif options["app"] == "blogs":  # blogs
             self.stdout.write("⌛️ Initialising Blogs Import \n")
             import_blogs(get_api_url("blogs"))
 
-        if options["app"] == "media":  # media
+        elif options["app"] == "media":  # media
             self.stdout.write("⌛️ Initialising Media Files Import \n")
             import_media_files(get_api_url("media"))
 
-        if options["app"] == "short":
+        elif options["app"] == "short":
             # just do the ones that have foreign keys
             import_categories(get_api_url("categories"))
             import_publication_types(get_api_url("publication_types"))
             import_settings(get_api_url("settings"))
             import_regions(get_api_url("regions"))
 
-        if options["app"] == "all":
+        elif options["app"] == "all":
             # the whole lot in specific order
             # BEFORE ALL OTHERS as related keys exists
             # import_media_files(get_api_url('media'))
@@ -124,7 +124,7 @@ class Command(BaseCommand):
             import_publications(get_api_url("publications"))
             import_atlas_case_studies(get_api_url("atlas_case_studies"))
 
-        if options["app"] == "build":
+        elif options["app"] == "build":
             call_command("page_mover")
             call_command("fix_slugs")
             call_command("swap_page_types")
@@ -134,14 +134,14 @@ class Command(BaseCommand):
 
         # this needs to run before 'fixes' because links go to images and files
         # as well as pages and also 'documents' needs the files
-        if options["app"] == "mediafiles":
+        elif options["app"] == "mediafiles":
             # there's nothing more than a long process here
             # that collescts every media file form wordpress
             # and stores them in collection related to the subsite
             # names they come from. They are linked up in later scripts.
             import_media_files(get_api_url("media"))
 
-        if options["app"] == "fixes":
+        elif options["app"] == "fixes":
             # some of the existing pages here get initial content
             # coming over form word press and when some page
             # types are changed that content comes with them
@@ -152,40 +152,18 @@ class Command(BaseCommand):
             )  # here we have url issue
             call_command("dedupe_pubtypes")
 
-        if options["app"] == "makes":
+        elif options["app"] == "makes":
             # TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
             call_command("make_top_pages")
             call_command("make_alert_banner")
             call_command("make_home_page")
             call_command("make_footer_links")
 
-        if options["app"] == "documents":
+        elif options["app"] == "documents":
             call_command("make_documents_list")
 
-            """ other commands to add in
-            # make any other pages we need
-            # here we have url issue
-            make documents
-             # this needs to be last ones so pages are all in place
-            make footer links
-            """
-
-            """
-            python manage.py page_mover
-            python manage.py fix_slugs
-            python manage.py swap_page_types
-            python manage.py fix_component_page_slugs
-            python manage.py fix_landing_page_slugs
-            python manage.py swap_blogs_page
-            python manage.py parse_stream_fields
-            python manage.py parse_stream_fields_component_pages
-            TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
-            python manage.py make_alert_banner
-            python manage.py make_home_page
-            """
-
-        # if options['app'] == 'parse_posts_body':
-        #     parse_posts_body(get_api_url('posts'))
+        else:
+            print("❌ runimport subcommand not recognised")
 
 
 # def run_build_commands():
@@ -204,29 +182,6 @@ class Command(BaseCommand):
 #     """ other commands to add in
 #     make documents # here we have url issue
 #     """
-
-# def parse_posts_body(url):
-#     if not url:
-#         raise Exception('url error')
-#     posts_parser = PostsParser()
-#     fetch = posts_parser.fetch_url(url)
-#     completed_count = 0
-#     api_count = 0
-#     if fetch:
-#         completed_count, api_count = posts_parser.parse_results()
-
-# a final check to report actual imports to be done vs records in the table
-# if api_count == completed_count:
-#     sys.stdout.write(
-#         '\n✅ {} Posts imported'.format(completed_count))
-# elif api_count > completed_count:
-#     sys.stdout.write(
-#         '\n😲 SOMETHING IS WRONG the record count is lower then the available records')
-# elif api_count < completed_count:
-#     sys.stdout.write(
-#         '\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)')
-
-# sys.stdout.write('\n')
 
 
 def import_media_files(url):

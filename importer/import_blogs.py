@@ -70,8 +70,19 @@ class BlogsImporter(Importer):
             obj.save()
             rev.publish()
 
+            # Create source category
+            source = blog.get("source")
+            if source:
+                source_category, _ = Category.objects.get_or_create(
+                    name=f"source: {source}",
+                    description=f"Content from the {source} subsite",
+                    wp_id=None,
+                    source=None,
+                )
+            BlogCategoryRelationship.objects.create(blog=obj, category=source_category)
+
             # add the categories as related many to many, found this needs to be after the save above
-            if not not blog.get("categories"):  # some categories are blank
+            if blog.get("categories"):  # some categories are blank
                 cat_ids = blog.get("categories").split(" ")  # list of category wp_id's
                 for cat_id in cat_ids:
                     # find matching category on id and sub_site

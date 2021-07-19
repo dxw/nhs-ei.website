@@ -6,7 +6,7 @@ repos:
         exclude: deployment/
       - id: trailing-whitespace
       - id: check-merge-conflict
-      - id: check-byte-order-marker
+      - id: fix-byte-order-marker
       - id: debug-statements
       - id: check-json
   - repo: https://github.com/psf/black

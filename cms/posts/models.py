@@ -56,6 +56,8 @@ class PostIndexPage(Page):
 
 
 class Post(CategoryPage):
+    class Meta:
+        verbose_name = "News"
 
     parent_page_types = ["posts.PostIndexPage"]
     """

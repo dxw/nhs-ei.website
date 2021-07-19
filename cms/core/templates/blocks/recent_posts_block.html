@@ -1,54 +1,26 @@
 
 <div class="nhsuk-panel-with-label">
-    <h3 class="nhsuk-panel-with-label__label">{{ value.title }}</h3>
-    <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-full">
-
-        <div class="nhsuk-grid-row">
-          <div class="nhsuk-grid-column-one-half">
-            <ol class="nhsuk-list">
-
-            {% for item in queryset.posts %}
-                <li>
-                  <article class="nhsuk-u-margin-bottom-4">
-                    <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
-                      <a href="{{item.record.url}}">
-                      {{item.record.title}}</a>
-                    </h2>
-                    <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
-                    <span class="nhsei-list-meta">Published
-                    <time class="date" datetime="">{{ item.record.first_published_at|date:'d M Y g:i a' }}</time></span>
-                  </article>
-                </li>
-              {% endfor %}
-
-            </ol>
-            <a href="/news/nhs-england-improvement/">View all News</a>
-          </div>
-
-          <div class="nhsuk-grid-column-one-half">
-            <ol class="nhsuk-list">
-              {% for item in queryset.blogs %}
-                <li>
-                  <article class="nhsuk-u-margin-bottom-4">
-                    <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
-                      <a href="{{item.record.url}}">
-                      {{item.record.title}}</a>
-                    </h2>
-                    <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
-                    <span class="nhsei-list-meta">Published
-                    <time class="date" datetime="">{{ item.record.first_published_at|date:'d M Y g:i a' }}</time></span>
-                  </article>
-                </li>
-              {% endfor %}
-
-
-            </ol>
-            <a href="/blogs/blog/">View all Blogs</a>
-          </div>
-
-        </div>
-
+  <h3 class="nhsuk-panel-with-label__label">{{ value.title }}</h3>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="nhsuk-grid-row">
+        <ol class="nhsuk-list">
+          {% for item in queryset.posts %}
+          <li>
+            <article class="nhsuk-u-margin-bottom-4">
+              <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
+                <a href="{{item.record.url}}">
+                {{item.record.title}}</a>
+              </h2>
+              <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
+              <span class="nhsei-list-meta">Last updated
+              <time class="date" datetime="">{{ item.record.last_published_at|date:'d M Y g:i a' }}</time></span>
+            </article>
+          </li>
+          {% endfor %}
+        </ol>
+        <a href="/news/nhs-england-improvement/">View all -- TODO set categories???</a>
       </div>
     </div>
-    </div>
+  </div>
+</div>

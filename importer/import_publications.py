@@ -94,7 +94,7 @@ class PublicationsImporter(Importer):
                     slug="publication-items-base",
                     wp_slug="auto-generated-publications-index",
                     wp_id=0,
-                    source="fakesource",
+                    source=FAKE_SOURCE,
                 )
                 home_page.add_child(instance=publications_index_page)
                 revision = publications_index_page.save_revision()
@@ -140,7 +140,7 @@ class PublicationsImporter(Importer):
                 wp_slug=publication.get("slug"),
                 wp_link=publication.get("link"),
                 component_fields=publication.get("component_fields"),
-                source="fakesource",
+                source=FAKE_SOURCE,
             )
             sub_site_publication_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here

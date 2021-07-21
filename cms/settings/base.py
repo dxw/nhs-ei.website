@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "wagtailnhsukfrontend.settings",
     # importer
     "importer",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [

@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-from cms.categories.models import Category
+from cms.categories.models import Category, CategoryPage
 from django import forms
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -33,7 +33,9 @@ class BlogIndexPage(Page):
                 Blog.objects.live()
                 .order_by(blog_ordering)
                 .filter(
-                    blog_category_relationship__category=request.GET.get("category")
+                    categorypage_category_relationship__category=request.GET.get(
+                        "category"
+                    )
                 )
             )
         else:
@@ -55,19 +57,7 @@ class BlogIndexPage(Page):
         return context
 
 
-class BlogCategoryRelationship(models.Model):
-    blog = ParentalKey(
-        "blogs.Blog",
-        related_name="blog_category_relationship",
-    )
-    category = models.ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-
-
-class Blog(Page):
+class Blog(CategoryPage):
     parent_page_types = ["blogs.BlogIndexPage"]
     """
     title already in the Page class
@@ -97,7 +87,7 @@ class Blog(Page):
     # )
 
     content_panels = Page.content_panels + [
-        InlinePanel("blog_category_relationship", label="Categories"),
+        InlinePanel("categorypage_category_relationship", label="Categories"),
         FieldPanel("body"),
         MultiFieldPanel(
             [

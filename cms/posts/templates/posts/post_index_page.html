@@ -29,9 +29,9 @@
                         <b>Author: </b>{{ post.author }} we are missing the ability to match ID
                         to a name <br>
                       {% endcomment %}
-                        {% if post.post_category_relationship.all %}
+                        {% if post.categorypage_category_relationship.all %}
                         <b>Topics:</b>
-                        {% for category in post.post_category_relationship.all %}
+                        {% for category in post.categorypage_category_relationship.all %}
                         <a href="?category={{ category.category.id }}">{{ category.category }}</a>
                         {% endfor %}
                         {% endif %}

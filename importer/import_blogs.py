@@ -1,8 +1,8 @@
 import sys
 import time
 
-from cms.blogs.models import Blog, BlogIndexPage, BlogCategoryRelationship
-from cms.categories.models import Category
+from cms.blogs.models import Blog, BlogIndexPage
+from cms.categories.models import Category, CategoryPageCategoryRelationship
 from wagtail.core.models import Page
 from django.core.management import call_command
 
@@ -79,7 +79,9 @@ class BlogsImporter(Importer):
                     wp_id=None,
                     source=None,
                 )
-            BlogCategoryRelationship.objects.create(blog=obj, category=source_category)
+            CategoryPageCategoryRelationship.objects.create(
+                category_page=obj, category=source_category
+            )
 
             # add the categories as related many to many, found this needs to be after the save above
             if blog.get("categories"):  # some categories are blank
@@ -91,8 +93,8 @@ class BlogsImporter(Importer):
                         wp_id=int(cat_id),
                     )
 
-                    BlogCategoryRelationship.objects.create(
-                        blog=obj, category=category_object
+                    CategoryPageCategoryRelationship.objects.create(
+                        category_page=obj, category=category_object
                     )
 
             sys.stdout.write(".")

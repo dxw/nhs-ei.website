@@ -1,4 +1,4 @@
-from cms.categories.models import Category
+from cms.categories.models import Category, CategoryPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
@@ -32,7 +32,9 @@ class PostIndexPage(Page):
                 .live()
                 .order_by(post_ordering)
                 .filter(
-                    post_category_relationship__category=request.GET.get("category")
+                    categorypage_category_relationship__category=request.GET.get(
+                        "category"
+                    )
                 )
             )
         else:
@@ -53,19 +55,7 @@ class PostIndexPage(Page):
         return context
 
 
-class PostCategoryRelationship(models.Model):
-    post = ParentalKey(
-        "posts.Post",
-        related_name="post_category_relationship",
-    )
-    category = ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-
-
-class Post(Page):
+class Post(CategoryPage):
 
     parent_page_types = ["posts.PostIndexPage"]
     """
@@ -90,7 +80,7 @@ class Post(Page):
     author = models.CharField(max_length=255, blank=True)
 
     content_panels = Page.content_panels + [
-        InlinePanel("post_category_relationship", label="Categories"),
+        InlinePanel("categorypage_category_relationship", label="Categories"),
         FieldPanel("body"),
         MultiFieldPanel(
             [

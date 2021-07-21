@@ -82,35 +82,59 @@
   }
 },
 {
-  "model": "posts.postcategoryrelationship",
+  "model": "categories.categorypagecategoryrelationship",
   "pk": 1,
   "fields": {
-    "post": 11,
+    "category_page": 11,
     "category": 1
   }
 },
 {
-  "model": "posts.postcategoryrelationship",
+  "model": "categories.categorypagecategoryrelationship",
   "pk": 2,
   "fields": {
-    "post": 12,
+    "category_page": 12,
     "category": 1
   }
 },
 {
-  "model": "blogs.blogcategoryrelationship",
-  "pk": 1,
+  "model": "categories.categorypagecategoryrelationship",
+  "pk": 3,
   "fields": {
-    "blog": 5,
+    "category_page": 5,
     "category": 1
   }
 },
 {
-  "model": "blogs.blogcategoryrelationship",
-  "pk": 2,
+  "model": "categories.categorypagecategoryrelationship",
+  "pk": 4,
   "fields": {
-    "blog": 6,
+    "category_page": 6,
     "category": 2
+  }
+},
+{
+  "model": "categories.categorypagecategoryrelationship",
+  "pk": 5,
+  "fields": {
+    "category_page": 14,
+    "category": 1
+  }
+},
+{
+  "model": "categories.categorypagecategoryrelationship",
+  "pk": 6,
+  "fields": {
+    "category_page": 15,
+    "category": 2
+  }
+},
+{
+  "model": "categories.categorypagecategoryrelationship",
+  "pk": 7,
+  "fields": {
+    "category_page": 9,
+    "category": 1
   }
 },
 {
@@ -127,30 +151,6 @@
   "fields": {
     "publication": 15,
     "publication_type": 2
-  }
-},
-{
-  "model": "publications.publicationcategoryrelationship",
-  "pk": 1,
-  "fields": {
-    "publication": 14,
-    "category": 1
-  }
-},
-{
-  "model": "publications.publicationcategoryrelationship",
-  "pk": 2,
-  "fields": {
-    "publication": 15,
-    "category": 2
-  }
-},
-{
-  "model": "atlascasestudies.atlascasestudycategoryrelationship",
-  "pk": 1,
-  "fields": {
-    "atlas_case_study": 9,
-    "category": 1
   }
 },
 {
@@ -2172,7 +2172,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post One\", \"draft_title\": \"Blog Post One\", \"slug\": \"blog-post-one\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Post Content</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"blog_category_relationship\": [{\"pk\": 1, \"blog\": 5, \"category\": 1}]}",
+    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post One\", \"draft_title\": \"Blog Post One\", \"slug\": \"blog-post-one\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Post Content</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"categorypage_category_relationship\": [{\"pk\": 1, \"blog\": 5, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2186,7 +2186,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post One\", \"draft_title\": \"Blog Post One\", \"slug\": \"blog-post-one\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:25:17.986Z\", \"last_published_at\": \"2021-02-04T17:25:17.986Z\", \"latest_revision_created_at\": \"2021-02-04T17:25:17.941Z\", \"live_revision\": 7, \"body\": \"<p>Blog Post Content</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"blog_category_relationship\": [{\"pk\": 1, \"blog\": 5, \"category\": 1}]}",
+    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post One\", \"draft_title\": \"Blog Post One\", \"slug\": \"blog-post-one\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:25:17.986Z\", \"last_published_at\": \"2021-02-04T17:25:17.986Z\", \"latest_revision_created_at\": \"2021-02-04T17:25:17.941Z\", \"live_revision\": 7, \"body\": \"<p>Blog Post Content</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"categorypage_category_relationship\": [{\"pk\": 1, \"blog\": 5, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2200,7 +2200,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 6, \"path\": \"0001000100010002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post Two\", \"draft_title\": \"Blog Post Two\", \"slug\": \"blog-post-two\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Post Two</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"blog_category_relationship\": [{\"pk\": 2, \"blog\": 6, \"category\": 2}]}",
+    "content_json": "{\"pk\": 6, \"path\": \"0001000100010002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Blog Post Two\", \"draft_title\": \"Blog Post Two\", \"slug\": \"blog-post-two\", \"content_type\": 17, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/blog-index-page/blog-post-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Blog Post Two</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"blocategorypage_category_relationship\": [{\"pk\": 2, \"blog\": 6, \"category\": 2}]}",
     "approved_go_live_at": null
   }
 },
@@ -2228,7 +2228,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 9, \"path\": \"0001000100020001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Atlas Case Study One\", \"draft_title\": \"Atlas Case Study One\", \"slug\": \"atlas-case-study-one\", \"content_type\": 27, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/atlas-case-study-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Atlas case study one content</p>\", \"wp_id\": 0, \"wp_slug\": \"\", \"wp_link\": \"\", \"atlas_case_study_category_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"category\": 1}], \"atlas_case_study_setting_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"setting\": 1}], \"atlas_case_study_region_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"region\": 1}]}",
+    "content_json": "{\"pk\": 9, \"path\": \"0001000100020001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Atlas Case Study One\", \"draft_title\": \"Atlas Case Study One\", \"slug\": \"atlas-case-study-one\", \"content_type\": 27, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/atlas-case-study-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Atlas case study one content</p>\", \"wp_id\": 0, \"wp_slug\": \"\", \"wp_link\": \"\", \"atlas_case_studcategorypage_category_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"category\": 1}], \"atlas_case_study_setting_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"setting\": 1}], \"atlas_case_study_region_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"region\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2242,7 +2242,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 9, \"path\": \"0001000100020001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Atlas Case Study One\", \"draft_title\": \"Atlas Case Study One\", \"slug\": \"atlas-case-study-one\", \"content_type\": 27, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/atlas-case-study-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:32:41.975Z\", \"last_published_at\": \"2021-02-04T17:32:41.975Z\", \"latest_revision_created_at\": \"2021-02-04T17:32:41.938Z\", \"live_revision\": 13, \"body\": \"<p>Atlas case study one content</p>\", \"wp_id\": 0, \"wp_slug\": \"\", \"wp_link\": \"\", \"atlas_case_study_category_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"category\": 1}], \"atlas_case_study_setting_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"setting\": 1}], \"atlas_case_study_region_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"region\": 1}]}",
+    "content_json": "{\"pk\": 9, \"path\": \"0001000100020001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Atlas Case Study One\", \"draft_title\": \"Atlas Case Study One\", \"slug\": \"atlas-case-study-one\", \"content_type\": 27, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/atlas-case-study-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:32:41.975Z\", \"last_published_at\": \"2021-02-04T17:32:41.975Z\", \"latest_revision_created_at\": \"2021-02-04T17:32:41.938Z\", \"live_revision\": 13, \"body\": \"<p>Atlas case study one content</p>\", \"wp_id\": 0, \"wp_slug\": \"\", \"wp_link\": \"\", \"atlas_case_studcategorypage_category_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"category\": 1}], \"atlas_case_study_setting_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"setting\": 1}], \"atlas_case_study_region_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"region\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2270,7 +2270,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 11, \"path\": \"0001000100030001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post One\", \"draft_title\": \"Post One\", \"slug\": \"post-one\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"post_category_relationship\": [{\"pk\": 1, \"post\": 11, \"category\": 1}]}",
+    "content_json": "{\"pk\": 11, \"path\": \"0001000100030001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post One\", \"draft_title\": \"Post One\", \"slug\": \"post-one\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"poscategorypage_category_relationship\": [{\"pk\": 1, \"post\": 11, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2284,7 +2284,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 12, \"path\": \"0001000100030001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post One\", \"draft_title\": \"Post One\", \"slug\": \"post-one\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"post_category_relationship\": [{\"pk\": 2, \"post\": 12, \"category\": 1}]}",
+    "content_json": "{\"pk\": 12, \"path\": \"0001000100030001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post One\", \"draft_title\": \"Post One\", \"slug\": \"post-one\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"poscategorypage_category_relationship\": [{\"pk\": 2, \"post\": 12, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2298,7 +2298,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 12, \"path\": \"0001000100030002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post Two\", \"draft_title\": \"Post One\", \"slug\": \"post-two\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:44:09.122Z\", \"last_published_at\": \"2021-02-04T17:44:09.122Z\", \"latest_revision_created_at\": \"2021-02-04T17:44:09.098Z\", \"live_revision\": 16, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"post_category_relationship\": [{\"pk\": 2, \"post\": 12, \"category\": 1}]}",
+    "content_json": "{\"pk\": 12, \"path\": \"0001000100030002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Post Two\", \"draft_title\": \"Post One\", \"slug\": \"post-two\", \"content_type\": 14, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/post-index-page/post-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:44:09.122Z\", \"last_published_at\": \"2021-02-04T17:44:09.122Z\", \"latest_revision_created_at\": \"2021-02-04T17:44:09.098Z\", \"live_revision\": 16, \"body\": \"<p>Post one content</p>\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"author\": \"\", \"poscategorypage_category_relationship\": [{\"pk\": 2, \"post\": 12, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2326,7 +2326,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 14, \"path\": \"0001000100040001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication One\", \"draft_title\": \"Publication One\", \"slug\": \"publication-one\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publication one content</p>\", \"documents\": \"[]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 1, \"publication\": 14, \"publication_type\": 1}], \"publication_category_relationship\": [{\"pk\": 1, \"publication\": 14, \"category\": 1}]}",
+    "content_json": "{\"pk\": 14, \"path\": \"0001000100040001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication One\", \"draft_title\": \"Publication One\", \"slug\": \"publication-one\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publication one content</p>\", \"documents\": \"[]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 1, \"publication\": 14, \"publication_type\": 1}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 1, \"publication\": 14, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2340,7 +2340,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publication_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
+    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
     "approved_go_live_at": null
   }
 },
@@ -2578,7 +2578,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 14, \"path\": \"0001000100040001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication One\", \"draft_title\": \"Publication One\", \"slug\": \"publication-one\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:10.802Z\", \"last_published_at\": \"2021-02-04T17:49:10.802Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:10.774Z\", \"live_revision\": 20, \"body\": \"<p>Publication one content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>Document Title</p>\\\", \\\"document\\\": 1, \\\"summary\\\": \\\"<p>Document Summary</p>\\\"}, \\\"id\\\": \\\"f23e858b-2ae6-4232-921a-4d347bfb3125\\\"}], \\\"id\\\": \\\"28f8d4eb-a922-4686-82da-a25cbee489db\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 1, \"publication\": 14, \"publication_type\": 1}], \"publication_category_relationship\": [{\"pk\": 1, \"publication\": 14, \"category\": 1}]}",
+    "content_json": "{\"pk\": 14, \"path\": \"0001000100040001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication One\", \"draft_title\": \"Publication One\", \"slug\": \"publication-one\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:10.802Z\", \"last_published_at\": \"2021-02-04T17:49:10.802Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:10.774Z\", \"live_revision\": 20, \"body\": \"<p>Publication one content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>Document Title</p>\\\", \\\"document\\\": 1, \\\"summary\\\": \\\"<p>Document Summary</p>\\\"}, \\\"id\\\": \\\"f23e858b-2ae6-4232-921a-4d347bfb3125\\\"}], \\\"id\\\": \\\"28f8d4eb-a922-4686-82da-a25cbee489db\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 1, \"publication\": 14, \"publication_type\": 1}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 1, \"publication\": 14, \"category\": 1}]}",
     "approved_go_live_at": null
   }
 },
@@ -2592,7 +2592,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:52.030Z\", \"last_published_at\": \"2021-02-04T17:49:52.030Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:52.007Z\", \"live_revision\": 21, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>A Document With A Link To A Page</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 9, \\\"summary\\\": \\\"\\\"}, \\\"id\\\": \\\"4aa4218d-a5df-4f3f-8880-d6e34651d297\\\"}], \\\"id\\\": \\\"32f28605-6db3-4edd-bf99-7a53574b0557\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publication_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
+    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:52.030Z\", \"last_published_at\": \"2021-02-04T17:49:52.030Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:52.007Z\", \"live_revision\": 21, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>A Document With A Link To A Page</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 9, \\\"summary\\\": \\\"\\\"}, \\\"id\\\": \\\"4aa4218d-a5df-4f3f-8880-d6e34651d297\\\"}], \\\"id\\\": \\\"32f28605-6db3-4edd-bf99-7a53574b0557\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
     "approved_go_live_at": null
   }
 },
@@ -3143,6 +3143,55 @@
     "last_published_at": "2021-02-08T09:55:30.859Z",
     "latest_revision_created_at": "2021-02-08T09:55:30.797Z",
     "live_revision": 41
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 5,
+  "fields": {
+    "page_ptr": 5
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 6,
+  "fields": {
+    "page_ptr": 6
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 9,
+  "fields": {
+    "page_ptr": 9
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 11,
+  "fields": {
+    "page_ptr": 11
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 12,
+  "fields": {
+    "page_ptr": 12
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 14,
+  "fields": {
+    "page_ptr": 14
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 15,
+  "fields": {
+    "page_ptr": 15
   }
 },
 {

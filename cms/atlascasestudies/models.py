@@ -1,4 +1,4 @@
-from cms.categories.models import Category, Region, Setting
+from cms.categories.models import Category, Region, Setting, CategoryPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from modelcluster.fields import ParentalKey
@@ -52,7 +52,7 @@ class AtlasCaseStudyIndexPage(Page):
                 AtlasCaseStudy.objects.live()
                 .order_by(atlas_case_study_ordering)
                 .filter(
-                    atlas_case_study_category_relationship__category=request.GET.get(
+                    categorypage_category_relationship__category=request.GET.get(
                         "category"
                     )
                 )
@@ -87,18 +87,6 @@ class AtlasCaseStudyIndexPage(Page):
         return context
 
 
-class AtlasCaseStudyCategoryRelationship(models.Model):
-    atlas_case_study = ParentalKey(
-        "atlascasestudies.AtlasCaseStudy",
-        related_name="atlas_case_study_category_relationship",
-    )
-    category = models.ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-
-
 class AtlasCaseStudySettingRelationship(models.Model):
     atlas_case_study = ParentalKey(
         "atlascasestudies.AtlasCaseStudy",
@@ -123,7 +111,7 @@ class AtlasCaseStudyRegionRelationship(models.Model):
     )
 
 
-class AtlasCaseStudy(Page):
+class AtlasCaseStudy(CategoryPage):
     parent_page_types = ["atlascasestudies.AtlasCaseStudyIndexPage"]
     """
     title already in the Page class
@@ -155,7 +143,7 @@ class AtlasCaseStudy(Page):
     content_panels = Page.content_panels + [
         InlinePanel("atlas_case_study_setting_relationship", label="Settings"),
         InlinePanel("atlas_case_study_region_relationship", label="Regions"),
-        InlinePanel("atlas_case_study_category_relationship", label="Categories"),
+        InlinePanel("categorypage_category_relationship", label="Categories"),
         FieldPanel("body"),
         MultiFieldPanel(
             [

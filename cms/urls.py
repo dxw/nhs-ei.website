@@ -8,6 +8,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
 from cms.search import views as search_views
+from cms.categories import urls as category_urls
 from importer import urls as importer_urls
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
+    path("categories/", include(category_urls)),
     # views to show helpful dev info
     path("importer/", include(importer_urls)),
 ]

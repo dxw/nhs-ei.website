@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-basepage{% endblock body_class %}
+
+{% block content %}
+
+<div class="nhsuk-width-container">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <h1>{{ object.name }}</h1>
+        </div>
+    </div>
+
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <p>{{ object.description }}</p>
+          {% if category_pages %}
+            <table role="table" class="nhsuk-table-responsive">
+              <thead class="nhsuk-table__head">
+                <tr>
+                  <th>Title</th>
+                  <th>Content type</th>
+                  <th>Date published/updated</th>
+                </tr>
+              </thead>
+              <tbody class="nhsuk-table__body">
+              {% for page in category_pages %}
+                <tr class="nhsuk-table__row">
+                    <td class="nhsuk-table__cell"><a href="{{page.record.url}}">{{page.record.title}}</a></td>
+                    <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--blue">{{ page.tag }}</span></td>
+                    <td class="nhsuk-table__cell"><time class="date" datetime="">{{ page.record.last_published_at|date:'d M Y g:i a' }}</time></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+           </table>
+         {% else %}
+           <p>There are no pages in this category.</p>
+         {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

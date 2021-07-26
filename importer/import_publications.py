@@ -129,6 +129,7 @@ class PublicationsImporter(Importer):
                 logger.warn("page %s has no title", publication)
             elif len(page_title) > 250:
                 logger.warn("long page title: %s %s", page_title, publication)
+                page_title = page_title[:250] + "..."
             obj = Publication(
                 title=page_title,
                 # excerpt = post.get('excerpt'),

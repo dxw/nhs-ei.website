@@ -5,10 +5,10 @@
 <article class="nhsuk-width-container">
 
     <div class="nhsuk-u-reading-width">
-        {% if self.blog_category_relationship %}
+        {% if self.categorypage_category_relationship %}
         <div class="nhsuk-body-s">
             Categories:
-            {% for category in self.blog_category_relationship.all %}
+            {% for category in self.categorypage_category_relationship.all %}
             <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
             {% endfor %}
         </div>

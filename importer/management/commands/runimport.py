@@ -12,7 +12,6 @@ from importer.import_publication_types import PublicationTypesImporter
 from importer.import_publications import PublicationsImporter
 from importer.import_regions import RegionsImporter
 from importer.import_settings import SettingsImporter
-from importer.make_homepage import create_homepage
 
 from importer.websites import SCRAPY
 
@@ -103,7 +102,6 @@ class Command(BaseCommand):
 
         elif options["app"] == "short":
             # just do the ones that have foreign keys
-            create_homepage()
             import_categories(get_api_url("categories"))
             import_publication_types(get_api_url("publication_types"))
             import_settings(get_api_url("settings"))
@@ -113,7 +111,6 @@ class Command(BaseCommand):
             # the whole lot in specific order
             # BEFORE ALL OTHERS as related keys exists
             # import_media_files(get_api_url('media'))
-            create_homepage()
             import_categories(get_api_url("categories"))
             import_publication_types(get_api_url("publication_types"))
             import_settings(get_api_url("settings"))

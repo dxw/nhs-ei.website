@@ -8,11 +8,11 @@ from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
     PublicationType,
+    CategoryPageCategoryRelationship,
 )
 from cms.pages.models import BasePage
 from cms.publications.models import (
     Publication,
-    PublicationCategoryRelationship,
     PublicationIndexPage,
     PublicationPublicationTypeRelationship,
 )
@@ -180,8 +180,8 @@ class PublicationsImporter(Importer):
                     wp_id=None,
                     source=None,
                 )
-            PublicationCategoryRelationship.objects.create(
-                publication=obj, category=source_category
+            CategoryPageCategoryRelationship.objects.create(
+                category_page=obj, category=source_category
             )
 
             # add the categories (topics) as related many to many, found this needs to be after the save above
@@ -200,8 +200,8 @@ class PublicationsImporter(Importer):
                         wp_id=int(category),
                     )
 
-                    PublicationCategoryRelationship.objects.create(
-                        publication=obj, category=category_object
+                    CategoryPageCategoryRelationship.objects.create(
+                        category_page=obj, category=category_object
                     )
 
                 sys.stdout.write(".")

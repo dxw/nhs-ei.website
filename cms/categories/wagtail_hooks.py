@@ -21,10 +21,10 @@ from wagtail.contrib.modeladmin.options import (
 
 class CategoryPermissionHelper(PermissionHelper):
     def user_can_delete_obj(self, user, obj):
-        posts = Post.objects.filter(post_category_relationship__category=obj)
-        blogs = Blog.objects.filter(blog_category_relationship__category=obj)
+        posts = Post.objects.filter(categorypage_category_relationship__category=obj)
+        blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
         publications = Publication.objects.filter(
-            publication_category_relationship__category=obj
+            categorypage_category_relationship__category=obj
         )
         if not posts and not blogs and not publications:
             return True
@@ -51,8 +51,8 @@ class CategoriesAdmin(ModelAdmin):
     ]
 
     def get_category_usage(self, obj):
-        posts = Post.objects.filter(post_category_relationship__category=obj)
-        blogs = Blog.objects.filter(blog_category_relationship__category=obj)
+        posts = Post.objects.filter(categorypage_category_relationship__category=obj)
+        blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
         # posts_count, blogs_count = Category.get_category_usage()
         return "Posts {} | Blogs {}".format(posts.count(), blogs.count())
 
@@ -97,7 +97,7 @@ class PublicationTypeAdmin(ModelAdmin):
         publications = Publication.objects.filter(
             publication_publication_type_relationship__publication_type=obj
         )
-        # blogs = Blog.objects.filter(blog_category_relationship__category=obj)
+        # blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
         # posts_count, blogs_count = Category.get_category_usage()
         return "Publications {}".format(publications.count())
 
@@ -140,7 +140,7 @@ class SettingAdmin(ModelAdmin):
         atlas_case_studies = AtlasCaseStudy.objects.filter(
             atlas_case_study_setting_relationship__setting=obj
         )
-        # blogs = Blog.objects.filter(blog_category_relationship__category=obj)
+        # blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
         # posts_count, blogs_count = Category.get_category_usage()
         return "Atlas Case Studies {}".format(atlas_case_studies.count())
 
@@ -183,7 +183,7 @@ class RegionAdmin(ModelAdmin):
         atlas_case_studies = AtlasCaseStudy.objects.filter(
             atlas_case_study_region_relationship__region=obj
         )
-        # blogs = Blog.objects.filter(blog_category_relationship__category=obj)
+        # blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
         # posts_count, blogs_count = Category.get_category_usage()
         return "Atlas Case Studies {}".format(atlas_case_studies.count())
 

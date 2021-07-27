@@ -65,9 +65,9 @@
                     <a href="?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
                     {% endfor %}
                     {% endif %} <br>
-                    {% if publication.publication_category_relationship.all %}
+                    {% if publication.categorypage_category_relationship.all %}
                     <b>Topic:</b>
-                    {% for publication_type in publication.publication_category_relationship.all %}
+                    {% for publication_type in publication.categorypage_category_relationship.all %}
                     <a href="?category={{ publication_type.category.id }}">{{ publication_type.category }}</a>
                     {% endfor %}
                     {% endif %}

@@ -3,9 +3,9 @@ import sys
 import time
 
 from bs4 import BeautifulSoup
-from cms.categories.models import Category
+from cms.categories.models import Category, CategoryPageCategoryRelationship
 from cms.pages.models import BasePage
-from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
+from cms.posts.models import Post, PostIndexPage
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
@@ -123,7 +123,9 @@ class PostsImporter(Importer):
                     wp_id=None,
                     source=None,
                 )
-            PostCategoryRelationship.objects.create(post=obj, category=source_category)
+            CategoryPageCategoryRelationship.objects.create(
+                category_page=obj, category=source_category
+            )
 
             # add the categories as related many to many, found this needs to be after the save above
             if post.get("categories"):  # some categories are blank
@@ -139,8 +141,8 @@ class PostsImporter(Importer):
                         wp_id=int(category_id),
                     )
 
-                    PostCategoryRelationship.objects.create(
-                        post=obj, category=category_object
+                    CategoryPageCategoryRelationship.objects.create(
+                        category_page=obj, category=category_object
                     )
                 ###
 

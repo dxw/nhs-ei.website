@@ -40,9 +40,9 @@
                         <b>Author: </b>{{ atlas_case_study.author }} we are missing the ability to match ID
                         to a name <br>
                       {% endcomment %}
-                        {% if atlas_case_study.atlas_case_study_category_relationship.all %}
+                        {% if atlas_case_study.categorypage_category_relationship.all %}
                         <b>Topics:</b>
-                        {% for category in atlas_case_study.atlas_case_study_category_relationship.all %}
+                        {% for category in atlas_case_study.categorypage_category_relationship.all %}
                         <a href="?category={{ category.category.id }}">{{ category.category }}</a>
                         {% endfor %} <br>
                         {% endif %}

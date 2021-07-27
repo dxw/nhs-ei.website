@@ -4,10 +4,10 @@
 {% block content %}
 <article class="nhsuk-width-container">
     <div class="nhsuk-u-reading-width">
-        {% if self.atlas_case_study_category_relationship %}
+        {% if self.categorypage_category_relationship %}
         <div class="nhsuk-body-s">
             Topics:
-            {% for category in self.atlas_case_study_category_relationship.all %}
+            {% for category in self.categorypage_category_relationship.all %}
             <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category.name }}</a>
             {% endfor %} <br>
             Settings:

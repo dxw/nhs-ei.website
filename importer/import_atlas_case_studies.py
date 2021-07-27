@@ -2,12 +2,17 @@ import sys
 import time
 from cms.atlascasestudies.models import (
     AtlasCaseStudy,
-    AtlasCaseStudyCategoryRelationship,
     AtlasCaseStudyIndexPage,
     AtlasCaseStudySettingRelationship,
     AtlasCaseStudyRegionRelationship,
 )
-from cms.categories.models import Category, Region, Setting
+
+from cms.categories.models import (
+    Category,
+    Region,
+    Setting,
+    CategoryPageCategoryRelationship,
+)
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
@@ -107,8 +112,8 @@ class AtlasCaseStudiesImporter(Importer):
                         wp_id=int(category),
                     )
 
-                    AtlasCaseStudyCategoryRelationship.objects.create(
-                        atlas_case_study=obj, category=category_object
+                    CategoryPageCategoryRelationship.objects.create(
+                        category_page=obj, category=category_object
                     )
                 sys.stdout.write(".")
 
@@ -120,8 +125,8 @@ class AtlasCaseStudiesImporter(Importer):
                 wp_id=None,
                 source=None,
             )
-            AtlasCaseStudyCategoryRelationship.objects.create(
-                atlas_case_study=obj, category=atlas_category
+            CategoryPageCategoryRelationship.objects.create(
+                category_page=obj, category=atlas_category
             )
 
             # add the settings as related many to many, found this needs to be after the save above

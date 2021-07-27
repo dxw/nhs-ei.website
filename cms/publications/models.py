@@ -1,9 +1,6 @@
 from urllib.parse import urlparse
 
-from cms.categories.models import (
-    Category,
-    PublicationType,
-)
+from cms.categories.models import Category, PublicationType, CategoryPage
 
 from cms.core.blocks import PublicationsBlocks
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -64,7 +61,7 @@ class PublicationIndexPage(Page):
                 Publication.objects.live()
                 .order_by(publication_ordering)
                 .filter(
-                    publication_category_relationship__category=request.GET.get(
+                    categorypage_category_relationship__category=request.GET.get(
                         "category"
                     )
                 )
@@ -116,19 +113,7 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
-class PublicationCategoryRelationship(models.Model):
-    publication = ParentalKey(
-        "publications.Publication",
-        related_name="publication_category_relationship",
-    )
-    category = ForeignKey(
-        "categories.Category",
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-
-
-class Publication(Page):
+class Publication(CategoryPage):
 
     parent_page_types = ["publications.PublicationIndexPage"]
     """
@@ -158,7 +143,9 @@ class Publication(Page):
         InlinePanel(
             "publication_publication_type_relationship", label="Publication Types"
         ),
-        InlinePanel("publication_category_relationship", label="Publication Topics"),
+        InlinePanel(
+            "categorypage_category_relationship", label="Publication Categories"
+        ),
         FieldPanel("body"),
         StreamFieldPanel("documents"),
         MultiFieldPanel(

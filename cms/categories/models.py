@@ -1,6 +1,32 @@
 from django.db import models
 
+from modelcluster.fields import ParentalKey
+
+from wagtail.core.models import Page
+
 """CATEGORIES work with content types a across the site"""
+
+
+class CategoryPageCategoryRelationship(models.Model):
+    """
+    A table which describes which Categories a CategoryPage has.
+    """
+
+    category_page = ParentalKey(
+        "categories.CategoryPage",
+        related_name="categorypage_category_relationship",
+    )
+    category = models.ForeignKey(
+        "categories.Category",
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
+
+
+class CategoryPage(Page):
+    """CategoryPages are pages which have categories, like Blogs and Publications."""
+
+    pass
 
 
 class Category(models.Model):
@@ -23,11 +49,11 @@ class Category(models.Model):
     # def delete(self, *args, **kwargs):
     #     Post = apps.get_model('posts.Post')
     #     posts_count = Post.objects.filter(
-    #         post_category_relationship__category=self)
+    #         categorypage_category_relationship__category=self)
 
     #     Blog = apps.get_model('blogs.Blog')
     #     blogs_count = Blog.objects.filter(
-    #         blog_category_relationship__category=self)
+    #         categorypage_category_relationship__category=self)
 
     #     if posts_count or blogs_count:
     #         raise ValidationError('1244')
@@ -56,10 +82,10 @@ class PublicationType(models.Model):
     # prevent deleting a category if its in use
     # def delete(self, *args, **kwargs):
     #     Post = apps.get_model('posts.Post')
-    #     posts_count = Post.objects.filter(post_category_relationship__category=self)
+    #     posts_count = Post.objects.filter(categorypage_category_relationship__category=self)
 
     #     Blog = apps.get_model('blogs.Blog')
-    #     blogs_count = Blog.objects.filter(blog_category_relationship__category=self)
+    #     blogs_count = Blog.objects.filter(categorypage_category_relationship__category=self)
 
     #     if posts_count or blogs_count:
     #         raise ValidationError('1244')

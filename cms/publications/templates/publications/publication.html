@@ -21,7 +21,7 @@
     <div class="nhsuk-u-reading-width">
         <div class="nhsuk-body-s">
             Topics:
-            {% for category in self.publication_category_relationship.all %}
+            {% for category in self.categorypage_category_relationship.all %}
             <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
             {% endfor %} <br>
             Publication Type:

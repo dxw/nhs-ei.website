@@ -1,4 +1,5 @@
 from .base import *
+import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -23,6 +24,14 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.db",
     }
 }
+
+# we turn off basic auth when testing because it breaks the test suite
+if not os.environ.get("NO_BASIC_AUTH"):
+    MIDDLEWARE += ["baipw.middleware.BasicAuthIPWhitelistMiddleware"]
+BASIC_AUTH_LOGIN = os.environ.get("BASIC_AUTH_LOGIN", "nhsx")
+BASIC_AUTH_PASSWORD = os.environ.get(
+    "BASIC_AUTH_PASSWORD", "hardcodedpasswordpleasechange"
+)
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 

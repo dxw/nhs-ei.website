@@ -64,6 +64,8 @@ spec:
               value: "{{ .Values.environment.server_email }}"
             - name: WAGTAILSEARCH_URLS
               value: "{{ .Values.environment.wagtailsearch_urls }}"
+            - name: BASIC_AUTH_PASSWORD
+              value: "{{ .Values.environment.basic_auth_password }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

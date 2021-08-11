@@ -5,7 +5,6 @@ services:
   test:
     image: nhsei:latest
     environment:
-      - NO_BASIC_AUTH=True
       - DJANGO_SECRET_KEY=entersecretkeyhere
       - SERVER_ENV=test
       - DJANGO_SETTINGS_MODULE=cms.settings.dev

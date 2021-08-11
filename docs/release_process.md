@@ -12,3 +12,8 @@ the Azure container repository. The container is then deployed with Helm. See [d
 
 Changes deployed to staging are still regarded as Unreleased in the changelog. Changes are not "released" until they are
 deployed to production
+
+# Database dumps
+
+You can make a database dump with `script/dumpdb` which will put a JSON dump of most of the database into `/tmp/dumpdb.json`.
+This can then be imported with `script/manpy loaddata dumpdb.json` (or `python manage.py` if in the container)

@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+# https://www.coderedcorp.com/blog/how-to-dump-your-django-database-and-load-it-into-/
+docker-compose run --rm web python manage.py dumpdata --natural-foreign --natural-primary -e contenttypes -e auth.Permission --indent 2 -o /tmp/dumpdb.json
+echo "Database dump written to /tmp/dumpdb.json"

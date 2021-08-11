@@ -1,4 +1,5 @@
 from .base import *
+import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -25,8 +26,10 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 MIDDLEWARE += ["baipw.middleware.BasicAuthIPWhitelistMiddleware"]
-BASIC_AUTH_LOGIN = "nhsx"
-BASIC_AUTH_PASSWORD = "hardcodedpasswordpleasechange"
+BASIC_AUTH_LOGIN = os.environ.get("BASIC_AUTH_LOGIN", "nhsx")
+BASIC_AUTH_PASSWORD = os.environ.get(
+    "BASIC_AUTH_PASSWORD", "hardcodedpasswordpleasechange"
+)
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 

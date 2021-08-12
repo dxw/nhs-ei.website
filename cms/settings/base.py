@@ -208,9 +208,7 @@ vars().update(EMAIL_CONFIG)
 if os.environ.get("BASIC_AUTH_PASSWORD", False):
     MIDDLEWARE += ["baipw.middleware.BasicAuthIPWhitelistMiddleware"]
     BASIC_AUTH_LOGIN = "nhsei"
-    BASIC_AUTH_PASSWORD = os.environ.get(
-        "BASIC_AUTH_PASSWORD", "hardcodedpasswordpleasechange"
-    )
+    BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
 
 LOGGING = {
     "version": 1,

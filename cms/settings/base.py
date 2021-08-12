@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 
+import os
 from pathlib import Path
 
 import environ
@@ -201,6 +202,15 @@ SERVER_EMAIL = env("SERVER_EMAIL", default="root@localhost")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="root@localhost")
 
 vars().update(EMAIL_CONFIG)
+
+
+# we turn off basic auth when testing because it breaks the test suite
+if os.environ.get("BASIC_AUTH_PASSWORD", False):
+    MIDDLEWARE += ["baipw.middleware.BasicAuthIPWhitelistMiddleware"]
+    BASIC_AUTH_LOGIN = "nhsei"
+    BASIC_AUTH_PASSWORD = os.environ.get(
+        "BASIC_AUTH_PASSWORD", "hardcodedpasswordpleasechange"
+    )
 
 LOGGING = {
     "version": 1,

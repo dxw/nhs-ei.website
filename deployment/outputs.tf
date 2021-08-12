@@ -39,7 +39,7 @@ output "dburl" {
 }
 
 output "load_balancer_ip" {
-  value = data.kubernetes_service.ingress-load-balancer.load_balancer_ingress.0.ip
+  value = data.kubernetes_service.ingress-load-balancer.status[0].load_balancer[0].ingress[0].ip
 }
 
 output "load_balancer_dns" {

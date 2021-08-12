@@ -7,4 +7,4 @@ set -e
 #fi
 
 echo "Running tests..."
-docker-compose run --service-ports --rm web bash -c "cd fixtures && ./copy_media.sh && cd .. && python manage.py test cms"
+docker-compose run --service-ports -e --rm web bash -c "cd fixtures && ./copy_media.sh && cd .. && python manage.py test cms"

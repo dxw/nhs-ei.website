@@ -56,42 +56,6 @@ class TestComponentsPage(TestCase):
         )
         self.assertGreater(len(first_list_item_2_date.text.split()), 0)
 
-        # second list is the right side on desktop
-        second_list = panel.find_all("ol")[1]
-        second_list_item_1_link = second_list.select_one("li:nth-child(1) article h2 a")
-
-        self.assertEqual(
-            second_list_item_1_link["href"], "/blog-index-page/blog-post-two/"
-        )
-        self.assertEqual(second_list_item_1_link.text.strip(), "Blog Post Two")
-
-        second_list_item_1_label = second_list.select_one(
-            "li:nth-child(1) article span:nth-of-type(1)"
-        )
-        self.assertEqual(second_list_item_1_label.text.strip(), "Blog")
-
-        second_list_item_1_date = second_list.select_one(
-            "li:nth-child(1) article span:nth-of-type(2) time"
-        )
-        self.assertGreater(len(second_list_item_1_date.text.split()), 0)
-
-        second_list_item_2_link = second_list.select_one("li:nth-child(2) article h2 a")
-
-        self.assertEqual(
-            second_list_item_2_link["href"], "/blog-index-page/blog-post-one/"
-        )
-        self.assertEqual(second_list_item_2_link.text.strip(), "Blog Post One")
-
-        second_list_item_2_label = second_list.select_one(
-            "li:nth-child(2) article span:nth-of-type(1)"
-        )
-        self.assertEqual(second_list_item_2_label.text.strip(), "Blog")
-
-        second_list_item_2_date = second_list.select_one(
-            "li:nth-child(2) article span:nth-of-type(2) time"
-        )
-        self.assertGreater(len(second_list_item_2_date.text.split()), 0)
-
     def test_all_common_blocks(self):
         response = self.client.get("/base-page/")
         soup = BeautifulSoup(response.content, "html.parser")

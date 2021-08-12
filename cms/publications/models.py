@@ -1,8 +1,7 @@
 from urllib.parse import urlparse
 
 from cms.categories.models import Category, PublicationType, CategoryPage
-
-from cms.core.blocks import PublicationsBlocks
+from cms.publications.blocks import PublicationsBlocks
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey

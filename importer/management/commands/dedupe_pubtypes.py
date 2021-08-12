@@ -62,6 +62,9 @@ def replace_publication_type(old, new):
         relation.validate_unique()
 
     pubtype = PublicationType.objects.get(id=old)
+    assert not PublicationPublicationTypeRelationship.objects.filter(
+        publication_type_id=old
+    )
     print(f"deleting {old} {pubtype.name}")
     pubtype.delete()
 

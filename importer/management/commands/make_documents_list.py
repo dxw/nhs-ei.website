@@ -172,12 +172,13 @@ class Command(BaseCommand):
 
             publication.body = introduction
             publication.documents = json.dumps(new_stream_value)
+            first_published_at = publication.first_published_at
+            last_published_at = publication.last_published_at
+            revision_created_at = publication.latest_revision_created_at
             rev = publication.save_revision()
-            publication.first_published_at = publication.first_published_at
-            publication.last_published_at = publication.last_published_at
-            publication.latest_revision_created_at = (
-                publication.latest_revision_created_at
-            )
+            publication.first_published_at = first_published_at
+            publication.last_published_at = last_published_at
+            publication.latest_revision_created_at = revision_created_at
             publication.save()
             rev.publish()
             sys.stdout.write("\n✅ {} processing...".format(publication))

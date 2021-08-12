@@ -90,7 +90,6 @@ class PublicationTypeAdmin(ModelAdmin):
         FieldPanel("slug"),
         FieldPanel("description"),
         FieldPanel("wp_id"),
-        FieldPanel("source"),
     ]
 
     def get_publication_type_usage(self, obj):

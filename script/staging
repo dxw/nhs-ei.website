@@ -1,0 +1,11 @@
+#!/bin/sh
+. .env
+if [ -z ${STAGING+x} ]; then
+  echo "Get a bash shell on staging. Before first use, invoke";
+  echo "az login";
+  echo "az aks get-credentials --name nhsei-staging2021-k8s --resource-group nhsei-staging2021-k8s-resources";
+  echo .
+  echo "Then set STAGING in your .env file to the name of the pod (nhsei-website-...)";
+else
+  kubectl exec --stdin --tty $STAGING -- /bin/bash;
+fi

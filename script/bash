@@ -1,4 +1,36 @@
-#!/bin/bash
-set -e
+#!/bin/sh
+. .env
 
-docker-compose run --rm web bash
+if [ -n "$1" ]; then
+  # use first argument as an environment name. Use this to decide how to connect
+  # to the appropriate console.
+  if [ "$1" = "staging" ]; then
+    if [ -z ${STAGING+x} ]; then
+      echo "Get a bash shell on staging. Before first use, invoke";
+      echo "az login";
+      echo "az aks get-credentials --name nhsei-staging2021-k8s --resource-group nhsei-staging2021-k8s-resources";
+      echo ""
+      echo "Then set STAGING in your .env file to the name of the pod (nhsei-website-...)";
+    else
+      kubectl exec --stdin --tty $STAGING -- /bin/bash;
+    fi
+  elif [ "$1" = "production" ]; then
+    if [ -z ${PRODUCTION+x} ]; then
+      echo "Get a bash shell on production. Before first use, invoke";
+      echo "az login";
+      echo "az aks get-credentials --name nhsei-???-k8s --resource-group nhsei-???-k8s-resources";
+      echo ""
+      echo "Then set PRODUCTION in your .env file to the name of the pod (nhsei-website-...)";
+    else
+      kubectl exec --stdin --tty $PRODUCTION -- /bin/bash;
+    fi
+    heroku run rails console --app heroku-app-name-staging
+  else
+    echo "Sorry, I don't know how to connect to the '$1' environment. Try 'staging' or 'production'"
+    exit 1
+  fi
+else
+  # no argument provided, so just run the local console in the development
+  # environment.
+  docker-compose run --rm web bash
+fi

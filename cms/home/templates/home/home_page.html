@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static posts_tags publications_tags wagtailcore_tags wagtailimages_tags %}
+{% load static posts_tags publications_tags wagtailcore_tags wagtailimages_tags menu_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
@@ -8,6 +8,8 @@
 {% endblock%}
 
 {% block content %}
+
+{% main_menu %}
 
 <div class="nhsuk-width-container nhsuk-u-margin-top-6">
     <div class="nhsuk-grid-row">

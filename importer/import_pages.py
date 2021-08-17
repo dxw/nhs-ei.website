@@ -8,7 +8,7 @@ from django.utils.html import strip_tags
 from cms.pages.models import BasePage
 from wagtail.core.models import Page
 from importer.utils import URLParser
-
+from importer.preserve import preserve
 from .importer_cls import Importer
 
 
@@ -29,10 +29,6 @@ class PagesImporter(Importer):
         pages = self.results  # this is json result set
 
         for page in pages:
-
-            first_published_at = page.get("date")
-            last_published_at = page.get("modified")
-            latest_revision_created_at = page.get("modified")
 
             """
             Process: We need to import the pages at the top level under the home page as we don't know the
@@ -86,14 +82,11 @@ class PagesImporter(Importer):
             )
 
             home_page.add_child(instance=obj)
-            rev = obj.save_revision()  # this needs to run here
 
-            obj.first_published_at = first_published_at
-            obj.last_published_at = last_published_at
-            obj.latest_revision_created_at = latest_revision_created_at
-            # probably not the best way to do this but need to update the dates on the page record.
-            obj.save()
-            rev.publish()
+            obj.first_published_at = page.get("date")
+            obj.last_published_at = page.get("modified")
+            obj.latest_revision_created_at = page.get("modified")
+            preserve(obj)
             sys.stdout.write(".")
 
         if self.next:

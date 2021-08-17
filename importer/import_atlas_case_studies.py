@@ -16,6 +16,7 @@ from cms.categories.models import (
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
+from .preserve import preserve
 import logging
 
 logger = logging.getLogger("importer")
@@ -70,9 +71,6 @@ class AtlasCaseStudiesImporter(Importer):
 
         for atlas_case_study in atlas_case_studies:
 
-            first_published_at = atlas_case_study.get("date")
-            last_published_at = atlas_case_study.get("modified")
-            latest_revision_created_at = atlas_case_study.get("modified")
             page_title = atlas_case_study.get("title")
             if not page_title:
                 page_title = "page has no title"
@@ -91,14 +89,11 @@ class AtlasCaseStudiesImporter(Importer):
                 wp_link=atlas_case_study.get("wp_link"),
             )
             atlas_case_study_index_page.add_child(instance=obj)
-            rev = obj.save_revision()  # this needs to run here
-            rev.publish()
 
-            obj.first_published_at = first_published_at
-            obj.last_published_at = last_published_at
-            obj.latest_revision_created_at = latest_revision_created_at
-            obj.save()
-            rev.publish()
+            obj.first_published_at = atlas_case_study.get("date")
+            obj.last_published_at = atlas_case_study.get("modified")
+            obj.latest_revision_created_at = atlas_case_study.get("modified")
+            preserve(obj)
             sys.stdout.write(".")
 
             # add the categories as related many to many, found this needs to be after the save above

@@ -19,6 +19,7 @@ from cms.publications.models import (
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
+from .preserve import preserve
 
 logger = logging.getLogger("importer")
 
@@ -119,9 +120,6 @@ class PublicationsImporter(Importer):
                 sys.stdout.write(".")
 
             # lets make the posts for each sub site, we're in a loop for each post here
-            first_published_at = publication.get("date")
-            last_published_at = publication.get("modified")
-            latest_revision_created_at = publication.get("modified")
 
             page_title = publication.get("title")
             if not page_title:
@@ -144,14 +142,10 @@ class PublicationsImporter(Importer):
                 source=FAKE_SOURCE,
             )
             sub_site_publication_index_page.add_child(instance=obj)
-            rev = obj.save_revision()  # this needs to run here
-            rev.publish()
-
-            obj.first_published_at = first_published_at
-            obj.last_published_at = last_published_at
-            obj.latest_revision_created_at = latest_revision_created_at
-            obj.save()
-            rev.publish()
+            obj.first_published_at = publication.get("date")
+            obj.last_published_at = publication.get("modified")
+            obj.latest_revision_created_at = publication.get("modified")
+            preserve(obj)
             sys.stdout.write(".")
 
             # add the publication types as related many to many, found this needs to be after the save above

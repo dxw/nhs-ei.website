@@ -1,3 +1,5 @@
+{% load menu_tags %}
+
 <!-- raw example from https://medium.com/swlh/building-a-css-only-responsive-multi-level-mega-menu-ee0a3781cc3f
 CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
 -->
@@ -7,97 +9,17 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
       <nav id="header-navigation" class="mega_nav" role="navigation" aria-label="Primary navigation" aria-labbeledby="label-navigation">
           <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
           <ul class="menu menu-bar" aria-hidden="false" role="menubar">
+              {% for item in menu_items %}
               <li>
                   <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
-                    Publications
+                    {{ item.text }}
                   </a>
                   <ul class="mega-menu mega-menu--multiLevel">
-                    {% include "partials/nav-links/publications.html" %}
+                    {% sub_menu item template="partials/subnavigation.html" %}
                   </ul>
               </li>
+              {% endfor %}
 
-              <li>
-                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
-                    Our work
-                  </a>
-                  <ul class="mega-menu mega-menu--multiLevel">
-                    <li>
-                        <a href="/ourwork" class="menu-link mega-menu-link mega-menu-header">
-                          Our work
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-link mega-menu-link " aria-haspopup="true">
-                          Programmes of work
-                        </a>
-                        <ul class="menu menu-list menu-multiColumn">
-                          {% include "partials/nav-links/our-work__programmes-of-work.html" %}
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">
-                          New Initiatives
-                        </a>
-                        <ul class="menu menu-list menu-multiColumn">
-                          {% include "partials/nav-links/our-work__new-initiatives.html" %}
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/commissioning/" class="menu-link mega-menu-link">
-                          Commissioning
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">
-                          Finance and Governance
-                        </a>
-                        <ul class="menu menu-list menu-multiColumn">
-                          {% include "partials/nav-links/our-work__finance-governance.html" %}
-                        </ul>
-                    </li>
-                    <li class="mobile-menu-back-item"><!-- Mobile back -->
-                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
-                    </li>
-                  </ul>
-              </li>
-              <li>
-                <a href="javascript:void(0);"
-                class="menu-link menu-bar-link" aria-haspopup="true">
-                  NHS Workforce
-                </a>
-                <ul class="mega-menu mega-menu--multiLevel">
-                  {% include "partials/nav-links/nhs-workforce.html" %}
-                </ul>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
-                  Learning and Improvement
-                </a>
-                <ul class="mega-menu mega-menu--multiLevel">
-                  {% include "partials/nav-links/learning-improvement.html" %}
-                </ul>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
-                  Get Involved
-                </a>
-                <ul class="mega-menu mega-menu--multiLevel">
-                  {% include "partials/nav-links/get-involved.html" %}
-                </ul>
-              </li>
-
-              <li>
-                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">News and blogs</a>
-                  <ul class="mega-menu mega-menu--multiLevel">
-                    {% include "partials/nav-links/news-blogs.html" %}
-                  </ul>
-              </li>
-
-              <li class="mobile-menu-header">
-                  <a href="/home" class="">
-                      <span>Home</span>
-                  </a>
-              </li>
           </ul>
       </nav>
   </div>

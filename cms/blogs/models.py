@@ -4,10 +4,9 @@ from cms.categories.models import Category, CategoryPage
 from django import forms
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import Page, ParentalManyToManyField
+from wagtail.core.models import Page
 
 
 class BlogIndexPage(Page):
@@ -79,12 +78,6 @@ class Blog(CategoryPage):
     # excerpt = RichTextField(blank=True)
 
     author = models.CharField(max_length=255, blank=True)
-    # categories = ParentalManyToManyField(
-    #     'categories.Category',
-    #     blank=True,
-    #     related_name='blog_categories',
-    #     help_text='use cmd/ctrl click to select multiple categories',
-    # )
 
     content_panels = Page.content_panels + [
         InlinePanel("categorypage_category_relationship", label="Categories"),

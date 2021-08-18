@@ -642,7 +642,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6,<3.9"
-content-hash = "dcc08f23ffd9c29698b5abd5aea8e2ccbe3c5d9fea9dd1433970faf7f96d9f93"
+content-hash = "3de9bd816ece44b2aeff35a4a2673a4d7912a67ff2400bcb76ad987188ac06e1"
 
 [metadata.files]
 anyascii = [

@@ -28,14 +28,9 @@ from wagtailnhsukfrontend.blocks import (
     ExpanderBlock,
     ExpanderGroupBlock,
     FlattenValueContext,
-    GreyPanelBlock,
     InsetTextBlock,
     ImageBlock,
-    PanelBlock,
-    PanelListBlock,
     WarningCalloutBlock,
-    PromoBlock,
-    PromoGroupBlock,
     SummaryListBlock,
 )
 
@@ -75,14 +70,8 @@ class CoreBlocks(StreamBlock):
     expander_group = ExpanderGroupBlock(group="Base")
     inset_text = InsetTextBlock(group="Base")
     image = ImageBlock(group="Base")
-    panel = PanelBlock(group="Base")
-    panel_list = PanelListBlock(group="Base")
-    # panel_with_image = PanelBlockWithImage(group='Base')
-    grey_panel = GreyPanelBlock(group="Base")
     warning_callout = WarningCalloutBlock(group="Base")
     summary_list = SummaryListBlock(group="Base")
-    promo = PromoBlock(group="Base")
-    promo_group = PromoGroupBlock(group="Base")
 
     recent_posts = cms.categories.blocks.RecentPostsBlock(group="Custom")
     text = RichTextBlock(

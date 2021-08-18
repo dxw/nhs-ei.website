@@ -7,6 +7,7 @@ from wagtail.core.models import Page
 from django.core.management import call_command
 
 from .importer_cls import Importer
+from .preserve import preserve
 
 # blogs are not from a subsite so rewrite the source blogs to posts
 # they use the same categories
@@ -44,9 +45,6 @@ class BlogsImporter(Importer):
 
         blogs = self.results  # this is json result set
         for blog in blogs:
-            first_published_at = blog.get("date")
-            last_published_at = blog.get("modified")
-            latest_revision_created_at = blog.get("modified")
 
             obj = Blog(
                 title=blog.get("title"),
@@ -61,14 +59,11 @@ class BlogsImporter(Importer):
                 wp_link=blog.get("link"),
             )
             blog_index_page.add_child(instance=obj)
-            rev = obj.save_revision()  # this needs to run here
 
-            obj.first_published_at = first_published_at
-            obj.last_published_at = last_published_at
-            obj.latest_revision_created_at = latest_revision_created_at
-            # probably not the best way to do this but need to update the dates on the page record.
-            obj.save()
-            rev.publish()
+            obj.first_published_at = blog.get("date")
+            obj.last_published_at = blog.get("modified")
+            obj.latest_revision_created_at = blog.get("modified")
+            preserve(obj)
 
             # Create source category
             source = blog.get("source")

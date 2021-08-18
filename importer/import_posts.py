@@ -8,6 +8,7 @@ from cms.pages.models import BasePage
 from cms.posts.models import Post, PostIndexPage
 from wagtail.core.models import Page
 
+from .preserve import preserve
 from .importer_cls import Importer
 
 # so we can match the subsite categories for the post index page
@@ -86,9 +87,6 @@ class PostsImporter(Importer):
                 sys.stdout.write(".")
 
             # lets make the posts for each sub site, we're in a loop for each post here
-            first_published_at = post.get("date")
-            last_published_at = post.get("modified")
-            latest_revision_created_at = post.get("modified")
 
             obj = Post(
                 title=post.get("title"),
@@ -103,14 +101,11 @@ class PostsImporter(Importer):
                 wp_link=post.get("link"),
             )
             sub_site_news_index_page.add_child(instance=obj)
-            rev = obj.save_revision()  # this needs to run here
-            rev.publish()
+            obj.first_published_at = post.get("date")
+            obj.last_published_at = post.get("modified")
+            obj.latest_revision_created_at = post.get("modified")
+            preserve(obj)
 
-            obj.first_published_at = first_published_at
-            obj.last_published_at = last_published_at
-            obj.latest_revision_created_at = latest_revision_created_at
-            obj.save()
-            rev.publish()
             sys.stdout.write(".")
 
             # Create source category

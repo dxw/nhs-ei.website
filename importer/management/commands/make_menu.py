@@ -29,23 +29,23 @@ def restructure(menu):
     return new_menu
 
 
-def make_flat_menu(menu):
+def make_flat_menu(menu, parent=None):
     # Given a nested menu, return a simple list of name/url pairs
     for item in menu:
-        yield [item[0], item[1]]
+        yield [item[0], item[1], parent]
         if item[2]:
-            for item in list(make_flat_menu(item[2])):
+            for item in list(make_flat_menu(item[2], parent=item[1])):
                 yield item
 
 
 def get_pages(flat_menu):
     lookup = dict()
-    root = Page.objects.get(slug="home")
+    home = Page.objects.get(slug="home")
     for item in flat_menu:
-        name, url = item
+        name, url, _ = item
         if url:
             url_bits = url.strip("/").split("/")
-            page = root
+            page = home
             for bit in url_bits:
                 try:
                     page = page.get_children().get(slug=bit)
@@ -108,6 +108,19 @@ def add_root_menu_items(menu, lookup):
             print(f"Base menu already exists")
 
 
+def move_other_pages(flat_menu, lookup):
+    for item in reversed(flat_menu):  # reverse to do leaves before ancestors
+        if item[2]:
+            if item[1].strip("/") == item[2].strip("/"):
+                continue  # (skip if not moving)
+            print(item)
+
+            lookup[item[1]].move(lookup[item[2]], pos="last-child")
+        else:
+            # we don't need to move the first layer
+            continue
+
+
 class Command(BaseCommand):
     help = "Make a menu structure suitable for wagtailmenus"
 
@@ -117,9 +130,15 @@ class Command(BaseCommand):
         # restructure the data from menu_structure to the right shape
         menu = restructure(menu_structure)
         # get a flattened version of that structure
-        flat_menu = make_flat_menu(menu)
+        flat_menu = list(make_flat_menu(menu))
         # map existing pages to original URLs
         lookup = get_pages(flat_menu)
-        print(lookup)
         # make menu have top level pages
         add_root_menu_items(menu, lookup)
+        # we now have a semi-serviceable menu.
+        # Move other pages to reflect better the desired menu structure
+        move_other_pages(flat_menu, lookup)
+
+
+# TODO: make sure new pages have 'are menu' enabled.
+# TODO: ensure we default to at least 3 layers of menu

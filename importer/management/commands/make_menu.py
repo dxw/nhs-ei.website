@@ -48,7 +48,7 @@ def get_pages(flat_menu):
             page = home
             for bit in url_bits:
                 try:
-                    page = page.get_children().get(slug=bit)
+                    page = page.get_children().specific().get(slug=bit)
                 except Page.DoesNotExist:  # wagtail.core.models.DoesNotExist
                     print(bit)
                     raise
@@ -66,6 +66,7 @@ def create_new_pages(pagenames):
         print(f"Creating {pagename}")
         page = Page(
             title=pagename,
+            show_in_menus=True,
             # wp_id=-10,
             # source="none",
             # wp_slug="none",
@@ -110,11 +111,16 @@ def add_root_menu_items(menu, lookup):
 
 def move_other_pages(flat_menu, lookup):
     for item in reversed(flat_menu):  # reverse to do leaves before ancestors
+        page = lookup[item[1]]
+        if not page.show_in_menus:
+            page.show_in_menus = True
+            preserve(page)
         if item[2]:
             if item[1].strip("/") == item[2].strip("/"):
                 continue  # (skip if not moving)
             print(item)
-
+            # we should insert first to reverse order again back to normal
+            # but that causes a crash...
             lookup[item[1]].move(lookup[item[2]], pos="last-child")
         else:
             # we don't need to move the first layer

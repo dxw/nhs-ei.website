@@ -1,7 +1,8 @@
+deployment
 node_modules
 npm-debug.log
 media
-db.sqlite3
+*.sqlite3
 requests_cache.sqlite
 backup_*
 .git

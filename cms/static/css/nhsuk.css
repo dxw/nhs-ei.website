@@ -6809,8 +6809,8 @@ nav a {
 
 .menu-link {
   padding: 15px 10px;
-  background: #ffffff;
-  color: #005eb8;
+  background: #005eb8;
+  color: #fff;
   transition: background .2s, color .2s;
   position: relative;
   z-index: 1; }
@@ -6833,7 +6833,7 @@ nav a {
 .mega-menu-header {
   font-size: 1rem;
   font-weight: bold;
-  color: #00519f; }
+  color: #fff; }
 
 .mega-menu {
   background: #ffffff;

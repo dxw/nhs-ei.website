@@ -110,25 +110,13 @@ class TestComponentsPage(TestCase):
             "Image block",
         )
 
-        # Panel blocks
-        panel_with_label = soup.find("div", "nhsuk-panel-with-label")
-        self.assertTrue(panel_with_label.find("h3", "nhsuk-panel-with-label__label"))
-        self.assertEqual(
-            panel_with_label.find("h3", "nhsuk-panel-with-label__label").string,
-            "Panel block",
-        )
-
-        panel_group = soup.find("div", "nhsuk-panel-group")
-        self.assertEqual(len(panel_group.find_all("div", "nhsuk-panel-group__item")), 2)
-
-        panel_grey = soup.find("div", "nhsuk-panel--grey")
-        self.assertEqual(panel_grey.find("h3").string, "Grey panel block")
-        self.assertEqual(panel_grey.find("p").string, "Grey panel block content")
+        panel_group = soup.find("ul", "nhsuk-card-group")
+        self.assertEqual(len(panel_group.find_all("li", "nhsuk-card-group__item")), 2)
 
         # Warning
         warning_callout = soup.find("div", "nhsuk-warning-callout")
         self.assertEqual(
-            warning_callout.find("h3", "nhsuk-warning-callout__label").string,
+            warning_callout.find("h3", "nhsuk-warning-callout__label").string.strip(),
             "Warning callout block",
         )
         self.assertEqual(

@@ -70,19 +70,19 @@ class TestHomePage(TestCase):
         soup = BeautifulSoup(response.content, "html.parser")
 
         # Check there are two promos
-        promos = soup.find_all("div", "nhsuk-promo")
+        promos = soup.find_all("li", "nhsuk-card-group__item")
         self.assertEqual(len(promos), 2)
 
         # promo1 contains a header and text
         promo1 = promos[0]
-        promo1_header = promo1.find("h3", "nhsuk-promo__heading")
-        self.assertEqual(promo1_header.string, "Promo One Heading")
+        promo1_header = promo1.find("h3", "nhsuk-card__heading")
+        self.assertEqual(promo1_header.string.strip(), "Promo One Heading")
 
         # promo2 contains a header, text and an image with scr containing 'homepage-hero-image'
         promo2 = promos[1]
-        promo2_header = promo2.find("h3", "nhsuk-promo__heading")
-        self.assertEqual(promo2_header.string, "Promo Two Heading")
-        promo2_image = promo2.find("img", "nhsuk-promo__img")
+        promo2_header = promo2.find("h3", "nhsuk-card__heading")
+        self.assertEqual(promo2_header.string.strip(), "Promo Two Heading")
+        promo2_image = promo2.find("img", "nhsuk-card__img")
         self.assertTrue(
             "homepage-hero-image" in promo2_image["src"],
             f"src was {promo2_image['src']} which doesn't contain homepage-hero-image",
@@ -95,11 +95,11 @@ class TestHomePage(TestCase):
         # Check there is a callout block
         callout = soup.select_one("div.nhsuk-warning-callout")
         callout_header = callout.find("h3", "nhsuk-warning-callout__label")
-        self.assertEqual(callout_header.string, "Callout title?")
+        self.assertEqual(callout_header.string.strip(), "Callout title?")
         callout_content = callout.find("p")
-        self.assertEqual(callout_content.string, "Callout content")
+        self.assertEqual(callout_content.string.strip(), "Callout content")
         callout_link = callout.find("a")
-        self.assertEqual(callout_link.string, "Callout Link")
+        self.assertEqual(callout_link.string.strip(), "Callout Link")
 
     def test_home_page_footer(self):
         response = self.client.get("/")

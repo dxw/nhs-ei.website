@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Use Poetry to handle project dependencies
 - All content categories are now unified across the site, rather than existing
   in discrete subsites.
+- Updated version of nhsuk-frontend
 
 2021-02-08
 ### Added

@@ -126,8 +126,9 @@ class Publication(CategoryPage):
     documents = StreamField(PublicationsBlocks, blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
-    source = models.CharField(null=True, max_length=100)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
+    source = models.CharField(null=True, max_length=100, blank=True)
+
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
     component_fields = models.TextField(null=True, blank=True)

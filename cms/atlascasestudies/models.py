@@ -125,7 +125,7 @@ class AtlasCaseStudy(CategoryPage):
     body = RichTextField(blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
     # source = models.CharField(null=True, max_length=100)
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)

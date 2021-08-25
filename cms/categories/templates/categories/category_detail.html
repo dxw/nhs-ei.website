@@ -29,7 +29,7 @@
                 <tr class="nhsuk-table__row">
                     <td class="nhsuk-table__cell"><a href="{{page.record.url}}">{{page.record.title}}</a></td>
                     <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--blue">{{ page.tag }}</span></td>
-                    <td class="nhsuk-table__cell"><time class="date" datetime="">{{ page.record.last_published_at|date:'d M Y g:i a' }}</time></td>
+                    <td class="nhsuk-table__cell"><time class="date" datetime="">{{ page.record.last_published_at|date:'d M Y' }}</time></td>
                 </tr>
               {% endfor %}
               </tbody>

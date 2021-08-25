@@ -52,8 +52,8 @@ class TestCategoryDetailPage(TestCase):
 
         self.assertEqual(table_rows[1].select("td")[0].text, "Publication One")
         self.assertEqual(table_rows[1].select("td")[1].text, "Publication")
-        self.assertEqual(table_rows[1].select("td")[2].text, "05 Feb 2021 9:55 a.m.")
+        self.assertEqual(table_rows[1].select("td")[2].text, "05 Feb 2021")
 
         self.assertEqual(table_rows[2].select("td")[0].text, "Post Two")
         self.assertEqual(table_rows[2].select("td")[1].text, "News")
-        self.assertEqual(table_rows[2].select("td")[2].text, "04 Feb 2021 5:45 p.m.")
+        self.assertEqual(table_rows[2].select("td")[2].text, "04 Feb 2021")

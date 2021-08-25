@@ -18,10 +18,12 @@ class AtlasCaseStudyIndexPage(Page):
     ]
 
     def get_latest_atlas_case_studies(self, num):
-        return AtlasCaseStudy.objects.all().order_by("-first_published_at")[:num]
+        return AtlasCaseStudy.objects.all().order_by("-latest_revision_created_at")[
+            :num
+        ]
 
     def get_context(self, request, *args, **kwargs):
-        atlas_case_study_ordering = "-first_published_at"
+        atlas_case_study_ordering = "-latest_revision_created_at"
         context = super().get_context(request, *args, **kwargs)
 
         if request.GET.get("setting"):

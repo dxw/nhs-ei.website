@@ -20,10 +20,10 @@ class BlogIndexPage(Page):
     ]
 
     def get_latest_blogs(self, num):
-        return Blog.objects.all().order_by("-first_published_at")[:num]
+        return Blog.objects.all().order_by("-latest_revision_created_at")[:num]
 
     def get_context(self, request, *args, **kwargs):
-        blog_ordering = "-first_published_at"
+        blog_ordering = "-latest_revision_created_at"
         context = super().get_context(request, *args, **kwargs)
 
         if request.GET.get("category"):

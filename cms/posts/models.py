@@ -19,10 +19,10 @@ class PostIndexPage(Page):
     ]
 
     def get_latest_posts(num):
-        return Post.objects.all().order_by("-first_published_at")[:num]
+        return Post.objects.all().order_by("-latest_revision_created_at")[:num]
 
     def get_context(self, request, *args, **kwargs):
-        post_ordering = "-first_published_at"
+        post_ordering = "-latest_revision_created_at"
         context = super().get_context(request, *args, **kwargs)
 
         if request.GET.get("category"):

@@ -22,12 +22,12 @@ class CategoryDetailView(DetailView):
         pages = CategoryPage.objects.live()
         category = context["object"]
         pages = pages.filter(categorypage_category_relationship__category=category)
-        ordered_pages = pages.order_by("-last_published_at")
+        ordered_pages = pages.order_by("-latest_revision_created_at")
         page_data = [
             {
                 "record": page,
                 "tag": page.specific._meta.verbose_name.title(),
-                "date": page.last_published_at,
+                "date": page.latest_revision_created_at,
             }
             for page in ordered_pages
         ]

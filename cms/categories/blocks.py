@@ -73,12 +73,12 @@ class RecentPostsBlock(FlattenValueContext, StructBlock):
         if "all" not in page_types:
             page_classes = [page_type_lookup[page_type] for page_type in page_types]
             pages = pages.type(*page_classes)
-        limited_pages = pages.order_by("-last_published_at")[:num_to_show]
+        limited_pages = pages.order_by("-latest_revision_created_at")[:num_to_show]
         page_data = [
             {
                 "record": page,
                 "tag": page.specific._meta.verbose_name.title(),
-                "date": page.last_published_at,
+                "date": page.latest_revision_created_at,
             }
             for page in limited_pages
         ]

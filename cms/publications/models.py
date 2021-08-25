@@ -31,7 +31,7 @@ class PublicationIndexPage(Page):
         verbose_name_plural = "Publications Index Pages"
 
     def get_latest_publications(num):
-        return Publication.objects.all().order_by("-first_published_at")[:num]
+        return Publication.objects.all().order_by("-latest_revision_created_at")[:num]
 
     def get_context(self, request, *args, **kwargs):
         """
@@ -40,7 +40,7 @@ class PublicationIndexPage(Page):
         result sets but we will need a decision made on that. TODO.
         """
         context = super().get_context(request, *args, **kwargs)
-        publication_ordering = request.GET.get("order") or "-first_published_at"
+        publication_ordering = request.GET.get("order") or "-latest_revision_created_at"
 
         if request.GET.get("publication_type"):
             context["publication_type_id"] = int(request.GET.get("publication_type"))

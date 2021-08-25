@@ -32,7 +32,7 @@ def search(request):
     'latest_revision_created_at'
     '-latest_revision_created_at'
     """
-    search_ordering = "-first_published_at"
+    search_ordering = "-latest_revision_created_at"
 
     if request.GET.get("order"):
         search_ordering = request.GET.get("order")
@@ -51,7 +51,7 @@ def search(request):
                     Post.objects.live()
                     .order_by(search_ordering)
                     .filter(
-                        first_published_at__range=[
+                        latest_revision_created_at__range=[
                             request.GET.get("date_from"),
                             request.GET.get("date_to"),
                         ]
@@ -74,7 +74,7 @@ def search(request):
                     Blog.objects.live()
                     .order_by(search_ordering)
                     .filter(
-                        first_published_at__range=[
+                        latest_revision_created_at__range=[
                             request.GET.get("date_from"),
                             request.GET.get("date_to"),
                         ]
@@ -97,7 +97,7 @@ def search(request):
                     BasePage.objects.live()
                     .order_by(search_ordering)
                     .filter(
-                        first_published_at__range=[
+                        latest_revision_created_at__range=[
                             request.GET.get("date_from"),
                             request.GET.get("date_to"),
                         ]
@@ -120,7 +120,7 @@ def search(request):
                     Publication.objects.live()
                     .order_by(search_ordering)
                     .filter(
-                        first_published_at__range=[
+                        latest_revision_created_at__range=[
                             request.GET.get("date_from"),
                             request.GET.get("date_to"),
                         ]
@@ -142,7 +142,7 @@ def search(request):
                     Page.objects.live()
                     .order_by(search_ordering)
                     .filter(
-                        first_published_at__range=[
+                        latest_revision_created_at__range=[
                             request.GET.get("date_from"),
                             request.GET.get("date_to"),
                         ]
@@ -155,9 +155,6 @@ def search(request):
                 search_results = (
                     Page.objects.live().order_by(search_ordering).search(query)
                 )
-
-        # if request.GET.get('date_from') and request.GET.get('date_to'):
-        #     search_results.filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
 
         search_results_count = search_results.count()
 

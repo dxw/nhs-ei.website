@@ -14,7 +14,9 @@ if [ "$1" = "testfixtures" ]; then
   echo "Purged old page revisions from database"
   docker-compose run --rm web python manage.py dumpdata \
     --natural-foreign --natural-primary \
-    -e contenttypes -e auth.Permission \
+    -e contenttypes \
+    -e auth.permission \
+    -e wagtailcore.pagelogentry \
     --indent 2 \
     -o fixtures/testdata.json
   echo "Exported updated test fixtures"
@@ -23,7 +25,8 @@ else
   # https://www.coderedcorp.com/blog/how-to-dump-your-django-database-and-load-it-into-/
   docker-compose run --rm web python manage.py dumpdata \
     --natural-foreign --natural-primary \
-    -e contenttypes -e auth.Permission \
+    -e contenttypes \
+    -e auth.permission \
     --indent 2 \
     -o /tmp/dumpdb.json
   echo "Database dump written to /tmp/dumpdb.json"

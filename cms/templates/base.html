@@ -23,13 +23,9 @@
     <link href="https://www.nhs.uk/" rel="preconnect">
     <link href="https://assets.nhs.uk/" rel="preconnect" crossorigin>
 
-    <link type="font/woff2" href="https://assets.nhs.uk/fonts/FrutigerLTW01-55Roman.woff2" rel="preload" as="font"
-        crossorigin>
-    <link type="font/woff2" href="https://assets.nhs.uk/fonts/FrutigerLTW01-65Bold.woff2" rel="preload" as="font"
-        crossorigin>
     {# Global stylesheets #}
     {% block headCSS %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wagtailnhsukfrontend/css/wagtail-nhsuk-frontend.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wagtailnhsukfrontend/css/nhsuk.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/nhsuk.css' %}">
 
     {% endblock %}
@@ -39,7 +35,7 @@
     {% endblock %}
     {# Global javascript #}
     <script src="{% static 'js/nhsuk.js' %}" defer></script>
-    <script type="text/javascript" src="{% static 'wagtailnhsukfrontend/js/nhsuk-3.0.4.min.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'wagtailnhsukfrontend/js/nhsuk.min.js' %}" defer></script>
 
     {% block headIcons %}
     <link rel="shortcut icon" href="{% static 'assets/favicons/favicon.ico' %}" type="image/x-icon">

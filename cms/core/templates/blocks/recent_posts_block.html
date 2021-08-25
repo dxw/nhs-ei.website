@@ -12,9 +12,11 @@
                 <a href="{{item.record.url}}">
                 {{item.record.title}}</a>
               </h2>
+              <span class="nhsuk-body-s">
               <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
               <span class="nhsei-list-meta">Last updated
               <time class="date" datetime="">{{ item.record.last_published_at|date:'d M Y g:i a' }}</time></span>
+              </span>
             </article>
           </li>
           {% endfor %}

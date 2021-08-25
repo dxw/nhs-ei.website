@@ -32,12 +32,12 @@ class TestComponentsPage(TestCase):
         self.assertEqual(first_list_item_1_link.text.strip(), "Post Two")
 
         first_list_item_1_label = first_list.select_one(
-            "li:nth-child(1) article span:nth-of-type(1)"
+            "li:nth-child(1) article span span:nth-of-type(1)"
         )
         self.assertEqual(first_list_item_1_label.text.strip(), "News")
 
         first_list_item_1_date = first_list.select_one(
-            "li:nth-child(1) article span:nth-of-type(2) time"
+            "li:nth-child(1) article span span:nth-of-type(2) time"
         )
         self.assertGreater(len(first_list_item_1_date.text.split()), 0)
 
@@ -47,12 +47,12 @@ class TestComponentsPage(TestCase):
         self.assertEqual(first_list_item_2_link.text.strip(), "Post One")
 
         first_list_item_2_label = first_list.select_one(
-            "li:nth-child(2) article span:nth-of-type(1)"
+            "li:nth-child(2) article span span:nth-of-type(1)"
         )
         self.assertEqual(first_list_item_2_label.text.strip(), "News")
 
         first_list_item_2_date = first_list.select_one(
-            "li:nth-child(2) article span:nth-of-type(2) time"
+            "li:nth-child(2) article span span:nth-of-type(2) time"
         )
         self.assertGreater(len(first_list_item_2_date.text.split()), 0)
 

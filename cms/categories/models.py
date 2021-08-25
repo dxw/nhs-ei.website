@@ -34,8 +34,8 @@ class Category(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
-    source = models.CharField(null=True, max_length=100)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
+    source = models.CharField(null=True, max_length=100, blank=True)
 
     class Meta:
         ordering = ["name"]
@@ -69,7 +69,7 @@ class PublicationType(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         ordering = ["name"]
@@ -98,7 +98,7 @@ class Setting(models.Model):
     slug = models.SlugField(max_length=255)
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
     # source = models.CharField(null=True, max_length=100)
 
     class Meta:
@@ -115,7 +115,7 @@ class Region(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True, blank=True)
     # source = models.CharField(null=True, max_length=100)
 
     class Meta:

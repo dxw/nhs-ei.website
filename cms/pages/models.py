@@ -26,11 +26,11 @@ class BasePage(Page):
     body = StreamField(CoreBlocks, blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.IntegerField(null=True)
+    wp_id = models.IntegerField(null=True, blank=True)
     parent = models.IntegerField(blank=True, null=True)
-    source = models.CharField(null=True, max_length=100)
+    source = models.CharField(null=True, max_length=100, blank=True)
     wp_template = models.CharField(null=True, max_length=100, blank=True)
-    wp_slug = models.TextField(null=True)
+    wp_slug = models.TextField(null=True, blank=True)
     real_parent = models.IntegerField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
     raw_content = models.TextField(null=True, blank=True)
@@ -128,11 +128,11 @@ class LandingPage(Page):
     body = StreamField(CoreBlocks, blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.IntegerField(null=True)
+    wp_id = models.IntegerField(null=True, blank=True)
     parent = models.IntegerField(blank=True, null=True)
-    source = models.CharField(null=True, max_length=100)
+    source = models.CharField(null=True, max_length=100, blank=True)
     wp_template = models.CharField(null=True, max_length=100, blank=True)
-    wp_slug = models.TextField(null=True)
+    wp_slug = models.TextField(null=True, blank=True)
     real_parent = models.IntegerField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
     raw_content = models.TextField(null=True, blank=True)
@@ -215,11 +215,11 @@ class ComponentsPage(Page):
     body = StreamField(CoreBlocks, blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.IntegerField(null=True)
+    wp_id = models.IntegerField(null=True, blank=True)
     parent = models.IntegerField(blank=True, null=True)
-    source = models.CharField(null=True, max_length=100)
+    source = models.CharField(null=True, max_length=100, blank=True)
     wp_template = models.CharField(null=True, max_length=100, blank=True)
-    wp_slug = models.TextField(null=True)
+    wp_slug = models.TextField(null=True, blank=True)
     real_parent = models.IntegerField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
     raw_content = models.TextField(null=True, blank=True)

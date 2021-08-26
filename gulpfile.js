@@ -103,7 +103,7 @@ const webpackJSProd = () => {
 
 /* Copy assets folder (favicons, icons, logoso into static */
 const assets = () => {
-  return gulp.src('packages/assets/**')
+  return gulp.src('node_modules/nhsuk-frontend/packages/assets/**')
     .pipe(gulp.dest(assetsFolder + '/assets/'))
 }
 

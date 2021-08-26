@@ -13,6 +13,7 @@
                 {{item.record.title}}</a>
               </h2>
               <span class="nhsuk-body-s">
+                <div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{item.record.blurb}}</div>
               <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
               <span class="nhsei-list-meta">Last updated
               <time class="date" datetime="">{{ item.record.last_published_at|date:'d M Y' }}</time></span>

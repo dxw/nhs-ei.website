@@ -1,8 +1,8 @@
 from django.db import models
-
 from modelcluster.fields import ParentalKey
-
 from wagtail.core.models import Page
+import html
+import re
 
 """CATEGORIES work with content types a across the site"""
 
@@ -26,7 +26,35 @@ class CategoryPageCategoryRelationship(models.Model):
 class CategoryPage(Page):
     """CategoryPages are pages which have categories, like Blogs and Publications."""
 
-    pass
+    def blurb(self, length=110):  # Length empirically chosen, feel free to change.
+        """
+        Create a short extract for displaying on the search page.
+        We would call it an excerpt or a snippet, but both those names are taken
+        (by a page field and a wagtail concept of smaller-than-page fragments)
+        """
+
+        body = self.specific.body
+        # Later we'll probably want to handle stream fields but this'll do for now.
+        assert (
+            type(body) == str
+        ), "Invalid assumption: body of page is a richtext string. "
+        # It's not *actually* html, so removing it with regular expressions is fine.
+        # We probably don't need to process the whole string, which could be quite long
+        # TODO: consider cutting at 1k or so and matching for <[^<]$ too.
+        no_tag_blurb = re.sub("\s*<[^<]+>\s*", " ", body).lstrip()
+        roughcut_blurb = no_tag_blurb[:length]
+        if len(no_tag_blurb) > length:
+            ellipsis = "\u2026"
+        else:
+            ellipsis = ""
+        # There was a concern about cutting &...; escapes in half but
+        # the space splitting will prevent that.
+        last_space_pos = roughcut_blurb.rfind(" ")
+        if last_space_pos == -1:
+            blurb = roughcut_blurb  # there's no spaces
+        else:
+            blurb = roughcut_blurb[:last_space_pos]
+        return html.unescape(blurb + ellipsis)
 
 
 class Category(models.Model):

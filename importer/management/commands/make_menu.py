@@ -6,6 +6,7 @@ from cms.pages.models import Page
 from importer.preserve import preserve
 from wagtail.core.models import Site
 from wagtailmenus.conf import settings
+from django.core.exceptions import ValidationError
 
 import json
 
@@ -50,8 +51,8 @@ def get_pages(flat_menu):
                 try:
                     page = page.get_children().specific().get(slug=bit)
                 except Page.DoesNotExist:  # wagtail.core.models.DoesNotExist
-                    print(bit)
-                    raise
+                    # things seem to get very wierd around what this exception is...
+                    logger.warn(f"Unable to find page match for {bit} from page {page}")
                 else:
                     lookup[url] = page
     return lookup
@@ -94,7 +95,13 @@ def create_new_pages(pagenames):
 def add_root_menu_items(menu, lookup):
     # from https://github.com/rkhleics/wagtailmenus/blob/master/wagtailmenus/management/commands/autopopulate_main_menus.py
     # with a roundabout way of generating a queryset
-    top_level_pages = [lookup[item[1]] for item in menu]
+    try:
+        top_level_pages = [lookup[item[1]] for item in menu]
+    except Exception:
+        logger.fatal(f"Top level page missing")
+        for item in menu:
+            logger.fatal(f"{item}: {lookup.get(item[1], None)}")
+        raise
     page_ids = [x.id for x in top_level_pages]
     pages = Page.objects.filter(id__in=page_ids)
     assert len(pages) == len(page_ids)
@@ -111,6 +118,9 @@ def add_root_menu_items(menu, lookup):
 
 def move_other_pages(flat_menu, lookup):
     for item in reversed(flat_menu):  # reverse to do leaves before ancestors
+        if not lookup.get(item[1]):
+            logger.warn(f"Skipping {item[1]}")
+            continue
         page = lookup[item[1]]
         if not page.show_in_menus:
             page.show_in_menus = True
@@ -121,7 +131,11 @@ def move_other_pages(flat_menu, lookup):
             print(item)
             # we should insert first to reverse order again back to normal
             # but that causes a crash...
-            lookup[item[1]].move(lookup[item[2]], pos="last-child")
+            try:
+                lookup[item[1]].move(lookup[item[2]], pos="last-child")
+            except ValidationError as e:
+                logging.warn(f"Can't move {item[1]} to {item[2]}, {e}")
+
         else:
             # we don't need to move the first layer
             continue

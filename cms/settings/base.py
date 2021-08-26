@@ -183,6 +183,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     PROJECT_DIR / "static",
+    "node_modules",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated

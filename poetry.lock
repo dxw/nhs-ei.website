@@ -673,7 +673,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6,<3.9"
-content-hash = "d247806fa06850414cd9ebd0eea8b98f0e09716eddff2a6e818729213e01af23"
+content-hash = "19912dfb0460544d31697c01a253e8f3e310df099e720c24da8b90d6047d402c"
 
 [metadata.files]
 anyascii = [

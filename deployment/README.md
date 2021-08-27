@@ -95,3 +95,13 @@ $ export KUBECONFIG=~/.nhsei-azurek8s
 ```
 
 You should be able to run `kubectl` commands normally.
+
+## Things on Staging that aren't in Terraform yet
+
+### Create a valid certificate
+Manually: `kubectl create --edit -f https://cert-manager.io/docs/tutorials/acme/example/production-issuer.yaml` then do the things mentioned in https://docs.cert-manager.io/en/release-0.11/reference/clusterissuers.html
+This can probably be Terraformed with https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
+
+### Connect Postgresql securely
+Add a private endpoint. Terraform with
+https://github.com/hashicorp/terraform-provider-azurerm/blob/main/examples/private-endpoint/postgresql/main.tf

@@ -69,8 +69,5 @@ class TestBlurb(TestCase):
         # words after the cut off don't appear
         self.assertIn("scelerisque", page.body, 93)
         self.assertNotIn("scelerisque", page.blurb(93))
-        # things that are too long are cut off and can be
-        # substantially shorter due to trimming whole words
-        self.assertLess(len(page.blurb(93)), 92, page.blurb)
         # it cuts off where we expect and puts an ellipsis at the end
-        self.assertTrue(page.blurb(93).endswith(" id\u2026"))
+        self.assertTrue(page.blurb(93).endswith(" id li\u2026"))

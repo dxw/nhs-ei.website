@@ -77,16 +77,13 @@ class PublicationTypeAdmin(ModelAdmin):
     model = PublicationType
     search_fields = ("name",)
     list_display = ("name", "get_publication_type_usage")
-    # list_display = ('name', 'sub_site')
     menu_icon = "folder-open-inverse"
-    # list_filter = ("sub_site",)
 
     # to prevent deletion of a publiction type if it's in use
     permission_helper_class = PublicationTypePermissionHelper
 
     panels = [
         FieldPanel("name"),
-        # eventually hidden
         FieldPanel("slug"),
         FieldPanel("description"),
         FieldPanel("wp_id"),
@@ -120,19 +117,15 @@ class SettingAdmin(ModelAdmin):
     search_fields = ("name",)
     list_display = ("name", "get_setting_usage")
     menu_icon = "folder-open-inverse"
-    # list_filter = ('sub_site', )
 
     # to prevent deletion of a category if it's in use
     permission_helper_class = SettingPermissionHelper
 
     panels = [
-        # FieldPanel('sub_site'),
         FieldPanel("name"),
-        # eventually hidden
         FieldPanel("slug"),
         FieldPanel("description"),
         FieldPanel("wp_id"),
-        # FieldPanel('source'),
     ]
 
     def get_setting_usage(self, obj):
@@ -163,19 +156,15 @@ class RegionAdmin(ModelAdmin):
     search_fields = ("name",)
     list_display = ("name", "get_region_usage")
     menu_icon = "folder-open-inverse"
-    # list_filter = ('sub_site', )
 
     # to prevent deletion of a category if it's in use
     # permission_helper_class = RegionPermissionHelper
 
     panels = [
-        # FieldPanel('sub_site'),
         FieldPanel("name"),
-        # eventually hidden
         FieldPanel("slug"),
         FieldPanel("description"),
         FieldPanel("wp_id"),
-        # FieldPanel('source'),
     ]
 
     def get_region_usage(self, obj):

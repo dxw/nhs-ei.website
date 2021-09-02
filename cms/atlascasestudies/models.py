@@ -126,21 +126,8 @@ class AtlasCaseStudy(CategoryPage):
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.PositiveIntegerField(null=True, blank=True)
-    # source = models.CharField(null=True, max_length=100)
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
-
-    """i think we can do away with this field
-    and use the text from body to create the exceprt"""
-    # excerpt = RichTextField(blank=True)
-
-    # author = models.CharField(max_length=255, blank=True)
-    # categories = ParentalManyToManyField(
-    #     'categories.Category',
-    #     blank=True,
-    #     related_name='blog_categories',
-    #     help_text='use cmd/ctrl click to select multiple categories',
-    # )
 
     content_panels = Page.content_panels + [
         InlinePanel("atlas_case_study_setting_relationship", label="Settings"),
@@ -150,8 +137,6 @@ class AtlasCaseStudy(CategoryPage):
         MultiFieldPanel(
             [
                 FieldPanel("wp_id"),
-                # FieldPanel('author'),
-                # FieldPanel('source'),
                 FieldPanel("wp_slug"),
                 FieldPanel("wp_link"),
             ],
@@ -159,20 +144,3 @@ class AtlasCaseStudy(CategoryPage):
             classname="collapsed collapsible",
         ),
     ]
-
-    # def get_wp_api_link(self):
-    #     wp_source = self.source.replace('pages-','')
-    #     wp_id = self.wp_id
-    #     if wp_source != 'pages':
-    #         api_url = 'https://www.england.nhs.uk/{}/wp-json/wp/v2/pages/{}'.format(wp_source, wp_id)
-    #     else:
-    #         api_url = 'https://www.england.nhs.uk/wp-json/wp/v2/pages/{}'.format(wp_id)
-    #     return api_url
-
-    # def get_wp_live_link(self):
-    #     self_url_path = self.url
-    #     live_url_path = urlparse(self.wp_link).path
-    #     live_url = 'https://www.england.nhs.uk{}'.format(live_url_path)
-    #     print(self_url_path)
-    #     print(live_url_path)
-    #     return live_url

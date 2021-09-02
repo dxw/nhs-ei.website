@@ -17,8 +17,7 @@ from wagtail.core.models import Page
 
 
 class PublicationIndexPage(Page):
-    # title already in the Page class
-    # slug already in the Page class
+    # title and slug come from the Page class
     subpage_types = ["publications.Publication"]
     body = RichTextField(blank=True)
 
@@ -85,19 +84,6 @@ class PublicationIndexPage(Page):
         context["order"] = publication_ordering
 
         return context
-
-    def get_wp_api_link(self):
-        # TODO: Pretty sure this is a debug feature that should be removed.
-        return f"https://www.england.nhs.uk/wp-json/wp/v2/documents/{self.wp_id}"
-
-    def get_wp_live_link(self):
-        # TODO: Pretty sure this is a debug feature that should be removed.
-        self_url_path = self.url
-        live_url_path = urlparse(self.wp_link).path
-        live_url = "https://www.england.nhs.uk{}".format(live_url_path)
-        print(self_url_path)
-        print(live_url_path)
-        return live_url
 
 
 class PublicationPublicationTypeRelationship(models.Model):

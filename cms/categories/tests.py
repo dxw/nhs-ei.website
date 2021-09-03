@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
+from cms.blogs.models import Blog
+from wagtail.core.models import Page
 
 
 class TestCategoryIndexPage(TestCase):
@@ -57,3 +59,15 @@ class TestCategoryDetailPage(TestCase):
         self.assertEqual(table_rows[2].select("td")[0].text, "Post One")
         self.assertEqual(table_rows[2].select("td")[1].text, "News")
         self.assertEqual(table_rows[2].select("td")[2].text, "25 Aug 2021")
+
+
+class TestBlurb(TestCase):
+    fixtures = ["fixtures/testdata.json"]
+
+    def test_blurb(self):
+        page = Blog.objects.specific().get(slug="blog-post-one")
+        # words after the cut off don't appear
+        self.assertIn("scelerisque", page.body, 93)
+        self.assertNotIn("scelerisque", page.blurb(93))
+        # it cuts off where we expect and puts an ellipsis at the end
+        self.assertTrue(page.blurb(93).endswith(" id li\u2026"))

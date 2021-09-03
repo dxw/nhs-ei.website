@@ -1,10 +1,16 @@
 from django.db import models
-
 from modelcluster.fields import ParentalKey
-
 from wagtail.core.models import Page
+from django.template.defaultfilters import truncatechars, truncatechars_html
+import html
+import re
+
 
 """CATEGORIES work with content types a across the site"""
+
+
+class CannotBlurbNonString(Exception):
+    pass
 
 
 class CategoryPageCategoryRelationship(models.Model):
@@ -26,7 +32,24 @@ class CategoryPageCategoryRelationship(models.Model):
 class CategoryPage(Page):
     """CategoryPages are pages which have categories, like Blogs and Publications."""
 
-    pass
+    def blurb(self, length=110):  # Length empirically chosen, feel free to change.
+        """
+        Create a short extract for displaying on the search page.
+        We would call it an excerpt or a snippet, but both those names are taken
+        (by a page field and a wagtail concept of smaller-than-page fragments)
+        """
+
+        body = self.specific.body
+        # Later we'll probably want to handle stream fields but this'll handle richtext fields.
+        if type(body) != str:
+            raise CannotBlurbNonString(
+                f"Body of page returned a {type(body)} string, but we expected a str"
+            )
+        # It's not *actually* html, so removing it with regular expressions is fine.
+        # We probably don't need to process the whole string, which could be quite long
+        no_tag_blurb_raw = re.sub("\s*<[^<]+>\s*", " ", body).strip()
+        no_tag_blurb = html.unescape(no_tag_blurb_raw)
+        return truncatechars(no_tag_blurb, length)
 
 
 class Category(models.Model):

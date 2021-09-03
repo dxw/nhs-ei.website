@@ -5,3 +5,4 @@ db.sqlite3
 requests_cache.sqlite
 backup_*
 .git
+deployment

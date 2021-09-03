@@ -1,0 +1,26 @@
+Add the following file to .vscode/launch.json
+
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Django",
+      "type": "python",
+      "request": "attach",
+      "pathMappings": [
+        {
+          "localRoot": "/Users/dragon/dxw/nhs-ei.website",
+          "remoteRoot": "/app"
+        }
+      ],
+      "port": 3000,
+      "host": "127.0.0.1",
+    }
+  ]
+}
+
+-------
+
+Start a server via script/server then connect to it by clicking the Debug button
+(left ribbon with a bug on play) and the green arrow next to Run Django.
+Errors about not connecting to port 3000 probably mean that the server isn't running.

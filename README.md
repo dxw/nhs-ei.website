@@ -12,7 +12,7 @@ Notes:
 
 - Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
 
-- You local environment requirements should meet the following:
+- Your local environment requirements should meet the following:
   Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
 - `sqlite3` we found to run tests sqlite3 --version should not be < 3.26 so you may need to upgrade it. On a mac run brew install sqlite
@@ -25,7 +25,7 @@ Notes:
 
 Clone this repo to your local development machine
 
-```
+```bash
 git clone https://github.com/rkhleics/nhs-ei.website [your_folder_name:optional]
 ```
 
@@ -37,7 +37,7 @@ You will need 'docker' installed on your development machine. Get Docker: https:
 
 #### Change into the root of the project e.g.
 
-```
+```bash
 cd nhs-ei.website
 ```
 
@@ -45,13 +45,13 @@ or use the folder name you set when cloning the project.
 
 #### copy .env.example to .env
 
-```
+```bash
 cp .env.example .env
 ```
 
 #### after you have installed docker...
 
-```
+```bash
 docker-compose up
 ```
 
@@ -66,24 +66,38 @@ You will need a package on your machine to be able to setup a virtual environmen
 Create your virtual environment.
 the python version should be 3.8
 
-```
-pipenv install -r requirements.dev
+```bash
+pipenv install
 ```
 
 depending on your local python setup you may need to specify the version of python to use for the virtual environment...
 
-```
-pipenv install -r requirements.dev --python 3.8
+```bash
+pipenv install --python 3.8
 ```
 
 #### Your virtual environment should now be activated and ready to startup Wagtail
 
-You should see the virtual environment name before your user account name e.g. (virtual-env-name) user@computer ...
+Enable the new virtual environment:
 
-If not run
-
-```
+```bash
 pipenv shell
+```
+
+Install required libraries, on Ubuntu 20.04 linux we need to add the `pg_config` util:
+
+```bash
+sudo apt install libpq-dev 
+```
+
+TODO - Update this document for Mac/Windoze 
+
+Install the virtual env manager `poetry` from https://python-poetry.org/
+
+Install dependencies
+
+```bash
+poetry install
 ```
 
 When using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
@@ -99,7 +113,7 @@ To compile the fontend assets and use autoreload you need to have node and npm a
 
 In the root folder run
 
-```
+```bash
 npm install
 ```
 
@@ -121,7 +135,7 @@ python manage.py migrate
 
 Run ...
 
-```
+```bash
 python manage.py createsuperuser
 ```
 
@@ -131,13 +145,13 @@ You need to run 2 applications. One for the Wagtail app and the other for the fr
 
 From one terminal and with the virtual environment activated from [virtual environment](#virtual-environment) and form the root folder run ...
 
-```
+```bash
 python manage.py runserver 0:8000
 ```
 
 Then from a second terminal run ...
 
-```
+```bash
 npm start
 ```
 
@@ -203,7 +217,7 @@ To copy the media files, you can either:
 
 Move to the fixtures folder and run
 
-```
+```bash
 ./copy_media.sh
 ```
 
@@ -211,7 +225,7 @@ or, simply copy `fixtures/media` into a new folder called `media` at the root of
 
 Then from the root of the project run
 
-```
+```bash
 python manage.py loaddata fixtures/testdata.json
 ```
 
@@ -225,19 +239,19 @@ Making new testdata if you change the pages that are been tested and your test a
 
 Wagtail pre renders all images and we need to remove them, we don't want them to be included in the test data. The original images will stay in place. When the page is next viewed new renders will be created from the originals. Testing doesn't test for the actual image used, just the presence of the image tag in the correct place in the HTML
 
-```
+```bash
 python manage.py shell
 ```
 
 Then run the flowing commands
 
-```
+```bash
 from wagtail.images.models import Rendition
 ```
 
 and
 
-```
+```bash
 Rendition.objects.all().delete()
 ```
 
@@ -253,7 +267,7 @@ Now the media folder is a fixture that will represent the data when `./dumpdata.
 
 From the `fixtures` folder run
 
-```
+```bash
 ./dumpdata.sh > testdata.json
 ```
 

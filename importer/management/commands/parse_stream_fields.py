@@ -366,11 +366,20 @@ class Command(BaseCommand):
 
     def make_expander_group_block(self, content, page):
         content = ast.literal_eval(content)
-        title = content[0]["default_template_hidden_text_section_title"]
-        expander_list = content[1]  # (a list of expanders)
-        expanders = ast.literal_eval(
-            expander_list["default_template_hidden_text_blocks"]
-        )
+        if len(content) and "default_template_hidden_text_section_title" in content[0]:
+            title = content[0]["default_template_hidden_text_section_title"]
+        else:
+            title = "Unknown title"
+            logger.warn("Missing title: %s | %s", page, page.id)
+
+        if len(content) > 0 and "default_template_hidden_text_section_title" in content[1]:
+            expander_list = content[1]  # (a list of expanders)
+            expanders = ast.literal_eval(
+                expander_list["default_template_hidden_text_blocks"]
+            )
+        else:
+            expanders = []
+            logger.warn("Empty expander list: %s | %s", page, page.id)
 
         """
         {

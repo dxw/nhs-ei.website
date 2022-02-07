@@ -464,7 +464,11 @@ class ComponentsBuilder:
     def get_page_path(self, url):
         if url:
             path_list = url.split("/")  # a list of path segments
-            # first is always '' so lets remove it
+            # first is always '' so lets remove it, and we delete index zero below so we need at least 2 items
+            if len(path_list) <= 2:
+                logger.warn("URL too short: %s", url)
+                return "/"
+
             del path_list[0]
             if not path_list[0]:  # this one can go too
                 del path_list[0]

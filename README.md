@@ -90,8 +90,6 @@ Install required libraries, on Ubuntu 20.04 linux we need to add the `pg_config`
 sudo apt install libpq-dev 
 ```
 
-TODO - Update this document for Mac/Windoze 
-
 Install the virtual env manager `poetry` from https://python-poetry.org/
 
 Install dependencies

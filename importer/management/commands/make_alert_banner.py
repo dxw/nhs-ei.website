@@ -1,6 +1,7 @@
 import sys
 
 from django.core.management.base import BaseCommand
+from wagtail.core.models import Site
 
 from cms.core.models import CoreSettings
 
@@ -11,9 +12,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         settings = CoreSettings.objects.all().first()
         # delete first
-        settings.alert_banner = ""
-        settings.is_visible = False
-        settings.save()
+        if settings is not None:
+            settings.alert_banner = ""
+            settings.is_visible = False
+            settings.save()
+        else:
+            settings = CoreSettings()
+            site = Site.objects.all().first()
+            settings.site_id = site.id  # Horrible, I'm sorry. Toby
 
         settings.alert_banner = """
             <h2>Coronavirus (COVID-19)</h2>

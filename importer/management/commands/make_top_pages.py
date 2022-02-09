@@ -1,5 +1,9 @@
 import requests
 import sys
+
+from wagtail.core.fields import StreamField
+
+from cms.categories import blocks
 from cms.home.models import HomePage
 from django.core.management.base import BaseCommand
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
@@ -63,12 +67,7 @@ class Command(BaseCommand):
         latest_revision_created_at = our_work.latest_revision_created_at
 
         # updating the exiting blocks
-        blocks = our_work.body.__dict__
-        blocks["stream_data"][0]["value"][
-            "body"
-        ] = "<p>Learn more about our latest initiatives and what we’re doing for cancer, primary care, mental health, diabetes and other key areas of the NHS.</p>"
-
-        our_work.body = json.dumps(blocks["stream_data"])
+        our_work.body.raw_data = "<p>Learn more about our latest initiatives and what we’re doing for cancer, primary care, mental health, diabetes and other key areas of the NHS.</p>"
 
         rev = our_work.save_revision()
         our_work.first_published_at = first_published_at
@@ -127,7 +126,7 @@ class Command(BaseCommand):
                 "value": {
                     "label": "",
                     # this is the default, might want to change it...
-                    "heding_level": "3",
+                    "heading_level": "3",
                     # after it's been parsed for links
                     "body": "<p>We want to promote a culture of ongoing learning and improvement within the NHS. We aim to do this by encouraging shared learning, and through initiatives such as RightCare, the Insights Platform and Model Hospital.</p>",
                 },

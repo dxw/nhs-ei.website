@@ -26,6 +26,12 @@ DEBUG = env("DEBUG")
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 BASE_DIR = PROJECT_DIR.parent
 
+# Set default autofield to original 32-bit setting.
+# Supresses warnings when upgrading to Django 3.2
+# https://koenwoortman.com/python-django-auto-created-primary-key-used-when-not-defining-primary-key-type/
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 

@@ -163,6 +163,9 @@ class Command(BaseCommand):
         elif options["app"] == "documents":
             call_command("make_documents_list")
 
+        elif options["app"] == "menus":
+            call_command("make_menu")
+
         else:
             print("❌ runimport subcommand not recognised")
 

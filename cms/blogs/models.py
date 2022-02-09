@@ -94,22 +94,3 @@ class Blog(CategoryPage):
             classname="collapsed collapsible",
         ),
     ]
-
-    def get_wp_api_link(self):
-        wp_source = self.source.replace("pages-", "")
-        wp_id = self.wp_id
-        if wp_source != "pages":
-            api_url = "https://www.england.nhs.uk/{}/wp-json/wp/v2/pages/{}".format(
-                wp_source, wp_id
-            )
-        else:
-            api_url = "https://www.england.nhs.uk/wp-json/wp/v2/pages/{}".format(wp_id)
-        return api_url
-
-    # def get_wp_live_link(self):
-    #     self_url_path = self.url
-    #     live_url_path = urlparse(self.wp_link).path
-    #     live_url = 'https://www.england.nhs.uk{}'.format(live_url_path)
-    #     print(self_url_path)
-    #     print(live_url_path)
-    #     return live_url

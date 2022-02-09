@@ -1,16 +1,13 @@
 from cms.categories.models import Category, CategoryPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models.fields.related import ForeignKey
-from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 
 
 class PostIndexPage(Page):
-    # title already in the Page class
-    # slug already in the Page class
+    # title and slug come from the Page class
     subpage_types = ["posts.Post"]
     body = RichTextField(blank=True)
 
@@ -75,10 +72,6 @@ class Post(CategoryPage):
 
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
-
-    """i think we can do away with this field
-    and use the text from body to create the exceprt"""
-    # excerpt = RichTextField(blank=True)
 
     author = models.CharField(max_length=255, blank=True)
 

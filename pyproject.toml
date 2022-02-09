@@ -10,7 +10,7 @@ python = ">=3.6,<3.9"
 python-dateutil = "^2.8.1"
 lxml = "^4.6.5"
 Django = "^3.1"
-wagtail = "^2.14.1"
+wagtail = "^2.15.2"
 # Before updating wagtail-nhsuk-frontend, check to see if the npm package nhs-frontend also needs updating.
 wagtail-nhsuk-frontend = "~1.1.0"
 django-environ = "^0.4.5"

@@ -12,11 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         settings = CoreSettings.objects.all().first()
         # delete first
-        if settings is not None:
-            settings.alert_banner = ""
-            settings.is_visible = False
-            settings.save()
-        else:
+        if settings is None:
             settings = CoreSettings()
             site = Site.objects.all().first()
             settings.site_id = site.id  # Horrible, I'm sorry. Toby

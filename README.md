@@ -13,7 +13,7 @@ Notes:
 - Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
 
 - You local environment requirements should meet the following:
-  Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
+  Python >= 2.7, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
 - `sqlite3` we found to run tests sqlite3 --version should not be < 3.26 so you may need to upgrade it. On a mac run brew install sqlite
 

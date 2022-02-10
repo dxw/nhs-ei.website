@@ -1,0 +1,8 @@
+{% load menu_tags %}
+
+<div class="nhsuk-width-container menu-bar" id="mega-menu">
+  <h3>Corporate</h3>
+  {% flat_menu handle="corporate" %}
+  <h3>Dynamic</h3>
+  {% main_menu max_levels=3 template="partials/navigation.html" %}
+</div>

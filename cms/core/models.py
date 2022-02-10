@@ -29,17 +29,20 @@ class CoreSettings(BaseSetting, ClusterableModel):
                 FieldPanel("footer_extra"),
             ],
             heading="Extra header and footer code",
-            help_text="You can add valid html code snippets here such as analytics code or other scripts",
+            help_text="You can add valid html code snippets here such as "
+                      "analytics code or other scripts",
         ),
         MultiFieldPanel(
             [InlinePanel("upper_footer_links")],
             heading="Upper Footer Links",
-            help_text="NOTE: if you choose a page as a link it will overide the external link",
+            help_text="NOTE: if you choose a page as a link it will override "
+                      "the external link",
         ),
         MultiFieldPanel(
             [InlinePanel("lower_footer_links")],
             heading="Lower Footer Links",
-            help_text="NOTE: if you choose a page as a link it will overide the external link",
+            help_text="NOTE: if you choose a page as a link it will override "
+                      "the external link",
         ),
     ]
 

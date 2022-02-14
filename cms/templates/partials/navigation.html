@@ -1,27 +1,17 @@
 {% load menu_tags %}
 
-<!-- raw example from https://medium.com/swlh/building-a-css-only-responsive-multi-level-mega-menu-ee0a3781cc3f
-CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
--->
-<div class="nhsei-nav-wrapper">
-<div class="nhsuk-width-container">
-  <div class="nav mega_nav_wrapper">
-      <nav id="header-navigation" class="mega_nav" role="navigation" aria-label="Primary navigation" aria-labbeledby="label-navigation">
-          <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
-          <ul class="menu menu-bar" aria-hidden="false" role="menubar">
-              {% for item in menu_items %}
-              <li>
-                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
-                    {{ item.text }}
-                  </a>
-                  <ul class="mega-menu mega-menu--multiLevel">
-                    {% sub_menu item template="partials/subnavigation.html" %}
-                  </ul>
-              </li>
-              {% endfor %}
+{# https://github.com/dxw/nhs-ei.website/tree/2cff9befcc22b84afcbcde7235a79953cbfb1df5 <- last commit with previous nav template #}
 
-          </ul>
-      </nav>
-  </div>
-</div>
-</div>
+
+  <ul>
+    {% for item in menu_items %}
+      <li>
+        <a href="javascript:void(0);" aria-haspopup="true">
+          {{ item.text }}
+        </a>
+        <ul>
+          {% sub_menu item template="partials/subnavigation.html" %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>

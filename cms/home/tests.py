@@ -49,12 +49,7 @@ class TestHomePage(TestCase):
         response = self.client.get("/")
         soup = BeautifulSoup(response.content, "html.parser")
 
-        navigation = soup.find("nav")
-        navigation_links = navigation.select_one("ul.menu-bar").find_all("li")
-        # Check the first navigation item is a list item with the text 'Posts'
-        self.assertEqual(navigation_links[0].name, "li")
-        self.assertEqual(navigation_links[0].find("a").string.strip(), "Posts")
-        self.assertIn("Post One", str(navigation))
+        navigation = soup.find("#mega-menu")
 
     def test_home_page_alert_banner(self):
         response = self.client.get("/")

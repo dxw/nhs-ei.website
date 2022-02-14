@@ -1,4 +1,7 @@
 {% load menu_tags %}
+
+{# https://github.com/dxw/nhs-ei.website/tree/2cff9befcc22b84afcbcde7235a79953cbfb1df5 <- last commit with previous nav template #}
+
 {% if menu_items %}
   {% for item in menu_items %}
     <li>
@@ -6,17 +9,14 @@
         {% if item.has_children_in_menu %}
           aria-haspopup="true"
         {%endif%}
-        href="{{ item.href }}" class="menu-link mega-menu-link" >
+        href="{{ item.href }}">
           {{item.text}}
       </a>
 	    {% if item.has_children_in_menu %}
-       <ul class='menu menu-list menu-multiColumn'>
+       <ul>
        {% sub_menu item template=current_template %}
        </ul>
       {% endif %}
     </li>
   {% endfor %}
-  <li class="mobile-menu-back-item" class="menu-link mega-menu-link">
-    <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
-  </li>
 {% endif %}

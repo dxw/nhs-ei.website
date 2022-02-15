@@ -8751,8 +8751,16 @@ nav a:hover, nav a:visited {
   border: 0px;
 }
 
-#mega-menu {
+.toggle-content {
   display: none;
+  height: 0;
+  overflow: hidden;
+  transition: height 350ms ease-in-out;
+}
+
+.toggle-content.is-visible {
+  display: block;
+  height: auto;
 }
 
 .nhsuk-image {

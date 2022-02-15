@@ -25,6 +25,8 @@ wagtailmenus="^3.0.2"
 
 [tool.poetry.dev-dependencies]
 requests-cache = "^0.6.4"
+coverage = "^6.3.1"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

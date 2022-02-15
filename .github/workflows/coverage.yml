@@ -1,0 +1,38 @@
+name: Coverage
+
+on:
+  workflow_dispatch:
+    name: Manual
+  push:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install poetry
+      uses: abatilo/actions-poetry@v2.0.0
+      with:
+        poetry-version: 1.1.12
+    - name: Install Dependencies
+      run: poetry install
+    - name: Install JS dependencies
+      run: sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - && npm install
+    - name: Touch env
+      run: touch ${GITHUB_WORKSPACE}/cms/settings/.env
+        # - name: Setup DB
+        # run: poetry run ./manage.py migrate
+    - name: Run tests
+      run: poetry run coverage run ./manage.py test cms
+    - name: Report code coverage
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: 173df15c2a27953bcbc7691ace2d26fd62b46b227e1a076797691f267902abe1
+      with:
+        coverageCommand: poetry run coverage xml

@@ -8,6 +8,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import ClusterableModel, Orderable, ParentalKey
+from wagtailmenus.models import AbstractMainMenuItem
 
 
 @register_setting
@@ -30,19 +31,19 @@ class CoreSettings(BaseSetting, ClusterableModel):
             ],
             heading="Extra header and footer code",
             help_text="You can add valid html code snippets here such as "
-                      "analytics code or other scripts",
+            "analytics code or other scripts",
         ),
         MultiFieldPanel(
             [InlinePanel("upper_footer_links")],
             heading="Upper Footer Links",
             help_text="NOTE: if you choose a page as a link it will override "
-                      "the external link",
+            "the external link",
         ),
         MultiFieldPanel(
             [InlinePanel("lower_footer_links")],
             heading="Lower Footer Links",
             help_text="NOTE: if you choose a page as a link it will override "
-                      "the external link",
+            "the external link",
         ),
     ]
 
@@ -89,3 +90,27 @@ class LowerFooterLinks(Orderable):
         PageChooserPanel("page"),
         FieldPanel("external_url"),
     ]
+
+
+class ExtendedMainMenuItem(AbstractMainMenuItem):
+
+    menu = ParentalKey(
+        "wagtailmenus.MainMenu",
+        on_delete=models.CASCADE,
+        related_name="extended_menu_items",
+    )
+
+    caption = models.CharField(
+        max_length=250,
+        blank=True,
+        help_text="Additional explanatory text which appears alongside this menu item",
+    )
+
+    panels = (
+        PageChooserPanel("link_page"),
+        FieldPanel("link_url"),
+        FieldPanel("url_append"),
+        FieldPanel("link_text"),
+        FieldPanel("caption"),
+        FieldPanel("allow_subnav"),
+    )

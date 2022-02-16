@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "wagtail.contrib.search_promotions",
     "wagtailnhsukfrontend",
     "wagtailnhsukfrontend.settings",
     # importer

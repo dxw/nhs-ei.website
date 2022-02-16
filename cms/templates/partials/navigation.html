@@ -9,6 +9,9 @@
         <a href="javascript:void(0);" aria-haspopup="true">
           {{ item.text }}
         </a>
+        {% if item.caption %}
+        <br>{{ item.caption }}
+        {% endif %}
         <ul>
           {% sub_menu item template="partials/subnavigation.html" %}
         </ul>

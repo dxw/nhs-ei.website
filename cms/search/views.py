@@ -22,7 +22,7 @@ def search(request):
     date_to=2020-11-29
     """
 
-    query = request.GET.get("query", None)
+    query_string = request.GET.get("query", None)
     search_ordering = request.GET.get("order", "-latest_revision_created_at")
     search_type = request.GET.get("content_type", "")
     date_from = request.GET.get("date_from", "")
@@ -41,10 +41,10 @@ def search(request):
                     date_to,
                 ]
             )
-        return queryset.search(query)
+        return queryset.search(query_string)
 
     # Search
-    if query:
+    if query_string:
         if search_type == "news":
             search_results = search(Post)
         elif search_type == "blogs":
@@ -58,7 +58,7 @@ def search(request):
 
         search_results_count = search_results.count()
 
-        query = Query.get(query)
+        query = Query.get(query_string)
         # Record hit
         query.add_hit()
     else:
@@ -74,14 +74,14 @@ def search(request):
         search_results = paginator.page(paginator.num_pages)
 
     search_params = "&query={}&order={}&content_type={}&date_from={}&date_to={}".format(
-        query, search_ordering, search_type, date_from, date_to
+        query_string, search_ordering, search_type, date_from, date_to
     )
 
     return TemplateResponse(
         request,
         "search/search.html",
         {
-            "query": query,
+            "query_string": query_string,
             "search_results": search_results,
             "results_count": search_results_count,
             "page": page,

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags frontend_tags %}
+{% load static wagtailcore_tags frontend_tags wagtailsearchpromotions_tags %}
 
 {% block body_class %}template-searchresults{% endblock %}
 
@@ -13,7 +13,7 @@
         <div class="nhsuk-grid-column-one-third">
             <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Filter results by:</h2>
             <form action="">
-                <input type="hidden" name="query" value="{{ query }}">
+                <input type="hidden" name="query" value="{{ query_string }}">
                 <fieldset class="nhsuk-fieldset">
                     <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
                         <h1 class="nhsuk-fieldset__heading">Content type</h1>
@@ -73,7 +73,7 @@
             <div class="search-results-heading">
                 <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
                 <form action="">
-                    <input type="hidden" name="query" value="{{ query }}">
+                    <input type="hidden" name="query" value="{{ query_string }}">
                     <input type="hidden" name="content_type" value="{{content_type}}">
                     <input type="hidden" name="date_from" value="{{date_from}}">
                     <input type="hidden" name="date_to" value="{{date_to}}">
@@ -95,13 +95,33 @@
                     </fieldset>
                 </form>
                 <div class="nhsuk-body search-results-heading__details">
-                    {% if query %}
-                    <span>{{ results_count }} search results for <strong>"{{ query }}"</strong>
+                    {% if query_string %}
+                    <span>Search results for <strong>"{{ query_string }}"</strong>
                         {% if content_type %}, filtered by
                         <strong>{{ content_type }}</strong>{% endif %}</span>
                 </div>
                 {% endif %}
             </div>
+
+            {% get_search_promotions query_string as search_promotions %}
+            {% for search_promotion in search_promotions %}
+
+                <div class="nhsuk-card nhsuk-card--clickable">
+                    <div class="nhsuk-card__content">
+                        <div class="nhsuk-body-s">
+                            Suggested result<br>
+                        </div>
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                        <a class="nhsuk-card__link" href="{% pageurl search_promotion.page %}">{{ search_promotion.page.title }}</a>
+                        </h2>
+                        <p class="nhsuk-card__description">{{ search_promotion.description }}</p>
+                        <div class="nhsuk-body-s">
+                        Published: {{ search_promotion.page.first_published_at|date:'d F Y' }} - <em>Latest version
+                        {{ search_promotion.page.latest_revision_created_at|date:'d F Y' }}</em><br>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
 
             <div class="search-results">
                 <ul class="nhsuk-list nhsuk-list--border">

@@ -1,0 +1,68 @@
+from django.test import TestCase
+
+from wagtail.contrib.search_promotions.models import SearchPromotion
+from cms.pages.models import Page, BasePage
+from wagtail.search.models import Query
+
+
+class TestSearch(TestCase):
+    def test_simple_search(self):
+
+        root = Page.get_first_root_node()
+
+        test_aardvarks_page = BasePage(
+            title="Test Aardvarks Page",
+            slug="test-page-aardvarks",
+        )
+
+        test_bananas_page = BasePage(
+            title="Test Bananas Page",
+            slug="test-page-bananas",
+        )
+
+        root.add_child(instance=test_aardvarks_page)
+        root.add_child(instance=test_bananas_page)
+
+        response = self.client.get("/search/?query=aardvarks")
+
+        self.assertContains(response, "Test Aardvarks Page")
+        self.assertNotContains(response, "Test Bananas Page")
+
+    def test_promoted_search(self):
+
+        root = Page.get_first_root_node()
+
+        test_aardvarks_page = BasePage(
+            title="Test Aardvarks Page",
+            slug="test-page-aardvarks",
+        )
+
+        test_bananas_page = BasePage(
+            title="Test Bananas Page",
+            slug="test-page-bananas",
+        )
+
+        root.add_child(instance=test_aardvarks_page)
+        root.add_child(instance=test_bananas_page)
+
+        response = self.client.get("/search/?query=plantains")
+
+        # At this point there is no promoted search, no results should appear
+        self.assertNotContains(response, "Suggested result")
+        self.assertNotContains(response, "Test Aardvarks Page")
+        self.assertNotContains(response, "Test Bananas Page")
+
+        SearchPromotion.objects.create(
+            query=Query.get("plantains"),
+            page_id=test_bananas_page.id,
+            sort_order=0,
+            description="Plantains are similar to bananas.",
+        )
+
+        response = self.client.get("/search/?query=plantains")
+
+        # Now we have promoted a page for the phrase, we should get it in the search results
+        self.assertNotContains(response, "Test Aardvarks Page")
+        self.assertContains(response, "Suggested result")
+        self.assertContains(response, "Test Bananas Page")
+        self.assertContains(response, "Plantains are similar to bananas.")

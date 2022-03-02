@@ -151,3 +151,4 @@ compiledassets
 .DS_Store
 requests_cache.sqlite
 backup_*
+.idea

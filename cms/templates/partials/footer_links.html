@@ -1,0 +1,7 @@
+{% load menu_tags %}
+
+{% for item in menu_items %}
+    <li class="nhsuk-footer__list-item">
+        <a class="nhsuk-footer__list-item-link" href="{{ item.href }}">{{ item.text }}</a>
+    </li>
+{% endfor %}

@@ -170,47 +170,81 @@
   }
 },
 {
-  "model": "core.upperfooterlinks",
+  "model": "wagtailmenus.flatmenu",
   "pk": 1,
   "fields": {
-    "sort_order": 0,
-    "setting": 1,
-    "text": "Link Internal",
-    "page": 3,
-    "external_url": ""
+    "site": 2,
+    "title": "Footer (Upper)",
+    "handle": "footer-upper",
+    "heading": "",
+    "max_levels": 1
   }
 },
 {
-  "model": "core.upperfooterlinks",
+  "model": "wagtailmenus.flatmenu",
   "pk": 2,
   "fields": {
-    "sort_order": 1,
-    "setting": 1,
-    "text": "Link External",
-    "page": null,
-    "external_url": "http://www.example.com"
+    "site": 2,
+    "title": "Footer (Lower)",
+    "handle": "footer-lower",
+    "heading": "",
+    "max_levels": 1
   }
 },
 {
-  "model": "core.lowerfooterlinks",
+  "model": "wagtailmenus.flatmenuitem",
   "pk": 1,
   "fields": {
-    "sort_order": 0,
-    "setting": 1,
-    "text": "Link Internal",
-    "page": 3,
-    "external_url": ""
+      "sort_order": 0,
+      "link_page": 10,
+      "link_url": null,
+      "url_append": "",
+      "handle": "",
+      "link_text": "Link Internal",
+      "allow_subnav": false,
+      "menu": 1
   }
 },
 {
-  "model": "core.lowerfooterlinks",
+  "model": "wagtailmenus.flatmenuitem",
   "pk": 2,
   "fields": {
-    "sort_order": 1,
-    "setting": 1,
-    "text": "Link External",
-    "page": null,
-    "external_url": "http://www.example.com"
+      "sort_order": 1,
+      "link_page": null,
+      "link_url": "http://www.example.com",
+      "url_append": "",
+      "handle": "",
+      "link_text": "Link External",
+      "allow_subnav": false,
+      "menu": 1
+  }
+},
+{
+  "model": "wagtailmenus.flatmenuitem",
+  "pk": 3,
+  "fields": {
+      "sort_order": 0,
+      "link_page": 10,
+      "link_url": null,
+      "url_append": "",
+      "handle": "",
+      "link_text": "Link Internal",
+      "allow_subnav": false,
+      "menu": 2
+  }
+},
+{
+  "model": "wagtailmenus.flatmenuitem",
+  "pk": 4,
+  "fields": {
+      "sort_order": 1,
+      "link_page": null,
+      "link_url": "http://www.example.com",
+      "url_append": "",
+      "handle": "",
+      "link_text": "Link External",
+      "allow_subnav": false,
+      "menu": 2
   }
 },
 {

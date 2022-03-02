@@ -1,12 +1,18 @@
-{% load frontend_tags %}
+{% load menu_tags %}
 <footer role="contentinfo">
   <div class="nhsuk-footer" id="nhsuk-footer">
     <div class="nhsuk-width-container">
 
-    {% footer_links 'upper' %}
-    {% footer_links 'lower' %}
+      <ul class="nhsuk-footer__list nhsie-footer-menu">
+        {% flat_menu handle="footer-upper" template="partials/footer_links.html" %}
+      </ul>
 
-    <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
+      <ul class="nhsuk-footer__list nhsuk-footer__list">
+        {% flat_menu handle="footer-lower" template="partials/footer_links.html"%}
+      </ul>
 
+      <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
+
+    </div>
   </div>
 </footer>

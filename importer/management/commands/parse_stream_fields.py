@@ -192,8 +192,8 @@ class Command(BaseCommand):
                             content_fields = self.make_expander_group_block(
                                 page.content_fields, page
                             )
-                            for field in content_fields:
-                                body.append(field)
+                            for content_field in content_fields:
+                                body.append(content_field)
 
                             # body.append(content_blocks)
 

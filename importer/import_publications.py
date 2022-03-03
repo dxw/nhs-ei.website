@@ -166,7 +166,6 @@ class PublicationsImporter(Importer):
                 sys.stdout.write(".")
 
             # Create source category
-            source = publication.get("source")
             if source:
                 source_category, _ = Category.objects.get_or_create(
                     name=f"source: {source}",

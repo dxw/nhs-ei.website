@@ -1,19 +1,14 @@
-from os import PRIO_USER, unlink
-import requests
 import re
 import sys
 import logging
 from io import BytesIO
 from django.core.files import File
 from bs4 import BeautifulSoup
-from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
-from cms.atlascasestudies.models import AtlasCaseStudy
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
-from wagtail.images.models import Image
 from wagtail.core.models import Collection
 from .httpcache import session
 

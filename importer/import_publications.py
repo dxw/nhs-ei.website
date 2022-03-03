@@ -1,10 +1,7 @@
 import sys
 import time
-from urllib.parse import urlparse
 import logging
 
-from django.core.management import call_command
-from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
     PublicationType,

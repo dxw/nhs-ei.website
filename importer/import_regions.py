@@ -1,7 +1,6 @@
 import sys
 import time
 
-from django.core.management import call_command
 from cms.categories.models import Region
 
 from .importer_cls import Importer

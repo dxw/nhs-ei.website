@@ -1,9 +1,3 @@
-import ast
-from cms.blogs.models import Blog
-from cms.pages.models import BasePage, ComponentsPage, LandingPage
-from cms.posts.models import Post
-from cms.atlascasestudies.models import AtlasCaseStudy
-from cms.publications.models import Publication
 import random
 import sys
 from io import BytesIO
@@ -15,8 +9,6 @@ from django.core.files import File
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
-from importer.richtextbuilder import RichTextBuilder
-from requests.api import head, post
 from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image

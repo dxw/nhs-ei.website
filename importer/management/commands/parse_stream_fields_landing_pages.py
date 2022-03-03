@@ -1,23 +1,9 @@
 import ast
-import json
-import re
-from html import unescape
-from io import BytesIO
-from os import link
-import sys
-from django.utils.html import strip_tags
 import logging
 
-import requests
-from bs4 import BeautifulSoup
-from django.core.files.base import File
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
-from cms.pages.models import BasePage, ComponentsPage, LandingPage
+from cms.pages.models import LandingPage
 from importer.importer_cls import ComponentsBuilder
-from wagtail.core.models import Collection
-from wagtail.documents.models import Document
-from wagtail.images.models import Image
 
 logger = logging.getLogger("importer")
 logger.critical(

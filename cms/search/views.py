@@ -1,4 +1,3 @@
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse

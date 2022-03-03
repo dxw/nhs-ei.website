@@ -89,8 +89,7 @@ class Command(BaseCommand):
                 print(page, page.id)
                 components = ast.literal_eval(page.content_fields)[0]
                 builder = ComponentsBuilder(ast.literal_eval(components))
-                blocks = builder.make_blocks()
-                body = blocks
+                builder.make_blocks()
 
             # page.body = json.dumps(body)
 

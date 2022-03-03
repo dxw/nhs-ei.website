@@ -256,7 +256,6 @@ class RichTextBuilder:
             # print('using live')
             response = session.get("https://www.england.nhs.uk" + page_path)
             url = ""
-            is_post = False
             try:
                 response.raise_for_status()
             except:

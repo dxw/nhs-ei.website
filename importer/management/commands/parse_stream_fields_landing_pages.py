@@ -51,23 +51,6 @@ class Command(BaseCommand):
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         for page in pages:
-            # keep the dates as when imported
-            first_published_at = page.first_published_at
-            last_published_at = page.last_published_at
-            latest_revision_created_at = page.latest_revision_created_at
-
-            body = []  # the stream field
-            # get this to make a stream field
-            # raw_content = page.raw_content
-
-            # if page.title == 'Email bulletins':
-            #     print(page.component_fields)
-
-            # print('{} parsed'.format(page.title))
-            # deal first with wysiwyg from wordpress
-            # if raw_content:
-            #     raw_content_block = self.make_panel_block(raw_content)
-            #     body.append(raw_content_block)
 
             # then add any content fields if a field block has been used
 

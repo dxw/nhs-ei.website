@@ -213,7 +213,6 @@ class ComponentsBuilder:
         # print(content)
         if promos:
             for promo in promos:
-                has_image = promo["promo_image"]
                 content_image_id = None
                 content_image_alt = None
                 page_path = self.get_page_path(promo["promo_url"])

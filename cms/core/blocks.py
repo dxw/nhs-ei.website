@@ -98,19 +98,3 @@ class CoreBlocks(StreamBlock):
         """,
         template="blocks/html_block.html",
     )
-
-
-class LinkListBlock(StructBlock):
-    footer_links = ListBlock(
-        StructBlock(
-            [
-                ("text", CharBlock()),
-                ("page", PageChooserBlock()),
-                ("external_link", URLBlock()),
-            ]
-        )
-    )
-
-
-class FooterBlocks(StreamBlock):
-    footer_links = LinkListBlock(group="Custom")

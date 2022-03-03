@@ -279,3 +279,10 @@ LOGGING = {
 
 # Use our own extended menu item class to support captioning main menu items
 WAGTAILMENUS_MAIN_MENU_ITEMS_RELATED_NAME = "extended_menu_items"
+
+# Explicitly limit the flat menus to our intended choices
+WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
+    ("corporate", "Corporate"),
+    ("footer-upper", "Footer (Upper links)"),
+    ("footer-lower", "Footer (Lower links)"),
+)

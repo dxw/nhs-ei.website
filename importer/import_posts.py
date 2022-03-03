@@ -49,8 +49,9 @@ class PostsImporter(Importer):
         home_page = Page.objects.filter(title="Home")[0]
 
         for post in posts:
-            # we need a sub_site_category for the news index page
+
             source = post.get("source")
+
             # lets make a news index page if not already in place
             try:
                 # we need a pretty unique name here as some imported page have the title as News
@@ -73,11 +74,11 @@ class PostsImporter(Importer):
 
             try:
                 sub_site_news_index_page = PostIndexPage.objects.get(
-                    title=POST_SOURCES[post.get("source")]
+                    title=POST_SOURCES[source]
                 )
             except PostIndexPage.DoesNotExist:
                 sub_site_news_index_page = PostIndexPage(
-                    title=POST_SOURCES[post.get("source")],
+                    title=POST_SOURCES[source],
                     body="",
                     show_in_menus=True,
                 )
@@ -96,7 +97,7 @@ class PostsImporter(Importer):
                 show_in_menus=True,
                 wp_id=post.get("wp_id"),
                 author=post.get("author"),
-                source=post.get("source"),
+                source=source,
                 wp_slug=post.get("slug"),
                 wp_link=post.get("link"),
             )
@@ -109,7 +110,6 @@ class PostsImporter(Importer):
             sys.stdout.write(".")
 
             # Create source category
-            source = post.get("source")
             print(source)
             if source:
                 source_category, _ = Category.objects.get_or_create(

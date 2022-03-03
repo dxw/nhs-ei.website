@@ -106,7 +106,7 @@ class RichTextBuilder:
         links = soup.find_all(
             "a",
             href=re.compile(
-                r"^(http://|https://)(www.england.nhs.uk/|www.england.nhs.uk)"
+                r"^(http://|https://)(www\.england\.nhs\.uk/|www\.england\.nhs\.uk)"
             ),
         )
 

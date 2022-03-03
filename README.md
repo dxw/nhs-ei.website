@@ -87,7 +87,7 @@ pipenv shell
 Install required libraries, on Ubuntu 20.04 linux we need to add the `pg_config` util:
 
 ```bash
-sudo apt install libpq-dev 
+sudo apt install libpq-dev
 ```
 
 Install the virtual env manager `poetry` from https://python-poetry.org/

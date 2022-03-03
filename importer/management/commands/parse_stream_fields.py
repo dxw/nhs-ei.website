@@ -372,7 +372,10 @@ class Command(BaseCommand):
             title = "Unknown title"
             logger.warn("Missing title: %s | %s", page, page.id)
 
-        if len(content) > 0 and "default_template_hidden_text_section_title" in content[1]:
+        if (
+            len(content) > 0
+            and "default_template_hidden_text_section_title" in content[1]
+        ):
             expander_list = content[1]  # (a list of expanders)
             expanders = ast.literal_eval(
                 expander_list["default_template_hidden_text_blocks"]

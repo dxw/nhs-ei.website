@@ -192,8 +192,8 @@ class Command(BaseCommand):
                             content_fields = self.make_expander_group_block(
                                 page.content_fields, page
                             )
-                            for field in content_fields:
-                                body.append(field)
+                            for content_field in content_fields:
+                                body.append(content_field)
 
                             # body.append(content_blocks)
 
@@ -372,7 +372,10 @@ class Command(BaseCommand):
             title = "Unknown title"
             logger.warn("Missing title: %s | %s", page, page.id)
 
-        if len(content) > 0 and "default_template_hidden_text_section_title" in content[1]:
+        if (
+            len(content) > 0
+            and "default_template_hidden_text_section_title" in content[1]
+        ):
             expander_list = content[1]  # (a list of expanders)
             expanders = ast.literal_eval(
                 expander_list["default_template_hidden_text_blocks"]
@@ -451,7 +454,6 @@ class Command(BaseCommand):
         """
         # rich_text = self.block_builder.extract_links(content)
         self.block_builder.extract_links(content)
-        content = content
         for link in self.block_builder.change_links:
             content = content.replace(str(link[0]), str(link[1]))
         block = {

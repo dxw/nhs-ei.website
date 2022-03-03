@@ -454,7 +454,6 @@ class Command(BaseCommand):
         """
         # rich_text = self.block_builder.extract_links(content)
         self.block_builder.extract_links(content)
-        content = content
         for link in self.block_builder.change_links:
             content = content.replace(str(link[0]), str(link[1]))
         block = {

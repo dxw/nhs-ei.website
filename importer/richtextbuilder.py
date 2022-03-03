@@ -242,7 +242,6 @@ class RichTextBuilder:
                     title=path_list[-1], file=media_file, collection=collection_root
                 )
                 file.save()
-                pass
 
             if document_id:
                 document_link = self.make_document_link(

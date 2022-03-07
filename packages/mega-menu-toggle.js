@@ -40,3 +40,9 @@ document.getElementById("toggle-menu").addEventListener("click", function (e) {
     e.preventDefault();
     toggle(document.getElementById("mega-menu"));
 }, false);
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (location.hash.replace('#','') === "open") {
+        toggle(document.getElementById("mega-menu"))
+    }
+});

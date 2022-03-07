@@ -8763,6 +8763,36 @@ nav a:hover, nav a:visited {
   height: auto;
 }
 
+#mega-menu .corporate-wrapper {
+  margin-top: 20px;
+  margin-left: 20px;
+  border-right: 1px solid black;
+  float: left;
+}
+#mega-menu .corporate-wrapper .corporate {
+  border-top: 1px solid black;
+}
+#mega-menu .corporate-wrapper .corporate ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px 300px 0px 0px;
+  font-weight: bold;
+}
+#mega-menu .main-menu-wrapper {
+  margin-top: 20px;
+  margin-left: 20px;
+  float: left;
+}
+#mega-menu .main-menu-wrapper .main-menu-links {
+  border-top: 1px solid black;
+}
+#mega-menu .main-menu-wrapper .main-menu-links ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px 300px 0px 0px;
+  font-weight: bold;
+}
+
 .nhsuk-image {
   width: 100%;
 }

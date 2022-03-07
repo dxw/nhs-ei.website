@@ -1,8 +1,19 @@
 {% load menu_tags %}
 
 <div class="nhsuk-width-container menu-bar toggle-content" id="mega-menu">
-  <h3>Corporate</h3>
-  {% flat_menu handle="corporate" %}
-  <h3>Dynamic</h3>
-  {% main_menu max_levels=3 template="partials/navigation.html" %}
+  {#  Coporate conatiner - start #}
+  <div class="corporate-wrapper">
+    <div>Corporate</div>
+    <div>{% flat_menu handle="corporate" %}</div>
+  </div>
+  {#  Coporate conatiner - end #}
+
+  {#  Main menu conatiner - start #}
+  <div class="main-menu-wrapper">
+    <div>Corporate</div>
+    <div class="main-menu-links">
+      <div>{% main_menu max_levels=3 template="partials/navigation.html" %}</div>
+    </div>
+  </div>
+  {#  Main menu conatiner - end #}
 </div>

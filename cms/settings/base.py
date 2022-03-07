@@ -279,3 +279,4 @@ LOGGING = {
 
 # Use our own extended menu item class to support captioning main menu items
 WAGTAILMENUS_MAIN_MENU_ITEMS_RELATED_NAME = "extended_menu_items"
+WAGTAILMENUS_SITE_SPECIFIC_TEMPLATE_DIRS = True

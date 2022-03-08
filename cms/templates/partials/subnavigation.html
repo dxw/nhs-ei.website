@@ -5,11 +5,9 @@
 {% if menu_items %}
   {% for item in menu_items %}
     <li>
-      <a
-          class="toggle-menu"
+      <a class="toggle-menu-expand XXX submenu-{{ parent_id }}"
           data-submenu="submenu-{{ item.id }}"
           data-depth="{{ current_level }}"
-
           {% if item.has_children_in_menu %}
           aria-haspopup="true"
           {% endif %}
@@ -17,8 +15,7 @@
         {{ item.text }}
       </a>
       {% if item.has_children_in_menu %}
-        <ul class="sub-menu-items submenu-{{ item.id }}"
-          id="submenu-{{ item.id }}">
+        <ul class="sub-menu-items submenu-{{ item.id }}" id="submenu-{{ item.id }}">
           {% sub_menu item template=current_template %}
         </ul>
       {% endif %}

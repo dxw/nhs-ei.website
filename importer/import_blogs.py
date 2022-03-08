@@ -4,7 +4,6 @@ import time
 from cms.blogs.models import Blog, BlogIndexPage
 from cms.categories.models import Category, CategoryPageCategoryRelationship
 from wagtail.core.models import Page
-from django.core.management import call_command
 
 from .importer_cls import Importer
 from .preserve import preserve

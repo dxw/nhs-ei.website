@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 from cms.blogs.models import Blog
-from wagtail.core.models import Page
 
 
 class TestCategoryIndexPage(TestCase):

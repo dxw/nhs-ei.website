@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
-from django.http import response
 from django.test import TestCase
-import unittest
 
 
 class TestHomePage(TestCase):

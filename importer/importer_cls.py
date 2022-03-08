@@ -1,9 +1,3 @@
-import ast
-from cms.blogs.models import Blog
-from cms.pages.models import BasePage, ComponentsPage, LandingPage
-from cms.posts.models import Post
-from cms.atlascasestudies.models import AtlasCaseStudy
-from cms.publications.models import Publication
 import random
 import sys
 from io import BytesIO
@@ -15,8 +9,6 @@ from django.core.files import File
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
-from importer.richtextbuilder import RichTextBuilder
-from requests.api import head, post
 from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
@@ -221,7 +213,6 @@ class ComponentsBuilder:
         # print(content)
         if promos:
             for promo in promos:
-                has_image = promo["promo_image"]
                 content_image_id = None
                 content_image_alt = None
                 page_path = self.get_page_path(promo["promo_url"])
@@ -481,12 +472,6 @@ class ComponentsBuilder:
             if page_path in self.url_map:
                 page = Page.objects.get(id=self.url_map[page_path]["id"])
                 page_path = page.get_full_url()
-            if "http://coding.nickmoreton.co.uk/" in page_path:
-                logger.warn("nickmoreton.co.uk url found: %s", url)
-                page_path = page_path.replace(
-                    "http://coding.nickmoreton.co.uk/",
-                    "http://coding.nickmoreton.co.uk:8000/",
-                )
             return page_path
 
 

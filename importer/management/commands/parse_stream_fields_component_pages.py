@@ -4,24 +4,12 @@ from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 import json
-import re
 from html import unescape
-from io import BytesIO
-from os import link
 import sys
-from django.utils.html import strip_tags
 
-import requests
-from bs4 import BeautifulSoup
-from django.core.files.base import File
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from importer.importer_cls import ComponentsBuilder
-from wagtail.core.models import Collection
-from wagtail.documents.models import Document
-from wagtail.images.models import Image
-from importer.richtextbuilder import RichTextBuilder
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 

@@ -1,7 +1,6 @@
 import sys
 import time
 
-from django.core.management import call_command
 from cms.categories.models import PublicationType
 
 from .importer_cls import Importer

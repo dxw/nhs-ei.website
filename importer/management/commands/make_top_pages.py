@@ -1,16 +1,6 @@
-import requests
-import sys
-
-from wagtail.core.fields import StreamField
-
-from cms.categories import blocks
 from cms.home.models import HomePage
 from django.core.management.base import BaseCommand
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
-from wagtail.core.models import Collection, Page
-from django.core.files.images import ImageFile
-from wagtail.images.models import Image
-from io import BytesIO
 import json
 
 

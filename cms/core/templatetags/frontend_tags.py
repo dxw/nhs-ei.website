@@ -1,6 +1,5 @@
 from django import template
-from wagtail.core.models import Page, PageRevision
-from django.contrib.contenttypes.models import ContentType
+from wagtail.core.models import Page
 
 register = template.Library()
 

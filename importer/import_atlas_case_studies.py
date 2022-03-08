@@ -132,7 +132,7 @@ class AtlasCaseStudiesImporter(Importer):
                 )  # list of setting wp_id's
                 settings_objects = Setting.objects.filter(wp_id__in=settings)
                 for setting in settings_objects:
-                    rel = AtlasCaseStudySettingRelationship.objects.create(
+                    AtlasCaseStudySettingRelationship.objects.create(
                         atlas_case_study=obj, setting=setting
                     )
                 sys.stdout.write(".")
@@ -146,7 +146,7 @@ class AtlasCaseStudiesImporter(Importer):
 
                 regions_objects = Region.objects.filter(wp_id__in=regions)
                 for region in regions_objects:
-                    rel = AtlasCaseStudyRegionRelationship.objects.create(
+                    AtlasCaseStudyRegionRelationship.objects.create(
                         atlas_case_study=obj, region=region
                     )
                 sys.stdout.write(".")

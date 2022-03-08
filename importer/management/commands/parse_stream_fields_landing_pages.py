@@ -1,23 +1,9 @@
 import ast
-import json
-import re
-from html import unescape
-from io import BytesIO
-from os import link
-import sys
-from django.utils.html import strip_tags
 import logging
 
-import requests
-from bs4 import BeautifulSoup
-from django.core.files.base import File
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
-from cms.pages.models import BasePage, ComponentsPage, LandingPage
+from cms.pages.models import LandingPage
 from importer.importer_cls import ComponentsBuilder
-from wagtail.core.models import Collection
-from wagtail.documents.models import Document
-from wagtail.images.models import Image
 
 logger = logging.getLogger("importer")
 logger.critical(
@@ -65,23 +51,6 @@ class Command(BaseCommand):
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         for page in pages:
-            # keep the dates as when imported
-            first_published_at = page.first_published_at
-            last_published_at = page.last_published_at
-            latest_revision_created_at = page.latest_revision_created_at
-
-            body = []  # the stream field
-            # get this to make a stream field
-            # raw_content = page.raw_content
-
-            # if page.title == 'Email bulletins':
-            #     print(page.component_fields)
-
-            # print('{} parsed'.format(page.title))
-            # deal first with wysiwyg from wordpress
-            # if raw_content:
-            #     raw_content_block = self.make_panel_block(raw_content)
-            #     body.append(raw_content_block)
 
             # then add any content fields if a field block has been used
 
@@ -89,8 +58,7 @@ class Command(BaseCommand):
                 print(page, page.id)
                 components = ast.literal_eval(page.content_fields)[0]
                 builder = ComponentsBuilder(ast.literal_eval(components))
-                blocks = builder.make_blocks()
-                body = blocks
+                builder.make_blocks()
 
             # page.body = json.dumps(body)
 

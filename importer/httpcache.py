@@ -5,11 +5,9 @@ import os
 import logging
 import time
 
+from django.conf import settings
+
 logger = logging.getLogger("__name__")
-"""TODO: this should use the Django config but I haven't figured that out."""
-# from django.conf import settings
-# DEBUG = settings.DEBUG
-DEBUG = True
 
 CACHE_DB = "requests_cache.sqlite"
 
@@ -35,7 +33,7 @@ if "reset" in sys.argv:
     os.remove(CACHE_DB)
     print("Removed old HTTP cache.")
 
-if DEBUG:
+if settings.DEBUG:
     session = requests_cache.CachedSession(CACHE_DB, allowable_codes=(200, 404))
     session._request = session.request
     session.request = my_request

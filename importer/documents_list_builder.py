@@ -1,4 +1,3 @@
-from os import unlink
 import re
 import logging
 from bs4 import BeautifulSoup
@@ -92,7 +91,7 @@ class RichTextBuilder:
             html_content = content
         soup = BeautifulSoup(html_content, features="html5lib")
 
-        links = soup.find_all("a", href=re.compile(r"^https://www.england.nhs.uk/"))
+        links = soup.find_all("a", href=re.compile(r"^https://www\.england\.nhs\.uk/"))
 
         for link in links:
             page_path = "/" + "/".join(link["href"].split("/")[3:])

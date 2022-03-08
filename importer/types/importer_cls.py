@@ -1,7 +1,7 @@
-import random
-import sys
-from io import BytesIO
 import logging
+import random
+import time
+from io import BytesIO
 
 import dateutil.parser
 import requests
@@ -12,18 +12,94 @@ from django.utils.timezone import make_aware
 from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from .httpcache import session
+
+from cms.pages.models import BasePage
+from cms.settings.base import env
+from importer.httpcache import session
 
 logger = logging.getLogger("importer")
 
 
+def _set_media_file(old_val, new_val, obj):
+    # TODO: Maybe make this check better. Use hashes?
+    if old_val.size != new_val.size:
+        setattr(obj, "file", new_val)
+
+
 class Importer:
+    staging_page = None
+    STAGING_PAGE_TITLE = "Import Staging Page"
+    STAGING_PAGE_WP_ID = -1
+
+    cache = None
+    changed = None
+    count = None
+    next = None
+    previous = None
+    results = None
+
+    now = None
+    max_media_age = None
+    age = None
 
     # should_delete = False # True to remove all existing records form the model
     sleep_between_fetches = 0  # seconds, use it in parse_results()
 
+    def __init__(self):
+        """
+        Gets the value for how fresh media should be to be re-imported into the
+        site. The value in the ENV should be in the format <integer><period>
+        were the period may be m, h, d that represent seconds, minutes,
+        hours or days.
+        e.g.  30m = 30 minutes.
+              2d = 2 days.
+        """
+        self.cache = {}
+
+        try:
+            self.staging_page = Page.objects.get(title=self.STAGING_PAGE_TITLE)
+        except Page.DoesNotExist:
+            self.staging_page = BasePage(
+                title=self.STAGING_PAGE_TITLE, wp_id=self.STAGING_PAGE_WP_ID
+            )
+            home_page = Page.objects.get(title="Home")
+            home_page.add_child(instance=self.staging_page)
+            self.staging_page.save()
+
+        self.now = time.time()
+        raw_value = env("MAX_MEDIA_AGE", default="0")
+        value = str(raw_value).strip()
+
+        if value == "0":
+            self.max_media_age = 0
+            return
+
+        if value[-1] not in ["m", "h", "d"] or not value[:-1].isnumeric():
+            raise Exception(
+                "Bad value passed for MAX_MEDIA_AGE: %s. Check the value "
+                "for "
+                "MAX_MEDIA_AGE in the environment are in the format "
+                "<integer><[m|h|d]]>" % value
+            )
+
+        period = value[-1]
+        duration = int(value[:-1])
+
+        if period == "m":
+            self.max_media_age = duration * 60
+        elif period == "h":
+            self.max_media_age = duration * 3600
+        elif period == "d":
+            self.max_media_age = duration * 86400
+        else:
+            logger.warning(
+                "Unreachable? Bad period has been in get_max_age_in_ms: %s"
+                % env("MAX_MEDIA_AGE")
+            )
+            self.max_media_age = 0
+
     def fetch_url(self, url):
-        sys.stdout.write("\n⌛️ fetching API url {}\n".format(url))
+        logger.info("\n⌛️ fetching API url {}\n".format(url))
         r = requests.get(url).json()
         self.count = r.get("count")
         self.next = r.get("next")
@@ -44,12 +120,41 @@ class Importer:
         return self.results
 
     def parse_results(self):
-        # best to add a sleep between fetches time.sleep(self.sleep_between_fetches)
+        # best to add a sleep between fetches time.sleep(
+        # self.sleep_between_fetches)
         raise NotImplementedError
 
     def empty_table(self):
         # its an optional argument when running the importer [-d]
         raise NotImplementedError
+
+    def check_is_too_old(self, modified_time, identifier):
+        if self.max_media_age != 0:
+            mod_time = modified_time.timestamp()
+            self.age = self.now - mod_time
+            if self.age > self.max_media_age:
+                logger.info(
+                    "Object is older than threshold, age=%d seconds, %s"
+                    % (self.age, identifier)
+                )
+                return True
+
+        return False
+
+    def __call__(self, *args):
+        attr_name = args[0]
+        new_val = args[1]
+        obj = args[2]
+        old_val = getattr(obj, attr_name)
+        if attr_name == "file":
+            _set_media_file(old_val, new_val, obj)
+        elif old_val != new_val:
+            setattr(obj, attr_name, new_val)
+            self.changed = True
+
+    def save(self, model):
+        if self.changed:
+            model.save()
 
 
 class ComponentsBuilder:
@@ -216,23 +321,13 @@ class ComponentsBuilder:
                 content_image_id = None
                 content_image_alt = None
                 page_path = self.get_page_path(promo["promo_url"])
-                # if has_image:
-                #     # found_image = self.fetch_image_id(promo['promo_image']['title'])
-                #     found_image = self.fetch_image_id(
-                #         self.variate_name())  # just for testing
-                #     if found_image:
-                #         content_image_id = found_image.id
-                #         content_image_alt = promo['promo_image']['title']
-                #     else:
-                #         content_image_id = None
-                #         content_image_alt = None
-                # sometime they are there but have not content at all and get rendered empty
                 if promo["promo_title"] or promo["promo_content"]:
                     block_promo = {
                         "url": page_path,
                         "heading": strip_tags(promo["promo_title"]),
                         "description": strip_tags(promo["promo_content"]),
-                        "content_image": content_image_id,  # need to make it work in wagtail
+                        "content_image": content_image_id,
+                        # need to make it work in wagtail
                         "alt_text": content_image_alt,
                     }
                     block_group["value"]["promos"].append(block_promo)
@@ -421,7 +516,8 @@ class ComponentsBuilder:
                     "url": page_path,
                     "heading": strip_tags(section["topic_title"]),
                     "description": strip_tags(section["topic_content"]),
-                    # need to make it work in wagtail, topic blocks never have an image
+                    # need to make it work in wagtail, topic blocks never
+                    # have an image
                     "content_image": None,
                     "alt_text": "",
                 }
@@ -455,7 +551,8 @@ class ComponentsBuilder:
     def get_page_path(self, url):
         if url:
             path_list = url.split("/")  # a list of path segments
-            # first is always '' so lets remove it, and we delete index zero below so we need at least 2 items
+            # first is always '' so lets remove it, and we delete index zero
+            # below so we need at least 2 items
             if len(path_list) <= 2:
                 logger.warn("URL too short: %s", url)
                 return "/"
@@ -533,7 +630,8 @@ class DocumentsBuilder:
                     return self.create_document_type(file, document, self.document)
                 else:
                     logger.warn(
-                        "make_document_list_error: no response on pub %s (%s) for URL (%s)",
+                        "make_document_list_error: no response on pub %s (%s)"
+                        " for URL (%s)",
                         self.publication,
                         self.publication.id,
                         document["url"],

@@ -53,12 +53,12 @@ class CategoryPage(Page):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
     wp_id = models.PositiveIntegerField(null=True, blank=True)
-    source = models.CharField(null=True, max_length=100, blank=True)
+    source = models.CharField(null=True, max_length=255, blank=True)
 
     class Meta:
         ordering = ["name"]

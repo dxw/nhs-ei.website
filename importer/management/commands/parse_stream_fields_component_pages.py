@@ -1,15 +1,17 @@
 import ast
+import logging
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 import json
 from html import unescape
-import sys
 
 from django.core.management.base import BaseCommand
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
-from importer.importer_cls import ComponentsBuilder
+from importer.types.importer_cls import ComponentsBuilder
+
+logger = logging.getLogger("importer:parse_stream_fields_component_pages")
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 
@@ -34,6 +36,7 @@ class Command(BaseCommand):
     help = "parsing stream fields component pages"
 
     def __init__(self):
+        super().__init__()
         models = [
             BasePage,
             ComponentsPage,
@@ -95,7 +98,7 @@ class Command(BaseCommand):
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         for page in pages:
-            sys.stdout.write("⌛️ {} processing...\n".format(page))
+            logger.info("⌛️ {} processing...".format(page))
             # keep the dates as when imported
             first_published_at = page.first_published_at
             last_published_at = page.last_published_at
@@ -137,7 +140,7 @@ class Command(BaseCommand):
             page.save()
             rev.publish()
 
-            sys.stdout.write("✅ {} done\n".format(page))
+            logger.info("✅ {} done".format(page))
 
             # if page.title == 'About us':
             #     sys.exit()

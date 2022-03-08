@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-
 import os
 from pathlib import Path
 
@@ -30,7 +29,6 @@ BASE_DIR = PROJECT_DIR.parent
 # Supresses warnings when upgrading to Django 3.2
 # https://koenwoortman.com/python-django-auto-created-primary-key-used-when-not-defining-primary-key-type/
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -121,14 +119,12 @@ SECRET_KEY = env("SECRET_KEY", default=utils.get_random_secret_key())
 # https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-ALLOWED_HOSTS
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[".localhost", "127.0.0.1"])
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     "default": env.db(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -147,7 +143,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -171,7 +166,6 @@ WAGTAILSEARCH_BACKENDS = {
     },
 }
 
-
 # Media files (User uploaded images and documents)
 AZURE_CONNECTION_STRING = env("AZURE_CONNECTION_STRING", default=None)
 if AZURE_CONNECTION_STRING:
@@ -194,13 +188,13 @@ STATICFILES_DIRS = [
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
-# Javascript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
+# Javascript / CSS assets being served from cache (e.g. after a Wagtail
+# upgrade).
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = BASE_DIR / "compiledassets"
 STATIC_URL = "/static/"
-
 
 # Wagtail settings
 
@@ -212,7 +206,6 @@ SERVER_EMAIL = env("SERVER_EMAIL", default="root@localhost")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="root@localhost")
 
 vars().update(EMAIL_CONFIG)
-
 
 # we turn off basic auth when testing because it breaks the test suite
 if os.environ.get("BASIC_AUTH_PASSWORD", False):
@@ -231,7 +224,7 @@ LOGGING = {
         "simple": {"format": "%(levelname)s %(message)s"},
         "general": {
             "format": (
-                "%(process)-5d %(thread)d %(name)-50s %(levelname)-8s " "- %(message)s"
+                "%(process)-5d %(thread)d %(name)-50s %(levelname)-8s - %(message)s"
             ),
         },
         "tailored": {
@@ -274,6 +267,37 @@ LOGGING = {
         },
         "cms": {"handlers": ["console"], "level": "DEBUG"},
         "importer": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:parse_stream_fields_component_pages": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+        },
+        "importer:make_documents_list": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+        },
+        "importer:page_mover": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:fix_slugs": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:parse_stream_fields": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+        },
+        "importer:swap_blog_pages": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:fix_landing_page_slugs": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+        },
+        "importer:categories": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:media_files": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:pages": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:publications": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:publication_types": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+        },
+        "importer:settings": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:posts": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:regions": {"handlers": ["file", "console"], "level": "INFO"},
+        "importer:blogs": {"handlers": ["file", "console"], "level": "INFO"},
     },
 }
 

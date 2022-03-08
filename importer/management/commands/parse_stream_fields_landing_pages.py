@@ -3,7 +3,7 @@ import logging
 
 from django.core.management.base import BaseCommand
 from cms.pages.models import LandingPage
-from importer.importer_cls import ComponentsBuilder
+from importer.types.importer_cls import ComponentsBuilder
 
 logger = logging.getLogger("importer")
 logger.critical(

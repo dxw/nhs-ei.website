@@ -8767,7 +8767,6 @@ nav a:hover, nav a:visited {
   margin-top: 20px;
   margin-left: 20px;
   border-right: 1px solid black;
-  float: left;
 }
 #mega-menu .corporate-wrapper .corporate {
   border-top: 1px solid black;
@@ -8775,22 +8774,26 @@ nav a:hover, nav a:visited {
 #mega-menu .corporate-wrapper .corporate ul {
   list-style-type: none;
   margin: 0;
-  padding: 20px 300px 0px 0px;
+  padding: 20px 300px 0 0;
   font-weight: bold;
 }
 #mega-menu .main-menu-wrapper {
   margin-top: 20px;
   margin-left: 20px;
   float: left;
+  border-right: 1px solid black;
 }
-#mega-menu .main-menu-wrapper .main-menu-links {
+#mega-menu .main-menu-wrapper .main-menu-items {
   border-top: 1px solid black;
 }
-#mega-menu .main-menu-wrapper .main-menu-links ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 20px 300px 0px 0px;
+#mega-menu .main-menu-wrapper .main-menu-items ul {
   font-weight: bold;
+  padding: 2px;
+  margin: 0;
+}
+#mega-menu .main-menu-wrapper .sub-menu-items {
+  display: none;
+  overflow: hidden;
 }
 
 .nhsuk-image {

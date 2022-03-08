@@ -4,7 +4,6 @@
     margin-top: 20px;
     margin-left: 20px;
     border-right: 1px solid black;
-    float: left;
 
     .corporate {
       border-top: 1px solid black;
@@ -12,7 +11,7 @@
       ul {
         list-style-type: none;
         margin: 0;
-        padding: 20px 300px 0px 0px;
+        padding: 20px 300px 0 0;
         font-weight: bold;
       }
     }
@@ -22,16 +21,25 @@
     margin-top: 20px;
     margin-left: 20px;
     float: left;
+    border-right: 1px solid black;
 
-    .main-menu-links {
+    .main-menu-items {
       border-top: 1px solid black;
 
       ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 20px 300px 0px 0px;
+        //list-style-type: none;
+        //margin: 0;
+        //padding: 20px 300px 0px 0px;
         font-weight: bold;
+        padding: 2px;
+        margin: 0;
       }
+    }
+
+    .sub-menu-items {
+      display: none;
+      overflow: hidden;
+
     }
   }
 }

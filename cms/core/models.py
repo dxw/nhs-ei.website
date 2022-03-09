@@ -7,6 +7,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import ClusterableModel, ParentalKey
+from wagtail.documents.models import Document
+from wagtail.images.models import Image
 from wagtailmenus.models import AbstractMainMenuItem
 
 
@@ -37,6 +39,54 @@ class CoreSettings(BaseSetting, ClusterableModel):
 
 class ExtendedMainMenuItem(AbstractMainMenuItem):
 
+    menu = ParentalKey(
+        "wagtailmenus.MainMenu",
+        on_delete=models.CASCADE,
+        related_name="extended_menu_items",
+    )
+
+    caption = models.CharField(
+        max_length=250,
+        blank=True,
+        help_text="Additional explanatory text which appears alongside this menu item",
+    )
+
+    panels = [
+        FieldPanel("text"),
+        PageChooserPanel("page"),
+        FieldPanel("external_url"),
+    ]
+
+
+"""
+We tried to extend the abstract models for image and document and then change
+the BASE_IMAGE/DOC values but this caused a foreign key to be created on the
+custom_logo setting in wagtailnhsfrontend. That package is included as is and
+if we update that model future model updates may beak because of that key.
+"""
+
+
+class ImageImportBridge(models.Model):
+    """
+    Temp model to track images as imported.
+    TODO: factor out after launch
+    """
+
+    wp_id = models.CharField(max_length=32, null=False)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+
+
+class DocImportBridge(models.Model):
+    """
+    Temp model to track files as imported.
+    TODO: factor out after launch
+    """
+
+    wp_id = models.CharField(max_length=32, null=False)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
+
+
+class ExtendedMainMenuItem(AbstractMainMenuItem):
     menu = ParentalKey(
         "wagtailmenus.MainMenu",
         on_delete=models.CASCADE,

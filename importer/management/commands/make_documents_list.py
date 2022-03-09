@@ -1,19 +1,20 @@
 import ast
 import json
-import sys
 import logging
+import sys
+
+from django.core.management.base import BaseCommand
+from django.utils.text import slugify
 
 from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from cms.posts.models import Post
 from cms.publications.models import Publication
-from django.core.management.base import BaseCommand
-from django.utils.text import slugify
-from importer.importer_cls import DocumentsBuilder
 from importer.richtextbuilder import RichTextBuilder
+from importer.types.importer_cls import DocumentsBuilder
 
-logger = logging.getLogger("importer")
+logger = logging.getLogger("importer:make_documents_list")
 
 DOCUMENT_TYPES = [
     "heading",
@@ -28,6 +29,7 @@ class Command(BaseCommand):
     help = "Creates the documents for each publication page"
 
     def __init__(self):
+        super().__init__()
         models = [
             BasePage,
             ComponentsPage,
@@ -49,11 +51,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        """now not deleteing docuemnts they need to be found instead"""
+        """now not deleting documents they need to be found instead"""
         publications = Publication.objects.all()
         pub_count = len(publications)
         for i, publication in enumerate(publications):
-            sys.stdout.write(f"\n⌛️ {publication} processing... ({i}/{pub_count})")
+            logger.info(f"⌛️ {publication} processing... ({i}/{pub_count})")
             component_fields = ast.literal_eval(publication.component_fields)
             introduction = ""
             docs = []
@@ -68,7 +70,7 @@ class Command(BaseCommand):
                         # some docs have no document !!!! whaaaat wp_id 1115
                         docs = ast.literal_eval(row[k]) or []
                         if not docs:
-                            logger.warn("No document in doc %s", publication)
+                            logger.warning("No document in doc %s", publication)
 
             for document in docs:
                 if document and document["type_of_publication"] in DOCUMENT_TYPES:
@@ -77,7 +79,7 @@ class Command(BaseCommand):
                     if item:
                         document_list.append(item)
                 else:
-                    print("document type not found")
+                    logger.warning("document type not found")
                     sys.exit()
 
             # make the jump menu after by looking for headings in final document_list[]
@@ -104,11 +106,11 @@ class Command(BaseCommand):
 
             docs = []
 
-            for i in range(0, len(document_list)):
-                if document_list[i]["type"] == "named_anchor":
+            for j in range(0, len(document_list)):
+                if document_list[j]["type"] == "named_anchor":
                     mapped_type_postitions.append("anchor")
 
-                elif document_list[i]["type"] != "named_anchor":
+                elif document_list[j]["type"] != "named_anchor":
                     mapped_type_postitions.append("doc")
 
                 last_item = mapped_type_postitions[-1]
@@ -125,7 +127,7 @@ class Command(BaseCommand):
                     mapped_type_postitions.append("anchor")
                     docs = []
 
-                if i == len(document_list) - 1:
+                if j == len(document_list) - 1:
                     mapped_type_postitions.append(docs)
                     docs = []
 
@@ -142,14 +144,15 @@ class Command(BaseCommand):
 
             block_group = {"type": "document_group", "value": []}
 
-            if not "anchor" in mapped_type_postitions:
+            if "anchor" not in mapped_type_postitions:
 
-                for i in range(0, len(mapped_type_postitions)):
-                    block_group["value"].append(document_list[i])
+                for k in range(0, len(mapped_type_postitions)):
+                    block_group["value"].append(document_list[k])
                 new_stream_value.append(block_group)
 
             else:
-                pos = 0  # some items are list but need to keep track to get document_list index
+                pos = 0  # some items are list but need to keep track to get
+                # document_list index
                 docs = []
                 for item in mapped_type_postitions:
 
@@ -180,7 +183,7 @@ class Command(BaseCommand):
             publication.latest_revision_created_at = revision_created_at
             publication.save()
             rev.publish()
-            sys.stdout.write("\n✅ {} processing...".format(publication))
+            logger.info("✅ {} processing...".format(publication))
 
 
 """

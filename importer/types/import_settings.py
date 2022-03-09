@@ -1,9 +1,12 @@
-import sys
+import logging
 import time
+from abc import ABC
 
 from cms.categories.models import Setting
-
+from . import trim_long_text
 from .importer_cls import Importer
+
+logger = logging.getLogger("importer:settings")
 
 # the indiators from wordpress aren't nice so map them to better titles
 # SOURCES = {
@@ -18,27 +21,36 @@ from .importer_cls import Importer
 # }
 
 
-class SettingsImporter(Importer):
+class SettingsImporter(Importer, ABC):
     def __init__(self):
+        super().__init__()
         settings = Setting.objects.all()
-        # category_sub_sites = CategorySubSite.objects.all()
-        if settings:
-            sys.stdout.write("⚠️  Run delete_settings before running this command\n")
-            sys.exit()
+        for setting in settings:
+            self.cache[setting.wp_id] = setting
 
     def parse_results(self):
         settings = self.results
+
         for r in settings:
-            setting = Setting(
-                name=r.get("name"),
-                slug=r.get("slug"),
-                description=r.get("description"),
-                wp_id=r.get("wp_id"),
-                # source = r.get('source'),
-                # sub_site = category_sub_site
-            )
-            setting.save()
-            sys.stdout.write(".")
+            is_new = False
+            wp_id = int(r.get("wp_id"))
+            if wp_id in self.cache:
+                setting = self.cache[wp_id]
+            else:
+                is_new = True
+                setting = Setting(wp_id=wp_id)
+
+            self.changed = False
+
+            self("name", r.get("name"), setting)
+            self("slug", trim_long_text(r.get("slug"), 200), setting)
+            self("description", r.get("description"), setting)
+
+            self.save(setting)
+            if is_new:
+                logger.info("Imported Setting name=%s" % setting.name)
+            else:
+                logger.info("Updated Setting name=%s" % setting.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

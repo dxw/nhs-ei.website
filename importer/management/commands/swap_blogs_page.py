@@ -1,12 +1,14 @@
-import sys
+import logging
 
 from django.core.management.base import BaseCommand
-from django.utils.crypto import get_random_string
 from django.core.validators import slug_re
+from django.utils.crypto import get_random_string
 from django.utils.html import strip_tags
+from cms.blogs.models import BlogIndexPage
 from cms.pages.models import ComponentsPage, LandingPage
 from importer.utils import URLParser
-from cms.blogs.models import BlogIndexPage
+
+logger = logging.getLogger("importer:swap_blog_pages")
 
 
 class Command(BaseCommand):
@@ -16,17 +18,20 @@ class Command(BaseCommand):
         # uniqufy urls to start with so we can deal with altering them later
         # all pages initially come in at the top level under home page
         # so urls can get changed to keep them unique (Wagtail action)
+        super().__init__()
         self.random_strings = []
 
     def handle(self, *args, **options):
         """
-        Process: We need to change the blogs landing page from a Components Page here to a Landing Page type
+        Process: We need to change the blogs landing page from a Components Page
+        here to a Landing Page type
 
-        Landing pages: have a different layout better catered for with a separate page type
+        Landing pages: have a different layout better catered for with a
+        separate page type
         """
 
-        # its title here it 'Blogs' its slug is 'blogs' and it's a component page type
-        # there should only be one...
+        # its title here it 'Blogs' its slug is 'blogs' and it's a component
+        # page type there should only be one...
         blog_landing_page = ComponentsPage.objects.get(
             wp_template="page-blog-landing.php"
         )
@@ -39,7 +44,8 @@ class Command(BaseCommand):
 
         slug = URLParser(blog_landing_page.wp_link).find_slug()
 
-        # sometimes there's external links with params so fall back to the slug fomr wordpress
+        # sometimes there's external links with params so fall back to the slug
+        # from wordpress
         if not slug_re.match(slug):
             slug = blog_landing_page.slug
 
@@ -80,7 +86,7 @@ class Command(BaseCommand):
         rev.publish()
 
         blogs_page = LandingPage.objects.get(wp_template="page-blog-landing.php")
-        print("Moving all blog posts to new parent page, Takes a while...")
+        logger.info("Moving all blog posts to new parent page, Takes a while...")
 
         # find base page with that wp_id and source so we can move it's children
         old_blog_index_base_page = BlogIndexPage.objects.get(slug="blog")
@@ -97,7 +103,7 @@ class Command(BaseCommand):
         rev = blogs_page.save_revision()
         blogs_page.save()
         rev.publish()
-        sys.stdout.write("\n✅  Blogs Page Now Set Up\n")
+        logger.info("✅  Blogs Page Now Set Up")
 
     def unique_slug(self, slug):
         # 8 characters, only digits.

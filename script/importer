@@ -9,7 +9,6 @@ read -p "Press Enter to continue, CTRL-C to stop"
 echo "Importing..."
 docker-compose run --service-ports --rm web bash -c "\
    python manage.py delete_all && \
-   python manage.py runimport media && \
    python manage.py runimport all && \
    python manage.py runimport build && \
    python manage.py runimport fixes && \

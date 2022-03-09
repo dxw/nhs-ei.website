@@ -1,16 +1,21 @@
-import sys
+import logging
 
 from django.core.management.base import BaseCommand
+from django.db import DataError
+from wagtail.core.models import Page
+
+from cms.atlascasestudies.models import AtlasCaseStudyIndexPage
 from cms.blogs.models import BlogIndexPage
 from cms.pages.models import BasePage
-from cms.atlascasestudies.models import AtlasCaseStudyIndexPage
-from wagtail.core.models import Page
+
+logger = logging.getLogger("importer:fix_landing_page_slugs")
 
 
 class Command(BaseCommand):
     """
     the purpose of this module is to fix pages slugs.
-    during the first import they get incremented by wagtail to make the slugs unique
+    during the first import they get incremented by wagtail to make the slugs
+    unique
     once moved into place by movepages.py they can be corrected to the slug
     in SCRAPY
     """
@@ -40,7 +45,7 @@ class Command(BaseCommand):
             blog_items_base.save()
             rev.publish()
         except BlogIndexPage.DoesNotExist:
-            sys.stdout.write("\n✅  Blog Index Slug Already Changed\n")
+            logger.info("✅  Blog Index Slug Already Changed")
 
         # change news-items-base slug to
         try:
@@ -63,7 +68,7 @@ class Command(BaseCommand):
             news_items_base.save()
             rev.publish()
         except BasePage.DoesNotExist:
-            sys.stdout.write("\n✅  News Index Slug Already Changed\n")
+            logger.info("✅  News Index Slug Already Changed")
 
         # change publication-items-base slug to
         try:
@@ -83,10 +88,17 @@ class Command(BaseCommand):
             publication_items_base.first_published_at = first_published
             publication_items_base.last_published_at = last_published
             publication_items_base.latest_revision_created_at = latest_revision_created
-            publication_items_base.save()
+            try:
+                publication_items_base.save()
+            except DataError:
+                logger.warning(
+                    "Slug for publication_items_base %s cannot be saved!"
+                    % publication_items_base
+                )
+
             rev.publish()
         except BasePage.DoesNotExist:
-            sys.stdout.write("\n✅  News Index Slug Already Changed\n")
+            logger.info("✅  News Index Slug Already Changed")
 
         # change atlas-case-study-items-base slug to
         try:
@@ -112,6 +124,6 @@ class Command(BaseCommand):
             atlas_case_study_items_base.save()
             rev.publish()
         except BasePage.DoesNotExist:
-            sys.stdout.write("\n✅  Atlas Case Studies Index Slug Already Changed\n")
+            logger.info("✅  Atlas Case Studies Index Slug Already Changed")
 
-        sys.stdout.write("\n✅  All slugs fixed\n")
+        logger.info("✅  All slugs fixed")

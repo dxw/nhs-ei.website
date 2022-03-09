@@ -48,3 +48,7 @@ class Ancestry:
             return -1
         if self.parent_type == "top":
             return 0
+
+        # Dragon commented above that he was getting a None type, me too!
+        # So I'll just fix it here as an Assumed top. Topy 2022-02-24
+        return 0

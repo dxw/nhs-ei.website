@@ -1,21 +1,20 @@
 import ast
 import json
-import sys
 from bs4 import BeautifulSoup
 from html import unescape
 import logging
 
-
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
+
+from cms.atlascasestudies.models import AtlasCaseStudy
+from cms.blogs.models import Blog
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from cms.posts.models import Post
-from cms.blogs.models import Blog
 from cms.publications.models import Publication
-from cms.atlascasestudies.models import AtlasCaseStudy
 from importer.richtextbuilder import RichTextBuilder
 
-logger = logging.getLogger("importer")
+logger = logging.getLogger("importer:parse_stream_fields")
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 
@@ -143,7 +142,7 @@ class Command(BaseCommand):
         # counter = pages_count
         page_count = len(pages)
         for i, page in enumerate(pages):
-            sys.stdout.write(f"⌛️ {page} processing ... ({i}/{page_count})\n")
+            logger.info(f"⌛️ {page} processing ... ({i}/{page_count})")
             # keep the dates as when imported
             # if page.title == 'Join the NHS COVID-19 vaccine team':
             first_published_at = page.first_published_at
@@ -200,7 +199,7 @@ class Command(BaseCommand):
             page.save()
             rev.publish()
 
-            sys.stdout.write("✅ {} done\n".format(page))
+            logger.info("✅ {} done".format(page))
 
             # counter -=1
             # print(counter)

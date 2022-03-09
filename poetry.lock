@@ -22,7 +22,7 @@ tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
 name = "azure-core"
-version = "1.22.1"
+version = "1.23.0"
 description = "Microsoft Azure Core Library for Python"
 category = "main"
 optional = false
@@ -31,6 +31,7 @@ python-versions = ">=3.6"
 [package.dependencies]
 requests = ">=2.18.4"
 six = ">=1.11.0"
+typing-extensions = ">=4.0.1"
 
 [[package]]
 name = "azure-storage-blob"
@@ -732,7 +733,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.9"
-content-hash = "83033918eaf7ae3073e142e6c0569a8078e77ee411e8e76ca1bf04d02cfa4f9e"
+content-hash = "e6763210dabec49d6bec20631e62dd04589228d2cba9ef44b11cd8b6f7f0cdce"
 
 [metadata.files]
 anyascii = [
@@ -744,8 +745,8 @@ asgiref = [
     {file = "asgiref-3.5.0.tar.gz", hash = "sha256:2f8abc20f7248433085eda803936d98992f1343ddb022065779f37c5da0181d0"},
 ]
 azure-core = [
-    {file = "azure-core-1.22.1.zip", hash = "sha256:4b6e405268a33b873107796495cec3f2f1b1ffe935624ce0fbddff36d38d3a4d"},
-    {file = "azure_core-1.22.1-py3-none-any.whl", hash = "sha256:407381c74e2ccc16adb1f29c4a1b381ebd39e8661bbf60422926d8252d5b757d"},
+    {file = "azure-core-1.23.0.zip", hash = "sha256:a56a6f720d0948d3f3e4a25a5fe46df2f1b7f865c358d74e2ce47dbb49262608"},
+    {file = "azure_core-1.23.0-py3-none-any.whl", hash = "sha256:23c1389a115c328878c4eface3ca3899c2468313ea6f883f2347d6924cd887b2"},
 ]
 azure-storage-blob = [
     {file = "azure-storage-blob-12.9.0.zip", hash = "sha256:cff66a115c73c90e496c8c8b3026898a3ce64100840276e9245434e28a864225"},

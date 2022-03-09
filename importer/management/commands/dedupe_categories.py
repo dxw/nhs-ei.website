@@ -2,7 +2,6 @@ import logging
 
 from django.core.management.base import BaseCommand
 from cms.categories.models import CategoryPageCategoryRelationship, Category
-from cms.publications.models import PublicationType
 
 logger = logging.getLogger(__name__)
 

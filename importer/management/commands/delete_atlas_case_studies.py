@@ -1,8 +1,6 @@
 import sys
-import time
 
 from django.core.management.base import BaseCommand
-from cms.pages.models import BasePage
 from cms.atlascasestudies.models import AtlasCaseStudy, AtlasCaseStudyIndexPage
 
 

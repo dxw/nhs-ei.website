@@ -1,7 +1,5 @@
 from django import template
-from wagtail.core.models import Page, PageRevision
-from cms.core.models import UpperFooterLinks, LowerFooterLinks
-from django.contrib.contenttypes.models import ContentType
+from wagtail.core.models import Page
 
 register = template.Library()
 
@@ -29,28 +27,6 @@ def breadcrumb(context):
 
     # else:
     #     raise Exception("'page' not found in template context")
-
-
-@register.inclusion_tag("tags/footer_links.html", takes_context=True)
-def footer_links(context, location):
-    footer_links = None
-    hidden_title = ""
-    list_class = ""
-    if location == "upper":
-        list_class = "nhsie-footer-menu"
-        hidden_title = "Secondary menu links"
-        footer_links = UpperFooterLinks.objects.all()
-
-    elif location == "lower":
-        list_class = "nhsuk-footer__list"
-        hidden_title = "Support links"
-        footer_links = LowerFooterLinks.objects.all()
-
-    return {
-        "footer_links": footer_links,
-        "hidden_title": hidden_title,
-        "list_class": list_class,
-    }
 
 
 @register.inclusion_tag("tags/content_type_tag.html", takes_context=True)

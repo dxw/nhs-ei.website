@@ -1,10 +1,7 @@
 import sys
 import time
-from urllib.parse import urlparse
 import logging
 
-from django.core.management import call_command
-from django.utils.html import strip_tags
 from cms.categories.models import (
     Category,
     PublicationType,
@@ -166,7 +163,6 @@ class PublicationsImporter(Importer):
                 sys.stdout.write(".")
 
             # Create source category
-            source = publication.get("source")
             if source:
                 source_category, _ = Category.objects.get_or_create(
                     name=f"source: {source}",

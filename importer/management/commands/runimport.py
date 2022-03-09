@@ -158,7 +158,6 @@ class Command(BaseCommand):
             call_command("make_top_pages")
             call_command("make_alert_banner")
             call_command("make_home_page")
-            call_command("make_footer_links")
 
         elif options["app"] == "documents":
             call_command("make_documents_list")

@@ -1,23 +1,10 @@
-from django.template.defaultfilters import default, filesizeformat
 from wagtail.core.blocks import (
-    StructBlock,
     RawHTMLBlock,
-    CharBlock,
     StreamBlock,
-    ListBlock,
-    ChooserBlock,
 )
 from wagtail.core.blocks.field_block import (
-    BooleanBlock,
-    ChoiceBlock,
-    DecimalBlock,
-    IntegerBlock,
-    MultipleChoiceBlock,
-    PageChooserBlock,
     RichTextBlock,
-    URLBlock,
 )
-from wagtail.documents.blocks import DocumentChooserBlock
 
 from wagtailnhsukfrontend.blocks import (
     ActionLinkBlock,
@@ -27,7 +14,6 @@ from wagtailnhsukfrontend.blocks import (
     DontBlock,
     ExpanderBlock,
     ExpanderGroupBlock,
-    FlattenValueContext,
     CardFeatureBlock,
     InsetTextBlock,
     ImageBlock,
@@ -98,19 +84,3 @@ class CoreBlocks(StreamBlock):
         """,
         template="blocks/html_block.html",
     )
-
-
-class LinkListBlock(StructBlock):
-    footer_links = ListBlock(
-        StructBlock(
-            [
-                ("text", CharBlock()),
-                ("page", PageChooserBlock()),
-                ("external_link", URLBlock()),
-            ]
-        )
-    )
-
-
-class FooterBlocks(StreamBlock):
-    footer_links = LinkListBlock(group="Custom")

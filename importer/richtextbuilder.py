@@ -1,19 +1,14 @@
-from os import PRIO_USER, unlink
-import requests
 import re
 import sys
 import logging
 from io import BytesIO
 from django.core.files import File
 from bs4 import BeautifulSoup
-from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
-from cms.atlascasestudies.models import AtlasCaseStudy
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
-from wagtail.images.models import Image
 from wagtail.core.models import Collection
 from .httpcache import session
 
@@ -106,7 +101,7 @@ class RichTextBuilder:
         links = soup.find_all(
             "a",
             href=re.compile(
-                r"^(http://|https://)(www.england.nhs.uk/|www.england.nhs.uk)"
+                r"^(http://|https://)(www\.england\.nhs\.uk/|www\.england\.nhs\.uk)"
             ),
         )
 
@@ -242,7 +237,6 @@ class RichTextBuilder:
                     title=path_list[-1], file=media_file, collection=collection_root
                 )
                 file.save()
-                pass
 
             if document_id:
                 document_link = self.make_document_link(
@@ -262,7 +256,6 @@ class RichTextBuilder:
             # print('using live')
             response = session.get("https://www.england.nhs.uk" + page_path)
             url = ""
-            is_post = False
             try:
                 response.raise_for_status()
             except:

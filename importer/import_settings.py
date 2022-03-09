@@ -2,7 +2,6 @@ import sys
 import time
 
 from cms.categories.models import Setting
-from django.core.management import call_command
 
 from .importer_cls import Importer
 

@@ -12,7 +12,6 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from importer.importer_cls import DocumentsBuilder
 from importer.richtextbuilder import RichTextBuilder
-from wagtail.documents.models import Document
 
 logger = logging.getLogger("importer")
 

@@ -1,4 +1,3 @@
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
@@ -30,7 +29,6 @@ def search(request):
 
     page = request.GET.get("page", 1)
     search_results_count = None
-    search_type = request.GET.get("content_type", "")
 
     def search(_class):
         queryset = _class.objects.live().order_by(search_ordering)

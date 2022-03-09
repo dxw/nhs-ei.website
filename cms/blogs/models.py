@@ -1,7 +1,4 @@
-from urllib.parse import urlparse
-
 from cms.categories.models import Category, CategoryPage
-from django import forms
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel

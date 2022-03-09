@@ -1,13 +1,9 @@
-import time
-import sys
-
 from django.core.management.base import BaseCommand
 from django.utils.crypto import get_random_string
 from django.core.validators import slug_re
 from django.utils.html import strip_tags
 from cms.pages.models import BasePage, ComponentsPage
 from importer.utils import URLParser
-from cms.blogs.models import BlogIndexPage
 
 
 class Command(BaseCommand):

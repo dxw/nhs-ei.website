@@ -1,12 +1,8 @@
 import sys
 import time
-import ast
-import os
 from io import BytesIO
-from pathlib import Path
 import logging
 
-import requests
 from django.core.files import File
 from django.core.files.images import ImageFile
 from wagtail.core.models import Collection

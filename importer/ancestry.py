@@ -1,5 +1,4 @@
 from cms.pages.models import BasePage
-from cms.home.models import Page
 
 
 class Ancestry:

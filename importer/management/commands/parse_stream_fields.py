@@ -1,23 +1,12 @@
 import ast
-from io import BytesIO
 import json
-from os import link
-import re
 import sys
-from sys import path
-from typing import ItemsView
 from bs4 import BeautifulSoup
-from django.core.files.base import File
-from django.core.files.images import ImageFile
-import requests
 from html import unescape
 import logging
 
 
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
-from wagtail.core.models import Collection
-from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from cms.posts.models import Post
@@ -192,8 +181,8 @@ class Command(BaseCommand):
                             content_fields = self.make_expander_group_block(
                                 page.content_fields, page
                             )
-                            for field in content_fields:
-                                body.append(field)
+                            for content_field in content_fields:
+                                body.append(content_field)
 
                             # body.append(content_blocks)
 
@@ -454,7 +443,6 @@ class Command(BaseCommand):
         """
         # rich_text = self.block_builder.extract_links(content)
         self.block_builder.extract_links(content)
-        content = content
         for link in self.block_builder.change_links:
             content = content.replace(str(link[0]), str(link[1]))
         block = {

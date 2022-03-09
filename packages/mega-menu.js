@@ -1,3 +1,11 @@
+/*
+JS:        packages/mega-menu.js
+CSS:       packages/custom-styles/_megamenu.scss
+Templates: cms/templates/partials/megamenu
+*/
+
+/* ******************** Burger Menu ******************** */
+
 const show = function (elem) {
     const getHeight = function () {
         elem.style.display = 'block';
@@ -42,7 +50,22 @@ document.getElementById("toggle-menu").addEventListener("click", function (e) {
 }, false);
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (location.hash.replace('#','') === "open") {
+    if (location.hash.replace('#', '') === "open") {
         toggle(document.getElementById("mega-menu"))
+    }
+});
+
+/* ******************** Mega Menu ******************** */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleMenu = document.getElementsByClassName("toggle-menu-expand");
+
+    for (const link of toggleMenu) {
+        link.addEventListener("click", (event) => {
+            // Add listener here
+            // if (Number(event.target.getAttribute("data-depth")) <= 2) {
+            //     event.preventDefault();
+            // }
+        });
     }
 });

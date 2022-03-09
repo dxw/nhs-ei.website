@@ -1,0 +1,51 @@
+/*
+JS:        packages/mega-menu.js
+CSS:       packages/custom-styles/_megamenu.scss
+Templates: cms/templates/partials/megamenu
+*/
+
+#mega-menu {
+
+  .corporate-wrapper {
+    margin-top: 20px;
+    margin-left: 20px;
+    border-right: 1px solid black;
+
+    .corporate {
+      border-top: 1px solid black;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 20px 300px 0 0;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .main-menu-wrapper {
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+    border-right: 1px solid black;
+
+    .main-menu-items {
+      border-top: 1px solid black;
+
+      ul {
+        //list-style-type: none;
+        //margin: 0;
+        padding: 20px 10px 0px 30px;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+
+    .sub-menu-items {
+      //display: none;
+      overflow: hidden;
+
+    }
+  }
+}
+

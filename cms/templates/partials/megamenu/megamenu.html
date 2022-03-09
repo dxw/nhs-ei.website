@@ -1,0 +1,20 @@
+{% load menu_tags %}
+
+<div class="nhsuk-width-container menu-bar toggle-content" id="mega-menu">
+  {#  Corporate container - start #}
+  <div class="corporate-wrapper">
+    <div>Corporate</div>
+    <div>{% flat_menu handle="corporate" %}</div>
+  </div>
+  {#  Corporate container - end #}
+
+  {#  Main menu conatiner - start #}
+  <div class="main-menu-wrapper">
+    <div>Programmes</div>
+    <div class="main-menu">
+      <div>{% main_menu max_levels=3 template="partials/megamenu/navigation.html" %}</div>
+    </div>
+  </div>
+  {#  Main menu conatiner - end #}
+</div>
+

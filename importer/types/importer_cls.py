@@ -107,7 +107,7 @@ class Importer:
             self.max_media_age = 0
 
     def fetch_url(self, url):
-        logger.info("\n⌛️ fetching API url {}\n".format(url))
+        logger.info("⌛️ fetching API url {}".format(url))
         r = requests.get(url).json()
         self.count = r.get("count")
         self.next = r.get("next")
@@ -167,7 +167,7 @@ class Importer:
             try:
                 model.save()
             except Exception as e:
-                logger.error("%s, %s" % (e, model))
+                logger.error("%s, %d, %s, %s" % (e, model.wp_id, model.type, model))
 
 
 class ComponentsBuilder:

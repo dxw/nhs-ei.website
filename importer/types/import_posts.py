@@ -11,7 +11,7 @@ from cms.posts.models import Post, PostIndexPage
 from importer.preserve import preserve
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:posts")
+logger = logging.getLogger("importer")
 
 # so we can match the subsite categories for the post index page
 POST_SOURCES_TO_CATEGORY_SOURCES = {
@@ -96,7 +96,9 @@ class PostsImporter(Importer, ABC):
                 self.news_index_page.add_child(instance=sub_site_news_index_page)
                 rev = sub_site_news_index_page.save_revision()
                 rev.publish()
-                logger.info("Created post index, %s" % POST_SOURCES[post.get("source")])
+                logger.debug(
+                    "Created post index, %s" % POST_SOURCES[post.get("source")]
+                )
 
             # let's make the posts for each sub site, we're in a loop for each
             # post here
@@ -125,9 +127,11 @@ class PostsImporter(Importer, ABC):
 
             if is_new:
                 sub_site_news_index_page.add_child(instance=obj)
-                logger.info("Imported Post wp_id=%d, title=%s" % (obj.wp_id, obj.title))
+                logger.debug(
+                    "Imported Post wp_id=%d, title=%s" % (obj.wp_id, obj.title)
+                )
             else:
-                logger.info("Updated Post wp_id=%d, title=%s" % (obj.wp_id, obj.title))
+                logger.debug("Updated Post wp_id=%d, title=%s" % (obj.wp_id, obj.title))
 
             preserve(obj)
 

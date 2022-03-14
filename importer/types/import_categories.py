@@ -18,7 +18,7 @@ SOURCES = {
     "categories-rightcare": "Right Care",
 }
 
-logger = logging.getLogger("importer:categories")
+logger = logging.getLogger("importer")
 
 
 class CategoriesImporter(Importer, ABC):
@@ -52,9 +52,9 @@ class CategoriesImporter(Importer, ABC):
 
             self.save(category)
             if is_new:
-                logger.info("Imported Category name=%s" % category.name)
+                logger.debug("Imported Category name=%s" % category.name)
             else:
-                logger.info("Updated Category name=%s" % category.name)
+                logger.debug("Updated Category name=%s" % category.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

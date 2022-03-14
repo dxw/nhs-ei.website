@@ -5,7 +5,7 @@ from abc import ABC
 from cms.categories.models import PublicationType
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:publication_types")
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 SOURCES = {
@@ -47,12 +47,12 @@ class PublicationTypesImporter(Importer, ABC):
 
             self.save(publication_type)
             if is_new:
-                logger.info(
+                logger.debug(
                     "Imported PublicationType wp_id=%s, title=%s"
                     % (publication_type.wp_id, publication_type.name)
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated PublicationType wp_id=%s, title=%s"
                     % (publication_type.wp_id, publication_type.name)
                 )

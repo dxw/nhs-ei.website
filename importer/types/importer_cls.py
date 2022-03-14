@@ -141,7 +141,7 @@ class Importer:
             mod_time = modified_time.timestamp()
             self.age = self.now - mod_time
             if self.age > self.max_media_age:
-                logger.info(
+                logger.debug(
                     "Object is older than threshold, age=%d seconds, %s"
                     % (self.age, identifier)
                 )
@@ -167,7 +167,7 @@ class Importer:
             try:
                 model.save()
             except Exception as e:
-                logger.error(e)
+                logger.error("%s, %s" % (e, model))
 
 
 class ComponentsBuilder:

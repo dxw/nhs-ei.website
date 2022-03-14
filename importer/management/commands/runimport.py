@@ -1,3 +1,4 @@
+import logging
 import sys
 
 from django.core.management import call_command
@@ -14,6 +15,8 @@ from importer.types.import_publications import PublicationsImporter
 from importer.types.import_regions import RegionsImporter
 from importer.types.import_settings import SettingsImporter
 from importer.websites import SCRAPY
+
+logger = logging.getLogger("importer")
 
 
 def get_api_url(app):
@@ -68,23 +71,33 @@ class Command(BaseCommand):
             import_publication_types(get_api_url("publication_types"))
             import_settings(get_api_url("settings"))
             import_regions(get_api_url("regions"))
+
             import_pages(get_api_url("pages"))
             import_posts(get_api_url("posts"))
             import_blogs(get_api_url("blogs"))
             import_publications(get_api_url("publications"))
             import_atlas_case_studies(get_api_url("atlas_case_studies"))
+
             call_command("page_mover")
             call_command("fix_slugs")
             call_command("swap_page_types")
             call_command("fix_component_page_slugs")
             call_command("fix_landing_page_slugs")
-            # call_command("swap_blogs_page")
+            call_command("swap_blogs_page")
+
             call_command("parse_stream_fields", "prod")
             call_command(
                 "parse_stream_fields_component_pages", "prod"
             )  # here we have url issue
             call_command("dedupe_pubtypes")
             call_command("dedupe_categories")
+
+            # No longer needed. these will be created by a content editor after
+            # initial import
+            # call_command("make_top_pages")
+            # call_command("make_alert_banner")
+            # call_command("make_home_page")
+
             call_command("make_documents_list")
 
         # categories
@@ -128,59 +141,6 @@ class Command(BaseCommand):
             self.stdout.write("⌛️ Initialising Media Files Import \n")
             import_media_files(get_api_url("media"))
 
-        elif options["app"] == "short":
-            # just do the ones that have foreign keys
-            import_categories(get_api_url("categories"))
-            import_publication_types(get_api_url("publication_types"))
-            import_settings(get_api_url("settings"))
-            import_regions(get_api_url("regions"))
-
-        elif options["app"] == "all":
-            # the whole lot in specific order
-            # BEFORE ALL OTHERS as related keys exists
-            import_media_files(get_api_url("media"))
-            import_categories(get_api_url("categories"))
-            import_publication_types(get_api_url("publication_types"))
-            import_settings(get_api_url("settings"))
-            import_regions(get_api_url("regions"))
-            # END BEFORE ALL OTHERS
-            # pages needs to run here because later commands
-            # create pages that prevent this script from running
-            import_pages(get_api_url("pages"))
-            import_posts(get_api_url("posts"))
-            import_blogs(get_api_url("blogs"))
-            import_publications(get_api_url("publications"))
-            import_atlas_case_studies(get_api_url("atlas_case_studies"))
-
-        elif options["app"] == "build":
-            call_command("page_mover")
-            call_command("fix_slugs")
-            call_command("swap_page_types")
-            call_command("fix_component_page_slugs")
-            call_command("fix_landing_page_slugs")
-            call_command("swap_blogs_page")
-
-        # this needs to run before 'fixes' because links go to images and files
-        # as well as pages and also 'documents' needs the files
-        elif options["app"] == "mediafiles":
-            # there's nothing more than a long process here
-            # that collescts every media file form wordpress
-            # and stores them in collection related to the subsite
-            # names they come from. They are linked up in later scripts.
-            import_media_files(get_api_url("media"))
-
-        elif options["app"] == "fixes":
-            # some of the existing pages here get initial content
-            # coming over form word press and when some page
-            # types are changed that content comes with them
-            # it's added to and adjusted in later scripts
-            call_command("parse_stream_fields", "prod")
-            call_command(
-                "parse_stream_fields_component_pages", "prod"
-            )  # here we have url issue
-            call_command("dedupe_pubtypes")
-            call_command("dedupe_categories")
-
         elif options["app"] == "makes":
             # TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
             call_command("make_top_pages")
@@ -207,19 +167,9 @@ def import_media_files(url):
     if fetch:
         completed_count, api_count = media_files_importer.parse_results()
 
-    sys.stdout.write("\n✅ Media Files imported")
-    # a final check to report actual imports to be done vs records in the table
-    # if api_count == completed_count:
-    #     sys.stdout.write(
-    #         '\n✅ {} Media Files imported'.format(completed_count))
-    # elif api_count > completed_count:
-    #     sys.stdout.write(
-    #         '\n😲 SOMETHING IS WRONG the record count is lower then the available records')
-    # elif api_count < completed_count:
-    #     sys.stdout.write(
-    #         '\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)')
-
-    sys.stdout.write("\n")
+    logger.info(
+        "✅ %d Media Files imported, api count (%d)" % (completed_count, api_count)
+    )
 
 
 def import_categories(url):
@@ -232,19 +182,9 @@ def import_categories(url):
     if fetch:
         completed_count, api_count = categories_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Categories processed".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info(
+        "✅ %d Categories processed, api count (%d)" % (completed_count, api_count)
+    )
 
 
 def import_publication_types(url):
@@ -257,19 +197,10 @@ def import_publication_types(url):
     if fetch:
         completed_count, api_count = publication_types_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Publication Types processed".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info(
+        "✅ %d Publication Types processed, api count (%d)"
+        % (completed_count, api_count)
+    )
 
 
 def import_atlas_case_studies(url):
@@ -282,19 +213,10 @@ def import_atlas_case_studies(url):
     if fetch:
         completed_count, api_count = atlas_case_studies_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Atals Case Studies imported".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info(
+        "✅ %d Atals Case Studies processed, api count (%d)"
+        % (completed_count, api_count)
+    )
 
 
 def import_settings(url):
@@ -307,19 +229,7 @@ def import_settings(url):
     if fetch:
         completed_count, api_count = settings_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Settings processed".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info("✅ {} Settings processed".format(completed_count))
 
 
 def import_regions(url):
@@ -332,19 +242,7 @@ def import_regions(url):
     if fetch:
         completed_count, api_count = regions_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Regions processed".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info("✅ %d Regions processed, api count (%d)" % (completed_count, api_count))
 
 
 def import_posts(url):
@@ -357,19 +255,7 @@ def import_posts(url):
     if fetch:
         completed_count, api_count = posts_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Posts imported".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info("✅ %d Posts imported, api count (%d)" % (completed_count, api_count))
 
 
 def import_publications(url):
@@ -382,19 +268,9 @@ def import_publications(url):
     if fetch:
         completed_count, api_count = publications_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("\n✅ {} Publications imported".format(completed_count))
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is lower then the available records"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)"
-        )
-
-    sys.stdout.write("\n")
+    logger.info(
+        "✅ %d Publications imported, api count (%d)" % (completed_count, api_count)
+    )
 
 
 def import_blogs(url):
@@ -407,19 +283,7 @@ def import_blogs(url):
     if fetch:
         completed_count, api_count = blogs_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("EXCELLENT ✅ the record count matches the available records\n")
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "SOMETHING IS WRONG 😲 the record count is lower then the available records\n"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "SOMETHING IS WRONG 😲 the record count is higher then the available records (did you forget the delete option?)\n"
-        )
-
-    sys.stdout.write("{} Blogs are now imported :) \n".format(completed_count))
+    logger.info("✅ %d Blogs imported, api count (%d)" % (completed_count, api_count))
 
 
 def import_pages(url):
@@ -432,16 +296,4 @@ def import_pages(url):
     if fetch:
         completed_count, api_count = pages_all_importer.parse_results()
 
-    # a final check to report actual imports to be done vs records in the table
-    if api_count == completed_count:
-        sys.stdout.write("EXCELLENT ✅ the record count matches the available records\n")
-    elif api_count > completed_count:
-        sys.stdout.write(
-            "SOMETHING IS WRONG 😲 the record count is lower then the available records\n"
-        )
-    elif api_count < completed_count:
-        sys.stdout.write(
-            "SOMETHING IS WRONG 😲 the record count is higher then the available records (did you forget the delete option?)\n"
-        )
-
-    sys.stdout.write("{} Pages are now imported :) \n".format(completed_count))
+    logger.info("✅ %d Pages imported, api count (%d)" % (completed_count, api_count))

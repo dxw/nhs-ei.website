@@ -116,7 +116,7 @@ class PublicationsImporter(Importer, ABC):
                 )
                 rev = sub_site_publication_index_page.save_revision()
                 rev.publish()
-                logger.info(
+                logger.debug(
                     "Created PublicationIndexPage title=%s"
                     % PUBLICATION_SOURCES[FAKE_SOURCE]
                 )
@@ -161,11 +161,11 @@ class PublicationsImporter(Importer, ABC):
 
             if is_new:
                 sub_site_publication_index_page.add_child(instance=obj)
-                logger.info(
+                logger.debug(
                     "Imported Publication wp_id=%d, title=%s" % (obj.wp_id, obj.title)
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated Publication wp_id=%d, title=%s" % (obj.wp_id, obj.title)
                 )
 
@@ -187,7 +187,7 @@ class PublicationsImporter(Importer, ABC):
                         publication=obj, publication_type=publication_type
                     )
 
-                logger.info("Associated publication with %s" % publication_types)
+                logger.debug("Associated publication with %s" % publication_types)
 
             # Create source category
             source = publication.get("source")
@@ -229,7 +229,7 @@ class PublicationsImporter(Importer, ABC):
                             "source=%s" % (category, source)
                         )
 
-                logger.info("Set categories to %s" % category_id)
+                logger.debug("Set categories to %s" % category_id)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

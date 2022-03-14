@@ -48,9 +48,9 @@ class RegionsImporter(Importer, ABC):
 
             self.save(region)
             if is_new:
-                logger.info("Imported Region name=%s" % region.name)
+                logger.debug("Imported Region name=%s" % region.name)
             else:
-                logger.info("Updated Region name=%s" % region.name)
+                logger.debug("Updated Region name=%s" % region.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

@@ -47,12 +47,12 @@ class PublicationTypesImporter(Importer, ABC):
 
             self.save(publication_type)
             if is_new:
-                logger.info(
+                logger.debug(
                     "Imported PublicationType wp_id=%s, title=%s"
                     % (publication_type.wp_id, publication_type.name)
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated PublicationType wp_id=%s, title=%s"
                     % (publication_type.wp_id, publication_type.name)
                 )

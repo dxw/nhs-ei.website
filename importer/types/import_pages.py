@@ -106,11 +106,11 @@ class PagesImporter(Importer, ABC):
 
             if is_new:
                 self.staging_page.add_child(instance=obj)
-                logger.info(
+                logger.debug(
                     "Imported BasePage wp_id=%s, title=%s" % (obj.wp_id, obj.title)
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated BasePage wp_id=%s, title=%s" % (obj.wp_id, obj.title)
                 )
 
@@ -121,11 +121,11 @@ class PagesImporter(Importer, ABC):
             self.save(obj)
 
             if is_new:
-                logger.info(
+                logger.debug(
                     "Imported File wp_id=%s, title=%s" % (wp_id, page.get("title"))
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated File wp_id=%s, title=%s" % (wp_id, page.get("title"))
                 )
 

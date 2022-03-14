@@ -48,9 +48,9 @@ class SettingsImporter(Importer, ABC):
 
             self.save(setting)
             if is_new:
-                logger.info("Imported Setting name=%s" % setting.name)
+                logger.debug("Imported Setting name=%s" % setting.name)
             else:
-                logger.info("Updated Setting name=%s" % setting.name)
+                logger.debug("Updated Setting name=%s" % setting.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

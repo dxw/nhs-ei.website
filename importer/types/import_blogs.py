@@ -76,9 +76,11 @@ class BlogsImporter(Importer, ABC):
 
             if is_new:
                 self.blog_index_page.add_child(instance=obj)
-                logger.info("Imported Blog wp_id=%s, title=%s" % (obj.wp_id, obj.title))
+                logger.debug(
+                    "Imported Blog wp_id=%s, title=%s" % (obj.wp_id, obj.title)
+                )
             else:
-                logger.info("Updated Blog wp_id=%s, title=%s" % (obj.wp_id, obj.title))
+                logger.debug("Updated Blog wp_id=%s, title=%s" % (obj.wp_id, obj.title))
 
             preserve(obj)
 

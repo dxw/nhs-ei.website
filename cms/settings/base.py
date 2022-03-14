@@ -279,7 +279,7 @@ LOGGING = {
         },
         "cms": {"handlers": ["console"], "level": "DEBUG"},
         "importer": {
-            "handlers": ["file_debug", "file_error", "console"],
+            "handlers": ["file", "file_debug", "file_error", "console"],
             "level": "DEBUG",
         },
     },

@@ -112,12 +112,12 @@ class AtlasCaseStudiesImporter(Importer, ABC):
 
             if is_new:
                 self.atlas_case_study_index_page.add_child(instance=obj)
-                logger.info(
+                logger.debug(
                     "Created AtlasCaseStudy, wp_id=%s, title=%s"
                     % (obj.wp_id, obj.title)
                 )
             else:
-                logger.info(
+                logger.debug(
                     "Updated AtlasCaseStudy, wp_id=%s, title=%s"
                     % (obj.wp_id, obj.title)
                 )
@@ -139,7 +139,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                         CategoryPageCategoryRelationship.objects.create(
                             category_page=obj, category=category_object
                         )
-                    logger.info(
+                    logger.debug(
                         "Creating link to categories, cat ids = %s" % category_ids
                     )
 
@@ -167,7 +167,9 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                         AtlasCaseStudySettingRelationship.objects.create(
                             atlas_case_study=obj, setting=setting
                         )
-                    logger.info("Creating link to setting, setting ids = %s" % settings)
+                    logger.debug(
+                        "Creating link to setting, setting ids = %s" % settings
+                    )
 
                 # add the regions as related many to many, found this needs
                 # to be
@@ -183,7 +185,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                         AtlasCaseStudyRegionRelationship.objects.create(
                             atlas_case_study=obj, region=region
                         )
-                    logger.info("Creating link to setting, region ids = %s" % regions)
+                    logger.debug("Creating link to setting, region ids = %s" % regions)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

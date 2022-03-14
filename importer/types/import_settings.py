@@ -6,7 +6,7 @@ from cms.categories.models import Setting
 from . import trim_long_text
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:settings")
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 # SOURCES = {
@@ -48,9 +48,9 @@ class SettingsImporter(Importer, ABC):
 
             self.save(setting)
             if is_new:
-                logger.info("Imported Setting name=%s" % setting.name)
+                logger.debug("Imported Setting name=%s" % setting.name)
             else:
-                logger.info("Updated Setting name=%s" % setting.name)
+                logger.debug("Updated Setting name=%s" % setting.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

@@ -14,7 +14,7 @@ from cms.core.models import ImageImportBridge, DocImportBridge
 from importer.httpcache import session
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:media_files")
+logger = logging.getLogger("importer")
 
 Document = get_document_model()
 Image = get_image_model()
@@ -114,18 +114,22 @@ class MediaFilesImporter(Importer, ABC):
 
                 if is_new:
                     if media_type == "file":
-                        logger.info("Imported File wp_id=%s, title=%s" % (wp_id, title))
+                        logger.debug(
+                            "Imported File wp_id=%s, title=%s" % (wp_id, title)
+                        )
                         DocImportBridge(wp_id=wp_id, document=media_object).save()
                     else:
-                        logger.info(
+                        logger.debug(
                             "Imported Image wp_id=%s, title=%s" % (wp_id, title)
                         )
                         ImageImportBridge(wp_id=wp_id, image=media_object).save()
                 else:
                     if media_type == "file":
-                        logger.info("Updated File wp_id=%s, title=%s" % (wp_id, title))
+                        logger.debug("Updated File wp_id=%s, title=%s" % (wp_id, title))
                     else:
-                        logger.info("Updated Image wp_id=%s, title=%s" % (wp_id, title))
+                        logger.debug(
+                            "Updated Image wp_id=%s, title=%s" % (wp_id, title)
+                        )
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

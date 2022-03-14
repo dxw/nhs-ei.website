@@ -238,7 +238,7 @@ LOGGING = {
             "filters": ["require_debug_false"],
         },
         "console": {
-            "level": "DEBUG",
+            "level": "ERROR",
             "class": "logging.StreamHandler",
             "formatter": "general",
             "filters": ["require_debug_true"],
@@ -255,6 +255,18 @@ LOGGING = {
             "filters": ["require_debug_true"],
             "formatter": "tailored",
         },
+        "file_debug": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "logger.debug.log",
+            "formatter": "tailored",
+        },
+        "file_error": {
+            "level": "WARNING",
+            "class": "logging.FileHandler",
+            "filename": "logger.warning.log",
+            "formatter": "tailored",
+        },
     },
     "loggers": {
         "django": {
@@ -266,38 +278,10 @@ LOGGING = {
             "propagate": True,
         },
         "cms": {"handlers": ["console"], "level": "DEBUG"},
-        "importer": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:parse_stream_fields_component_pages": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
+        "importer": {
+            "handlers": ["file_debug", "file_error", "console"],
+            "level": "DEBUG",
         },
-        "importer:make_documents_list": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
-        },
-        "importer:page_mover": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:fix_slugs": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:parse_stream_fields": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
-        },
-        "importer:swap_blog_pages": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:fix_landing_page_slugs": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
-        },
-        "importer:categories": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:media_files": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:pages": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:publications": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:publication_types": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
-        },
-        "importer:settings": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:posts": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:regions": {"handlers": ["file", "console"], "level": "INFO"},
-        "importer:blogs": {"handlers": ["file", "console"], "level": "INFO"},
     },
 }
 

@@ -11,7 +11,7 @@ from cms.posts.models import Post, PostIndexPage
 from importer.preserve import preserve
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:posts")
+logger = logging.getLogger("importer")
 
 # so we can match the subsite categories for the post index page
 POST_SOURCES_TO_CATEGORY_SOURCES = {

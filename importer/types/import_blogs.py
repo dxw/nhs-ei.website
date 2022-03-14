@@ -10,7 +10,7 @@ from cms.categories.models import Category, CategoryPageCategoryRelationship
 from importer.preserve import preserve
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:blogs")
+logger = logging.getLogger("importer")
 
 # blogs are not from a subsite so rewrite the source blogs to posts
 # they use the same categories

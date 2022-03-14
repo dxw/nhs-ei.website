@@ -12,7 +12,7 @@ from importer.utils import URLParser
 from . import trim_long_text
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:pages")
+logger = logging.getLogger("importer")
 
 
 class PagesImporter(Importer, ABC):

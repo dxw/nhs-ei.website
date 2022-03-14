@@ -18,7 +18,7 @@ SOURCES = {
     "categories-rightcare": "Right Care",
 }
 
-logger = logging.getLogger("importer:categories")
+logger = logging.getLogger("importer")
 
 
 class CategoriesImporter(Importer, ABC):

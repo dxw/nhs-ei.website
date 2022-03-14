@@ -5,7 +5,7 @@ from abc import ABC
 from cms.categories.models import PublicationType
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:publication_types")
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 SOURCES = {

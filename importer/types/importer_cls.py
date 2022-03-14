@@ -164,7 +164,10 @@ class Importer:
 
     def save(self, model):
         if self.changed:
-            model.save()
+            try:
+                model.save()
+            except Exception as e:
+                logger.error(e)
 
 
 class ComponentsBuilder:

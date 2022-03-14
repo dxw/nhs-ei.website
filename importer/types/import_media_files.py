@@ -14,7 +14,7 @@ from cms.core.models import ImageImportBridge, DocImportBridge
 from importer.httpcache import session
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:media_files")
+logger = logging.getLogger("importer")
 
 Document = get_document_model()
 Image = get_image_model()

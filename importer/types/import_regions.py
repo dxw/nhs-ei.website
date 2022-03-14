@@ -18,7 +18,7 @@ from .importer_cls import Importer
 #     'categories-rightcare': 'Right Care',
 # }
 
-logger = logging.getLogger("importer:regions")
+logger = logging.getLogger("importer")
 
 
 class RegionsImporter(Importer, ABC):

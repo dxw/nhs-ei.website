@@ -6,7 +6,7 @@ from cms.categories.models import Setting
 from . import trim_long_text
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:settings")
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 # SOURCES = {

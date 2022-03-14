@@ -19,7 +19,7 @@ from cms.publications.models import (
 from importer.preserve import preserve
 from .importer_cls import Importer
 
-logger = logging.getLogger("importer:publications")
+logger = logging.getLogger("importer")
 
 FAKE_SOURCE = "publications"
 

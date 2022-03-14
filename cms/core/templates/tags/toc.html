@@ -1,0 +1,6 @@
+<h2>Contents</h2>
+<ul>
+  {% for line in toc %}
+    <li><a href="{{ line.link }}">{{ line.text }}</a></li>
+  {%  endfor %}
+</ul>

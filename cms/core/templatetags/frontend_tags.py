@@ -1,4 +1,6 @@
 from django import template
+from django.shortcuts import render
+from django.template import loader
 from wagtail.core.models import Page
 
 register = template.Library()
@@ -40,3 +42,31 @@ def get_content_type_tag(context, page):
     }
     if content_type.model in CONTENT_TYPE_LABELS.keys():
         return {"type": CONTENT_TYPE_LABELS[content_type.model]}
+
+
+@register.inclusion_tag("tags/content_type_tag.html", takes_context=True)
+def get_content_type_tag(context, page):
+    result_page = Page.objects.get(id=page.id)
+    content_type = result_page.content_type
+    CONTENT_TYPE_LABELS = {
+        "post": "News",
+        "blog": "Blog",
+        "publication": "Publication",
+    }
+    if content_type.model in CONTENT_TYPE_LABELS.keys():
+        return {"type": CONTENT_TYPE_LABELS[content_type.model]}
+
+
+@register.inclusion_tag("tags/toc.html", takes_context=True)
+def generate_toc_from_page(context):
+    # page = context.get("page")
+    # _template = loader.get_template(context.get("template_name"))
+    # html = _template.render(context, context.get("request"))
+    # html = render(context.get("request"), context.get("template_name"), context)
+    return {
+        "toc": [
+            {"text": "title one", "link": "#anchor"},
+            {"text": "title two", "link": "#anchor"},
+            {"text": "title three", "link": "#anchor"},
+        ]
+    }

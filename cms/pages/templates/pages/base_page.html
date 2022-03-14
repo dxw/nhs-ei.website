@@ -1,11 +1,14 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags frontend_tags %}
 
 {% block body_class %}template-basepage{% endblock body_class %}
 
 {% block content %}
 
 <div class="nhsuk-width-container">
+
+    {% generate_toc_from_page %}
+
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
             <h1>{{ self.title }}</h1>

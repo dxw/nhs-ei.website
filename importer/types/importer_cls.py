@@ -1,3 +1,4 @@
+import json
 import logging
 import random
 import time
@@ -24,6 +25,13 @@ def _set_media_file(old_val, new_val, obj):
     # TODO: Maybe make this check better. Use hashes?
     if old_val.size != new_val.size:
         setattr(obj, "file", new_val)
+
+
+def _set_content(old_val, new_val, obj):
+    if old_val != new_val:
+        # setattr(obj, "raw_content", new_val)
+        obj.raw_content = new_val
+        obj.body = json.dumps([{"type": "html", "value": new_val}])
 
 
 class Importer:
@@ -148,6 +156,8 @@ class Importer:
         old_val = getattr(obj, attr_name)
         if attr_name == "file":
             _set_media_file(old_val, new_val, obj)
+        elif attr_name == "raw_content":
+            _set_content(old_val, new_val, obj)
         elif old_val != new_val:
             setattr(obj, attr_name, new_val)
             self.changed = True

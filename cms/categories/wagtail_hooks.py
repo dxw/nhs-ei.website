@@ -53,8 +53,14 @@ class CategoriesAdmin(ModelAdmin):
     def get_category_usage(self, obj):
         posts = Post.objects.filter(categorypage_category_relationship__category=obj)
         blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
-        # posts_count, blogs_count = Category.get_category_usage()
-        return "Posts {} | Blogs {}".format(posts.count(), blogs.count())
+        publications = Publication.objects.filter(
+            categorypage_category_relationship__category=obj
+        )
+        return "Posts: {posts_count} | Blogs: {blogs_count} | Publications: {publications_count}".format(
+            posts_count=posts.count(),
+            blogs_count=blogs.count(),
+            publications_count=publications.count(),
+        )
 
     get_category_usage.short_description = "Usage"
 

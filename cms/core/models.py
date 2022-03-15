@@ -51,11 +51,14 @@ class ExtendedMainMenuItem(AbstractMainMenuItem):
         help_text="Additional explanatory text which appears alongside this menu item",
     )
 
-    panels = [
-        FieldPanel("text"),
-        PageChooserPanel("page"),
-        FieldPanel("external_url"),
-    ]
+    panels = (
+        PageChooserPanel("link_page"),
+        FieldPanel("link_url"),
+        FieldPanel("url_append"),
+        FieldPanel("link_text"),
+        FieldPanel("caption"),
+        FieldPanel("allow_subnav"),
+    )
 
 
 """

@@ -84,26 +84,3 @@ class DocImportBridge(models.Model):
 
     wp_id = models.CharField(max_length=32, null=False)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
-
-
-class ExtendedMainMenuItem(AbstractMainMenuItem):
-    menu = ParentalKey(
-        "wagtailmenus.MainMenu",
-        on_delete=models.CASCADE,
-        related_name="extended_menu_items",
-    )
-
-    caption = models.CharField(
-        max_length=250,
-        blank=True,
-        help_text="Additional explanatory text which appears alongside this menu item",
-    )
-
-    panels = (
-        PageChooserPanel("link_page"),
-        FieldPanel("link_url"),
-        FieldPanel("url_append"),
-        FieldPanel("link_text"),
-        FieldPanel("caption"),
-        FieldPanel("allow_subnav"),
-    )

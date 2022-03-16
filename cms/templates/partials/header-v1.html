@@ -17,24 +17,22 @@
     </div>
 
     <div class="nhsuk-header__content" id="content-header">
-
-      <div class="nhsuk-header__menu">
-        <button
-            id="toggle-menu"
-            aria-controls="header-navigation"
-            class="burger-button"
-            aria-label="Open menu">
-
-        </button>
-      </div>
-
       {% include "partials/search.html" %}
 
     </div>
-
+    
   </div>
 
-  {% include 'partials/private_beta_banner.html' %}
-  {% include 'partials/megamenu/megamenu.html' %}
+  <div class="nhsuk-grid-row full-width">
+  <div class="nhsuk-header__menu nhsuk-width-container">
+    <div id="toggle-menu" aria-controls="header-navigation"aria-label="Open menu"><span class="burger-menu-text">MENU</span>
+      <button id="toggle-menu" aria-controls="header-navigation" class="burger-button" aria-label="Open menu">
+    </button>
+    </div>
+  </div>  
+  </div>
 
+  {% include 'partials/megamenu/megamenu.html' %}
+  {% include 'partials/private_beta_banner.html' %}
 </header>
+

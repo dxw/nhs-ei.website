@@ -14,6 +14,7 @@ from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
+from cms.core.models import ParseList
 from cms.pages.models import BasePage
 from cms.settings.base import env
 from importer.httpcache import session
@@ -154,6 +155,7 @@ class Importer:
         new_val = args[1]
         obj = args[2]
         old_val = getattr(obj, attr_name)
+        # print("%s / %s" % (attr_name, new_val))
         if attr_name == "file":
             _set_media_file(old_val, new_val, obj)
         elif attr_name == "raw_content":
@@ -162,19 +164,24 @@ class Importer:
             setattr(obj, attr_name, new_val)
             self.changed = True
 
-    def save(self, model):
+    def save(self, model, post_parse_required=True):
         if self.changed:
             try:
                 model.save()
+                if post_parse_required:
+                    # stash this for later checking
+                    ParseList(target=model).save()
             except Exception as e:
-                logger.error("%s, %d, %s, %s" % (e, model.wp_id, model.type, model))
+                logger.error(
+                    "%s, %s, %s (%d)" % (e, model.__class__, model, model.wp_id)
+                )
 
 
 class ComponentsBuilder:
     def __init__(self, data, url_map=None, page=None):
 
         # a temporary fix to rewrite absolute urls
-        # in the block types that ultimatley will have a page chooser etc
+        # in the block types that ultimately will have a page chooser etc
         self.url_map = url_map
         self.page = page
 

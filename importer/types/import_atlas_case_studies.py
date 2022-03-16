@@ -122,7 +122,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                     % (obj.wp_id, obj.title)
                 )
 
-            preserve(obj)
+            self.save(obj)
 
             if is_new:
                 # add the categories as related many to many, found this
@@ -131,14 +131,17 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                     category_ids = atlas_case_study.get("categories").split(" ")
                     # list of category wp_id's
                     for category in category_ids:
-                        category_object = Category.objects.get(
-                            source="categories",
-                            wp_id=int(category),
-                        )
-
-                        CategoryPageCategoryRelationship.objects.create(
-                            category_page=obj, category=category_object
-                        )
+                        try:
+                            category_object = Category.objects.get(
+                                source="categories", wp_id=int(category)
+                            )
+                            CategoryPageCategoryRelationship.objects.create(
+                                category_page=obj, category=category_object
+                            )
+                        except Exception as e:
+                            logger.warning(
+                                "Unable to locate category for wp_id=%s" % category
+                            )
                     logger.debug(
                         "Creating link to categories, cat ids = %s" % category_ids
                     )

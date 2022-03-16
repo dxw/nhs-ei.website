@@ -11,6 +11,7 @@
             aria-haspopup="true">
           {{ item.text }}
         </a>
+        {{ item.caption }}
         <ul class="sub-menu-items submenu-{{ item.id }}"
             id="submenu-{{ item.id }}">
           {% sub_menu item template="partials/megamenu/subnavigation.html" %}

@@ -80,6 +80,7 @@ class Command(BaseCommand):
     help = "parsing stream fields"
 
     def __init__(self):
+        super().__init__()
         models = [
             BasePage,
             ComponentsPage,
@@ -313,7 +314,7 @@ class Command(BaseCommand):
                         )
                         linked_html = linked_html.replace(img_string, new_image)
                     except Image.DoesNotExist:
-                        logger.warn(
+                        logger.warning(
                             "Missing image: %s | %s | %s", img["src"], page, page.id
                         )
                     if not new_image:
@@ -370,7 +371,7 @@ class Command(BaseCommand):
             )
         else:
             expanders = []
-            logger.warn("Empty expander list: %s | %s", page, page.id)
+            logger.warning("Empty expander list: %s | %s", page, page.id)
 
         """
         {

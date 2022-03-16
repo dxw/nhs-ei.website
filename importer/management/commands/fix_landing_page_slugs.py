@@ -1,5 +1,6 @@
 import logging
 
+from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from django.db import DataError
 from wagtail.core.models import Page
@@ -44,6 +45,10 @@ class Command(BaseCommand):
             blog_items_base.latest_revision_created_at = latest_revision_created
             blog_items_base.save()
             rev.publish()
+        except ValidationError as ve:
+            logger.info(
+                "✅  Blog Index Slug Already Changed (Validation failed, %s" % ve
+            )
         except BlogIndexPage.DoesNotExist:
             logger.info("✅  Blog Index Slug Already Changed")
 
@@ -67,6 +72,10 @@ class Command(BaseCommand):
             news_items_base.latest_revision_created_at = latest_revision_created
             news_items_base.save()
             rev.publish()
+        except ValidationError as ve:
+            logger.info(
+                "✅  News Index Slug Already Changed (Validation failed, %s" % ve
+            )
         except BasePage.DoesNotExist:
             logger.info("✅  News Index Slug Already Changed")
 
@@ -97,8 +106,12 @@ class Command(BaseCommand):
                 )
 
             rev.publish()
+        except ValidationError as ve:
+            logger.info(
+                "✅  Publications Index Slug Already Changed (Validation failed, %s" % ve
+            )
         except BasePage.DoesNotExist:
-            logger.info("✅  News Index Slug Already Changed")
+            logger.info("✅  Publications Index Slug Already Changed")
 
         # change atlas-case-study-items-base slug to
         try:
@@ -123,6 +136,11 @@ class Command(BaseCommand):
             )
             atlas_case_study_items_base.save()
             rev.publish()
+        except ValidationError as ve:
+            logger.info(
+                "✅  Atlas Case Studies Index Slug Already Changed (Validation failed, %s"
+                % ve
+            )
         except BasePage.DoesNotExist:
             logger.info("✅  Atlas Case Studies Index Slug Already Changed")
 

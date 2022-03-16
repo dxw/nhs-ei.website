@@ -6,10 +6,12 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import ClusterableModel, ParentalKey
+from wagtail.core.models import ClusterableModel, ParentalKey, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtailmenus.models import AbstractMainMenuItem
+
+from cms.pages.models import BasePage
 
 
 @register_setting
@@ -107,3 +109,13 @@ class ExtendedMainMenuItem(AbstractMainMenuItem):
         FieldPanel("caption"),
         FieldPanel("allow_subnav"),
     )
+
+
+class ParseList(models.Model):
+    """
+    This is a list of new pages that needs to be split into content blocks
+    """
+
+    target = models.ForeignKey(Page, on_delete=models.CASCADE)
+    slug_fixed = models.BooleanField(default=False)
+    html_parsed = models.IntegerField(default=False)

@@ -45,7 +45,7 @@ class PublicationTypesImporter(Importer, ABC):
             self("slug", r.get("slug"), publication_type)
             self("description", r.get("description"), publication_type)
 
-            self.save(publication_type)
+            self.save(publication_type, False)
             if is_new:
                 logger.debug(
                     "Imported PublicationType wp_id=%s, title=%s"

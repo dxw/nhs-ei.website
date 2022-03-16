@@ -303,7 +303,7 @@ class RichTextBuilder:
                         page_link = self.make_page_link(link.text, id, title)
                         self.change_links.append([link, page_link])
                     else:
-                        print("leaving the link alone")
+                        logger.info("leaving the link alone %s" % actual_url)
 
             else:
                 logger.warn("Stream fields URL error (???), %s, %s", page_path, page)

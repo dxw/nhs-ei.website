@@ -3,49 +3,118 @@ JS:        packages/mega-menu.js
 CSS:       packages/custom-styles/_megamenu.scss
 Templates: cms/templates/partials/megamenu
 */
+.nhsuk-header__menu {
+  float:none;
+}
 
 #mega-menu {
-
+  max-width: 100%;
+  margin: 0 auto;
+  border: 1px solid #005eb8;
   .corporate-wrapper {
+    width:100%;
+    @media (min-width:740px){
+      float:left;
+      width:19%;
+    }
     margin-top: 20px;
-    margin-left: 20px;
-    border-right: 1px solid black;
-
-    .corporate {
-      border-top: 1px solid black;
-
+    .corporate_section {
+      padding-left: 20px;
+      @media (max-width:740px) {
+        padding-right:20px;
+      }
+      .corporate {
+        padding-top:20px;
+        border-top: 1px solid $color_nhsuk-grey-3;
+      }
       ul {
         list-style-type: none;
         margin: 0;
         padding: 20px 300px 0 0;
         font-weight: bold;
+        display: inline;
+        a {
+          display:block;
+        }
       }
     }
   }
 
   .main-menu-wrapper {
+    width:100%;
+    @media (min-width:740px){
+      width:80%;
+    }
     margin-top: 20px;
-    margin-left: 20px;
     float: left;
-    border-right: 1px solid black;
-
-    .main-menu-items {
-      border-top: 1px solid black;
-
-      ul {
-        //list-style-type: none;
-        //margin: 0;
-        padding: 20px 10px 0px 30px;
-        font-weight: bold;
-        margin: 0;
+    border-right: 1px solid $color_nhsuk-grey-3;
+    border-left: 1px solid $color_nhsuk-grey-3;
+    .programme_section {
+      border-bottom: 1px solid $color_nhsuk-grey-3;
+      margin-bottom: 20px;
+      @media (max-width:740px) {
+        margin-right:20px;
+        margin-left: 20px;
       }
     }
 
+    .main-menu-items {
+      font-weight: bold;
+      margin-bottom:10px;
+      padding-left:0px;
+      list-style-type: none;
+      margin: 0;
+      width: 100%;
+      padding-right: 20px;
+      float: left;
+      @media (min-width:980px){
+        width: 25%;
+      }
+      @media (min-width:740px) and (max-width:980px) {
+     // desktop narrow
+        width: 50%;
+      }
+      @media (max-width:740px) {
+        padding: 0px 20px;
+        padding-bottom:30px;
+      }
+      li {
+        @media (min-width:980px){
+          min-height: 120px;
+        }
+        margin-bottom: 15px;
+        display: block;
+        clear: left;
+       @media (min-width:740px) and (max-width:980px) {
+       // tablet
+          min-height:75px;
+        }
+      }
+    }
     .sub-menu-items {
       //display: none;
       overflow: hidden;
-
+    }
+    a {
+      font-weight:bold;
+    }
+    span {
+      font-size: 16px;
+      line-height: 16px;
+      display: block;
+      font-weight: normal;
     }
   }
 }
+
+.burger-menu-text {
+  font-weight: bold;
+  top: -13px;
+  color: white;
+  position:relative;
+}
+.burger-button,.burger-menu-text {
+  cursor:pointer;
+}
+
 

@@ -107,8 +107,12 @@ Templates: cms/templates/partials/megamenu
   }
 }
 
-
 //header
+@media (max-width:980px){
+  div#toggle-menu {
+      padding-left: 20px;
+  }
+}
 .nhsuk-grid-row.full-width {
   border-top: 1px solid white;
   padding-top: 8px;
@@ -122,3 +126,4 @@ Templates: cms/templates/partials/megamenu
 .burger-button,.burger-menu-text {
   cursor:pointer;
 }
+

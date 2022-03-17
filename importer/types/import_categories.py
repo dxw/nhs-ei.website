@@ -17,7 +17,9 @@ class CategoriesImporter(Importer, ABC):
         categories = self.results
         for r in categories:
 
-            category = category_mapper.get_category_for_name(r.get("name"))
+            category = category_mapper.get_mapped_category_for_type_by_id(
+                type=r.get("source"), id=r.get("wp_id"), name=r.get("name")
+            )
             logger.debug("Imported Category name=%s" % category.name)
 
         if self.next:

@@ -177,13 +177,52 @@ TODO: How to upgrade sqlite3 version with python 3.8
 
 The import app is located at /importer
 
-It's a range of django management scripts that need to be run to import all the wordpress website data from Scrapy https://nhsei-scrapy.rkh.co.uk
+It's a range of django management scripts that need to be run to import all the wordpress website data from an instance of Scrapy
 
-### View the <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
+First clone and stand up https://github.com/dxw/nhs-ei.scrapy
 
-The scripts in the importer guide need to be run for both install methods.
+To import everything, or to freshen the current instance, first re-run the scapy import and then run:
 
-Before the data is imported the development site you see will contain no pages other than the home page which will be blank at this stage.
+```bash
+poetry run ./manage.py runimport venti
+```
+
+You can monitor the current progress at three levels of detail:
+
+```bash
+tail -f logger.warning.log  # Only warnings, errors, and criticals
+tail -f logger.log          # Process overview, whats hapening and what's erroring
+tail -f logger.debug.log    # Everything that is happening, very verbose
+```
+
+To clean the current instance:
+
+```bash
+poetry run ./manage.py delete_all # Slow ~ 30 minnutes
+# or
+rm *.sqlite && -rf media/* # Fast but you will need run migrations again to re-create the DB
+```
+
+It is possible to run the commands separately, but **MUST** run in this order on first import:
+
+```bash
+poetry run ./manage.py low_impact # Categories/Publication types/Setting and Regions ~20 seconds
+poetry run ./manage.py media      # Images and docs, very slow > 1 hour
+poetry run ./manage.py refresh    # The real pages, very slow > 1 hour
+poetry run ./manage.py parse      # Post import slug/html/image/link processing, very slow > 1 hour
+```
+
+These import just the individual content types. You can run them on their own, they are still idempotent.
+
+```bash
+poetry run ./manage.py posts
+poetry run ./manage.py publications
+poetry run ./manage.py atlas_case_studies
+poetry run ./manage.py pages
+poetry run ./manage.py blogs
+poetry run ./manage.py media
+poetry run ./manage.py documents
+```
 
 ## Application Guide
 

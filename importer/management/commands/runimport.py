@@ -1,9 +1,9 @@
 import logging
-import sys
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
+from importer.postimport import parse_all_updated
 from importer.types.import_atlas_case_studies import AtlasCaseStudiesImporter
 from importer.types.import_blogs import BlogsImporter
 from importer.types.import_categories import CategoriesImporter
@@ -44,9 +44,32 @@ def get_api_url(app):
         return SCRAPY + "api/media_files"
 
 
-"""
-./manage.py runimport app
-"""
+def do_low_impact():
+    """
+    These all run really quickly ~20s so group them
+    """
+    import_categories(get_api_url("categories"))
+    import_publication_types(get_api_url("publication_types"))
+    import_settings(get_api_url("settings"))
+    import_regions(get_api_url("regions"))
+
+
+def do_refresh():
+    """
+    This can be run repeatedly, it tags changed objects in the ParseList model
+    """
+    import_pages(get_api_url("pages"))
+    import_posts(get_api_url("posts"))
+    import_blogs(get_api_url("blogs"))
+    import_publications(get_api_url("publications"))
+    import_atlas_case_studies(get_api_url("atlas_case_studies"))
+
+    # only runs on child pages of import staging page
+    call_command("page_mover")
+
+    # These are fast we can run them every time
+    call_command("dedupe_pubtypes")
+    call_command("dedupe_categories")
 
 
 class Command(BaseCommand):
@@ -67,92 +90,31 @@ class Command(BaseCommand):
 
         if options["app"] == "venti":
             import_media_files(get_api_url("media"))
-            import_categories(get_api_url("categories"))
-            import_publication_types(get_api_url("publication_types"))
-            import_settings(get_api_url("settings"))
-            import_regions(get_api_url("regions"))
+            do_low_impact()
+            do_refresh()
+            parse_all_updated()
 
-            import_pages(get_api_url("pages"))
+        elif options["app"] == "low_impact":
+            do_low_impact()
+        elif options["app"] == "refresh":
+            do_refresh()
+        elif options["app"] == "parse":
+            parse_all_updated()
+
+        elif options["app"] == "posts":
             import_posts(get_api_url("posts"))
-            import_blogs(get_api_url("blogs"))
+        elif options["app"] == "publications":
             import_publications(get_api_url("publications"))
+        elif options["app"] == "atlas_case_studies":
             import_atlas_case_studies(get_api_url("atlas_case_studies"))
-
-            call_command("page_mover")
-            call_command("fix_slugs")
-            call_command("swap_page_types")
-            call_command("fix_component_page_slugs")
-            call_command("fix_landing_page_slugs")
-            call_command("swap_blogs_page")
-
-            call_command("parse_stream_fields", "prod")
-            call_command(
-                "parse_stream_fields_component_pages", "prod"
-            )  # here we have url issue
-            call_command("dedupe_pubtypes")
-            call_command("dedupe_categories")
-
-            # No longer needed. these will be created by a content editor after
-            # initial import
-            # call_command("make_top_pages")
-            # call_command("make_alert_banner")
-            # call_command("make_home_page")
-
-            call_command("make_documents_list")
-
-        # categories
-        elif options["app"] == "categories":  # categories
-            self.stdout.write("⌛️ Initialising Categories Import \n")
-            import_categories(get_api_url("categories"))
-
-        elif options["app"] == "publication_types":  # publications types
-            self.stdout.write("⌛️ Initialising Publication Types Import \n")
-            import_publication_types(get_api_url("publication_types"))
-
-        elif options["app"] == "settings":  # settings
-            self.stdout.write("⌛️ Initialising Settings Import \n")
-            import_settings(get_api_url("settings"))
-
-        elif options["app"] == "regions":  # regions
-            self.stdout.write("⌛️ Initialising Regions Import \n")
-            import_regions(get_api_url("regions"))
-
-        elif options["app"] == "posts":  # posts
-            self.stdout.write("⌛️ Initialising Posts Import \n")
-            import_posts(get_api_url("posts"))
-
-        elif options["app"] == "publications":  # publications
-            self.stdout.write("⌛️ Initialising Publications Import \n")
-            import_publications(get_api_url("publications"))
-
-        elif options["app"] == "atlas_case_studies":  # atlas case studies
-            self.stdout.write("⌛️ Initialising Atlas Case Studies Import \n")
-            import_atlas_case_studies(get_api_url("atlas_case_studies"))
-
-        elif options["app"] == "pages":  # pages
-            self.stdout.write("⌛️ Initialising Pages Import \n")
+        elif options["app"] == "pages":
             import_pages(get_api_url("pages"))
-
-        elif options["app"] == "blogs":  # blogs
-            self.stdout.write("⌛️ Initialising Blogs Import \n")
+        elif options["app"] == "blogs":
             import_blogs(get_api_url("blogs"))
-
-        elif options["app"] == "media":  # media
-            self.stdout.write("⌛️ Initialising Media Files Import \n")
+        elif options["app"] == "media":
             import_media_files(get_api_url("media"))
-
-        elif options["app"] == "makes":
-            # TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
-            call_command("make_top_pages")
-            call_command("make_alert_banner")
-            call_command("make_home_page")
-
         elif options["app"] == "documents":
             call_command("make_documents_list")
-
-        elif options["app"] == "menus":
-            call_command("make_menu")
-
         else:
             print("❌ runimport subcommand not recognised")
 

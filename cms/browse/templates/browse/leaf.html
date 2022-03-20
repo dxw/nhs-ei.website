@@ -1,0 +1,10 @@
+{% load menu_tags %}
+
+
+<div style="margin-left: 60px">
+{% for item in menu_items %}
+  <li>
+    <a href="">{{ item.text }}</a>
+  </li>
+{% endfor %}
+</div>

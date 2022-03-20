@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load menu_tags %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-basepage{% endblock body_class %}
+
+{% block content %}
+  <div>Section: {{ section }}</div>
+  <div>Branch: {{ branch }}</div>
+    {% main_menu max_levels=3 template="browse/section.html" %}
+{% endblock content %}

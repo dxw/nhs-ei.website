@@ -1,0 +1,16 @@
+{% load menu_tags %}
+
+<div style="margin-left: 30px">
+  {% for item in menu_items %}
+    <li>
+      <a href="{% url 'browse_leaf' section=section branch=item.href|cut:"/" %}">{{ item.text }}</a>
+      <span>href={{ item.href }}</span>
+    </li>
+  {% endfor %}
+</div>
+
+{% for item in menu_items %}
+  {% if branch and branch == item.href|cut:"/" and item.has_children_in_menu %}
+    {% sub_menu item template="browse/leaf.html" %}
+  {% endif %}
+{% endfor %}

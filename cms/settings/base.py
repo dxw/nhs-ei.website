@@ -39,6 +39,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INSTALLED_APPS = [
     "cms.home",
     "cms.search",
+    "cms.browse",
     "cms.categories",
     "cms.posts",
     "cms.blogs",

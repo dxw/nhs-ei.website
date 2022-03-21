@@ -82,7 +82,7 @@ class BlogsImporter(Importer, ABC):
             else:
                 logger.debug("Updated Blog wp_id=%s, title=%s" % (obj.wp_id, obj.title))
 
-            preserve(obj)
+            self.save(obj)
 
             # Create source category
             source = blog.get("source")
@@ -114,8 +114,8 @@ class BlogsImporter(Importer, ABC):
                         )
                     except Exception as ex:
                         logger.warning(
-                            "Unable to locate category for wp_id=%s, "
-                            "source=%s" % (cat_id, source)
+                            "Unable to locate category for wp_id=%s, source=%s"
+                            % (cat_id, source)
                         )
 
         if self.next:

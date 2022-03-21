@@ -50,7 +50,7 @@ class CategoriesImporter(Importer, ABC):
             self("description", r.get("description"), category)
             self("source", r.get("source"), category)
 
-            self.save(category)
+            self.save(category, False)
             if is_new:
                 logger.debug("Imported Category name=%s" % category.name)
             else:

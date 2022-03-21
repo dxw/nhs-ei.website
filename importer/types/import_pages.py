@@ -7,7 +7,7 @@ from django.core.validators import slug_re
 from django.utils.crypto import get_random_string
 from django.utils.html import strip_tags
 
-from cms.pages.models import BasePage
+from cms.pages.models import BasePage, ComponentsPage
 from importer.utils import URLParser
 from . import trim_long_text
 from .importer_cls import Importer
@@ -47,6 +47,10 @@ class PagesImporter(Importer, ABC):
                 obj = self.cache[wp_id]
             else:
                 obj = BasePage(wp_id=wp_id, show_in_menus=True)
+                if page.get("page-components.php") or page.get("page-blog-landing.php"):
+                    obj = ComponentsPage(wp_id=wp_id, show_in_menus=True)
+                else:
+                    obj = BasePage(wp_id=wp_id, show_in_menus=True)
                 is_new = True
 
             self.changed = False
@@ -76,15 +80,10 @@ class PagesImporter(Importer, ABC):
                 for k, v in item.items():
                     model_fields[k] = v
 
-            slug = URLParser(page.get("link")).find_slug()
-            # sometimes there's external links with params so fall back to
-            # the slug fomr wordpress
-            if not slug_re.match(slug):
-                slug = page.get("slug")
-
             self("title", page.get("title"), obj)
-            self("slug", self.unique_slug(trim_long_text(slug, 200)), obj)
-            self("excerpt", strip_tags(page.get("excerpt")), obj)
+            self("slug", "%d----%s" % (hash(page.get("slug")), page.get("wp_id")), obj)
+            self("excerpt", trim_long_text(strip_tags(page.get("excerpt")), 250), obj)
+            self("raw_content", page.get("content"), obj)
             self("raw_content", page.get("content"), obj)
             self("author", page.get("author"), obj)
             self("md_owner", model_fields["owner"], obj)
@@ -95,8 +94,8 @@ class PagesImporter(Importer, ABC):
             # start wordpress fields we can delete later
             self("parent", page.get("parent"), obj)
             self("source", page.get("source"), obj)
-            self("wp_template", page.get("wp_template"), obj)
-            self("wp_slug", page.get("wp_slug"), obj)
+            self("wp_template", page.get("template"), obj)
+            self("wp_slug", page.get("slug"), obj)
             self("real_parent", page.get("real_parent") or 0, obj)
             self("wp_link", page.get("wp_link"), obj)
             self("model_fields", page.get("model_fields"), obj)
@@ -107,11 +106,13 @@ class PagesImporter(Importer, ABC):
             if is_new:
                 self.staging_page.add_child(instance=obj)
                 logger.debug(
-                    "Imported BasePage wp_id=%s, title=%s" % (obj.wp_id, obj.title)
+                    "Imported %s wp_id=%s, title=%s"
+                    % (obj.__class__, obj.wp_id, obj.title)
                 )
             else:
                 logger.debug(
-                    "Updated BasePage wp_id=%s, title=%s" % (obj.wp_id, obj.title)
+                    "Updated %s wp_id=%s, title=%s"
+                    % (obj.__class__, obj.wp_id, obj.title)
                 )
 
             self("first_published_at", page.get("date"), obj)
@@ -119,15 +120,6 @@ class PagesImporter(Importer, ABC):
             self("latest_revision_created_at", page.get("modified"), obj)
 
             self.save(obj)
-
-            if is_new:
-                logger.debug(
-                    "Imported File wp_id=%s, title=%s" % (wp_id, page.get("title"))
-                )
-            else:
-                logger.debug(
-                    "Updated File wp_id=%s, title=%s" % (wp_id, page.get("title"))
-                )
 
         if self.next:
             time.sleep(self.sleep_between_fetches)
@@ -137,12 +129,3 @@ class PagesImporter(Importer, ABC):
             BasePage.objects.live().descendant_of(self.staging_page).count(),
             self.count,
         )
-
-    def unique_slug(self, slug):
-        # 8 characters, only digits.
-        random_string = get_random_string(8, "0123456789")
-        if random_string not in self.random_strings:
-            self.random_strings.append(random_string)
-            return str(slug) + "----" + str(random_string)
-        else:
-            self.unique_slug(slug)

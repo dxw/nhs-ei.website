@@ -169,7 +169,7 @@ class PublicationsImporter(Importer, ABC):
                     "Updated Publication wp_id=%d, title=%s" % (obj.wp_id, obj.title)
                 )
 
-            preserve(obj)
+            self.save(obj)
 
             # add the publication types as related many to many, found this
             # needs to be after the save above

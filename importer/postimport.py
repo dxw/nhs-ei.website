@@ -37,9 +37,21 @@ def save_slug(page):
 
 
 def fix_slug(process_candidate):
-    page = process_candidate.target
+    page = process_candidate.target.specific_class.objects.get(
+        id=process_candidate.target.id
+    )
     logger.debug("Fixing slug for %s" % page)
-    # There are a _lot_ of name clashes, we'll build a slug based and increment it if needed
+
+    if page.wp_slug and page.wp_slug != "":
+        page.slug = page.wp_slug
+        page.save()
+        process_candidate.slug_fixed = True
+        process_candidate.save()
+        logger.debug("Set slug wp_slug, '%s' for '%s'" % (page.slug, page))
+        return
+
+    # There are a _lot_ of name clashes, we'll build a slug based and
+    # increment it if needed
     base_slug = strip_chars(trim_long_text(strip_chars(page.title), 251))
     slug = base_slug
     counter = 1
@@ -124,6 +136,11 @@ class Parser:
             return
         if isinstance(page, Publication):
             logger.info("⌛️ Skipping Publication page %s" % page.__class__)
+            process_candidate.html_parsed = True
+            process_candidate.save()
+            return
+        if isinstance(page, AtlasCaseStudy):
+            logger.info("⌛️ Skipping AtlasCaseStudy page %s" % page.__class__)
             process_candidate.html_parsed = True
             process_candidate.save()
             return
@@ -302,7 +319,9 @@ class Parser:
                         )
                     if not new_image:
                         linked_html = (
-                            linked_html + '<h3 style="color:red">missing ' "image</h3>"
+                            linked_html + '<h3 style="color:red">missing '
+                            ""
+                            "image</h3>"
                         )
                 block_value += linked_html
 

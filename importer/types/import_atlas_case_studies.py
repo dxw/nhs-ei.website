@@ -18,7 +18,6 @@ from cms.categories.models import (
     Setting,
     CategoryPageCategoryRelationship,
 )
-from importer.preserve import preserve
 from .importer_cls import Importer
 
 logger = logging.getLogger("importer")

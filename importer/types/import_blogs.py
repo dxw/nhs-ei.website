@@ -7,7 +7,6 @@ from wagtail.core.models import Page
 
 from cms.blogs.models import Blog, BlogIndexPage
 from cms.categories.models import Category, CategoryPageCategoryRelationship
-from importer.preserve import preserve
 from .importer_cls import Importer
 
 logger = logging.getLogger("importer")

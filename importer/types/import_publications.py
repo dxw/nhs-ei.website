@@ -16,7 +16,6 @@ from cms.publications.models import (
     PublicationIndexPage,
     PublicationPublicationTypeRelationship,
 )
-from importer.preserve import preserve
 from .importer_cls import Importer
 
 logger = logging.getLogger("importer")

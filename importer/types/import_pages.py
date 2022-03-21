@@ -3,12 +3,9 @@ import time
 from abc import ABC
 
 from dateutil import parser
-from django.core.validators import slug_re
-from django.utils.crypto import get_random_string
 from django.utils.html import strip_tags
 
 from cms.pages.models import BasePage, ComponentsPage
-from importer.utils import URLParser
 from . import trim_long_text
 from .importer_cls import Importer
 
@@ -46,7 +43,6 @@ class PagesImporter(Importer, ABC):
             if wp_id in self.cache:
                 obj = self.cache[wp_id]
             else:
-                obj = BasePage(wp_id=wp_id, show_in_menus=True)
                 if page.get("page-components.php") or page.get("page-blog-landing.php"):
                     obj = ComponentsPage(wp_id=wp_id, show_in_menus=True)
                 else:

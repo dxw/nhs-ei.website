@@ -1,0 +1,140 @@
+.govuk-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+}
+.browse {
+  padding-top: 30px;
+  position: relative;
+  padding-bottom: 30px;
+} 
+.browse--three-columns .browse__root-pane {
+    display: block;
+    width: 25%;
+    margin-right: 0;
+}
+.browse__root-pane, .browse__section-pane, .browse__subsection-pane {
+    float: right;
+    min-height: 3px;
+}
+.browse__list {
+    text-decoration: underline;
+    text-decoration-thickness: max(1px, 0.0625rem);
+    text-underline-offset: 0.1em;
+    font-weight: 400;
+    position: relative;
+    display: block;
+    padding: 15px 25px 20px 0;
+    color: #505a5f;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    .browse__link.browse__link--active {
+        background: #1d70b8;
+        color: #fff;
+    }
+    .browse__link.browse__link--active:focus {
+      background: #fd0;
+      color: #0b0c0c;
+    }
+    .browse__link:focus:hover {
+      box-shadow: 0 -2px #f3f2f1, 0 3px #0b0c0c;
+      color: #0b0c0c;
+    }
+    .browse__link:hover {
+      background: #f3f2f1;
+      color: #1d70b8;
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+    }
+    .browse__link:link {
+        color: #1d70b8;
+    }
+    .browse__link:after {
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      right: 10px;
+      float: right;
+      content: "\203A";
+    }
+}
+.browse__heading {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+.browse--three-columns .browse__subsection-pane {
+    width: 50%;
+    margin-right: 13%;
+}
+.browse--three-columns .browse__subsection-pane {
+    transition-delay: 0s,.4s,0s;
+    opacity: 1;
+    height: auto;
+}
+.browse--two-columns .browse__subsection-pane {
+    opacity: 0;
+}
+.browse__subsection-pane {
+    opacity: 0;
+    transition-property: width, opacity, margin-right;
+    transition-delay: 0s, 0s, 0s;
+    transition-duration: .4s,0s,.4s;
+    height: 0;
+    overflow: hidden;
+}
+.browse__inner--curated {
+    padding-left: 30px;
+}
+.browse__inner {
+    border-left: 1px solid #b1b4b6;
+    min-height: 950px;
+    padding-bottom: 30px;
+}
+.browse__heading {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+.browse__list-header {
+    margin: 30px 0 5px 0;
+}
+
+.browse--three-columns .browse__section-pane {
+    display: block;
+    margin-right: 0;
+    margin-left: -13%;
+    width: 25%;
+}
+.browse__section-pane {
+    z-index: 2;
+    background: #fff;
+    position: relative;
+    transition: width .4s,margin-left .4s;
+}
+.browse--three-columns .browse__section-pane .browse__inner {
+    padding-left: 0;
+}
+.browse__section-pane .browse__heading {
+    padding-left: 15px;
+}
+
+.browse--two-columns .browse__root-pane {
+    display: block;
+    width: 25%;
+    margin-right: 0;
+}
+
+.browse--two-columns .browse__section-pane {
+    width: 35%;
+    .browse__inner--curated {
+      padding-left: 30px;
+  }
+}
+

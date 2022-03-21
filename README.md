@@ -181,7 +181,7 @@ It's a range of django management scripts that need to be run to import all the 
 
 First clone and stand up https://github.com/dxw/nhs-ei.scrapy
 
-To import everything, or to freshen the current instance, first re-run the scapy import and then run:
+To import everything, or to freshen the current instance, first re-run the scrapy import and then run:
 
 ```bash
 poetry run ./manage.py runimport venti

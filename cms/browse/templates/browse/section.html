@@ -1,11 +1,15 @@
 {% load menu_tags %}
-
-{% for item in menu_items %}
-  <li>
-    <a href="{% url 'browse_branch' section=item.href|cut:"/" %}">{{ item.text }}</a>
-  </li>
-{% endfor %}
-
+    <div class="browse" data-state="subsection" data-module="browse-columns">
+      <div id="root" class="browse--two-columns browse__root-pane">
+        <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
+        {% for item in menu_items %}
+          <ul class="browse__list">
+            <li>
+              <a class="browse__link browse__link--active" href="{% url 'browse_branch' section=item.href|cut:"/" %}">{{ item.text }}</a>
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
 {% for item in menu_items %}
   {% if section and section == item.href|cut:"/" and item.has_children_in_menu %}
     {% sub_menu item template="browse/branch.html" %}

@@ -1,10 +1,15 @@
 {% load menu_tags %}
 
 
-<div style="margin-left: 60px">
+<div class="browse">
+  <div id="subsection" class="browse--three-columns browse__subsection-pane">
+    <div class="browse__inner browse__inner--curated">
+      <h3 class="browse__list-header">h3 header</h3>
 {% for item in menu_items %}
-  <li>
-    <a href="">{{ item.text }}</a>
-  </li>
+        <li>
+          <a href="{{ item.href }}">{{ item.text }}</a>
+          <span>{{ item.caption }}</span>
+        </li>
 {% endfor %}
+  </div>
 </div>

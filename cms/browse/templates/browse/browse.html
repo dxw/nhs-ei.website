@@ -6,7 +6,11 @@
 {% block body_class %}template-basepage{% endblock body_class %}
 
 {% block content %}
+  <div class="nhsuk-width-container">
+    <h1 class="nhsuk-visually-hidden">Browse NHS.co.uk</h1>
   <div>Section: {{ section }}</div>
   <div>Branch: {{ branch }}</div>
     {% main_menu max_levels=3 template="browse/section.html" %}
 {% endblock content %}
+</div>
+</div>

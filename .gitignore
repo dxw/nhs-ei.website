@@ -152,3 +152,5 @@ compiledassets
 requests_cache.sqlite
 backup_*
 .idea
+dump.sql
+importer/management/commands/skunk.py

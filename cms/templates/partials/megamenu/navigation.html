@@ -1,21 +1,13 @@
 {% load menu_tags %}
 
-  <ul class="main-menu-items">
-    {% for item in menu_items %}
-      <li>
-        <a
-            href="{{ item.href }}"
-            class="toggle-menu-expand"
-            data-submenu="submenu-{{ item.id }}"
-            data-depth="{{ current_level }}"
-            aria-haspopup="true">
-          {{ item.text }}
-        </a>
-        <ul class="sub-menu-items submenu-{{ item.id }}"
-            id="submenu-{{ item.id }}">
-          {% sub_menu item template="partials/megamenu/subnavigation.html" %}
-        </ul>
-      </li>
-    {% endfor %}
-  </ul>
+{% for item in menu_items %}
+  {% cycle '<ul class="main-menu-items">' '' '' '' %}
+  <li>
+    <a href="">{{ item.text }}</a>
+    <span>
+      {{ item.caption }}
+    </span>
+  </li>
+  {% cycle '' '' '' '</ul>' %}
+{% endfor %}
 

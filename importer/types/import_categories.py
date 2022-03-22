@@ -17,10 +17,11 @@ class CategoriesImporter(Importer, ABC):
         categories = self.results
         for r in categories:
 
-            category = category_mapper.get_mapped_category_for_type_by_id(
-                type=r.get("source"), id=r.get("wp_id"), name=r.get("name")
+            mapped_categories = category_mapper.get_mapped_categories_for_type_by_id(
+                type=r.get("source"), id=r.get("wp_id")
             )
-            logger.debug("Imported Category name=%s" % category.name)
+            for category in mapped_categories:
+                logger.debug("Imported Category name=%s" % category.name)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

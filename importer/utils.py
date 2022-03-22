@@ -64,17 +64,27 @@ class ImportCategoryMapper:
         slug = self.get_slug_for_category_name(category_name)
         return self.get_category_for_slug(slug)
 
-    def get_mapped_category_for_type_by_id(self, type, id, name=None):
+    def get_mapped_categories_for_type_by_id(self, type, id):
 
         if type not in CATEGORY_MAP:
             raise Exception(f"Category type {type} does not exist in CATEGORY_MAP.")
 
         if id not in CATEGORY_MAP[type]:
-            if name:
-                slug = self.get_slug_for_category_name(name)
-                error_string = f'Category ID {id} does not exist in CATEGORY_MAP for type {type}. This needs manually mapping. Category name is "{name}", slug is "{slug}"'
-            else:
-                error_string = f"Category ID {id} does not exist in CATEGORY_MAP for type {type}. This needs manually mapping."
-            raise Exception(error_string)
+            raise Exception(
+                f"Category ID {id} does not exist in CATEGORY_MAP for type {type}. This needs manually mapping."
+            )
 
-        return self.get_category_for_slug(CATEGORY_MAP[type][id])
+        slugs = CATEGORY_MAP[type][id]
+
+        if isinstance(slugs, str):
+            slugs = [
+                slugs,
+            ]
+
+        categories = []
+
+        for slug in slugs:
+
+            categories.append(self.get_category_for_slug(slug))
+
+        return categories

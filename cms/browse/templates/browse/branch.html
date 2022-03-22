@@ -8,7 +8,9 @@
         <ul class="browse__list">
           {% for item in menu_items %}
             <li>
-              <a href="{% url 'browse_leaf' section=section branch=item.href|cut:"/" %}">{{ item.text }}</a>
+              <a
+                  class="{% if item.href|cut:"/" == branch %}ACTIVE{% endif %}"
+                  href="{% url 'browse_leaf' section=section branch=item.href|cut:"/" %}">{{ item.text }}</a>
               <span>{{ item.id|get_caption }}</span>
             </li>
           {% endfor %}

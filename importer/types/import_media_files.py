@@ -110,7 +110,7 @@ class MediaFilesImporter(Importer, ABC):
                 self("collection", collection, media_object)
                 self("created_at", r.get("date"), media_object)
 
-                self.save(media_object)
+                self.save(media_object, False)
 
                 if is_new:
                     if media_type == "file":

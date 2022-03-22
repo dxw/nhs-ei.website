@@ -282,6 +282,10 @@ LOGGING = {
             "handlers": ["file", "file_debug", "file_error", "console"],
             "level": "DEBUG",
         },
+        "parser": {
+            "handlers": ["file", "file_debug", "file_error", "console"],
+            "level": "DEBUG",
+        },
     },
 }
 
@@ -295,3 +299,6 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("footer-upper", "Footer (Upper links)"),
     ("footer-lower", "Footer (Lower links)"),
 )
+
+# TODO - turn this on when we go live, it breaks imports all ove the place
+WAGTAILREDIRECTS_AUTO_CREATE = False

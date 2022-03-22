@@ -89,8 +89,8 @@ class Command(BaseCommand):
         # involved except the one for each app might we want to log it?
 
         if options["app"] == "venti":
-            import_media_files(get_api_url("media"))
             do_low_impact()
+            import_media_files(get_api_url("media"))
             do_refresh()
             parse_all_updated()
 

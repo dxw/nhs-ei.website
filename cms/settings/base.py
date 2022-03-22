@@ -296,3 +296,6 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("footer-upper", "Footer (Upper links)"),
     ("footer-lower", "Footer (Lower links)"),
 )
+
+# what is the max length of mega menu captions in characters
+NHSEI_MAX_CATION_LENGTH = 50

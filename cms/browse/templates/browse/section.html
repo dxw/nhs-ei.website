@@ -1,3 +1,4 @@
+{% load browse_tags %}
 {% load menu_tags %}
     <div class="browse" data-state="subsection" data-module="browse-columns">
       <div id="root" class="browse--two-columns browse__root-pane">
@@ -6,6 +7,7 @@
           <ul class="browse__list">
             <li>
               <a class="browse__link browse__link--active" href="{% url 'browse_branch' section=item.href|cut:"/" %}">{{ item.text }}</a>
+              <span>{{ item.link_page_id|get_caption }}</span>
             </li>
           </ul>
         {% endfor %}

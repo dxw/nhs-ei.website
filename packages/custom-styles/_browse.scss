@@ -1,30 +1,24 @@
 .nhsuk-main-wrapper {
-    background-color: white;
+    background-color:$color_nhsuk-white;
     overflow:auto;
 }
 .browse {
   position:relative;
+  p {
+    margin-bottom:5px;
+  }
 }
-//visually hidden
-.nhsuk-visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  clip: rect(0 0 0 0) !important;
-  -webkit-clip-path: inset(50%) !important;
-  clip-path: inset(50%) !important;
-  border: 0 !important;
-  white-space: nowrap !important;
-}
+
 // first col
-@media (min-width:641px){
-  .browse--two-columns.browse__root-pane {
+.browse__root-pane {
+  @media (min-width:641px){
     display: block;
     width: 25%;
     margin-right: 0;
+    border-right: 1px solid $nhsuk-link-active-color;
+  }
+  @media (max-width:641px){
+    display:none;
   }
 }
 
@@ -32,18 +26,37 @@
   padding: 0;
   margin: 0;
   list-style: none;
+
+  a {
+    position:relative;
+    display: block;
+  }
+  h3 {
+    margin-bottom:0px;
+  }
   .browse__link {
     text-decoration: underline;
     text-decoration-thickness: max(1px, 0.0625rem);
     text-underline-offset: 0.1em;
-    position: relative;
     display: block;
-    padding: 15px 25px 20px 15px;
+    padding: 10px 25px 10px 20px;
     color: #505a5f;
-  }
-  .browse__link--active {
-    background: #1d70b8;
-    color: #fff;
+    &.browse__link--active {
+      background: $nhsuk-link-active-color;
+      color: #fff;
+      &:hover {
+        background: $nhsuk-link-active-color;
+        color:#fff;
+        p, h3 {
+          color: #fff;
+        }
+      }
+      &:focus:hover {
+        p, a, h3{
+          color:$nhsuk-focus-text-color;
+        }
+      }
+    }
   }
   .browse__link:hover {
       text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
@@ -52,18 +65,19 @@
   }
   .browse__link:focus {
       outline: 3px solid transparent;
-      color: #0b0c0c;
+      color: $nhsuk-text-color;
       background-color: #fd0;
-      box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+      box-shadow: 0 -2px #fd0, 0 4px $nhsuk-text-color;
       text-decoration: none;
   }
   .browse__link:focus:hover {
-    box-shadow: 0 -2px #f3f2f1, 0 3px #0b0c0c;
-    color: #0b0c0c;
+    box-shadow: 0 -2px #f3f2f1, 0 3px $nhsuk-text-color;
+    color:$nhsuk-text-color;
+    background-color: #fd0;
   }
   .browse__link:hover {
     background: #f3f2f1;
-    color: #1d70b8;
+    color:$nhsuk-link-color;
   }
   .browse__link:after {
     position: absolute;
@@ -77,14 +91,23 @@
 
 // second column
 .browse__section-pane {
-  z-index: 2;
   background: #fff;
-  position: relative;
-  transition: width .4s,margin-left .4s;
+  border-right: 1px solid $nhsuk-link-active-color;
   @media (min-width:641px){
     width: 35%;
     .browse__section-pane .browse__heading {
       padding-left: 15px;
+    }
+  }
+  .browse__link {
+    text-decoration: none;
+    &:hover {
+      h3 {
+        text-decoration:underline;
+      }
+      p {
+        color: $nhsuk-focus-text-color;
+      }
     }
   }
 }
@@ -104,40 +127,37 @@
 .browse__inner {
     padding-bottom: 30px;
     @media (min-width:641px){
-      padding-left: 30px;
+      padding-left: 5px;
+      padding-right: 5px;
+      .browse__link--active {
+        margin-left:-5px;
+        padding-left:25px;
+        margin-right:-5px
+      }
     }
+  .browse__heading {
+    padding-left: 20px;
+  }
 }
 
 
 @media (min-width:641px){
   .browse__root-pane, .browse__section-pane, .browse__subsection-pane {
     float:left;
-    min-height: 3px;
   }
 }
 
 //third column
 .browse--three-columns .browse__subsection-pane {
-  transition-delay: 0s,.4s,0s;
-  opacity: 1;
-  height: auto;
   @media (min-width:641px){
     width: 50%;
-    margin-right: 13%;
   }
 }
 
 .browse__subsection-pane {
-  //opacity: 0;
-  transition-property: width, opacity, margin-right;
-  transition-delay: 0s, 0s, 0s;
-  transition-duration: .4s,0s,.4s;
-  height: 0;
-  overflow: hidden;
   @media (min-width:641px){
     width: 27%;
-    margin-right: 13%;
-    height: auto;
+    padding-left: 20px;
   }
 }
 

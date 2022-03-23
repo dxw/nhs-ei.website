@@ -9,7 +9,7 @@
           <ul class="browse__list">
             <li>
               <a
-                  class="browse__link browse__link--active {% if item.href|cut:"/" == section %}ACTIVE{% endif %}"
+                  class="browse__link {% if item.href|cut:"/" == section %}browse__link--active{% endif %}"
                   href="{% url 'browse_branch' section=item.href|cut:"/" %}">{{ item.text }}</a>
               <span>{{ item.link_page_id|get_caption }}</span>
             </li>

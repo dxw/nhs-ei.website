@@ -40,3 +40,9 @@ def get_content_type_tag(context, page):
     }
     if content_type.model in CONTENT_TYPE_LABELS.keys():
         return {"type": CONTENT_TYPE_LABELS[content_type.model]}
+
+
+@register.inclusion_tag("tags/toc.html", takes_context=True)
+def build_toc(context, obj):
+    page = obj.specific_class.objects.get(id=obj.id)
+    return {"my_title": page.content}

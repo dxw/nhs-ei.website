@@ -44,10 +44,15 @@ def fix_slug(process_candidate):
 
     if page.wp_slug and page.wp_slug != "":
         page.slug = page.wp_slug
-        page.save()
-        process_candidate.slug_fixed = True
-        process_candidate.save()
-        logger.debug("Set slug wp_slug, '%s' for '%s'" % (page.slug, page))
+        try:
+            page.save()
+            process_candidate.slug_fixed = True
+            process_candidate.save()
+            logger.debug("Set slug wp_slug, '%s' for '%s'" % (page.slug, page))
+        except ValidationError:
+            logger.critical(
+                "Slug is already in use, '%s', wp_id=%s" % (page.wp_slug, page.wp_id)
+            )
         return
 
     # There are a _lot_ of name clashes, we'll build a slug based and

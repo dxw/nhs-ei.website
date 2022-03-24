@@ -51,7 +51,8 @@ def fix_slug(process_candidate):
             logger.debug("Set slug wp_slug, '%s' for '%s'" % (page.slug, page))
         except ValidationError:
             logger.critical(
-                "Slug is already in use, '%s', wp_id=%s" % (page.wp_slug, page.wp_id)
+                "Slug is already in use, '%s', page.id=%d, wp_id=%s"
+                % (page.wp_slug, page.id, page.wp_id)
             )
         return
 

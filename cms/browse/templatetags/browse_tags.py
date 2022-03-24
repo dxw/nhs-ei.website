@@ -1,4 +1,5 @@
 import logging
+
 from django import template
 from wagtail.core.models import Page
 
@@ -29,3 +30,12 @@ def get_caption(caption_item_id):
         )
 
     return ""
+
+
+from django.urls import reverse, path
+
+
+@register.filter
+def url_for(item):
+    page = Page.objects.get(id=item.link_page_id)
+    return reverse("browse", args={page.slug})

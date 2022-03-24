@@ -1,9 +1,9 @@
-{% load menu_tags %}
+{% load menu_tags browse_tags %}
 
 {% for item in menu_items %}
   {% cycle '<ul class="main-menu-items">' '' '' '' %}
   <li>
-    <a href="{% url 'browse_branch' section=item.href|cut:"/" %}">{{ item.text }}</a>
+    <a href="{{ item|url_for }}">{{ item.text }}</a>
     <span>
       {{ item.caption }}
     </span>

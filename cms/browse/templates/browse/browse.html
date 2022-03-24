@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% load frontend_tags %}
-{% load menu_tags %}
-{% load wagtailcore_tags %}
+{% load frontend_tags wagtailcore_tags browse_tags %}
 
 
 {% breadcrumb %}
@@ -10,10 +8,71 @@
 
 {% block content %}
   <div class="nhsuk-width-container">
+
     <h1 class="nhsuk-visually-hidden">Browse NHS.co.uk</h1>
-  <div>Section: {{ section }}</div>
-  <div>Branch: {{ branch }}</div>
-    {% main_menu max_levels=3 template="browse/section.html" %}
+  <div class="browse" data-state="subsection" data-module="browse-columns">
+    {# programmes start #}
+    <div id="root" class="browse__root-pane">
+      <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
+      {% for item in programmes %}
+        <ul class="browse__list">
+          <li>
+            <a
+                class="browse__link {% if item.slug == section %}browse__link--active{% endif %}"
+                href="{% url 'browse' section=item.slug %}">{{ item.title }}</a>
+          </li>
+        </ul>
+      {% endfor %}
+    </div>
+    {# programmes end #}
+
+    {# h2 start #}
+    {% if branch_items|length > 0 %}
+      <div id="section" class="browse__section-pane">
+        <div class="browse__inner browse__inner--curated">
+          <h2 tabindex="-1" class="browse__heading">Viewing: {{ section_item.text }}</h2>
+          <ul class="browse__list">
+            {% for item in branch_items %}
+              {% if forloop.first %}
+                <li>
+                  <a class="browse__link {% if item.slug == branch %}browse__link--active{% endif %}"
+                     href="{{ item.url }}">
+                    <h3 class="browse__title">{{ item.title }}</h3>
+                    <p class="browse__description">{{ item.id|get_caption }}</p>
+                  </a>
+                </li>
+              {% else %}
+                <li>
+                  <a class="browse__link {% if item.slug == branch %}browse__link--active{% endif %}"
+                     href="{% url 'browse' section=section branch=item.slug %}">
+                    <h3 class="browse__title">{{ item.title }}</h3>
+                    <p class="browse__description">{{ item.id|get_caption }}</p>
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+    {# h2 end #}
+
+    {# h3 start #}
+    {% if leaf_items|length > 0 %}
+      <div id="subsection" class="browse__subsection-pane">
+        <div class="browse__inner browse__inner--curated">
+          <h3 class="browse__header">{{ branch_item.text }}</h3>
+          <ul class="browse__list">
+            {% for item in leaf_items %}
+              <li>
+                <a href="{{ item.url }}">{{ item.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+    {# h3 end #}
+  </div>
+  </div>
 {% endblock content %}
-</div>
-</div>

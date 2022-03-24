@@ -10,12 +10,15 @@
 }
 
 // first col
-@media (min-width:641px){
-  .browse--two-columns.browse__root-pane {
+.browse__root-pane {
+  @media (min-width:641px){
     display: block;
     width: 25%;
     margin-right: 0;
     border-right: 1px solid $nhsuk-link-active-color;
+  }
+  @media (max-width:641px){
+    display:none;
   }
 }
 
@@ -25,8 +28,8 @@
   list-style: none;
 
   a {
-    padding: 0 20px;
     position:relative;
+    display: block;
   }
   h3 {
     margin-bottom:0px;
@@ -154,6 +157,7 @@
 .browse__subsection-pane {
   @media (min-width:641px){
     width: 27%;
+    padding-left: 20px;
   }
 }
 

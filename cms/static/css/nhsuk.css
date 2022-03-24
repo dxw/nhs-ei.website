@@ -7957,21 +7957,27 @@ b {
 }
 
 @media (min-width: 641px) {
-  .browse--two-columns.browse__root-pane {
+  .browse__root-pane {
     display: block;
     width: 25%;
     margin-right: 0;
     border-right: 1px solid #002f5c;
   }
 }
+@media (max-width: 641px) {
+  .browse__root-pane {
+    display: none;
+  }
+}
+
 .browse__list {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 .browse__list a {
-  padding: 0 20px;
   position: relative;
+  display: block;
 }
 .browse__list h3 {
   margin-bottom: 0px;
@@ -8097,6 +8103,7 @@ b {
 @media (min-width: 641px) {
   .browse__subsection-pane {
     width: 27%;
+    padding-left: 20px;
   }
 }
 

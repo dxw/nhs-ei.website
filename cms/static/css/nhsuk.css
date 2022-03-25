@@ -7962,7 +7962,6 @@ b {
     display: block;
     width: 25%;
     margin-right: 0;
-    border-right: 1px solid #002f5c;
   }
 }
 @media (max-width: 641px) {
@@ -8052,6 +8051,7 @@ b {
 .browse__section-pane {
   background: #fff;
   border-right: 1px solid #002f5c;
+  border-left: 1px solid #002f5c;
 }
 @media (min-width: 641px) {
   .browse__section-pane {

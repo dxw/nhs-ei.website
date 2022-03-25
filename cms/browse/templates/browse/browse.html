@@ -10,12 +10,9 @@
 
 {% block content %}
   <div class="nhsuk-width-container">
-
     <h1 class="nhsuk-visually-hidden">Browse NHS.co.uk</h1>
-<<<<<<< HEAD
-
+    <div class="browse">
     {# programmes start #}
-    <div class="browse" data-state="subsection" data-module="browse-columns">
       <div id="root" class="browse--two-columns browse__root-pane">
         <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
         {% for item in programmes %}
@@ -28,22 +25,6 @@
           </ul>
         {% endfor %}
       </div>
-=======
-  <div class="browse" data-state="subsection" data-module="browse-columns">
-    {# programmes start #}
-    <div id="root" class="browse__root-pane">
-      <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
-      {% for item in programmes %}
-        <ul class="browse__list">
-          <li>
-            <a
-                class="browse__link {% if item.slug == section %}browse__link--active{% endif %}"
-                href="{% url 'browse' section=item.slug %}">{{ item.title }}</a>
-          </li>
-        </ul>
-      {% endfor %}
->>>>>>> ddef491658f23b2622953ea7972b238bd802e9ac
-    </div>
     {# programmes end #}
 
     {# h2 start #}
@@ -64,11 +45,7 @@
               {% else %}
                 <li>
                   <a class="browse__link {% if item.slug == branch %}browse__link--active{% endif %}"
-<<<<<<< HEAD
                      href="{% url 'browse' programme=programme branch=item.slug %}">
-=======
-                     href="{% url 'browse' section=section branch=item.slug %}">
->>>>>>> ddef491658f23b2622953ea7972b238bd802e9ac
                     <h3 class="browse__title">{{ item.title }}</h3>
                     <p class="browse__description">{{ item.id|get_caption }}</p>
                   </a>
@@ -83,8 +60,6 @@
 
     {# h3 start #}
     {% if leaf_items|length > 0 %}
-<<<<<<< HEAD
-      <div class="browse">
         <div id="subsection" class="browse__subsection-pane">
           <div class="browse__inner browse__inner--curated">
             <h3 class="browse__header">{{ branch_item.text }}</h3>
@@ -96,25 +71,10 @@
               {% endfor %}
             </ul>
           </div>
-=======
-      <div id="subsection" class="browse__subsection-pane">
-        <div class="browse__inner browse__inner--curated">
-          <h3 class="browse__header">{{ branch_item.text }}</h3>
-          <ul class="browse__list">
-            {% for item in leaf_items %}
-              <li>
-                <a href="{{ item.url }}">{{ item.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
->>>>>>> ddef491658f23b2622953ea7972b238bd802e9ac
         </div>
-      </div>
     {% endif %}
     {# h3 end #}
   </div>
-<<<<<<< HEAD
-=======
+
   </div>
->>>>>>> ddef491658f23b2622953ea7972b238bd802e9ac
 {% endblock content %}

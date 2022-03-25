@@ -69,14 +69,13 @@
     {% block breadcrumb %}
         {% breadcrumb %}
     {% endblock %}
-    
 
     {% block main %}
     {% block outer_content %}{% endblock%}
 
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
         {% block content %}{% endblock %}
-        
+
     </main>
 
     {% endblock %}

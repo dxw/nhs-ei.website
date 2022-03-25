@@ -2,7 +2,9 @@
 {% load frontend_tags wagtailcore_tags browse_tags %}
 
 
-{% breadcrumb %}
+{% block breadcrumb %}
+  {% menu_breadcrumb %}
+{% endblock %}
 
 {% block body_class %}template-basepage{% endblock body_class %}
 
@@ -20,7 +22,7 @@
             <li>
               <a
                   class="browse__link {% if item.slug == section %}browse__link--active{% endif %}"
-                  href="{% url 'browse' section=item.slug %}">{{ item.title }}</a>
+                  href="{% url 'browse' programme=item.slug %}">{{ item.title }}</a>
             </li>
           </ul>
         {% endfor %}
@@ -46,7 +48,7 @@
               {% else %}
                 <li>
                   <a class="browse__link {% if item.slug == branch %}browse__link--active{% endif %}"
-                     href="{% url 'browse' section=section branch=item.slug %}">
+                     href="{% url 'browse' programme=programme branch=item.slug %}">
                     <h3 class="browse__title">{{ item.title }}</h3>
                     <p class="browse__description">{{ item.id|get_caption }}</p>
                   </a>

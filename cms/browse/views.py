@@ -8,7 +8,7 @@ from cms.core.models import ExtendedMainMenuItem
 logger = logging.getLogger("general")
 
 
-def browse(request, section, branch):
+def browse(request, programme, branch):
     # we could get current site, query main menu for matching items and then
     # load the items but we _know_ that ExtendedMenuItems will haveour list
     # in it. 4+ queries -> 1 query
@@ -22,8 +22,8 @@ def browse(request, section, branch):
     branches = []
     leaves = []
 
-    if section:
-        section_page = Page.objects.get(slug=section)
+    if programme:
+        section_page = Page.objects.get(slug=programme)
         branches.append(section_page)
         branches += [branch for branch in section_page.get_children()]
 
@@ -36,9 +36,9 @@ def browse(request, section, branch):
         request,
         "browse/browse.html",
         {
-            "programmes": programmes,
-            "section": section,
+            "programme": programme,
             "branch": branch,
+            "programmes": programmes,
             "branch_items": branches,
             "leaf_items": leaves,
         },

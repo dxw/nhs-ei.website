@@ -32,10 +32,43 @@ def get_caption(caption_item_id):
     return ""
 
 
-from django.urls import reverse, path
+from django.urls import reverse
 
 
 @register.filter
 def url_for(item):
     page = Page.objects.get(id=item.link_page_id)
     return reverse("browse", args={page.slug})
+
+
+@register.inclusion_tag("browse/breadcrumb.html", takes_context=True)
+def menu_breadcrumb(context):
+    url_path = context.request.path
+    if url_path[0:8] == "/browse/":
+        breadcrumb_pages = [
+            {
+                "label": "Home",
+                "href": "/",
+            }
+        ]
+        path_components = url_path.split("/")
+        if path_components[1] == "browse":
+            # make menu bread crumbs
+            if path_components[2]:
+                for component in path_components[2:]:
+                    try:
+                        page = Page.objects.get(slug=component)
+                        item = {
+                            "label": page.title,
+                            "href": reverse("browse", args={page.slug}),
+                        }
+                        breadcrumb_pages.append(item)
+                    except Page.DoesNotExist:
+                        # Just in case there is a non-page item in the list
+                        pass
+
+        return {
+            "breadcrumbs": breadcrumb_pages,
+        }
+
+    return {}

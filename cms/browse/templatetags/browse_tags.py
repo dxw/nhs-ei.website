@@ -2,7 +2,7 @@ import logging
 
 from django import template
 from wagtail.core.models import Page
-
+from django.urls import reverse
 from cms.settings.base import NHSEI_MAX_CATION_LENGTH
 
 register = template.Library()
@@ -30,9 +30,6 @@ def get_caption(caption_item_id):
         )
 
     return ""
-
-
-from django.urls import reverse
 
 
 @register.filter

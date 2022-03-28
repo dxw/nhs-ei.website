@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
+from cms.pages.models import BasePage, TOC
+
 
 class TestComponentsPage(TestCase):
 
@@ -122,3 +124,36 @@ class TestComponentsPage(TestCase):
         self.assertEqual(
             warning_callout.find("p").string, "Warning callout block content"
         )
+
+
+class TestTocModelSave(TestCase):
+
+    fixtures = ["fixtures/testdata.json"]
+
+    def test_parse_body(self):
+        # create a dummy content item
+        parent = BasePage.objects.first()
+        page = BasePage()
+        page.body = '[{"type": "text","value": "<p data-block-key=\\"uss91\\"><h2>Header one</h2>Test this page for every possible block type</p><p data-block-key=\\"7p6df\\"><h2>Header two</h2>First block types are simple blocks e.g. they are not groups of blocks</p>","id": "8654000b-5337-43e4-9692-abcdaeb80ca4"}]'
+        page.slug = "base-page"
+        page.source = "root"
+        page.title = "Test TOC Page"
+        parent.add_child(instance=page)
+        # save it
+        page.save()
+
+        # load it again and check we have anchor tags
+        page = BasePage.objects.get(title="Test TOC Page")
+        body = str(page.body)
+        soup = BeautifulSoup(body, "html.parser")
+        h2s = soup.find_all("h2")
+        self.assertEqual("header-one", h2s[0].get("id"))
+        self.assertEqual("header-two", h2s[1].get("id"))
+
+        # check the TOC table for anchors
+        tocs = TOC.objects.filter(page=page)
+        self.assertEqual(2, len(tocs))
+        self.assertEqual("header-one", tocs[0].anchor)
+        self.assertEqual("Header one", tocs[0].text)
+        self.assertEqual("header-two", tocs[1].anchor)
+        self.assertEqual("Header two", tocs[1].text)

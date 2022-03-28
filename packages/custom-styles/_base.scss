@@ -29,6 +29,27 @@
   border: 0 !important;
   white-space: nowrap !important;
 }
+.nhsuk-grid-row.full-width {
+  border-top: 1px solid white;
+}
+
+.nhsuk-width-container {
+  @media (min-width: 1024px) {
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
+
+
+
+.nhsuk-header__container  {
+  @media (max-width: 40.0525em) {
+    .nhsuk-header__container {
+        padding: 16px !important;
+    }
+  }
+
+}
 
 .nhsuk-width-container {
     max-width: 1200px;

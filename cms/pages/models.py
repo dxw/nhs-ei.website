@@ -1,12 +1,30 @@
+import logging
 from urllib.parse import urlparse
+
 from django.db import models
-from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+
 from cms.core.blocks import CoreBlocks
 
+logger = logging.getLogger("general")
 
-class BasePage(Page):
+
+class TOC:
+    html = models.TextField(blank=True)
+
+
+class TOCEnabled(object):
+    def save(self, *args, **kwargs):
+        super(TOCEnabled, self).save(*args, **kwargs)
+        # parse self for stream fields
+        # soup each stream field
+        # find h2s and anchors
+
+
+# TOCMixin needs to be the first class, https://stackoverflow.com/questions/24292847/django-does-it-make-sense-to-override-save-method-in-a-mixin
+class BasePage(TOCEnabled, Page):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers
     md_owner = models.TextField("Owner", blank=True)

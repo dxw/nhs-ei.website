@@ -11,9 +11,9 @@
 {% block content %}
   <div class="nhsuk-width-container">
     <h1 class="nhsuk-visually-hidden">Browse NHS.co.uk</h1>
-    <div class="browse">
+    <div class="browse {% if leaf_items|length > 0 %} mobile_menu {% else %}browse--two-columns{% endif %}">
     {# programmes start #}
-      <div id="root" class="browse--two-columns browse__root-pane">
+      <div id="root" class="browse__root-pane">
         <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
         {% for item in programmes %}
           <ul class="browse__list">
@@ -31,14 +31,14 @@
     {% if branch_items|length > 0 %}
       <div id="section" class="browse__section-pane">
         <div class="browse__inner browse__inner--curated">
-          <h2 tabindex="-1" class="browse__heading">Viewing: {{ section_item.text }}</h2>
+          <h2 tabindex="-1" class="browse__heading">Viewing: {{ branch_title }}</h2>
           <ul class="browse__list">
             {% for item in branch_items %}
               {% if forloop.first %}
                 <li>
-                  <a class="browse__link {% if item.slug == branch %}browse__link--active{% endif %}"
+                  <a class="browse__link hub {% if item.slug == branch %}browse__link--active{% endif %}"
                      href="{{ item.url }}">
-                    <h3 class="browse__title">{{ item.title }}</h3>
+                    <h3 class="browse__title">{{ item.title }} hub</h3>
                     <p class="browse__description">{{ item.id|get_caption }}</p>
                   </a>
                 </li>
@@ -62,7 +62,7 @@
     {% if leaf_items|length > 0 %}
         <div id="subsection" class="browse__subsection-pane">
           <div class="browse__inner browse__inner--curated">
-            <h3 class="browse__header">{{ branch_item.text }}</h3>
+            <h3 class="browse__header">{{ leaf_title }}</h3>
             <ul class="browse__list">
               {% for item in leaf_items %}
                 <li>

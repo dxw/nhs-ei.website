@@ -21,14 +21,18 @@ def browse(request, programme, branch):
     # now use the section (if set) get the top level page by slug
     branches = []
     leaves = []
+    branch_title = ""
+    leaf_title = ""
 
     if programme:
-        section_page = Page.objects.get(slug=programme)
-        branches.append(section_page)
-        branches += [branch for branch in section_page.get_children()]
+        programme_page = Page.objects.get(slug=programme)
+        branch_title = programme_page.title
+        branches.append(programme_page)
+        branches += [branch for branch in programme_page.get_children()]
 
         if branch:
             branch_page = Page.objects.get(slug=branch)
+            leaf_title = branch_page.title
             leaves.append(branch_page)
             leaves += [leaf for leaf in branch_page.get_children()]
 
@@ -38,6 +42,8 @@ def browse(request, programme, branch):
         {
             "programme": programme,
             "branch": branch,
+            "branch_title": branch_title,
+            "leaf_title": leaf_title,
             "programmes": programmes,
             "branch_items": branches,
             "leaf_items": leaves,

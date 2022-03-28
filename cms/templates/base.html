@@ -61,7 +61,6 @@
     {% block header %}
     {% include 'partials/header-v1.html' %}
     {% endblock %}
-
     {% block beforeContent %}
     {% include 'partials/before_content.html' %}
     {% endblock %}
@@ -69,14 +68,15 @@
     {% block breadcrumb %}
         {% breadcrumb %}
     {% endblock %}
-    
+
+    {% get_toc page %}
 
     {% block main %}
     {% block outer_content %}{% endblock%}
 
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
         {% block content %}{% endblock %}
-        
+
     </main>
 
     {% endblock %}

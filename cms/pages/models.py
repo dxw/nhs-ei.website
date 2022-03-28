@@ -1,7 +1,10 @@
+import json
 import logging
 from urllib.parse import urlparse
 
+from bs4 import BeautifulSoup
 from django.db import models
+from django.utils.text import slugify
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
@@ -11,19 +14,50 @@ from cms.core.blocks import CoreBlocks
 logger = logging.getLogger("general")
 
 
-class TOC:
-    html = models.TextField(blank=True)
-
-
-class TOCEnabled(object):
+class TOCEnabled:
     def save(self, *args, **kwargs):
-        super(TOCEnabled, self).save(*args, **kwargs)
+        # clear existing toc for this page
+        try:
+            toc_pages = TOC.objects.filter(page_id=self.id)
+            if toc_pages:
+                toc_pages.delete()
+        except TOC.DoesNotExist:
+            pass
+
+        # If we don't have an id we are a new page, save it now
+        if not self.id:
+            super(TOCEnabled, self).save(*args, **kwargs)
+
         # parse self for stream fields
-        # soup each stream field
-        # find h2s and anchors
+        for index in range(len(self.body)):
+            # soup each stream field
+            field = self.body[index]
+            content = field.render()
+            soup = BeautifulSoup(content, "html.parser")
+            if field.block_type == "text":
+                # find h2s and anchors
+                h2s = soup.find_all("h2")
+                for h2 in h2s:
+                    # does the h2 have an id? If not add one
+                    text = h2.text
+                    element_id = h2.get("id")
+                    # add item to TOC
+                    if not element_id:
+                        element_id = slugify(text)
+                        h2["id"] = element_id
+                        soup.find("h2", text=h2.text).replaceWith(h2)
+                    TOC(anchor=element_id, text=text, page=self).save()
+                self.body[index].value.source = str(soup)
+
+        super(TOCEnabled, self).save(*args, **kwargs)
 
 
-# TOCMixin needs to be the first class, https://stackoverflow.com/questions/24292847/django-does-it-make-sense-to-override-save-method-in-a-mixin
+class TOC(models.Model):
+    anchor = models.TextField()
+    text = models.TextField()
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="toc")
+
+
 class BasePage(TOCEnabled, Page):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers

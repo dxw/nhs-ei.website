@@ -1,4 +1,10 @@
-<div>
-  <h2>TOC</h2>
-  {{  html }}
-</div>
+{% if toc_items %}
+  <div>
+    <h2>TOC</h2>
+    <ul>
+      {% for item in toc_items %}
+        <li><a href="#{{ item.anchor }}">{{ item.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

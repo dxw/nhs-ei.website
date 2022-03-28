@@ -8854,6 +8854,10 @@ Templates: cms/templates/partials/megamenu
   width: 100%;
 }
 
+.nhsuk-main-wrapper {
+  background-color: white;
+}
+
 .nhsei-featured-section .nhsuk-image {
   margin-top: 0;
 }

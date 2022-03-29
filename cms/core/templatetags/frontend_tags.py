@@ -3,7 +3,7 @@ import logging
 from django import template
 from wagtail.core.models import Page
 
-from cms.pages.models import TOC
+from cms.publications.models import TOC
 
 register = template.Library()
 logger = logging.getLogger("general")

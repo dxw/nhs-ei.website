@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
-from cms.pages.models import BasePage, TOC
+from cms.pages.models import BasePage
+from cms.publications.models import TOC
 
 
 class TestComponentsPage(TestCase):
@@ -157,3 +158,5 @@ class TestTocModelSave(TestCase):
         self.assertEqual("Header one", tocs[0].text)
         self.assertEqual("header-two", tocs[1].anchor)
         self.assertEqual("Header two", tocs[1].text)
+
+    # TODO add toc-tags tests

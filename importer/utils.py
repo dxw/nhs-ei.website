@@ -3,7 +3,7 @@ import logging
 from nis import cat
 from django.utils.text import slugify
 
-from cms.categories.models import Category
+from cms.categories.models import Category, CategoryPageCategoryRelationship
 
 from importer.category_map import CATEGORIES, CATEGORY_MAP
 
@@ -88,3 +88,10 @@ class ImportCategoryMapper:
             categories.append(self.get_category_for_slug(slug))
 
         return categories
+
+
+def create_category_relationships_for_page(page, categories):
+    for category in categories:
+        CategoryPageCategoryRelationship.objects.create(
+            category_page=page, category=category
+        )

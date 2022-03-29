@@ -19,7 +19,7 @@
           <ul class="browse__list">
             <li>
               <a
-                  class="browse__link {% if item.slug == section %}browse__link--active{% endif %}"
+                  class="browse__link {% if item.slug == programme %}browse__link--active{% endif %}"
                   href="{% url 'browse' programme=item.slug %}">{{ item.title }}</a>
             </li>
           </ul>

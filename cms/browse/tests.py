@@ -1,8 +1,22 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import TestCase
+from faker import Faker as fk
 from selenium.webdriver.chrome.webdriver import WebDriver
+
+from cms.browse.templatetags.browse_tags import get_caption, url_for
+from cms.core.models import ExtendedMainMenuItem
+from cms.pages.models import BasePage
+from cms.settings.base import NHSEI_MAX_CATION_LENGTH
 
 
 class TestBrowseUnit(TestCase):
+    fixtures = ["fixtures/menu-fixtures.json"]
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.faker = fk()
+
     def test_browse(self):
         pass
 
@@ -12,7 +26,32 @@ class TestBrowseUnit(TestCase):
     def test_browse_branch(self):
         pass
 
-    def test_browse(self):
+    def test_get_caption(self):
+        page = BasePage.objects.get(title="About cancer")
+        caption = get_caption(page.id)
+        self.assertEqual("Lorem ipsum dolor sit amet, consectetur adipiscing", caption)
+
+        caption_text = ""
+        while len(caption_text) < NHSEI_MAX_CATION_LENGTH:
+            caption_text += self.faker.text()
+        trimmed_caption = caption_text[0:NHSEI_MAX_CATION_LENGTH]
+
+        page.excerpt = trimmed_caption
+        page.save()
+        caption = get_caption(page.id)
+        self.assertEqual(trimmed_caption, caption)
+
+        page.excerpt = caption_text
+        page.save()
+        caption = get_caption(page.id)
+        self.assertEqual(caption_text[0:NHSEI_MAX_CATION_LENGTH], caption)
+
+    def test_url_for(self):
+        item = ExtendedMainMenuItem.objects.get(link_page_id=23)
+        url = url_for(item)
+        self.assertEqual("/browse/nursing-midwifery-care-staff/", url)
+
+    def test_menu_breadcrumb(self):
         pass
 
 

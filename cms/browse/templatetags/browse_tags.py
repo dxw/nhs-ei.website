@@ -19,7 +19,7 @@ def get_caption(caption_item_id):
             if hasattr(specific_page, "excerpt"):
                 excerpt = specific_page.excerpt
                 if len(excerpt) > NHSEI_MAX_CATION_LENGTH:
-                    return excerpt[0:NHSEI_MAX_CATION_LENGTH] + "..."
+                    return excerpt[0:NHSEI_MAX_CATION_LENGTH]
                 else:
                     return excerpt
         except Page.DoesNotExist:

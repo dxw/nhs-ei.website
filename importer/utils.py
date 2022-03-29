@@ -1,6 +1,6 @@
 import logging
 
-from nis import cat
+from django.db import IntegrityError
 from django.utils.text import slugify
 
 from cms.categories.models import Category, CategoryPageCategoryRelationship
@@ -92,6 +92,9 @@ class ImportCategoryMapper:
 
 def create_category_relationships_for_page(page, categories):
     for category in categories:
-        CategoryPageCategoryRelationship.objects.create(
-            category_page=page, category=category
-        )
+        try:
+            CategoryPageCategoryRelationship.objects.create(
+                category_page=page, category=category
+            )
+        except IntegrityError:
+            pass

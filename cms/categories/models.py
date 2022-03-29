@@ -18,6 +18,12 @@ class CategoryPageCategoryRelationship(models.Model):
     A table which describes which Categories a CategoryPage has.
     """
 
+    class Meta:
+        unique_together = (
+            "category_page",
+            "category",
+        )
+
     category_page = ParentalKey(
         "categories.CategoryPage",
         related_name="categorypage_category_relationship",

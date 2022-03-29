@@ -283,6 +283,10 @@ LOGGING = {
             "handlers": ["file", "file_debug", "file_error", "console"],
             "level": "DEBUG",
         },
+        "parser": {
+            "handlers": ["file", "file_debug", "file_error", "console"],
+            "level": "DEBUG",
+        },
     },
 }
 
@@ -299,3 +303,5 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 
 # what is the max length of mega menu captions in characters
 NHSEI_MAX_CATION_LENGTH = 50
+# TODO - turn this on when we go live, it breaks imports all ove the place
+WAGTAILREDIRECTS_AUTO_CREATE = False

@@ -46,7 +46,7 @@ class SettingsImporter(Importer, ABC):
             self("slug", trim_long_text(r.get("slug"), 200), setting)
             self("description", r.get("description"), setting)
 
-            self.save(setting)
+            self.save(setting, False)
             if is_new:
                 logger.debug("Imported Setting name=%s" % setting.name)
             else:

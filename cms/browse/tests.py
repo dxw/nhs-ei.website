@@ -3,7 +3,7 @@ from django.test import TestCase
 from faker import Faker as fk
 from selenium.webdriver.chrome.webdriver import WebDriver
 
-from cms.browse.templatetags.browse_tags import get_caption, url_for
+from cms.browse.templatetags.browse_tags import get_caption, url_for, menu_breadcrumb
 from cms.core.models import ExtendedMainMenuItem
 from cms.pages.models import BasePage
 from cms.settings.base import NHSEI_MAX_CATION_LENGTH
@@ -16,15 +16,6 @@ class TestBrowseUnit(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.faker = fk()
-
-    def test_browse(self):
-        pass
-
-    def test_browse_programme(self):
-        pass
-
-    def test_browse_branch(self):
-        pass
 
     def test_get_caption(self):
         page = BasePage.objects.get(title="About cancer")
@@ -52,7 +43,41 @@ class TestBrowseUnit(TestCase):
         self.assertEqual("/browse/nursing-midwifery-care-staff/", url)
 
     def test_menu_breadcrumb(self):
-        pass
+        class FakeRequest:
+            path = "/browse/"
+
+        class FakeContext:
+            request = FakeRequest()
+
+        context = FakeContext()
+
+        breadcrumbs = menu_breadcrumb(context)
+        self.assertEqual(1, len(breadcrumbs["breadcrumbs"]))
+        self.assertEqual("Home", breadcrumbs["breadcrumbs"][0]["label"])
+        self.assertEqual("/browse/", breadcrumbs["breadcrumbs"][0]["href"])
+
+        context.request.path = "/browse/cancer/"
+        breadcrumbs = menu_breadcrumb(context)
+        self.assertEqual(2, len(breadcrumbs["breadcrumbs"]))
+        self.assertEqual("Home", breadcrumbs["breadcrumbs"][0]["label"])
+        self.assertEqual("/browse/", breadcrumbs["breadcrumbs"][0]["href"])
+        self.assertEqual("Cancer", breadcrumbs["breadcrumbs"][1]["label"])
+        self.assertEqual("/browse/cancer/", breadcrumbs["breadcrumbs"][1]["href"])
+
+        context.request.path = "/browse/cancer/nursing-midwifery-care-staff/"
+        breadcrumbs = menu_breadcrumb(context)
+        self.assertEqual(3, len(breadcrumbs["breadcrumbs"]))
+        self.assertEqual("Home", breadcrumbs["breadcrumbs"][0]["label"])
+        self.assertEqual("/browse/", breadcrumbs["breadcrumbs"][0]["href"])
+        self.assertEqual("Cancer", breadcrumbs["breadcrumbs"][1]["label"])
+        self.assertEqual("/browse/cancer/", breadcrumbs["breadcrumbs"][1]["href"])
+        self.assertEqual(
+            "Nursing, midwifery & care staff", breadcrumbs["breadcrumbs"][2]["label"]
+        )
+        self.assertEqual(
+            "/browse/nursing-midwifery-care-staff/",
+            breadcrumbs["breadcrumbs"][2]["href"],
+        )
 
 
 class TestBrowseFunctional(StaticLiveServerTestCase):

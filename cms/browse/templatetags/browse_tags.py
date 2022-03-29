@@ -45,7 +45,7 @@ def menu_breadcrumb(context):
         breadcrumb_pages = [
             {
                 "label": "Home",
-                "href": "/",
+                "href": "/browse/",
             }
         ]
         path_components = url_path.split("/")

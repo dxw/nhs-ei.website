@@ -13,7 +13,6 @@ from importer.types.import_posts import PostsImporter
 from importer.types.import_publication_types import PublicationTypesImporter
 from importer.types.import_publications import PublicationsImporter
 from importer.types.import_regions import RegionsImporter
-from importer.types.import_settings import SettingsImporter
 from importer.websites import SCRAPY
 
 logger = logging.getLogger("importer")
@@ -50,7 +49,6 @@ def do_low_impact():
     """
     import_categories(get_api_url("categories"))
     import_publication_types(get_api_url("publication_types"))
-    import_settings(get_api_url("settings"))
     import_regions(get_api_url("regions"))
 
 
@@ -179,19 +177,6 @@ def import_atlas_case_studies(url):
         "✅ %d Atals Case Studies processed, api count (%d)"
         % (completed_count, api_count)
     )
-
-
-def import_settings(url):
-    if not url:
-        raise Exception("url error")
-    settings_importer = SettingsImporter()
-    fetch = settings_importer.fetch_url(url)
-    completed_count = 0
-    api_count = 0
-    if fetch:
-        completed_count, api_count = settings_importer.parse_results()
-
-    logger.info("✅ {} Settings processed".format(completed_count))
 
 
 def import_regions(url):

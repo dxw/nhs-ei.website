@@ -157,22 +157,6 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                     category_page=obj, category=atlas_category
                 )
 
-                # add the settings as related many to many, found this needs to
-                # be after the save above
-                # some settings are blank
-                if not not atlas_case_study.get("settings"):
-                    settings = atlas_case_study.get("settings").split(
-                        " "
-                    )  # list of setting wp_id's
-                    settings_objects = Setting.objects.filter(wp_id__in=settings)
-                    for setting in settings_objects:
-                        AtlasCaseStudySettingRelationship.objects.create(
-                            atlas_case_study=obj, setting=setting
-                        )
-                    logger.debug(
-                        "Creating link to setting, setting ids = %s" % settings
-                    )
-
                 # add the regions as related many to many, found this needs
                 # to be
                 # after the save above

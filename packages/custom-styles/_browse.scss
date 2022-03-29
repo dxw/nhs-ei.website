@@ -16,7 +16,7 @@
     display: block;
     width: 25%;
     margin-right: 0;
-    
+
   }
   @media (max-width:641px){
     display:none;
@@ -144,6 +144,7 @@
 .browse--two-columns {
 .browse__section-pane {
   .browse__link {
+    padding-left:10px;
       h3 {
         color:$nhsuk-link-color;
       }

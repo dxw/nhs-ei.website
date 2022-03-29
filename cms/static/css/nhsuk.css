@@ -8085,6 +8085,9 @@ b {
   color: #212b32;
 }
 
+.browse--two-columns .browse__section-pane .browse__link {
+  padding-left: 10px;
+}
 .browse--two-columns .browse__section-pane .browse__link h3 {
   color: #005eb8;
 }

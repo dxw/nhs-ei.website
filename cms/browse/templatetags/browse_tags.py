@@ -3,7 +3,7 @@ import logging
 from django import template
 from wagtail.core.models import Page
 from django.urls import reverse
-from cms.settings.base import NHSEI_MAX_CATION_LENGTH
+from cms.settings.base import NHSEI_MAX_MENU_CAPTION_LENGTH
 
 register = template.Library()
 logger = logging.getLogger("general")

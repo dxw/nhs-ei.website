@@ -65,7 +65,6 @@ def do_refresh():
 
     # These are fast we can run them every time
     call_command("dedupe_pubtypes")
-    call_command("dedupe_categories")
 
 
 class Command(BaseCommand):

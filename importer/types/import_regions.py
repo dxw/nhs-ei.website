@@ -46,7 +46,7 @@ class RegionsImporter(Importer, ABC):
             self("slug", trim_long_text(r.get("slug"), 200), region)
             self("description", r.get("description"), region)
 
-            self.save(region)
+            self.save(region, False)
             if is_new:
                 logger.debug("Imported Region name=%s" % region.name)
             else:

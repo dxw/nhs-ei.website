@@ -35,19 +35,7 @@ case studies</a> provide examples of the work of some providers to make the FFT 
 £101 million for 2017/18</a>.</p>
 """
 
-# some urls dont need to be rewritten as they are
-# not in scope in this project and will remain
-# absolute when live although they are same site just now
-SKIP_ANCHOR_URLS = [
-    "/east-of-england/",
-    "/london/",
-    "/midlands/",
-    "/north-east-yorkshire/",
-    "/north-west/",
-    "/south-east/",
-    "/south/",
-    "/statistics/statistical-work-areas/rtt-waiting-times/rtt-guidance/",
-]
+SKIP_ANCHOR_URLS = []
 
 # these pages are 404 in live site
 SKIP_ANCHOR_URLS += ["/fft/fft-guidance/revised-fft-guidance/"]
@@ -86,8 +74,7 @@ class RichTextBuilder:
     def extract_img(self, content=None, page=None):
         soup = BeautifulSoup(content, features="html5lib")
         images = soup.find_all("img")
-        print("images")
-        print(images)
+        logger.info("images", images)
         sys.exit()
 
     def extract_links(self, content=None, page=None):
@@ -303,7 +290,7 @@ class RichTextBuilder:
                         page_link = self.make_page_link(link.text, id, title)
                         self.change_links.append([link, page_link])
                     else:
-                        print("leaving the link alone")
+                        logger.debug("leaving the link alone")
 
             else:
                 logger.warn("Stream fields URL error (???), %s, %s", page_path, page)

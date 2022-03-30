@@ -1,5 +1,5 @@
+from bs4 import BeautifulSoup
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import TestCase
 from faker import Faker as fk
 from selenium.webdriver.chrome.webdriver import WebDriver
 
@@ -9,13 +9,47 @@ from cms.pages.models import BasePage
 from cms.settings.base import NHSEI_MAX_CATION_LENGTH
 
 
-class TestBrowseUnit(TestCase):
+class TestBrowseUnit(StaticLiveServerTestCase):
     fixtures = ["fixtures/menu-fixtures.json"]
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.faker = fk()
+
+    def test_megamenu(self):
+        response = self.client.get("/")
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        burger = soup.find(id="toggle-menu")
+        self.assertTrue(burger)
+
+        menu = soup.find(id="mega-menu")
+        self.assertTrue(menu)
+
+        corporate = soup.find(class_="flat-menu corporate no_heading")
+        self.assertTrue(corporate)
+        corp_li = corporate.find_all("li")
+        self.assertEqual(7, len(corp_li))
+
+        main_menu = soup.find(class_="main-menu")
+        self.assertTrue(main_menu)
+        prog_li = main_menu.find_all("li")
+        self.assertEqual(16, len(prog_li))
+
+    def test_browse(self):
+        response = self.client.get("/browse/")
+        soup = BeautifulSoup(response.content, "html.parser")
+        pass
+
+    def test_programme(self):
+        pass
+
+    def test_branch(self):
+        pass
+
+    def test_leaf(self):
+        pass
 
     def test_get_caption(self):
         page = BasePage.objects.get(title="About cancer")
@@ -82,7 +116,7 @@ class TestBrowseUnit(TestCase):
 
 class TestBrowseFunctional(StaticLiveServerTestCase):
     selenium = None
-    fixtures = ["fixtures/testdata.json"]
+    fixtures = ["fixtures/menu-fixtures.json"]
 
     @classmethod
     def setUpClass(cls):

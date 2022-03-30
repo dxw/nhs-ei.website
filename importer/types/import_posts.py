@@ -5,10 +5,11 @@ from abc import ABC
 from dateutil import parser
 from wagtail.core.models import Page
 
-from cms.categories.models import Category, CategoryPageCategoryRelationship
 from cms.pages.models import BasePage
 from cms.posts.models import Post, PostIndexPage
 from .importer_cls import Importer
+
+from importer.utils import ImportCategoryMapper, create_category_relationships_for_page
 
 logger = logging.getLogger("importer")
 
@@ -39,6 +40,8 @@ POST_SOURCES = {
 
 class PostsImporter(Importer, ABC):
     news_index_page = None
+
+    category_mapper = ImportCategoryMapper()
 
     def __init__(self):
         super().__init__()
@@ -134,19 +137,6 @@ class PostsImporter(Importer, ABC):
 
             self.save(obj)
 
-            # Create source category
-            source = post.get("source")
-            if source and is_new:
-                source_category, _ = Category.objects.get_or_create(
-                    name=f"source: {source}",
-                    description=f"Content from the {source} subsite",
-                    wp_id=None,
-                    source=None,
-                )
-                CategoryPageCategoryRelationship.objects.create(
-                    category_page=obj, category=source_category
-                )
-
             # add the categories as related many to many, found this needs to
             # be after the save above
             if post.get("categories") and is_new:  # some categories are blank
@@ -156,21 +146,14 @@ class PostsImporter(Importer, ABC):
 
                 ###
                 for category_id in category_ids:
-                    # find matching category on id and sub_site
-                    try:
-                        category_object = Category.objects.get(
-                            source=POST_SOURCES_TO_CATEGORY_SOURCES[source],
-                            wp_id=int(category_id),
+                    mapped_categories = (
+                        self.category_mapper.get_mapped_categories_for_type_by_id(
+                            POST_SOURCES_TO_CATEGORY_SOURCES[source], category_id
                         )
+                    )
+                    create_category_relationships_for_page(obj, mapped_categories)
 
-                        CategoryPageCategoryRelationship.objects.create(
-                            category_page=obj, category=category_object
-                        )
-                    except Exception as ex:
-                        logger.warning(
-                            "Unable to locate category for wp_id=%s, "
-                            "source=%s" % (category_id, source)
-                        )
+                logger.debug("Set categories to %s" % category_ids)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

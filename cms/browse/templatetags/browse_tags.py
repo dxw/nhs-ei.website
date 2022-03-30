@@ -18,7 +18,7 @@ def get_caption(caption_item_id):
             specific_page = page.specific_class.objects.get(id=item_id)
             if hasattr(specific_page, "excerpt"):
                 excerpt = specific_page.excerpt
-                if len(excerpt) > NHSEI_MAX_CATION_LENGTH:
+                if len(excerpt) > NHSEI_MAX_MENU_CAPTION_LENGTH:
                     return excerpt[0:NHSEI_MAX_CATION_LENGTH]
                 else:
                     return excerpt

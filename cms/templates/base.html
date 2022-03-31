@@ -61,7 +61,6 @@
     {% block header %}
     {% include 'partials/nhs_components/nhs_header.html' %}
     {% endblock %}
-
     {% block beforeContent %}
     {% include 'partials/before_content.html' %}
     {% endblock %}
@@ -69,6 +68,8 @@
     {% block breadcrumb %}
         {% breadcrumb %}
     {% endblock %}
+  
+    {% get_toc page %}
 
     {% block main %}
     {% block outer_content %}{% endblock%}

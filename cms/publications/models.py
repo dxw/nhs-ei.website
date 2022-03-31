@@ -1,10 +1,10 @@
 from urllib.parse import urlparse
 
-from cms.categories.models import Category, PublicationType, CategoryPage
-from cms.publications.blocks import PublicationsBlocks
+from bs4 import BeautifulSoup
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
+from django.utils.text import slugify
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -14,6 +14,15 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
+
+from cms.categories.models import Category, PublicationType, CategoryPage
+from cms.publications.blocks import PublicationsBlocks
+
+
+class TOC(models.Model):
+    anchor = models.TextField()
+    text = models.TextField()
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="toc")
 
 
 class PublicationIndexPage(Page):
@@ -99,7 +108,6 @@ class PublicationPublicationTypeRelationship(models.Model):
 
 
 class Publication(CategoryPage):
-
     parent_page_types = ["publications.PublicationIndexPage"]
     """
     title already in the Page class
@@ -168,3 +176,35 @@ class Publication(CategoryPage):
         print(self_url_path)
         print(live_url_path)
         return live_url
+
+    def save(self, *args, **kwargs):
+        # clear existing toc for this page
+        try:
+            toc_pages = TOC.objects.filter(page_id=self.id)
+            if toc_pages:
+                toc_pages.delete()
+        except TOC.DoesNotExist:
+            pass
+
+        # If we don't have an id we are a new page, save it now
+        if not self.id:
+            super(CategoryPage, self).save(*args, **kwargs)
+
+        # Publication body is a straigh text field, not a stream field, so no need to loop
+
+        soup = BeautifulSoup(self.body, "html.parser")
+        # find h2s and anchors
+        h2s = soup.find_all("h2")
+        for h2 in h2s:
+            # does the h2 have an id? If not add one
+            text = h2.text
+            element_id = h2.get("id")
+            # add item to TOC
+            if not element_id:
+                element_id = slugify(text)
+                h2["id"] = element_id
+                soup.find("h2", text=h2.text).replaceWith(h2)
+            TOC(anchor=element_id, text=text, page=self).save()
+        self.body = str(soup)
+
+        super(CategoryPage, self).save(*args, **kwargs)

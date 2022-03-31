@@ -27,8 +27,8 @@ def breadcrumb(context):
         return {
             "breadcrumb_pages": breadcrumb_pages,
         }
-    else:
-        return {}
+
+    return {}
 
     # else:
     #     raise Exception("'page' not found in template context")

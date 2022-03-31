@@ -39,6 +39,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INSTALLED_APPS = [
     "cms.home",
     "cms.search",
+    "cms.browse",
     "cms.categories",
     "cms.posts",
     "cms.blogs",
@@ -300,5 +301,7 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("footer-lower", "Footer (Lower links)"),
 )
 
+# what is the max length of mega menu captions in characters
+NHSEI_MAX_MENU_CAPTION_LENGTH = 50
 # TODO - turn this on when we go live, it breaks imports all ove the place
 WAGTAILREDIRECTS_AUTO_CREATE = False

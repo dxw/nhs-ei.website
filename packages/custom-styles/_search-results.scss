@@ -1,3 +1,45 @@
+//header
+.template-searchresults {
+  .nhsuk-header__search {
+    display: none;
+  }
+}
+
+//search bar
+.nhs-search__input {
+  width: 70%;
+  float: left;
+}
+
+.nhs-search__button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  padding:11px;
+  background: #005eb8;
+  font-size: 18px;
+  color: #e8edee;
+  transition: all 0.2s ease-in-out;
+  line-height: 1;
+  width: 29%;
+  float: right;
+}
+
+// sort by drop down
+
+legend.sort_by.nhsuk-fieldset__legend.nhsuk-fieldset__legend--xs {
+    float: left;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
+    float: right;
+}
+
 .search-results-heading {
   border-bottom: 1px solid #dfe2e4;
 

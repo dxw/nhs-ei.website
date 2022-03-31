@@ -1,0 +1,58 @@
+{# #}
+{#TODO: add functionality to make this interactive#}
+<form action="">
+  <input type="hidden" name="query" value="{{ query_string }}">
+  <fieldset class="nhsuk-fieldset">
+    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+      <h1 class="nhsuk-fieldset__heading">Content type</h1>
+    </legend>
+    <div class="nhsuk-form-group">
+      <div class="nhsuk-radios">
+        <div class="nhsuk-radios__item">
+          <input class="nhsuk-radios__input" id="ct1" name="content_type" type="radio"
+          value="pages"{% if content_type == 'pages' %}checked{% endif %}>
+          <label class="nhsuk-label nhsuk-radios__label" for="ct1">Web page</label>
+        </div>
+        <div class="nhsuk-radios__item">
+          <input class="nhsuk-radios__input" id="ct2" name="content_type" type="radio"
+          value="news"{% if content_type == 'news' %}checked{% endif %}>
+          <label class="nhsuk-label nhsuk-radios__label" for="ct2">News</label>
+        </div>
+        <div class="nhsuk-radios__item">
+          <input class="nhsuk-radios__input" id="ct3" name="content_type" type="radio"
+          value="blogs"{% if content_type == 'blogs' %}checked{% endif %}>
+          <label class="nhsuk-label nhsuk-radios__label" for="ct3">Blog posts</label>
+        </div>
+        <div class="nhsuk-radios__item">
+          <input class="nhsuk-radios__input" id="ct4" name="content_type" type="radio"
+          value="publications"{% if content_type == 'publications' %}checked{% endif %}>
+          <label class="nhsuk-label nhsuk-radios__label" for="ct4">Publications</label>
+        </div>
+        <div class="nhsuk-radios__item">
+          <input class="nhsuk-radios__input" id="ct5" name="content_type" type="radio" value="all"{% if not content_type %}checked{% endif %}>
+          <label class="nhsuk-label nhsuk-radios__label" for="ct5">All</label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="nhsuk-fieldset">
+    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+      <h1 class="nhsuk-fieldset__heading">Date</h1>
+    </legend>
+    <div class="nhsuk-form-group">
+      <div class="nhsuk-date-input">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="date_from">From</label>
+          <input class="nhsuk-input nhsuk-date-input__input" id="date-from" name="date_from"
+          type="date" value={{date_from}}>
+        </div>
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="date_to">To</label>
+          <input class="nhsuk-input nhsuk-date-input__input" id="date-to" name="date_to"
+          type="date" value={{date_to}}>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <button class="nhsuk-button" type="submit">Filter results</button>
+</form>

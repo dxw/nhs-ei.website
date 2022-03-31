@@ -1,8 +1,9 @@
 import logging
 
 from django import template
-from wagtail.core.models import Page
 from django.urls import reverse
+from wagtail.core.models import Page
+
 from cms.settings.base import NHSEI_MAX_MENU_CAPTION_LENGTH
 
 register = template.Library()
@@ -19,7 +20,7 @@ def get_caption(caption_item_id):
             if hasattr(specific_page, "excerpt"):
                 excerpt = specific_page.excerpt
                 if len(excerpt) > NHSEI_MAX_MENU_CAPTION_LENGTH:
-                    return excerpt[0:NHSEI_MAX_CATION_LENGTH]
+                    return excerpt[0:NHSEI_MAX_MENU_CAPTION_LENGTH]
                 else:
                     return excerpt
         except Page.DoesNotExist:

@@ -1,21 +1,16 @@
 from bs4 import BeautifulSoup
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from faker import Faker as fk
+from django.test import TestCase
+from faker import Faker
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from cms.browse.templatetags.browse_tags import get_caption, url_for, menu_breadcrumb
 from cms.core.models import ExtendedMainMenuItem
 from cms.pages.models import BasePage
-from cms.settings.base import NHSEI_MAX_CATION_LENGTH
+from cms.settings.base import NHSEI_MAX_MENU_CAPTION_LENGTH
 
 
-class TestBrowseUnit(StaticLiveServerTestCase):
+class TestBrowseUnit(TestCase):
     fixtures = ["fixtures/menu-fixtures.json"]
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.faker = fk()
 
     def test_megamenu(self):
         response = self.client.get("/")
@@ -40,16 +35,30 @@ class TestBrowseUnit(StaticLiveServerTestCase):
     def test_browse(self):
         response = self.client.get("/browse/")
         soup = BeautifulSoup(response.content, "html.parser")
-        pass
+        self.assertIsNotNone(soup.find(class_="browse__root-pane"))
+
+        link_list = soup.findAll(class_="browse__link")
+        self.assertEqual(16, len(link_list))
 
     def test_programme(self):
-        pass
+        response = self.client.get("/browse/cancer/")
+        soup = BeautifulSoup(response.content, "html.parser")
+        section = soup.find(id="section")
+        self.assertIsNotNone(section)
+
+        link_list = soup.find(id="section").find(class_="browse__list").find_all("li")
+        self.assertEqual(8, len(link_list))
 
     def test_branch(self):
-        pass
+        response = self.client.get("/browse/cancer/cancer-level-2/")
+        soup = BeautifulSoup(response.content, "html.parser")
+        subsection = soup.find(id="subsection")
+        self.assertIsNotNone(subsection)
 
-    def test_leaf(self):
-        pass
+        link_list = (
+            soup.find(id="subsection").find(class_="browse__list").find_all("li")
+        )
+        self.assertEqual(2, len(link_list))
 
     def test_get_caption(self):
         page = BasePage.objects.get(title="About cancer")
@@ -57,9 +66,9 @@ class TestBrowseUnit(StaticLiveServerTestCase):
         self.assertEqual("Lorem ipsum dolor sit amet, consectetur adipiscing", caption)
 
         caption_text = ""
-        while len(caption_text) < NHSEI_MAX_CATION_LENGTH:
-            caption_text += self.faker.text()
-        trimmed_caption = caption_text[0:NHSEI_MAX_CATION_LENGTH]
+        while len(caption_text) < NHSEI_MAX_MENU_CAPTION_LENGTH:
+            caption_text += Faker().text()
+        trimmed_caption = caption_text[0:NHSEI_MAX_MENU_CAPTION_LENGTH]
 
         page.excerpt = trimmed_caption
         page.save()
@@ -69,7 +78,7 @@ class TestBrowseUnit(StaticLiveServerTestCase):
         page.excerpt = caption_text
         page.save()
         caption = get_caption(page.id)
-        self.assertEqual(caption_text[0:NHSEI_MAX_CATION_LENGTH], caption)
+        self.assertEqual(caption_text[0:NHSEI_MAX_MENU_CAPTION_LENGTH], caption)
 
     def test_url_for(self):
         item = ExtendedMainMenuItem.objects.get(link_page_id=23)
@@ -114,7 +123,7 @@ class TestBrowseUnit(StaticLiveServerTestCase):
         )
 
 
-class TestBrowseFunctional(StaticLiveServerTestCase):
+class TestBrowseFunctional(TestCase):
     selenium = None
     fixtures = ["fixtures/menu-fixtures.json"]
 
@@ -122,7 +131,7 @@ class TestBrowseFunctional(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
+        cls.selenium.implicitly_wait(300)
 
     @classmethod
     def tearDownClass(cls):
@@ -143,18 +152,3 @@ class TestBrowseFunctional(StaticLiveServerTestCase):
         burger_menu.click()
         # can we see the mega menu
         self.assertTrue(mega_menu.is_displayed())
-        # Check we can see corporate menu without caption
-        # Check we can see programmes with captions
-        # check clicking a programme takes you to the browse pages
-
-    def test_browse(self):
-        self.selenium.get("%s/%s" % (self.live_server_url, "/browse"))
-
-    def test_programme(self):
-        pass
-
-    def test_branch(self):
-        pass
-
-    def test_leaf(self):
-        pass

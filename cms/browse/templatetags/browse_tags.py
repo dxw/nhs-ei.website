@@ -34,7 +34,7 @@ def get_caption(caption_item_id):
 
 
 @register.filter
-def url_for(item):
+def url_for_link_page_id(item):
     page = Page.objects.get(id=item.link_page_id)
     return reverse("browse", args={page.slug})
 

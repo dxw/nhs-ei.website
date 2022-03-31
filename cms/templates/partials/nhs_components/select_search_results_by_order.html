@@ -1,0 +1,31 @@
+{# #}
+{#TODO: add functionality to make this interactive#}
+<form action="">
+  <input type="hidden" name="query" value="{{ query_string }}">
+  <input type="hidden" name="content_type" value="{{content_type}}">
+  <input type="hidden" name="date_from" value="{{date_from}}">
+  <input type="hidden" name="date_to" value="{{date_to}}">
+  <fieldset class="nhsuk-fieldset">
+    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+      <h1 class="nhsuk-fieldset__heading">Order by date</h1>
+    </legend>
+    <div class="nhsuk-form-group">
+      <div class="nhsuk-row nhsuk-u-margin-botom-3">
+        <select class="nhsuk-select" id="publish_date" name="order"
+          onchange="this.form.submit()">
+          <option value="-latest_revision_created_at"{% if order == '-latest_revision_created_at' %} selected{% endif %}>Version (newest first)</option>
+          <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Version (oldest first)</option>
+          <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Published (newest first)</option>
+          <option value="first_published_at"{% if order == 'first_published_at' %} selected{% endif %}>Published (oldest first)</option>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+</form>
+<div class="nhsuk-body search-results-heading__details">
+  {% if query_string %}
+    <span>Search results for <strong>"{{ query_string }}"</strong>
+      {% if content_type %}, filtered by
+      <strong>{{ content_type }}</strong>{% endif %}</span>
+    </div>
+  {% endif %}

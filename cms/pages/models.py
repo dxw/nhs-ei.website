@@ -1,8 +1,10 @@
 from urllib.parse import urlparse
+
 from django.db import models
-from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+
 from cms.core.blocks import CoreBlocks
 
 

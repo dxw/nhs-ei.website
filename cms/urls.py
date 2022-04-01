@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-
 from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
-from wagtail.contrib.sitemaps.views import sitemap
 
-from cms.search import views as search_views
+from cms.browse import urls as browse_urls
 from cms.categories import urls as category_urls
+from cms.search import views as search_views
 from importer import urls as importer_urls
 
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("categories/", include(category_urls)),
+    path("browse/", include(browse_urls)),
     # views to show helpful dev info
     path("importer/", include(importer_urls)),
 ]

@@ -1,7 +1,12 @@
+import logging
+
 from django import template
 from wagtail.core.models import Page
 
+from cms.publications.models import TOC
+
 register = template.Library()
+logger = logging.getLogger("general")
 
 
 @register.inclusion_tag("tags/breadcrumb.html", takes_context=True)
@@ -22,8 +27,8 @@ def breadcrumb(context):
         return {
             "breadcrumb_pages": breadcrumb_pages,
         }
-    else:
-        return {}
+
+    return {}
 
     # else:
     #     raise Exception("'page' not found in template context")
@@ -40,3 +45,12 @@ def get_content_type_tag(context, page):
     }
     if content_type.model in CONTENT_TYPE_LABELS.keys():
         return {"type": CONTENT_TYPE_LABELS[content_type.model]}
+
+
+@register.inclusion_tag("tags/toc.html", takes_context=True)
+def get_toc(context, obj):
+    toc_items = []
+    if obj:
+        toc_items = TOC.objects.filter(page=obj)
+
+    return {"toc_items": toc_items}

@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags frontend_tags wagtailsearchpromotions_tags %}
+
 {% block body_class %}template-searchresults{% endblock %}
+
+{% block breadcrumb %}
+{% include 'search/breadcrumb.html' %}
+{% endblock %}
+
+
 {% block title %}Search{% endblock %}
 {% block content %}
   <article class="nhsuk-width-container">
@@ -91,9 +98,7 @@
             </ul>
           </nav>
         {% endif %}
-      {% with total=119 %}
         {% include 'partials/nhs_components/pagination.html' %}
-      {% endwith %}
       </div>
     </div>
   </article>

@@ -1,0 +1,243 @@
+.nhsuk-main-wrapper {
+    background-color:$color_nhsuk-white;
+    overflow:auto;
+}
+.browse {
+  position:relative;
+  p {
+    margin-bottom:5px;
+    font-size: 15px;
+  }
+}
+
+// first col
+.browse__root-pane {
+  @media (min-width:641px){
+    display: block;
+    width: 25%;
+    margin-right: 0;
+
+  }
+  @media (max-width:641px){
+    display:none;
+  }
+}
+
+.browse__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  a {
+    position:relative;
+    display: block;
+  }
+  h3 {
+    margin-bottom:0px;
+    font-size: 18px;
+    @media (min-width:641px){
+      font-size: 19px;
+    }
+    text-decoration: underline;
+    text-decoration-thickness: max(1px, 0.0625rem);
+    text-underline-offset: 0.1em;
+  }
+  .browse__link {
+    text-decoration: underline;
+    text-decoration-thickness: max(1px, 0.0625rem);
+    text-underline-offset: 0.1em;
+    display: block;
+    padding: 5px 25px 5px 0px;
+    @media (min-width:641px){;
+      padding-left:20px
+    }
+
+    color: #505a5f;
+    &.browse__link--active {
+      background: $nhsuk-link-active-color;
+      color: #fff;
+      &:hover {
+        background: $nhsuk-link-active-color;
+        color:#fff;
+        p, h3 {
+          color: #fff;
+        }
+      }
+      &:focus:hover {
+        p, a, h3{
+          color:$nhsuk-focus-text-color;
+        }
+      }
+    }
+  }
+  .browse__link:hover {
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+      text-decoration-skip-ink: none;
+      text-decoration-skip: none;
+  }
+  .browse__link:focus {
+      outline: 3px solid transparent;
+      color: $nhsuk-text-color;
+      background-color: #fd0;
+      box-shadow: 0 -2px #fd0, 0 4px $nhsuk-text-color;
+      text-decoration: none;
+  }
+  .browse__link:focus:hover {
+    box-shadow: 0 -2px #f3f2f1, 0 3px $nhsuk-text-color;
+    color:$nhsuk-text-color;
+    background-color: #fd0;
+  }
+  .hub {
+    background-color:#E8EDEE;
+    color:black;
+    border:1px solid $color_nhsuk-blue;
+    &:after {
+      display:none;
+    }
+  }
+  .browse__link:hover {
+    background: #f3f2f1;
+    color:$nhsuk-link-color;
+  }
+  .browse__link:after {
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+    right: 10px;
+    float: right;
+    content: "\203A";
+  }
+}
+
+
+// second column
+.mobile_menu {
+  @media (max-width:641px) {
+    .browse__section-pane {
+      display:none;
+    }
+  }
+}
+.browse__section-pane {
+  background: #fff;
+  @media (min-width:641px){
+    border-right: 1px solid $nhsuk-link-active-color;
+    border-left: 1px solid $nhsuk-link-active-color;
+    width: 35%;
+    .browse__section-pane .browse__heading {
+      padding-left: 15px;
+    }
+  }
+  .browse__link {
+    text-decoration: none;
+    &:hover {
+      h3 {
+        text-decoration:underline;
+      }
+      p {
+        color: $nhsuk-focus-text-color;
+      }
+    }
+  }
+}
+
+.browse--two-columns {
+.browse__section-pane {
+  .browse__link {
+    padding-left:10px;
+      h3 {
+        color:$nhsuk-link-color;
+      }
+      p {
+        color: $nhsuk-focus-text-color;
+      }
+      &:focus {
+        outline: 3px solid transparent;
+        color: $nhsuk-text-color;
+        background-color: #fd0;
+        box-shadow: 0 -2px #fd0, 0 4px $nhsuk-text-color;
+        text-decoration: none;
+        h3 {
+          color: $nhsuk-text-color;
+        }
+      }
+    }
+  }
+}
+
+
+.browse__heading {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  outline: none;
+  @media (min-width:641px){
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+  }
+}
+
+.browse__header, .browse__heading {
+  font-weight: 700;
+  @media (max-width:641px){
+    font-size: 18px;
+  }
+}
+
+.browse__inner {
+    padding-bottom: 30px;
+    @media (min-width:641px){
+      padding-left: 5px;
+      padding-right: 5px;
+      .browse__link--active {
+        margin-left:-5px;
+        padding-left:25px;
+        margin-right:-5px
+      }
+    }
+  .browse__heading {
+    @media (min-width:641px){
+      padding-left: 20px;
+    }
+  }
+}
+
+@media (min-width:641px){
+  .browse__root-pane, .browse__section-pane, .browse__subsection-pane {
+    float:left;
+  }
+}
+
+//third column
+
+.browse__subsection-pane {
+  @media (min-width:641px){
+    width: 50%;
+  }
+}
+
+.browse__subsection-pane {
+  a {
+    font-weight: bold;
+    font-size:18px;
+  }
+  @media (min-width:641px){
+    width: 27%;
+    padding-left: 20px;
+  }
+}
+
+.nhsuk-breadcrumb__list {
+  display:block !important;
+}
+
+
+//mobile
+
+// .browse--mobile-col {
+//   .browse__section-pane {
+//     @media (max-width:641px){
+//       display:none;
+//     }
+//   }
+// }

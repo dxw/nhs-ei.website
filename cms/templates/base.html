@@ -59,9 +59,8 @@
     <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
 
     {% block header %}
-    {% include 'partials/nhs_header.html' %}
+    {% include 'partials/nhs_components/nhs_header.html' %}
     {% endblock %}
-
     {% block beforeContent %}
     {% include 'partials/before_content.html' %}
     {% endblock %}
@@ -69,14 +68,15 @@
     {% block breadcrumb %}
         {% breadcrumb %}
     {% endblock %}
-    
+  
+    {% get_toc page %}
 
     {% block main %}
     {% block outer_content %}{% endblock%}
 
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
         {% block content %}{% endblock %}
-        
+
     </main>
 
     {% endblock %}

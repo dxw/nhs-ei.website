@@ -1,9 +1,9 @@
-{% load menu_tags %}
+{% load menu_tags browse_tags %}
 
 {% for item in menu_items %}
   {% cycle '<ul class="main-menu-items">' '' '' '' %}
   <li>
-    <a href="">{{ item.text }}</a>
+    <a href="{{ item|url_for_link_page_id }}">{{ item.text }}</a>
     <span>
       {{ item.caption }}
     </span>

@@ -18,6 +18,12 @@ class CategoryPageCategoryRelationship(models.Model):
     A table which describes which Categories a CategoryPage has.
     """
 
+    class Meta:
+        unique_together = (
+            "category_page",
+            "category",
+        )
+
     category_page = ParentalKey(
         "categories.CategoryPage",
         related_name="categorypage_category_relationship",
@@ -54,7 +60,7 @@ class CategoryPage(Page):
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
     wp_id = models.PositiveIntegerField(null=True, blank=True)

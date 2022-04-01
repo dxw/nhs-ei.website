@@ -1,5 +1,4 @@
 import logging
-import sys
 import time
 from abc import ABC
 
@@ -9,46 +8,24 @@ from wagtail.core.models import Page
 from cms.atlascasestudies.models import (
     AtlasCaseStudy,
     AtlasCaseStudyIndexPage,
-    AtlasCaseStudySettingRelationship,
-    AtlasCaseStudyRegionRelationship,
-)
-from cms.categories.models import (
-    Category,
-    Region,
-    Setting,
-    CategoryPageCategoryRelationship,
 )
 from .importer_cls import Importer
+
+from importer.utils import ImportCategoryMapper, create_category_relationships_for_page
 
 logger = logging.getLogger("importer")
 
 
 class AtlasCaseStudiesImporter(Importer, ABC):
-    categories = None
-    settings = None
-    regions = None
     atlas_case_study_index_page = None
+
+    category_mapper = ImportCategoryMapper()
 
     def __init__(self):
         super().__init__()
         atlas_case_studies = AtlasCaseStudy.objects.all()
         for case in atlas_case_studies:
             self.cache[case.wp_id] = case
-
-        # we need categories to exist before importing atlas case studies
-        self.categories = Category.objects.all()
-        if not self.categories:
-            sys.exit("\n😲Cannot continue... did you import the categories first?")
-
-        # we need settings to exist before importing atlas case studies
-        self.settings = Setting.objects.all()
-        if not self.settings:
-            sys.exit("\n😲Cannot continue... did you import the settings first?")
-
-        # we need categories to exist before importing atlas case studies
-        self.regions = Region.objects.all()
-        if not self.regions:
-            sys.exit("\n😲Cannot continue... did you import the regions first?")
 
         # make an atlas case study index page for the whole site, only one to
         # exist ...
@@ -72,6 +49,11 @@ class AtlasCaseStudiesImporter(Importer, ABC):
 
     def parse_results(self):
         atlas_case_studies = self.results
+
+        atlas_categories = [
+            self.category_mapper.get_category_for_slug("atlas"),
+            self.category_mapper.get_category_for_slug("nursing"),
+        ]
 
         for atlas_case_study in atlas_case_studies:
 
@@ -124,70 +106,42 @@ class AtlasCaseStudiesImporter(Importer, ABC):
             self.save(obj)
 
             if is_new:
-                # add the categories as related many to many, found this
-                # needs to be after the save above some categories are blank
-                if not not atlas_case_study.get("categories"):
-                    category_ids = atlas_case_study.get("categories").split(" ")
-                    # list of category wp_id's
-                    for category in category_ids:
-                        try:
-                            category_object = Category.objects.get(
-                                source="categories", wp_id=int(category)
-                            )
-                            CategoryPageCategoryRelationship.objects.create(
-                                category_page=obj, category=category_object
-                            )
-                        except Exception as e:
-                            logger.warning(
-                                "Unable to locate category for wp_id=%s" % category
-                            )
-                    logger.debug(
-                        "Creating link to categories, cat ids = %s" % category_ids
-                    )
 
                 # Tag the Atlas Case Studies as such.
-                atlas_category, _ = Category.objects.get_or_create(
-                    name="Atlas Case Studies",
-                    slug="atlas-case-studies",
-                    description="Atlas of Shared Learning: Case Studies",
-                    wp_id=None,
-                    source=None,
-                )
-                CategoryPageCategoryRelationship.objects.create(
-                    category_page=obj, category=atlas_category
-                )
+                create_category_relationships_for_page(obj, atlas_categories)
 
-                # add the settings as related many to many, found this needs to
-                # be after the save above
-                # some settings are blank
-                if not not atlas_case_study.get("settings"):
-                    settings = atlas_case_study.get("settings").split(
-                        " "
-                    )  # list of setting wp_id's
-                    settings_objects = Setting.objects.filter(wp_id__in=settings)
-                    for setting in settings_objects:
-                        AtlasCaseStudySettingRelationship.objects.create(
-                            atlas_case_study=obj, setting=setting
+                # add the categories as related many to many, found this
+                # needs to be after the save above some categories are blank
+                if atlas_case_study.get("categories"):
+                    category_ids = atlas_case_study.get("categories").split(" ")
+                    for category_id in category_ids:
+                        mapped_categories = (
+                            self.category_mapper.get_mapped_categories_for_type_by_id(
+                                "categories", category_id
+                            )
                         )
+                        create_category_relationships_for_page(obj, mapped_categories)
                     logger.debug(
-                        "Creating link to setting, setting ids = %s" % settings
+                        "Creating link to categories, cat ids = %s" % category_ids
                     )
 
                 # add the regions as related many to many, found this needs
                 # to be
                 # after the save above
                 # some regions are blank
-                if not not atlas_case_study.get("regions"):
+                if atlas_case_study.get("regions"):
                     regions = atlas_case_study.get("regions").split(
                         " "
                     )  # list of category wp_id's
 
-                    regions_objects = Region.objects.filter(wp_id__in=regions)
-                    for region in regions_objects:
-                        AtlasCaseStudyRegionRelationship.objects.create(
-                            atlas_case_study=obj, region=region
+                    for region_id in regions:
+                        mapped_regions = (
+                            self.category_mapper.get_mapped_categories_for_type_by_id(
+                                "regions", region_id
+                            )
                         )
-                    logger.debug("Creating link to setting, region ids = %s" % regions)
+                        create_category_relationships_for_page(obj, mapped_regions)
+                    logger.debug("Creating link to regions, region ids = %s" % regions)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

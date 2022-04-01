@@ -6,9 +6,7 @@ from dateutil import parser
 from wagtail.core.models import Page
 
 from cms.categories.models import (
-    Category,
     PublicationType,
-    CategoryPageCategoryRelationship,
 )
 from cms.pages.models import BasePage
 from cms.publications.models import (
@@ -18,21 +16,11 @@ from cms.publications.models import (
 )
 from .importer_cls import Importer
 
+from importer.utils import ImportCategoryMapper, create_category_relationships_for_page
+
 logger = logging.getLogger("importer")
 
 FAKE_SOURCE = "publications"
-
-# so we can match the subsite categories for the publication index page
-PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES = {
-    "publications": "publication_types",
-    "publications-aac": "publication_types-aac",
-    "publications-commissioning": "publication_types-commissioning",
-    "publications-coronavirus": "publication_types-coronavirus",
-    "publications-greenernhs": "publication_types-greenernhs",
-    "publications-improvement-hub": "publication_types-improvement-hub",
-    "publications-non-executive-opportunities": "publication_types-non-executive-opportunities",
-    "publications-rightcare": "publication_types-rightcare",
-}
 
 # so we can add publication to a sub site and build out sub site publication
 # index pages
@@ -61,6 +49,9 @@ PUBLICATION_SOURCES_TO_CATEGORY_SOURCES = {
 
 
 class PublicationsImporter(Importer, ABC):
+
+    category_mapper = ImportCategoryMapper()
+
     def __init__(self):
         super().__init__()
         publications = Publication.objects.all()
@@ -188,18 +179,7 @@ class PublicationsImporter(Importer, ABC):
 
                 logger.debug("Associated publication with %s" % publication_types)
 
-            # Create source category
             source = publication.get("source")
-            if source and is_new:
-                source_category, _ = Category.objects.get_or_create(
-                    name=f"source: {source}",
-                    description=f"Content from the {source} subsite",
-                    wp_id=None,
-                    source=None,
-                )
-                CategoryPageCategoryRelationship.objects.create(
-                    category_page=obj, category=source_category
-                )
 
             # add the categories (topics) as related many to many, found this
             # needs to be after the save above
@@ -207,28 +187,20 @@ class PublicationsImporter(Importer, ABC):
 
             if publication.get("categories") and is_new:
 
-                category_id = publication.get("categories").split(
+                category_ids = publication.get("categories").split(
                     " "
                 )  # list of category wp_id's
 
-                for category in category_id:
-                    try:
-                        # find matching category on id and sub_site
-                        category_object = Category.objects.get(
-                            source=PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source],
-                            wp_id=int(category),
-                        )
+                for category_id in category_ids:
 
-                        CategoryPageCategoryRelationship.objects.create(
-                            category_page=obj, category=category_object
+                    mapped_categories = (
+                        self.category_mapper.get_mapped_categories_for_type_by_id(
+                            PUBLICATION_SOURCES_TO_CATEGORY_SOURCES[source], category_id
                         )
-                    except Exception as ex:
-                        logger.warning(
-                            "Unable to locate category for wp_id=%s, "
-                            "source=%s" % (category, source)
-                        )
+                    )
+                    create_category_relationships_for_page(obj, mapped_categories)
 
-                logger.debug("Set categories to %s" % category_id)
+                logger.debug("Set categories to %s" % category_ids)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

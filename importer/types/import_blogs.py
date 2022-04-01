@@ -6,20 +6,17 @@ from dateutil import parser
 from wagtail.core.models import Page
 
 from cms.blogs.models import Blog, BlogIndexPage
-from cms.categories.models import Category, CategoryPageCategoryRelationship
 from .importer_cls import Importer
+
+from importer.utils import ImportCategoryMapper, create_category_relationships_for_page
 
 logger = logging.getLogger("importer")
 
-# blogs are not from a subsite so rewrite the source blogs to posts
-# they use the same categories
-
-# these are used for matching to subsite because there is only one subsite.
-CATEGORY_SOURCE_NAME = "categories"
-POST_SOURCE = "NHS England & Improvement"
-
 
 class BlogsImporter(Importer, ABC):
+
+    category_mapper = ImportCategoryMapper()
+
     def __init__(self):
         super().__init__()
         blogs = Blog.objects.all()
@@ -83,39 +80,19 @@ class BlogsImporter(Importer, ABC):
 
             self.save(obj)
 
-            # Create source category
-            source = blog.get("source")
-            if source and is_new:
-                source_category, _ = Category.objects.get_or_create(
-                    name=f"source: {source}",
-                    description=f"Content from the {source} subsite",
-                    wp_id=None,
-                    source=None,
-                )
-                CategoryPageCategoryRelationship.objects.create(
-                    category_page=obj, category=source_category
-                )
-
             # add the categories as related many to many, found this needs to
             # be after the save above
             if blog.get("categories") and is_new:  # some categories are blank
-                cat_ids = blog.get("categories").split(" ")  # list cat wp_id's
-                for cat_id in cat_ids:
-                    try:
-                        # find matching category on id and sub_site
-                        category_object = Category.objects.get(
-                            source=CATEGORY_SOURCE_NAME,
-                            wp_id=int(cat_id),
+                category_ids = blog.get("categories").split(" ")  # list cat wp_id's
+                for category_id in category_ids:
+                    mapped_categories = (
+                        self.category_mapper.get_mapped_categories_for_type_by_id(
+                            "categories", category_id
                         )
+                    )
+                    create_category_relationships_for_page(obj, mapped_categories)
 
-                        CategoryPageCategoryRelationship.objects.create(
-                            category_page=obj, category=category_object
-                        )
-                    except Exception as ex:
-                        logger.warning(
-                            "Unable to locate category for wp_id=%s, source=%s"
-                            % (cat_id, source)
-                        )
+                logger.debug("Set categories to %s" % category_ids)
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

@@ -50,7 +50,7 @@ class ImportCategoryMapper:
             )
         else:
 
-            _, category = Category.objects.get_or_create(
+            category, _ = Category.objects.get_or_create(
                 name=category_from_definitions["name"], slug=slug
             )
             self.cache[slug] = category

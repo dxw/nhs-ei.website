@@ -1,17 +1,24 @@
+from unittest import mock
+from unittest.mock import patch
+
 from bs4 import BeautifulSoup
+from django.http.response import Http404
 from django.test import TestCase
 from faker import Faker
-
-# from selenium.webdriver.chrome.webdriver import WebDriver
+from wagtail.core.models import Page
 
 from cms.browse.templatetags.browse_tags import (
     get_caption,
     url_for_link_page_id,
     menu_breadcrumb,
 )
+from cms.browse.views import fetch_page_by_slug
 from cms.core.models import ExtendedMainMenuItem
 from cms.pages.models import BasePage
 from cms.settings.base import NHSEI_MAX_MENU_CAPTION_LENGTH
+
+
+# from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 class TestBrowseUnit(TestCase):
@@ -127,6 +134,30 @@ class TestBrowseUnit(TestCase):
             breadcrumbs["breadcrumbs"][2]["href"],
         )
 
+    def test_fetch_page_by_slug(self):
+        with self.assertRaises(Http404) as e:
+            fetch_page_by_slug("no such page")
+
+        with mock.patch("wagtail.core.models.Page.objects.filter") as page_patch:
+            mock_page = mock.MagicMock(spec=Page)
+            mock_page.slug = "slug"
+
+            class DummyList:
+                def live():
+                    return [mock_page, mock_page, mock_page]
+
+            page_patch.return_value = DummyList
+
+            with self.assertLogs(level="DEBUG") as my_logger:
+                page = fetch_page_by_slug("slug")
+            self.assertIn(
+                "Multiple pages matched with a slug of slug", my_logger.output[0]
+            )
+
+
+# For python 2.x use from mock import patch   def test_check_logging_message(
+# self, mock_logger):     mock_logger.error.assert_called_with("Your log
+# message here")
 
 # class TestBrowseFunctional(TestCase):
 #     selenium = None

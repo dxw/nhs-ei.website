@@ -21,6 +21,8 @@ def fetch_page_by_slug(slug):
     if len(pages) == 0:
         # Should not be reachable
         raise Http404
+    elif len(pages) > 1:
+        logger.warning("Multiple pages matched with a slug od %s" % slug)
     return list(pages)[0]
     #####################
 

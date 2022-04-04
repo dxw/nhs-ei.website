@@ -77,3 +77,26 @@ class TestSearch(TestCase):
 
         self.assertEquals("Home", items[0].text.strip())
         self.assertEquals("Search", items[1].text.strip())
+
+class TestPagination(TestCase):
+    fixtures = ["fixtures/menu-fixtures.json"]
+
+    def test_no_pagination(self):
+        response = self.client.get("/search/?query=no-results")
+        self.assertNotContains(response, "Previous")
+        self.assertNotContains(response, "Next")
+
+    def test_no_next(self):
+        response = self.client.get("/search/?page=3&query=e")
+        self.assertContains(response, "Previous")
+        self.assertNotContains(response, "Next")
+
+    def test_no_prev(self):
+        response = self.client.get("/search/?query=e")
+        self.assertNotContains(response, "Previous")
+        self.assertContains(response, "Next")
+
+    def test_prev_and_next(self):
+        response = self.client.get("/search/?page=2&query=e")
+        self.assertContains(response, "Previous")
+        self.assertContains(response, "Next")

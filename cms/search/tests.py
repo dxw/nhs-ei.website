@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from django.test import TestCase
 
 from wagtail.contrib.search_promotions.models import SearchPromotion
@@ -67,6 +68,15 @@ class TestSearch(TestCase):
         self.assertContains(response, "Test Bananas Page")
         self.assertContains(response, "Plantains are similar to bananas.")
 
+    def test_breadcrumbs(self):
+        response = self.client.get("/search/")
+
+        soup = BeautifulSoup(response.content, "html.parser")
+        items = soup.findAll(class_="nhsuk-breadcrumb__item")
+        self.assertEqual(2, len(list(items)))
+
+        self.assertEquals("Home", items[0].text.strip())
+        self.assertEquals("Search", items[1].text.strip())
 
 class TestPagination(TestCase):
     fixtures = ["fixtures/menu-fixtures.json"]

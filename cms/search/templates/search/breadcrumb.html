@@ -1,22 +1,12 @@
-{#TODO: developer to make breadcrumb work #}
-
 <div class="nhsuk-breadcrumb" aria-label="Breadcrumb">
   <div class="nhsuk-width-container">
     <ol class="nhsuk-breadcrumb__list">
-      {% for crumb in breadcrumbs %}
-        <li class="nhsuk-breadcrumb__item">
-          <a class="nhsuk-breadcrumb__link" href="{{ crumb.href }}">{{ crumb.label }}</a>
-        </li>
-      {% endfor %}
       <li class="nhsuk-breadcrumb__item">
-          <a class="nhsuk-breadcrumb__link" href="#">text</a>
-        </li>
-        <li class="nhsuk-breadcrumb__item">
-          <a class="nhsuk-breadcrumb__link" href="#">text</a>
-        </li>
-        <li class="nhsuk-breadcrumb__item">
-          <a class="nhsuk-breadcrumb__link" href="#">text</a>
-        </li>
+        <a class="nhsuk-breadcrumb__link" href="/">Home</a>
+      </li>
+      <li class="nhsuk-breadcrumb__item">
+        <a class="nhsuk-breadcrumb__link" href="{% url 'search' %}">Search</a>
+      </li>
     </ol>
   </div>
 </div>

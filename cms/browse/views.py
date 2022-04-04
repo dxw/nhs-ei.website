@@ -17,7 +17,7 @@ def fetch_page_by_slug(slug):
     # Also see browse_tags.py:~58
     #######
     # But we have multiples, so we need to guard against that.
-    pages = Page.objects.filter(slug=slug)
+    pages = Page.objects.filter(slug=slug).live()
     if len(pages) == 0:
         # Should not be reachable
         raise Http404

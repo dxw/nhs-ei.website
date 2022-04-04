@@ -64,14 +64,15 @@ class Importer:
         """
         self.cache = {}
 
+        self.home_page = Page.objects.get(title="Home")
+
         try:
             self.staging_page = Page.objects.get(title=self.STAGING_PAGE_TITLE)
         except Page.DoesNotExist:
             self.staging_page = BasePage(
                 title=self.STAGING_PAGE_TITLE, wp_id=self.STAGING_PAGE_WP_ID
             )
-            home_page = Page.objects.get(title="Home")
-            home_page.add_child(instance=self.staging_page)
+            self.home_page.add_child(instance=self.staging_page)
             self.staging_page.save()
 
         self.now = time.time()

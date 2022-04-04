@@ -42,7 +42,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                 show_in_menus=True,
                 slug="atlas-case-study-items-base",
             )
-            self.staging_page.add_child(instance=self.atlas_case_study_index_page)
+            self.home_page.add_child(instance=self.atlas_case_study_index_page)
             revision = self.atlas_case_study_index_page.save_revision()
             revision.publish()
             logger.info("Created Atlas Case Study Items Base")

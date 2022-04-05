@@ -41,8 +41,6 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
 }
 
 .search-results-heading {
-  border-bottom: 1px solid #dfe2e4;
-
   .search-results-heading__title {
     @include nhsuk-responsive-margin(3, 'bottom');
   }
@@ -68,4 +66,41 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
   .nhsuk-tag {
     @include nhsuk-responsive-margin(2, 'bottom');
   }
+}
+
+
+
+//Promoted search results
+.nhsuk-notification-banner {
+    margin-bottom: 50px;
+}
+.nhsuk-notification-banner {
+    font-size: 19px;
+}
+.nhsuk-notification-banner {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 30px;
+    border: 5px solid $color_nhsuk-blue;
+    background-color: $color_nhsuk-blue;
+}
+
+.nhsuk-notification-banner__header {
+    padding: 2px 20px 5px;
+    border-bottom: 1px solid transparent;
+}
+.nhsuk-notification-banner__heading {
+  color: $color_nhsuk-blue;
+}
+.nhsuk-notification-banner__title {
+    font-size: 19px;
+    font-weight: 700;
+    color:$color_nhsuk-white;
+    padding: 5px 0px;
+    margin: 0;
+}
+.nhsuk-notification-banner__content {
+    color:$nhsuk-text-color;
+    padding: 20px;
+    background-color:$color_nhsuk-white;
 }

@@ -27,8 +27,8 @@
       {# body#}
       <div class="nhsuk-grid-column-two-thirds">
         <div class="search-results-heading">
-          <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
           {% include 'partials/nhs_components/select_search_results_by_order.html' %}
+          {% include 'partials/nhs_components/promoted_search-content.html' %}
         </div>
         {% get_search_promotions query_string as search_promotions %}
         {% for search_promotion in search_promotions %}

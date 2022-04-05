@@ -1,5 +1,9 @@
+from unittest import mock
+
 from django.test import TestCase
+
 from cms.blogs.models import Blog, BlogIndexPage
+from cms.core.templatetags.frontend_tags import breadcrumb
 from cms.pages.models import Page
 from importer.preserve import preserve
 
@@ -51,3 +55,29 @@ class TestInitialImporterDatePreservation(TestCase):
         assert obj2.first_published_at.year == 2111
         assert obj2.last_published_at.year == 2222
         assert obj2.latest_revision_created_at.year == 2333
+
+
+class DummyContext:
+    page = None
+
+    def __init__(self, page):
+        self.page = page
+
+    def get(self, text, boolean):
+        return self.page
+
+
+class TestFrontendTags(TestCase):
+    fixtures = ["fixtures/menu-fixtures.json"]
+
+    def test_breadcrumb(self):
+        page = Page.objects.get(title="Cancer level 3")
+        dummy_context = DummyContext(page)
+
+        raw_crumbs = breadcrumb(dummy_context)
+        crumbs = raw_crumbs["breadcrumb_pages"]
+
+        self.assertEqual(3, len(crumbs))
+        self.assertEqual("Home", crumbs[0].title)
+        self.assertEqual("Cancer", crumbs[1].title)
+        self.assertEqual("Cancer level 2", crumbs[2].title)

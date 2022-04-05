@@ -17,9 +17,18 @@ class CategoriesImporter(Importer, ABC):
         categories = self.results
         for r in categories:
 
-            mapped_categories = category_mapper.get_mapped_categories_for_type_by_id(
-                type=r.get("source"), id=r.get("wp_id")
-            )
+            try:
+                mapped_categories = (
+                    category_mapper.get_mapped_categories_for_type_by_id(
+                        type=r.get("source"), id=r.get("wp_id")
+                    )
+                )
+
+            except:
+                raise Exception(
+                    f"Category \"{r.get('name')}\" with ID {r.get('wp_id')} does not exist in CATEGORY_MAP. This needs manually mapping."
+                )
+
             for category in mapped_categories:
                 logger.debug("Imported Category name=%s" % category.name)
 

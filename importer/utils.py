@@ -67,12 +67,20 @@ class ImportCategoryMapper:
     def get_mapped_categories_for_type_by_id(self, type, id):
 
         if type not in CATEGORY_MAP:
-            raise Exception(f"Category type {type} does not exist in CATEGORY_MAP.")
+            # during dev we don't want to hard fail here. later will want to but for now issue a warning and keep going
+            # raise Exception(f"Category type {type} does not exist in CATEGORY_MAP.")
+            logger.warning(f"Category type {type} does not exist in CATEGORY_MAP.")
+            return []
 
         if id not in CATEGORY_MAP[type]:
-            raise Exception(
+            # during dev we don't want to hard fail here. later will want to but for now issue a warning and keep going
+            # raise Exception(
+            #     f"Category ID {id} does not exist in CATEGORY_MAP for type {type}. This needs manually mapping."
+            # )
+            logger.warning(
                 f"Category ID {id} does not exist in CATEGORY_MAP for type {type}. This needs manually mapping."
             )
+            return []
 
         slugs = CATEGORY_MAP[type][id]
 

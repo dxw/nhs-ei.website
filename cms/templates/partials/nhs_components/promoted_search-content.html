@@ -1,16 +1,17 @@
-<div class="nhsuk-notification-banner" role="region" aria-labelledby="nhsuk-notification-banner-title" data-module="nhsuk-notification-banner">
+{% load wagtailcore_tags wagtailsearchpromotions_tags %}
+<div class="nhsuk-notification-banner" role="region" aria-labelledby="nhsuk-notification-banner-title"
+     data-module="nhsuk-notification-banner">
   <div class="nhsuk-notification-banner__header">
     <h2 class="nhsuk-notification-banner__title" id="nhsuk-notification-banner-title">
-    Suggest result
+      Suggest result
     </h2>
   </div>
   <div class="nhsuk-notification-banner__content">
     <h3 class="nhsuk-notification-banner__heading">
-    Coronavirus (COVID-19) guidance for clinicians
+      <a class="nhsuk-card__link" href="{% pageurl search_promotion.page %}">{{ search_promotion.page.title }}</a>
     </h3>
-    <p>These pages have links to the up-to-date guidance healthcare professionals need to
-    respond to coronavirus (COVID-19).</p>
-    <p>These pages have links to the up-to-date guidance healthcare professionals need to
-    respond to coronavirus (COVID-19).</p>
+    <p>{{ search_promotion.description }}</p>
+    <p>Published: {{ search_promotion.page.first_published_at|date:'d F Y' }} - <em>Latest version
+      {{ search_promotion.page.latest_revision_created_at|date:'d F Y' }}</em></p>
   </div>
 </div>

@@ -1,26 +1,34 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags frontend_tags wagtailsearchpromotions_tags %}
-
 {% block body_class %}template-searchresults{% endblock %}
-
 {% block breadcrumb %}
-{% include 'search/breadcrumb.html' %}
+  {% include 'search/breadcrumb.html' %}
 {% endblock %}
-
-
 {% block title %}Search{% endblock %}
 {% block content %}
-  <article class="nhsuk-width-container">
     <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-one-third">
-        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Filters</h2>
-        {% include 'partials/nhs_components/search_content_type.html' %}
-      </div>
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-l">Search results for: Condition</h1>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-third">
+      <h2 class="nhsuk-heading-xs"></h2>
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+      {% include "partials/nhs_components/search_results_bar.html" %}
+    </div>
+  </div>
+  <div class="nhsuk-grid-row nhsuk-u-margin-top-8">
+    <div class="nhsuk-grid-column-one-third">
+      <h2 class="nhsuk-heading-xs">Filters</h2>
+      {% include 'partials/nhs_components/search_content_type.html' %}
+    </div>
       {# body#}
       <div class="nhsuk-grid-column-two-thirds">
         <div class="search-results-heading">
-          <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
           {% include 'partials/nhs_components/select_search_results_by_order.html' %}
+          {% include 'partials/nhs_components/promoted_search-content.html' %}
         </div>
         {% get_search_promotions query_string as search_promotions %}
         {% for search_promotion in search_promotions %}
@@ -101,6 +109,5 @@
         {% include 'partials/nhs_components/pagination.html' %}
       </div>
     </div>
-  </article>
 
 {% endblock %}

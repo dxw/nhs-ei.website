@@ -8454,9 +8454,42 @@ b {
   color: #ffffff;
 }
 
-.search-results-heading {
-  border-bottom: 1px solid #dfe2e4;
+.template-searchresults .nhsuk-header__search {
+  display: none;
 }
+
+.nhs-search__input {
+  width: 70%;
+  float: left;
+}
+
+.nhs-search__button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  padding: 11px;
+  background: #005eb8;
+  font-size: 18px;
+  color: #e8edee;
+  transition: all 0.2s ease-in-out;
+  line-height: 1;
+  width: 29%;
+  float: right;
+}
+
+legend.sort_by.nhsuk-fieldset__legend.nhsuk-fieldset__legend--xs {
+  float: left;
+  font-weight: bold;
+  padding-right: 15px;
+}
+
+fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
+  float: right;
+}
+
 .search-results-heading .search-results-heading__title {
   margin-bottom: 8px;
 }
@@ -8501,6 +8534,45 @@ b {
   .nhsei-panel-search-result .nhsuk-tag {
     margin-bottom: 8px;
   }
+}
+
+.nhsuk-notification-banner {
+  margin-bottom: 50px;
+}
+
+.nhsuk-notification-banner {
+  font-size: 19px;
+}
+
+.nhsuk-notification-banner {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 30px;
+  border: 5px solid #005eb8;
+  background-color: #005eb8;
+}
+
+.nhsuk-notification-banner__header {
+  padding: 2px 20px 5px;
+  border-bottom: 1px solid transparent;
+}
+
+.nhsuk-notification-banner__heading {
+  color: #005eb8;
+}
+
+.nhsuk-notification-banner__title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 5px 0px;
+  margin: 0;
+}
+
+.nhsuk-notification-banner__content {
+  color: #212b32;
+  padding: 20px;
+  background-color: #ffffff;
 }
 
 .block-panel .nhsuk-panel {

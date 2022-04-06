@@ -194,17 +194,17 @@ class Publication(CategoryPage):
 
         soup = BeautifulSoup(self.body, "html.parser")
         # find h2s and anchors
-        h2s = soup.find_all("h2")
-        for h2 in h2s:
+        all_h2s_in_document = soup.find_all("h2")
+        for existing_h2 in all_h2s_in_document:
             # does the h2 have an id? If not add one
-            text = h2.text
-            element_id = h2.get("id")
+            existing_text = existing_h2.text
+            element_id = existing_h2.get("id")
             # add item to TOC
             if not element_id:
-                element_id = slugify(text)
-                h2["id"] = element_id
-                soup.find("h2", text=h2.text).replaceWith(h2)
-            TOC(anchor=element_id, text=text, page=self).save()
+                element_id = slugify(existing_text)
+                existing_h2["id"] = element_id
+                soup.find("h2", text=existing_text).replaceWith(existing_h2)
+            TOC(anchor=element_id, text=existing_text, page=self).save()
         self.body = str(soup)
 
         super(CategoryPage, self).save(*args, **kwargs)

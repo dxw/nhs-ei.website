@@ -75,7 +75,10 @@ class TestBrowseUnit(TestCase):
     def test_get_caption(self):
         page = BasePage.objects.get(title="About cancer")
         caption = get_caption(page.id)
-        self.assertEqual("Lorem ipsum dolor sit amet, consectetur adipiscing", caption)
+        self.assertEqual(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent faci",
+            caption,
+        )
 
         caption_text = ""
         while len(caption_text) < NHSEI_MAX_MENU_CAPTION_LENGTH:

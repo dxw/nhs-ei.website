@@ -46,7 +46,7 @@ class ExtendedMainMenuItem(AbstractMainMenuItem):
     )
 
     caption = models.CharField(
-        max_length=250,
+        max_length=70,
         blank=True,
         help_text="Additional explanatory text which appears alongside this menu item",
     )

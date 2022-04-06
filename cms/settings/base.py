@@ -302,6 +302,6 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 )
 
 # what is the max length of mega menu captions in characters
-NHSEI_MAX_MENU_CAPTION_LENGTH = 50
+NHSEI_MAX_MENU_CAPTION_LENGTH = 70
 # TODO - turn this on when we go live, it breaks imports all ove the place
 WAGTAILREDIRECTS_AUTO_CREATE = False

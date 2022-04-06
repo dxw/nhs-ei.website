@@ -9,7 +9,6 @@ from django.core.exceptions import ValidationError
 from django.db import DataError
 from wagtail.images.models import Image
 
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
 from cms.core.models import ParseList
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
@@ -108,7 +107,6 @@ class Parser:
             ComponentsPage,
             Blog,
             Post,
-            AtlasCaseStudy,
             Publication,
             LandingPage,
         ]
@@ -142,11 +140,6 @@ class Parser:
             return
         if isinstance(page, Publication):
             logger.info("⌛️ Skipping Publication page %s" % page.__class__)
-            process_candidate.html_parsed = True
-            process_candidate.save()
-            return
-        if isinstance(page, AtlasCaseStudy):
-            logger.info("⌛️ Skipping AtlasCaseStudy page %s" % page.__class__)
             process_candidate.html_parsed = True
             process_candidate.save()
             return

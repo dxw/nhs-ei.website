@@ -233,7 +233,7 @@ class TestPublication(TestCase):
         self.assertEqual(title.text.strip(), "A Document With A Link To A Page")
         self.assertEqual(
             title.select_one("a")["href"],
-            "/atlas-case-studies-index-page/atlas-case-study-one/",
+            "/blog-index-page/",
         )
 
 

@@ -1,5 +1,3 @@
-from unittest import mock
-
 from django.test import TestCase
 
 from cms.blogs.models import Blog, BlogIndexPage

@@ -11,6 +11,7 @@ from cms.pages.models import BasePage
 
 RESULTS_PER_PAGE = 10
 
+
 def search(request):
     """
     sample query
@@ -28,7 +29,7 @@ def search(request):
     date_from = request.GET.get("date_from", "")
     date_to = request.GET.get("date_to", "")
 
-    page = request.GET.get("page", 1)
+    page = int(request.GET.get("page", 1))
     search_results_count = 0
 
     def search(_class):
@@ -89,7 +90,9 @@ def search(request):
             "order": search_ordering,
             "date_from": date_from,
             "date_to": date_to,
-            "min_result_index": min(1+((page-1)*RESULTS_PER_PAGE), search_results_count),
-            "max_result_index": min(page*RESULTS_PER_PAGE, search_results_count),
+            "min_result_index": min(
+                1 + ((page - 1) * RESULTS_PER_PAGE), search_results_count
+            ),
+            "max_result_index": min(page * RESULTS_PER_PAGE, search_results_count),
         },
     )

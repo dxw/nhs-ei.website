@@ -9,6 +9,7 @@ from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
 
+RESULTS_PER_PAGE = 10
 
 def search(request):
     """
@@ -28,7 +29,7 @@ def search(request):
     date_to = request.GET.get("date_to", "")
 
     page = request.GET.get("page", 1)
-    search_results_count = None
+    search_results_count = 0
 
     def search(_class):
         queryset = _class.objects.live().order_by(search_ordering)
@@ -63,7 +64,7 @@ def search(request):
         search_results = Page.objects.none()
 
     # Pagination
-    paginator = Paginator(search_results, 10)
+    paginator = Paginator(search_results, RESULTS_PER_PAGE)
     try:
         search_results = paginator.page(page)
     except PageNotAnInteger:
@@ -88,5 +89,7 @@ def search(request):
             "order": search_ordering,
             "date_from": date_from,
             "date_to": date_to,
+            "min_result_index": min(1+((page-1)*RESULTS_PER_PAGE), search_results_count),
+            "max_result_index": min(page*RESULTS_PER_PAGE, search_results_count),
         },
     )

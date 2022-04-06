@@ -8,7 +8,12 @@
 {% block content %}
     <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <h1 class="nhsuk-heading-l">Search results for: {{query_string}}</h1>
+      <h1 class="nhsuk-heading-l">
+        Search results for:
+        {% if query_string %}
+        {{ query_string }}{% if content_type %}, filtered by <strong>{{ content_type }}</strong>{% endif %}
+        {% endif %}
+      </h1>
     </div>
   </div>
   <div class="nhsuk-grid-row">
@@ -29,6 +34,11 @@
         <div class="search-results-heading">
           <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
           {% include 'partials/nhs_components/select_search_results_by_order.html' %}
+          {% if results_count > 0 %}
+          Showing {{min_result_index}} to {{max_result_index}} of {{ results_count }} results
+          {% else %}
+          Showing no results
+          {% endif %}
         </div>
         {% get_search_promotions query_string as search_promotions %}
         {% for search_promotion in search_promotions %}

@@ -1,4 +1,5 @@
 {#TODO: add functionality to make this interactive#}
+<div class="nhsuk-body search-results-heading__details">
 <form action="">
   <input type="hidden" name="query" value="{{ query_string }}">
   <input type="hidden" name="content_type" value="{{content_type}}">
@@ -20,11 +21,9 @@
     </div>
   </fieldset>
 </form>
-<div class="nhsuk-body search-results-heading__details">
   {% if query_string %}
     <span>Search results for <strong>"{{ query_string }}"</strong>
       {% if content_type %}, filtered by
       <strong>{{ content_type }}</strong>{% endif %}</span>
-    </div>
   {% endif %}
 </div>

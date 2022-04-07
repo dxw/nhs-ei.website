@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 
 from cms.publications.models import Publication
@@ -38,6 +40,17 @@ def search(request):
             queryset = queryset.filter(
                 latest_revision_created_at__range=[
                     date_from,
+                    date_to,
+                ]
+            )
+        elif date_from:
+            queryset = queryset.filter(
+                latest_revision_created_at__range=[date_from, datetime.max]
+            )
+        elif date_to:
+            queryset = queryset.filter(
+                latest_revision_created_at__range=[
+                    "1900-01-01",
                     date_to,
                 ]
             )

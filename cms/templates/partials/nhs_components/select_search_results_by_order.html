@@ -1,4 +1,3 @@
-{#TODO: add functionality to make this interactive#}
 <div class="nhsuk-body search-results-heading__details">
 <form action="">
   <input type="hidden" name="query" value="{{ query_string }}">
@@ -14,6 +13,9 @@
         <select class="nhsuk-select" id="publish_date" name="order"
           onchange="this.form.submit()">
           <option value="-latest_revision_created_at"{% if order == '-latest_revision_created_at' %} selected{% endif %}>Most relevant</option>
+          <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Newest first</option>
+          <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Oldest first</option>
+          <option value="most_relevant"{% if order == "most_relevant" %} selected{% endif %}>Most relevant</option>
           <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Newest first</option>
           <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Oldest first</option>
         </select>

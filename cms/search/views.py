@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
@@ -27,8 +29,8 @@ def search(request):
     date_from = request.GET.get("date_from", "")
     date_to = request.GET.get("date_to", "")
 
-    page = request.GET.get("page", 1)
-    search_results_count = None
+    page = int(request.GET.get("page", 1))
+    search_results_count = 0
 
     def search(_class):
         queryset = _class.objects.live().order_by(search_ordering)
@@ -63,7 +65,7 @@ def search(request):
         search_results = Page.objects.none()
 
     # Pagination
-    paginator = Paginator(search_results, 10)
+    paginator = Paginator(search_results, settings.SEARCH_RESULTS_PER_PAGE)
     try:
         search_results = paginator.page(page)
     except PageNotAnInteger:
@@ -88,5 +90,12 @@ def search(request):
             "order": search_ordering,
             "date_from": date_from,
             "date_to": date_to,
+            "min_result_index": min(
+                1 + ((page - 1) * settings.SEARCH_RESULTS_PER_PAGE),
+                search_results_count,
+            ),
+            "max_result_index": min(
+                page * settings.SEARCH_RESULTS_PER_PAGE, search_results_count
+            ),
         },
     )

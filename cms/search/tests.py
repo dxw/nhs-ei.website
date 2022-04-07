@@ -83,6 +83,10 @@ class TestSearchWithFilters(TestCase):
 
     fixtures = ["fixtures/loadsa-pages.json"]
 
+    def test_negative_page(self):
+        response = self.client.get("/search/?query=e&page=-2")
+        self.assertContains(response, "Showing 21 to 30 of 48 results")
+
     def test_date_range(self):
         response = self.client.get("/search/?query=e")
         self.assertContains(response, "Showing 1 to 10 of 48 results")

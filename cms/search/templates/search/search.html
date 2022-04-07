@@ -10,8 +10,7 @@
     <div class="nhsuk-grid-column-full">
       <h1 class="nhsuk-heading-l">
         {% if query_string %}
-          Search results for:
-          {{ query_string }}{% if content_type %}, filtered by <strong>{{ content_type }}</strong>{% endif %}
+          Search results for: {{ query_string }}{% if content_type %}, filtered by <strong>{{ content_type }}</strong>{% endif %}
         {% else %}
           Search
         {% endif %}

@@ -45,10 +45,7 @@ def search(request):
             )
         elif date_from:
             queryset = queryset.filter(
-                latest_revision_created_at__range=[
-                    date_from,
-                    datetime.today().strftime("%Y-%m-%d"),
-                ]
+                latest_revision_created_at__range=[date_from, datetime.max]
             )
         elif date_to:
             queryset = queryset.filter(

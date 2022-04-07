@@ -77,6 +77,25 @@ def search(request):
         query_string, search_ordering, search_type, date_from, date_to
     )
 
+    # figure out the page results from - to numbers
+    if page > 0:
+        min_result_index = min(
+            1 + ((page - 1) * settings.SEARCH_RESULTS_PER_PAGE), search_results_count
+        )
+        max_result_index = min(
+            page * settings.SEARCH_RESULTS_PER_PAGE, search_results_count
+        )
+    else:
+        # 0 and negative numbers count down from the last result
+        abs_min_result_index = (
+            (paginator.num_pages - 1) * settings.SEARCH_RESULTS_PER_PAGE
+        ) + (page * settings.SEARCH_RESULTS_PER_PAGE)
+        min_result_index = max(1, abs_min_result_index + 1)
+        max_result_index = min(
+            search_results_count,
+            min_result_index + settings.SEARCH_RESULTS_PER_PAGE - 1,
+        )
+
     return TemplateResponse(
         request,
         "search/search.html",
@@ -90,12 +109,7 @@ def search(request):
             "order": search_ordering,
             "date_from": date_from,
             "date_to": date_to,
-            "min_result_index": min(
-                1 + ((page - 1) * settings.SEARCH_RESULTS_PER_PAGE),
-                search_results_count,
-            ),
-            "max_result_index": min(
-                page * settings.SEARCH_RESULTS_PER_PAGE, search_results_count
-            ),
+            "min_result_index": min_result_index,
+            "max_result_index": max_result_index,
         },
     )

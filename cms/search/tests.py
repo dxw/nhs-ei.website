@@ -61,11 +61,12 @@ class TestSearch(TestCase):
 
         response = self.client.get("/search/?query=plantains")
 
-        # Now we have promoted a page for the phrase, we should get it in the search results
+        # Now we have promoted a page for the phrase, we should get it in the
+        # search results
         self.assertNotContains(response, "Test Aardvarks Page")
         self.assertContains(response, "Search")
-        # self.assertContains(response, "Test Bananas Page")
-        # self.assertContains(response, "Plantains are similar to bananas.")
+        self.assertContains(response, "Test Bananas Page")
+        self.assertContains(response, "Plantains are similar to bananas.")
 
     def test_breadcrumbs(self):
         response = self.client.get("/search/")
@@ -76,6 +77,55 @@ class TestSearch(TestCase):
 
         self.assertEquals("Home", items[0].text.strip())
         self.assertEquals("Search", items[1].text.strip())
+
+
+class TestSearchWithFilters(TestCase):
+
+    fixtures = ["fixtures/loadsa-pages.json"]
+
+    def test_negative_page(self):
+        response = self.client.get("/search/?query=e&page=-2")
+        self.assertContains(response, "Showing 21 to 30 of 48 results")
+
+    def test_date_range(self):
+        response = self.client.get("/search/?query=e")
+        self.assertContains(response, "Showing 1 to 10 of 48 results")
+
+        response = self.client.get(
+            "/search/?query=e&content_type=all&date_from=2021-01-01&date_to=2021-12-31"
+        )
+        self.assertContains(response, "Showing 1 to 10 of 14 results")
+
+        # TODO Currently, fails and returns all items
+        # response = self.client.get(
+        # "/search/?query=e&date_from=&date_to=2021-06-01")
+        # self.assertContains(response, "Showing 1 to 10 of 14 results")
+
+        # TODO Currently, fails and returns all items
+        # response = self.client.get(
+        # "/search/?query=e&content_type=all&date_from=2021-06-07")
+        # self.assertContains(response, "Showing 1 to 10 of 14 results")
+
+    def test_type_filters(self):
+        response = self.client.get("/search/?query=e&content_type=pages")
+        self.assertContains(response, "Showing 1 to 10 of 10 results")
+
+        response = self.client.get("/search/?query=e&content_type=news")
+        self.assertContains(response, "Showing 1 to 10 of 10 results")
+
+        response = self.client.get("/search/?query=e&content_type=blogs")
+        self.assertContains(response, "Showing 1 to 9 of 9 results")
+
+        response = self.client.get("/search/?query=e&content_type=publications")
+        self.assertContains(response, "Showing 1 to 8 of 8 results")
+
+    def test_type_and_date_filters(self):
+        response = self.client.get(
+            "/search/?query=e&content_type=pages&date_from=2021-06-01&date_to=2021-12-31"
+        )
+        self.assertContains(response, "Showing 1 to 4 of 4 results")
+
+        # TODO filter and date range without start/end dates, see test above
 
 
 class TestPagination(TestCase):

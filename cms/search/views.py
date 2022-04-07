@@ -8,8 +8,7 @@ from wagtail.search.models import Query
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
-
-RESULTS_PER_PAGE = 10
+from cms.settings.base import RESULTS_PER_PAGE
 
 
 def search(request):

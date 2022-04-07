@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
@@ -8,8 +10,6 @@ from wagtail.search.models import Query
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
-
-RESULTS_PER_PAGE = 10
 
 
 def search(request):
@@ -65,7 +65,7 @@ def search(request):
         search_results = Page.objects.none()
 
     # Pagination
-    paginator = Paginator(search_results, RESULTS_PER_PAGE)
+    paginator = Paginator(search_results, settings.SEARCH_RESULTS_PER_PAGE)
     try:
         search_results = paginator.page(page)
     except PageNotAnInteger:

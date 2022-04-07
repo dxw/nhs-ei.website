@@ -19,7 +19,7 @@
   "homepage": "https://github.com/rkhleics/nhs-ei.website#readme",
   "dependencies": {
     "accessible-autocomplete": "^2.0.3",
-    "nhsuk-frontend": "~5.1.0",
+    "nhsuk-frontend": "github:dxw/nhsuk-frontend",
     "sass-mq": "^5.0.1"
   },
   "devDependencies": {

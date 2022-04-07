@@ -156,9 +156,27 @@ WORDS = [
 
 
 class Command(BaseCommand, ABC):
+    """
+    Usage: poetry run ./manage.py generate_fixtures
+
+    This will create actual pages in the DB so create a fixture set, clear your DB and initialise a new one.
+
+    rm db.sqlite3
+    poetry run ./manage.py migrate
+
+    And then dump the content as a set of fixtures:
+
+    poetry run ./manage.pydumpdata \
+        -o fixtures/some-fixture-file.json \
+        --indent 2 \
+        --exclude contenttypes \
+        --exclude auth.permission
+    """
+
     help = "Creates fixture data in the DB"
 
     def __init__(self):
+        super().__init__()
         Faker.seed(4321)
         self.faker = Faker()
 

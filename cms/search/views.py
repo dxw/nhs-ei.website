@@ -1,4 +1,5 @@
-from cms import settings
+from django.conf import settings
+
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse

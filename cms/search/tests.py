@@ -96,15 +96,13 @@ class TestSearchWithFilters(TestCase):
         )
         self.assertContains(response, "Showing 1 to 10 of 14 results")
 
-        # TODO Currently, fails and returns all items
-        # response = self.client.get(
-        # "/search/?query=e&date_from=&date_to=2021-06-01")
-        # self.assertContains(response, "Showing 1 to 10 of 14 results")
+        response = self.client.get("/search/?query=e&date_from=&date_to=2021-06-01")
+        self.assertContains(response, "Showing 1 to 10 of 40 results")
 
-        # TODO Currently, fails and returns all items
-        # response = self.client.get(
-        # "/search/?query=e&content_type=all&date_from=2021-06-07")
-        # self.assertContains(response, "Showing 1 to 10 of 14 results")
+        response = self.client.get(
+            "/search/?query=e&content_type=all&date_from=2021-06-07"
+        )
+        self.assertContains(response, "Showing 1 to 7 of 7 results")
 
     def test_type_filters(self):
         response = self.client.get("/search/?query=e&content_type=pages")

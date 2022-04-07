@@ -376,6 +376,8 @@ CATEGORY_MAP = {
         "1452": "severe-weather-advice",  # winter-news-and-advice
         "2876": "nhs-workforce",  # workforce
         "3771": "carers",  # young-carers
+        "3775": "innovation", # nhs-accelerated-access-collaborative
+        "3776": "statistics", # survey
     },
     "categories-aac": {
         "10": "innovation",  # artificial-intelligence

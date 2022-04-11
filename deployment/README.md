@@ -40,26 +40,50 @@ container_name       = [the name of the blob container]
 key                  = "terraform.tstate"
 ```
 
+##### Log into azure with the Azure CLI
+
+Install the azure cli:
+
+```
+$ brew install az
+```
+
+Log in to your account:
+
+```
+$ az login
+```
+
+Confirm which account you are currently using:
+
+```
+$ az account show
+```
+
 ##### Initialise Terraform
 
-This step assumes you have installed Terraform to your local machine.
-It will download the required Terraform modules and configure the remote state backend
+Install the Terraform version manager `tfenv`:
+
+```
+$ brew install tfenv
+```
+
+Install the required terraform version:
+
+```
+$ tfenv install
+```
+
+Initialize Terraform to download the required Terraform modules and configure the remote state backend
 to use the settings you specified in the previous step.
 
 `$ terraform init -backend-config=backend.vars`
 
-##### (Optional) Create a variables file
+##### Create a Terraform variables file
 
-Terraform will automatically load a file ending with `.auto.tfvars`.<br>
-You can create a file with the following content:
+Copy the `terraform.tfvars.example` to `terraform.tfvars` and modify the contents as required
 
-```
-location = [Azure region, eg "uksouth"]
-prefix = [a name for the project, eg "nhsei"]
-ssl_email_address = [an email address used by Letsencrypt]
-```
-
-If you do not wish to create the file Terraform will ask you to provide the variables
+If you do not wish to create the file, Terraform will ask you to provide the variables
 when you run it.
 
 ##### Create the infrastructure

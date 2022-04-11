@@ -1,0 +1,3 @@
+prefix            = "nhsei"
+location          = "UK South"
+ssl_email_address = "hello@example.com"

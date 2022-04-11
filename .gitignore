@@ -136,6 +136,8 @@ node_modules
 # Terraform
 *.tfstate
 .terraform
+backend.vars
+*.tfvars
 
 robots.txt
 log

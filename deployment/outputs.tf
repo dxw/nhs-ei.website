@@ -3,7 +3,8 @@ output "cluster_id" {
 }
 
 output "kube_config" {
-  value = azurerm_kubernetes_cluster.cluster.kube_config_raw
+  value     = azurerm_kubernetes_cluster.cluster.kube_config_raw
+  sensitive = true
 }
 
 output "client_key" {
@@ -27,7 +28,8 @@ output "dbusername" {
 }
 
 output "dbpassword" {
-  value = azurerm_postgresql_server.database.administrator_login_password
+  value     = azurerm_postgresql_server.database.administrator_login_password
+  sensitive = true
 }
 
 output "databasefqdn" {
@@ -35,7 +37,8 @@ output "databasefqdn" {
 }
 
 output "dburl" {
-  value = "psql://${azurerm_postgresql_server.database.administrator_login}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
+  value     = "psql://${azurerm_postgresql_server.database.administrator_login}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
+  sensitive = true
 }
 
 output "load_balancer_ip" {

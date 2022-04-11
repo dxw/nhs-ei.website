@@ -30,7 +30,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
  && rm -rf /var/lib/apt/lists/*
 
 # Install nodejs LTS
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     nodejs \
  && rm -rf /var/lib/apt/lists/*

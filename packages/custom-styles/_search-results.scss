@@ -68,18 +68,11 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
   }
 }
 
-
-
 //Promoted search results
 .nhsuk-notification-banner {
     margin-bottom: 50px;
-}
-.nhsuk-notification-banner {
     font-size: 19px;
-}
-.nhsuk-notification-banner {
     font-weight: 400;
-    font-size: 16px;
     margin-bottom: 30px;
     border: 5px solid $color_nhsuk-blue;
     background-color: $color_nhsuk-blue;
@@ -103,4 +96,35 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
     color:$nhsuk-text-color;
     padding: 20px;
     background-color:$color_nhsuk-white;
+}
+.nhsuk-list .nhsuk-panel.nhsei-panel-search-result {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: 1px solid $nhsuk-border-color;
+  position:relative;
+// search list tags
+  .search-meta, .tag_right {
+    font-size: 16px;
+  }
+  .tag_right {
+    @media (min-width:641px){
+      position: absolute;
+      right: 0;
+      bottom: 24px;
+    }
+    padding-top:20px;
+  }
+}
+
+.search-meta svg {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    position: relative;
+    margin: 0 5px 0 0;
+}
+
+span.post-author {
+    padding-left: 20px;
 }

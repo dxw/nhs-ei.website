@@ -27,6 +27,8 @@ WAGTAILSEARCH_BACKENDS = {
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
+MIDDLEWARE += ["kolo.middleware.KoloMiddleware"]
+
 try:
     from .local import *
 except ImportError:

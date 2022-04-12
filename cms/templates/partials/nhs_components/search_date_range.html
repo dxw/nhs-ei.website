@@ -1,0 +1,80 @@
+{# #}
+{#TODO: add functionality to make this interactive#}
+<form action="">
+  <fieldset class="nhsuk-fieldset">
+  <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l filter-title nhsuk-u-margin-bottom-4">
+     <h2 class="nhsuk-fieldset__heading nhsuk-heading-xs">
+        <button class="" type="button" aria-expanded="true" aria-controls="Date range"> Date range:</button>
+      <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-select__icon filter-select__icon--up" aria-hidden="true" focusable="false"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
+    <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-select__icon filter-select__icon--down" aria-hidden="true" focusable="false"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
+    </h2>
+  </legend>
+
+  <div class="nhsuk-form-group filter-date-range">
+    <label class="nhsuk-label published-label" for="published after">
+      Published after:
+    </label>
+    <div id="published-hint" class="nhsuk-hint">
+     For example, 2005 or 21/11/2014
+    </div>
+     <div class="nhsuk-date-input" id="passport-issued">
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-after-day">
+            Day
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="published-after-day" name="published-after-day" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-after-month">
+            Month
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="published-after-month" name="published-after-month" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-after-year">
+            Year
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="published-after-year" name="published-after-year" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+  </div>
+  <div class="nhsuk-form-group nhsuk-u-margin-top-4 filter-date-range">
+    <label class="nhsuk-label published-label" for="published before">
+      Published before:
+    </label>
+    <div id="published-hint" class="nhsuk-hint">
+      For example, 2005 or 21/11/2014
+    </div>
+     <div class="nhsuk-date-input" id="passport-issued">
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-before-day">
+            Day
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="published-before-day" name="published-before-day" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-before-month">
+            Month
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="published-before-month" name="published-before-month" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+      <div class="nhsuk-date-input__item">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-date-input__label" for="published-before-year">
+            Year
+          </label>
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="published-before-year" name="published-before-year" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+      </div>
+  </div>
+</fieldset>
+</form>

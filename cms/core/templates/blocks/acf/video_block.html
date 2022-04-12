@@ -1,0 +1,7 @@
+{% load wagtailcore_tags wagtailembeds_tags %}
+
+<div class="{{ classname }}">
+  {{value.title}}
+  {{value.content}}
+  {% embed value.embed.url max_width=1024 %}
+</div>

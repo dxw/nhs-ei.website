@@ -1,0 +1,10 @@
+{% load wagtailcore_tags  %}
+
+<div class="{{ classname }}">
+  {{value.title}}
+
+  {% for topic in value.topics %}
+    {# find this in topic_block.html #}
+    {% include_block topic %}
+  {% endfor %}
+</div>

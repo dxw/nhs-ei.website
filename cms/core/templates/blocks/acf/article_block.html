@@ -1,0 +1,4 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="{{ classname }}">
+  {{value.title}} {% image value.image max-200x200 %} {{value.image_alignment}} {{value.image_size}} {{value.content}} {% pageurl value.page %} {{value.page}}
+</div>

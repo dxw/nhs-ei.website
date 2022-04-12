@@ -31,7 +31,15 @@ from wagtailnhsukfrontend.blocks import (
     SummaryListBlock,
 )
 
+from .acf_blocks import (
+    TopicSectionBlock,
+    VisitNhsukInfobarBlock,
+    PrioritiesBlock,
+    VideoBlock,
+    ArticleBlock,
+)
 import cms.categories.blocks
+from wagtail.core import blocks as core_blocks
 
 RICHTEXT_FEATURES_ALL = [
     "h1",
@@ -98,7 +106,13 @@ class CoreBlocks(StreamBlock):
     page_heading = PageHeadingBlock(group="Custom")
     promoted_links = PromotedLinksBlock(group="Custom")
 
-    recent_posts = cms.categories.blocks.RecentPostsBlock(group="Custom")
+    visit_nhsuk_infobar = VisitNhsukInfobarBlock(group="ACF")
+    topic_section = TopicSectionBlock(group="ACF")
+    priorities = PrioritiesBlock(group="ACF")
+    video = VideoBlock(group="ACF")
+    recent_posts = cms.categories.blocks.RecentPostsBlock(group="ACF")
+    article = ArticleBlock(group="ACF")
+
     text = RichTextBlock(
         group="Custom",
         help_text="""
@@ -109,7 +123,7 @@ class CoreBlocks(StreamBlock):
         features=RICHTEXT_FEATURES_ALL,
     )
     html = RawHTMLBlock(
-        group="custom",
+        group="Custom",
         help_text="""
             Use this block to add raw html
         """,

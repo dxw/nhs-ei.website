@@ -1,0 +1,117 @@
+# Blocks designed to mimic the behaviour of existing NHS Advanced Custom Fields
+
+from wagtail.core import blocks
+from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageChooserBlock
+
+# ===============================
+# Looking for a RecentPostsBlock?
+# It's in cms.categories.blocks
+#
+# Not added a PromoBlock -- might already be in Base?
+# ===============================
+
+
+class VisitNhsukInfobarBlock(blocks.StaticBlock):
+    "wp_name: visit_nhsuk_infobar"
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/visit_nhsuk_infobar_block.html"
+        admin_text = "Recommends users find medical advice at nhs.uk"
+
+
+class TopicBlock(blocks.StructBlock):
+    "wp's 'topic_section_component' is a list of these"
+    title = blocks.CharBlock()  # topic_title in wp
+    content = (
+        blocks.CharBlock()
+    )  # topic_content in wp; is <p>text</p> ... might be full HTML?
+    page = blocks.PageChooserBlock()  # topic_url in wp
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/topic_block.html"
+        help_text = "A topic."
+
+
+class TopicSectionBlock(blocks.StructBlock):
+    "wp: 'topic_section_component'"
+    title = blocks.CharBlock()
+    topics = blocks.ListBlock(child_block=TopicBlock)
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/topic_section_block.html"
+        help_text = "Topics."
+
+
+class PriorityBlock(blocks.StructBlock):
+    "wp's 'priorities_component' is a list of these"
+    highlight = blocks.BooleanBlock(required=False)  # nhsuk_highlight in wp
+    title = blocks.CharBlock()  # priority_title in wp; contains stray HTML
+    page = blocks.PageChooserBlock()  # priority_url in wp
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/priority_block.html"
+        help_text = "A priority."
+
+
+class PrioritiesBlock(blocks.StructBlock):
+    "wp: 'priorities_component'"
+    title = blocks.CharBlock()
+    priorities = blocks.ListBlock(child_block=PriorityBlock)
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/priorities_block.html"
+        help_text = "Priorities."
+
+
+class VideoBlock(blocks.StructBlock):
+    "wp: 'video_component'"
+    title = blocks.CharBlock()  # wp: video_title
+    # video_size: is_half_width
+    # title_link: "" ???
+    embed = EmbedBlock()  # wp: youtube_link
+    content = blocks.RichTextBlock()  # wp: content, actual HTML (<a>) seen
+    # video_background: false
+    # video_background_colour: "" ???
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/video_block.html"
+        help_text = "Video with description"
+
+
+class ArticleBlock(blocks.StructBlock):
+    "wp: 'article_component'"
+    title = blocks.CharBlock()  # wp: article_title
+    image = ImageChooserBlock()  # wp: article_image
+    image_alignment = blocks.ChoiceBlock(
+        [
+            ["right", "right"],
+            ["left", "left"],
+        ],
+        default="right",
+    )  # wp: article_image_alignment; has-right-aligned-image
+    image_size = blocks.ChoiceBlock(
+        [
+            ["half", "half width"],
+            ["third", "one third width"],
+            ["quarter", "one quarter width"],
+        ],
+        default="third",
+    )  # wp:article_image_size; has-third-width-image
+    # background # wp:article_background; false
+    # background-colour #wp:article_background_colour: "#e8edee"
+    content = blocks.RichTextBlock()  # wp: article_content; full HTML
+    page = blocks.PageChooserBlock(required=False)  # wp: article_url, optional
+
+    class Meta:
+        icon = "user"
+        template = "blocks/acf/article_block.html"
+        help_text = (
+            "A third-of-a-screen article about a page, either this one or another"
+        )

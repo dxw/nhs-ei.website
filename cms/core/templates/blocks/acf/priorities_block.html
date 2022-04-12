@@ -1,0 +1,9 @@
+{% load wagtailcore_tags  %}
+<div class="{{ classname }}">
+  {{value.title}}
+
+  {% for priority in value.priorities %}
+    {# find this in priority_block.html #}
+    {% include_block priority %}
+  {% endfor %}
+</div>

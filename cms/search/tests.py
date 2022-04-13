@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from django.test import TestCase
 from wagtail.contrib.search_promotions.models import SearchPromotion
 from wagtail.search.models import Query
+import lxml.html
 
 from cms.pages.models import Page, BasePage
 
@@ -148,3 +149,10 @@ class TestPagination(TestCase):
         response = self.client.get("/search/?page=2&query=e")
         self.assertContains(response, "Previous")
         self.assertContains(response, "Next")
+
+class TestSearchBox(TestCase):
+    def test_no_query(self):
+        # If no query is provided, the search bar is empty (not None)
+        response = self.client.get("/search/")
+        root = lxml.html.fromstring(response.rendered_content)
+        self.assertEqual([''], root.xpath('//input[@id="search"]/@value'))

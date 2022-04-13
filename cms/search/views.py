@@ -25,7 +25,7 @@ def search(request):
     date_to=2020-11-29
     """
 
-    query_string = request.GET.get("query", None)
+    query_string = request.GET.get("query", "")
     search_ordering = request.GET.get("order", "-latest_revision_created_at")
     search_type = request.GET.get("content_type", "")
     date_from = request.GET.get("date_from", "")

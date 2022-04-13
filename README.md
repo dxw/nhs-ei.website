@@ -217,7 +217,6 @@ These import just the individual content types. You can run them on their own, t
 ```bash
 poetry run ./manage.py posts
 poetry run ./manage.py publications
-poetry run ./manage.py atlas_case_studies
 poetry run ./manage.py pages
 poetry run ./manage.py blogs
 poetry run ./manage.py media
@@ -243,7 +242,6 @@ The following page types (models) are tested
 
 - HomePage (cms/home/models.py)
 - PublicationIndexPage and Publication (cms/publications/models.py)
-- AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudies/models.py)
 - BlogIndexPage and Blog (cms/blog/models.py)
 - PostIndexPage and Post (cms/posts/models.py)
 - BasePage and ComponentsPage (cms/pages/models.py)

@@ -15,7 +15,7 @@ project
 │   │   urls.py (url configuration)
 │   │   wsgi.py (server config)
 │   │
-│   └───[module name] e.g. atlascasestudies
+│   └───[module name] e.g. publications
 │       └───migrations
 │       │   ... wagtail auto generated
 │       │

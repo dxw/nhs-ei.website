@@ -48,14 +48,6 @@
   }
 },
 {
-  "model": "categories.categorypagecategoryrelationship",
-  "pk": 7,
-  "fields": {
-    "category_page": 9,
-    "category": 1
-  }
-},
-{
   "model": "categories.category",
   "pk": 1,
   "fields": {
@@ -151,22 +143,6 @@
   "fields": {
     "publication": 15,
     "publication_type": 2
-  }
-},
-{
-  "model": "atlascasestudies.atlascasestudysettingrelationship",
-  "pk": 1,
-  "fields": {
-    "atlas_case_study": 9,
-    "setting": 1
-  }
-},
-{
-  "model": "atlascasestudies.atlascasestudyregionrelationship",
-  "pk": 1,
-  "fields": {
-    "atlas_case_study": 9,
-    "region": 1
   }
 },
 {
@@ -806,34 +782,6 @@
 },
 {
   "model": "wagtailcore.pagerevision",
-  "pk": 12,
-  "fields": {
-    "page": 8,
-    "submitted_for_moderation": false,
-    "created_at": "2021-02-04T17:31:45.854Z",
-    "user": [
-      "admin"
-    ],
-    "content_json": "{\"pk\": 8, \"path\": \"000100010002\", \"depth\": 3, \"numchild\": 0, \"title\": \"Atlas Case Studies Index Page\", \"draft_title\": \"Atlas Case Studies Index Page\", \"slug\": \"atlas-case-studies-index-page\", \"content_type\": 28, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"body\": \"<p>Atlas case studies Index Page</p>\"}",
-    "approved_go_live_at": null
-  }
-},
-{
-  "model": "wagtailcore.pagerevision",
-  "pk": 14,
-  "fields": {
-    "page": 9,
-    "submitted_for_moderation": false,
-    "created_at": "2021-02-04T17:40:16.702Z",
-    "user": [
-      "admin"
-    ],
-    "content_json": "{\"pk\": 9, \"path\": \"0001000100020001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Atlas Case Study One\", \"draft_title\": \"Atlas Case Study One\", \"slug\": \"atlas-case-study-one\", \"content_type\": 27, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/atlas-case-studies-index-page/atlas-case-study-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:32:41.975Z\", \"last_published_at\": \"2021-02-04T17:32:41.975Z\", \"latest_revision_created_at\": \"2021-02-04T17:32:41.938Z\", \"live_revision\": 13, \"body\": \"<p>Atlas case study one content</p>\", \"wp_id\": 0, \"wp_slug\": \"\", \"wp_link\": \"\", \"atlas_case_studcategorypage_category_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"category\": 1}], \"atlas_case_study_setting_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"setting\": 1}], \"atlas_case_study_region_relationship\": [{\"pk\": 1, \"atlas_case_study\": 9, \"region\": 1}]}",
-    "approved_go_live_at": null
-  }
-},
-{
-  "model": "wagtailcore.pagerevision",
   "pk": 19,
   "fields": {
     "page": 13,
@@ -884,7 +832,7 @@
     "user": [
       "admin"
     ],
-    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:52.030Z\", \"last_published_at\": \"2021-02-04T17:49:52.030Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:52.007Z\", \"live_revision\": 21, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>A Document With A Link To A Page</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 9, \\\"summary\\\": \\\"\\\"}, \\\"id\\\": \\\"4aa4218d-a5df-4f3f-8880-d6e34651d297\\\"}], \\\"id\\\": \\\"32f28605-6db3-4edd-bf99-7a53574b0557\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
+    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:52.030Z\", \"last_published_at\": \"2021-02-04T17:49:52.030Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:52.007Z\", \"live_revision\": 21, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>A Document With A Link To A Page</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 4, \\\"summary\\\": \\\"\\\"}, \\\"id\\\": \\\"4aa4218d-a5df-4f3f-8880-d6e34651d297\\\"}], \\\"id\\\": \\\"32f28605-6db3-4edd-bf99-7a53574b0557\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publicatiocategorypage_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
     "approved_go_live_at": null
   }
 },
@@ -1141,82 +1089,6 @@
     "last_published_at": "2021-02-04T17:26:56.432Z",
     "latest_revision_created_at": "2021-02-04T17:26:56.396Z",
     "live_revision": 9,
-    "alias_of": null
-  }
-},
-{
-  "model": "wagtailcore.page",
-  "pk": 8,
-  "fields": {
-    "path": "000100010002",
-    "depth": 3,
-    "numchild": 1,
-    "translation_key": "652b704f-96a3-474f-bd60-71901658945a",
-    "locale": 1,
-    "title": "Atlas Case Studies Index Page",
-    "draft_title": "Atlas Case Studies Index Page",
-    "slug": "atlas-case-studies-index-page",
-    "content_type": [
-      "atlascasestudies",
-      "atlascasestudyindexpage"
-    ],
-    "live": true,
-    "has_unpublished_changes": false,
-    "url_path": "/home/atlas-case-studies-index-page/",
-    "owner": [
-      "admin"
-    ],
-    "seo_title": "",
-    "show_in_menus": false,
-    "search_description": "",
-    "go_live_at": null,
-    "expire_at": null,
-    "expired": false,
-    "locked": false,
-    "locked_at": null,
-    "locked_by": null,
-    "first_published_at": "2021-02-04T17:31:45.877Z",
-    "last_published_at": "2021-02-04T17:31:45.877Z",
-    "latest_revision_created_at": "2021-02-04T17:31:45.854Z",
-    "live_revision": 12,
-    "alias_of": null
-  }
-},
-{
-  "model": "wagtailcore.page",
-  "pk": 9,
-  "fields": {
-    "path": "0001000100020001",
-    "depth": 4,
-    "numchild": 0,
-    "translation_key": "4712d41c-61bd-43f0-a103-5383ad301406",
-    "locale": 1,
-    "title": "Atlas Case Study One",
-    "draft_title": "Atlas Case Study One",
-    "slug": "atlas-case-study-one",
-    "content_type": [
-      "atlascasestudies",
-      "atlascasestudy"
-    ],
-    "live": true,
-    "has_unpublished_changes": false,
-    "url_path": "/home/atlas-case-studies-index-page/atlas-case-study-one/",
-    "owner": [
-      "admin"
-    ],
-    "seo_title": "",
-    "show_in_menus": false,
-    "search_description": "",
-    "go_live_at": null,
-    "expire_at": null,
-    "expired": false,
-    "locked": false,
-    "locked_at": null,
-    "locked_by": null,
-    "first_published_at": "2021-02-04T17:32:41.975Z",
-    "last_published_at": "2021-02-04T17:40:16.735Z",
-    "latest_revision_created_at": "2021-02-04T17:40:16.702Z",
-    "live_revision": 14,
     "alias_of": null
   }
 },
@@ -1747,25 +1619,6 @@
   }
 },
 {
-  "model": "atlascasestudies.atlascasestudy",
-  "pk": 9,
-  "fields": {
-    "categorypage_ptr": 9,
-    "body": "<p>Atlas case study one content</p>",
-    "wp_id": 0,
-    "wp_slug": "",
-    "wp_link": ""
-  }
-},
-{
-  "model": "atlascasestudies.atlascasestudyindexpage",
-  "pk": 8,
-  "fields": {
-    "page_ptr": 8,
-    "body": "<p>Atlas case studies Index Page</p>"
-  }
-},
-{
   "model": "publications.publication",
   "pk": 14,
   "fields": {
@@ -1786,7 +1639,7 @@
   "fields": {
     "categorypage_ptr": 15,
     "body": "<p>Publication two content</p>",
-    "documents": "[{\"type\": \"document_group\", \"value\": [{\"type\": \"document_link\", \"value\": {\"title\": \"<p>A Document With A Link To A Page</p>\", \"external_url\": \"\", \"page\": 9, \"summary\": \"\"}, \"id\": \"4aa4218d-a5df-4f3f-8880-d6e34651d297\"}], \"id\": \"32f28605-6db3-4edd-bf99-7a53574b0557\"}]",
+    "documents": "[{\"type\": \"document_group\", \"value\": [{\"type\": \"document_link\", \"value\": {\"title\": \"<p>A Document With A Link To A Page</p>\", \"external_url\": \"\", \"page\": 4, \"summary\": \"\"}, \"id\": \"4aa4218d-a5df-4f3f-8880-d6e34651d297\"}], \"id\": \"32f28605-6db3-4edd-bf99-7a53574b0557\"}]",
     "wp_id": 0,
     "source": "root",
     "wp_slug": "",
@@ -1935,13 +1788,6 @@
   "pk": 6,
   "fields": {
     "page_ptr": 6
-  }
-},
-{
-  "model": "categories.categorypage",
-  "pk": 9,
-  "fields": {
-    "page_ptr": 9
   }
 },
 {

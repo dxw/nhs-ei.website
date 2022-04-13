@@ -8,7 +8,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         call_command("delete_blogs")
         call_command("delete_posts")
-        call_command("delete_atlas_case_studies")
         call_command("delete_publications")
         call_command("delete_pages")
         call_command("delete_components_pages")

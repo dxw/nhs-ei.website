@@ -53,14 +53,9 @@
     <div class="col bg-contrast-lower text-component padding-sm">
         <h4 class="text-center">Publications</h4>
         <p class="text-center text-xl"><strong class="color-success">{{ publications_pages_count }}</strong></p>
-        <p class="text-xs opacity-50%">This figure represents the publication pages in the wagtail site that are derived from
+        <p class="text-xs opacity-50%">This figure represents the publication pages in the wagtail site that are derived
+            from
             the Publication Model</p>
-    </div>
-    <div class="col bg-contrast-lower text-component padding-sm">
-        <h4 class="text-center">Atlas Case Studies</h4>
-        <p class="text-center text-xl"><strong class="color-success">{{ atlas_case_studies_pages_count }}</strong></p>
-        <p class="text-xs opacity-50%">This figure represents the atlas case study pages in the wagtail site that are derived from
-            the Atlas Case Study Model</p>
     </div>
 </div>
 <div class="flex@sm gap-md margin-y-sm">
@@ -141,8 +136,8 @@
             {% elif p.parent > 0 and p.real_parent == 0 %}
             <span style="background-color: black" class="margin-x-xs color-contrast-lower">(10)</span>
             {% endif %}
-            <span style="background-color: red"
-                class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem }}</span>
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem
+                }}</span>
         </a>
     </div>
     {% endfor %}
@@ -173,8 +168,8 @@
             {% elif p.parent > 0 and p.real_parent == 0 %}
             <span style="background-color: black" class="margin-x-xs color-contrast-lower">(10)</span>
             {% endif %}
-            <span style="background-color: red"
-                class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem }}</span>
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem
+                }}</span>
         </a>
     </div>
     {% endif %}

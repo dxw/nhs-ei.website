@@ -1,10 +1,7 @@
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
 from cms.categories.models import (
     Category,
     PublicationType,
-    Region,
-    Setting,
 )
 from cms.posts.models import Post
 from cms.publications.models import Publication
@@ -100,84 +97,6 @@ class PublicationTypeAdmin(ModelAdmin):
     get_publication_type_usage.short_description = "Usage"
 
 
-"""SETTINGS"""
-
-
-class SettingPermissionHelper(PermissionHelper):
-    def user_can_delete_obj(self, user, obj):
-        atlas_case_studies = AtlasCaseStudy.objects.filter(
-            atlas_case_study_setting_relationship__setting=obj
-        )
-        if not atlas_case_studies:
-            return True
-
-
-class SettingAdmin(ModelAdmin):
-    model = Setting
-    search_fields = ("name",)
-    list_display = ("name", "get_setting_usage")
-    menu_icon = "folder-open-inverse"
-
-    # to prevent deletion of a category if it's in use
-    permission_helper_class = SettingPermissionHelper
-
-    panels = [
-        FieldPanel("name"),
-        FieldPanel("slug"),
-        FieldPanel("description"),
-        FieldPanel("wp_id"),
-    ]
-
-    def get_setting_usage(self, obj):
-        atlas_case_studies = AtlasCaseStudy.objects.filter(
-            atlas_case_study_setting_relationship__setting=obj
-        )
-        # blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
-        # posts_count, blogs_count = Category.get_category_usage()
-        return "Atlas Case Studies {}".format(atlas_case_studies.count())
-
-    get_setting_usage.short_description = "Usage"
-
-
-"""REGIONS"""
-
-
-class RegionPermissionHelper(PermissionHelper):
-    def user_can_delete_obj(self, user, obj):
-        regions = Region.objects.filter(
-            atlas_case_study_region_relationship__region=obj
-        )
-        if not regions:
-            return True
-
-
-class RegionAdmin(ModelAdmin):
-    model = Region
-    search_fields = ("name",)
-    list_display = ("name", "get_region_usage")
-    menu_icon = "folder-open-inverse"
-
-    # to prevent deletion of a category if it's in use
-    # permission_helper_class = RegionPermissionHelper
-
-    panels = [
-        FieldPanel("name"),
-        FieldPanel("slug"),
-        FieldPanel("description"),
-        FieldPanel("wp_id"),
-    ]
-
-    def get_region_usage(self, obj):
-        atlas_case_studies = AtlasCaseStudy.objects.filter(
-            atlas_case_study_region_relationship__region=obj
-        )
-        # blogs = Blog.objects.filter(categorypage_category_relationship__category=obj)
-        # posts_count, blogs_count = Category.get_category_usage()
-        return "Atlas Case Studies {}".format(atlas_case_studies.count())
-
-    get_region_usage.short_description = "Usage"
-
-
 """ADMIN GROUP"""
 
 
@@ -187,8 +106,6 @@ class CategoriesAdminGroup(ModelAdminGroup):
     items = (
         CategoriesAdmin,
         PublicationTypeAdmin,
-        SettingAdmin,
-        RegionAdmin,
     )
 
 

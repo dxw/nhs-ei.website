@@ -7,7 +7,6 @@ import logging
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from cms.posts.models import Post
@@ -85,7 +84,6 @@ class Command(BaseCommand):
             ComponentsPage,
             Blog,
             Post,
-            AtlasCaseStudy,
             Publication,
             LandingPage,
         ]

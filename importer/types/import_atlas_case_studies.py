@@ -5,9 +5,9 @@ from abc import ABC
 from dateutil import parser
 from wagtail.core.models import Page
 
-from cms.atlascasestudies.models import (
-    AtlasCaseStudy,
-    AtlasCaseStudyIndexPage,
+from cms.publications.models import (
+    Publication,
+    PublicationIndexPage,
 )
 from .importer_cls import Importer
 
@@ -23,7 +23,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
 
     def __init__(self):
         super().__init__()
-        atlas_case_studies = AtlasCaseStudy.objects.all()
+        atlas_case_studies = Publication.objects.all()
         for case in atlas_case_studies:
             self.cache[case.wp_id] = case
 
@@ -32,11 +32,11 @@ class AtlasCaseStudiesImporter(Importer, ABC):
 
         try:
             # a parent for all atlas case study pages
-            self.atlas_case_study_index_page = AtlasCaseStudyIndexPage.objects.get(
+            self.atlas_case_study_index_page = PublicationIndexPage.objects.get(
                 title="Atlas Case Study Items Base"
             )
         except Page.DoesNotExist:
-            self.atlas_case_study_index_page = AtlasCaseStudyIndexPage(
+            self.atlas_case_study_index_page = PublicationIndexPage(
                 title="Atlas Case Study Items Base",
                 body="theres a place here for some text",
                 show_in_menus=True,
@@ -55,7 +55,11 @@ class AtlasCaseStudiesImporter(Importer, ABC):
             self.category_mapper.get_category_for_slug("nursing"),
         ]
 
+        imported_count = 0
+
         for atlas_case_study in atlas_case_studies:
+
+            imported_count = imported_count + 1
 
             modified = atlas_case_study.get("modified")
             modified_time = parser.parse(modified)
@@ -71,7 +75,7 @@ class AtlasCaseStudiesImporter(Importer, ABC):
                 obj = self.cache[wp_id]
             else:
 
-                obj = AtlasCaseStudy(wp_id=wp_id, show_in_menus=True)
+                obj = Publication(wp_id=wp_id, show_in_menus=True)
                 obj.first_published_at = atlas_case_study.get("date")
                 is_new = True
 
@@ -94,13 +98,11 @@ class AtlasCaseStudiesImporter(Importer, ABC):
             if is_new:
                 self.atlas_case_study_index_page.add_child(instance=obj)
                 logger.debug(
-                    "Created AtlasCaseStudy, wp_id=%s, title=%s"
-                    % (obj.wp_id, obj.title)
+                    "Created Publication, wp_id=%s, title=%s" % (obj.wp_id, obj.title)
                 )
             else:
                 logger.debug(
-                    "Updated AtlasCaseStudy, wp_id=%s, title=%s"
-                    % (obj.wp_id, obj.title)
+                    "Updated Publication, wp_id=%s, title=%s" % (obj.wp_id, obj.title)
                 )
 
             self.save(obj)
@@ -147,4 +149,4 @@ class AtlasCaseStudiesImporter(Importer, ABC):
             time.sleep(self.sleep_between_fetches)
             self.fetch_url(self.next)
             self.parse_results()
-        return AtlasCaseStudy.objects.count(), self.count
+        return imported_count, self.count

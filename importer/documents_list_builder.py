@@ -5,7 +5,6 @@ from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
-from cms.atlascasestudies.models import AtlasCaseStudy
 
 logger = logging.getLogger("importer")
 
@@ -73,7 +72,7 @@ class RichTextBuilder:
         self.change_links = []
 
     def all_pages(self):
-        models = [BasePage, ComponentsPage, Blog, Post, AtlasCaseStudy, Publication]
+        models = [BasePage, ComponentsPage, Blog, Post, Publication]
         url_ids = {}  # cached
 
         for model in models:

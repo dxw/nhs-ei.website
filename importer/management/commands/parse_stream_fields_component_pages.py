@@ -1,7 +1,6 @@
 import ast
 import logging
 from cms.publications.models import Publication
-from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 import json
@@ -42,7 +41,6 @@ class Command(BaseCommand):
             ComponentsPage,
             Blog,
             Post,
-            AtlasCaseStudy,
             Publication,
             LandingPage,
         ]

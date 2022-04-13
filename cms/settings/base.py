@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "cms.blogs",
     "cms.pages",
     "cms.publications",
-    "cms.atlascasestudies",
     "cms.core",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",

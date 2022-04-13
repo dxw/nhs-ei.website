@@ -23,6 +23,10 @@
 
   </span>
 </div>
+{% if result.specific.categorypage_category_relationship %}
 <div class="tag_right">
-  <a href="">{% get_content_type_tag result %}</a>
+  {% for category in result.specific.categorypage_category_relationship.all %}
+    <a href="{% url 'category-detail' category.category.slug %}">{{ category.category }}</a>
+  {% endfor %}
 </div>
+{% endif %}

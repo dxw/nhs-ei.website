@@ -43,3 +43,8 @@ def get_content_type_tag(context, page):
     }
     if content_type.model in CONTENT_TYPE_LABELS.keys():
         return {"type": CONTENT_TYPE_LABELS[content_type.model]}
+
+
+@register.filter
+def to_class_name(value):
+    return value.specific_class.get_verbose_name()

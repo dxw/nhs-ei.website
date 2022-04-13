@@ -1,0 +1,11 @@
+{% load static frontend_tags %}
+
+<div class="search-results">
+  <ul class="nhsuk-list nhsuk-list--border">
+  {% for result in search_results %}
+    <li class="nhsuk-panel nhsei-panel-search-result">
+      {% include 'partials/nhs_components/search_result.html' %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>

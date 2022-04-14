@@ -17,20 +17,23 @@
       </h1>
     </div>
   </div>
-  <div class="nhsuk-grid-row">
+
+  <form action="#" method="get">
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        <h2 class="nhsuk-heading-xs"></h2>
+      </div>
+      <div class="nhsuk-grid-column-two-thirds">
+        {% include "partials/nhs_components/search_results_bar.html" %}
+      </div>
+    </div>
+    <div class="nhsuk-grid-row nhsuk-u-margin-top-8">
     <div class="nhsuk-grid-column-one-third">
-      <h2 class="nhsuk-heading-xs"></h2>
+      <h2 class="">Filters</h2>
+      {% include 'partials/nhs_components/search_content_type.html' %}
+      {% include 'partials/nhs_components/search_date_range.html' %}
     </div>
-    <div class="nhsuk-grid-column-two-thirds">
-      {% include "partials/nhs_components/search_results_bar.html" %}
-    </div>
-  </div>
-  <div class="nhsuk-grid-row nhsuk-u-margin-top-8">
-  <div class="nhsuk-grid-column-one-third">
-    <h2 class="">Filters</h2>
-    {% include 'partials/nhs_components/search_content_type.html' %}
-    {% include 'partials/nhs_components/search_date_range.html' %}
-  </div>
+  </form>
   {# body#}
   <div class="nhsuk-grid-column-two-thirds">
     <div class="search-results-heading">

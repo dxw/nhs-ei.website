@@ -9,25 +9,25 @@
   </legend>
   <div class="nhsuk-radios nhsuk-radios--conditional show-checkbox">
     <div class="nhsuk-radios__item">
-      <input class="nhsuk-radios__input" id="content_type-1"  name="content_type" type="radio" value="pages" aria-expanded="false">
+      <input class="nhsuk-radios__input" id="content_type-1"  name="content_type" type="radio" value="pages" aria-expanded="false" {% if content_type == "pages" %}checked="true"{% endif %}>
       <label class="nhsuk-label nhsuk-radios__label" for="content_type-1">
         Webpage
       </label>
     </div>
     <div class="nhsuk-radios__item">
-      <input class="nhsuk-radios__input" id="content_type-2" name="content_type" type="radio" value="news" aria-expanded="false">
+      <input class="nhsuk-radios__input" id="content_type-2" name="content_type" type="radio" value="news" aria-expanded="false" {% if content_type == "news" %}checked="true"{% endif %}>
       <label class="nhsuk-label nhsuk-radios__label" for="content_type-2">
         News
       </label>
     </div>
     <div class="nhsuk-radios__item">
-      <input class="nhsuk-radios__input" id="content_type-3" name="content_type" type="radio" value="blogs" aria-expanded="true">
+      <input class="nhsuk-radios__input" id="content_type-3" name="content_type" type="radio" value="blogs" aria-expanded="true" {% if content_type == "blogs" %}checked="true"{% endif %}>
       <label class="nhsuk-label nhsuk-radios__label" for="content_type-3">
         Blogs
       </label>
     </div>
     <div class="nhsuk-radios__item">
-      <input class="nhsuk-radios__input" id="content_type-4" name="content_type" type="radio" value="publications" aria-controls="conditional-publications" aria-expanded="true">
+      <input class="nhsuk-radios__input" id="content_type-4" name="content_type" type="radio" value="publications" aria-controls="conditional-publications" aria-expanded="true" {% if content_type == "publications" %}checked="true"{% endif %}>
       <label class="nhsuk-label nhsuk-radios__label" for="content_type-4">
         Publication
       </label>
@@ -35,7 +35,11 @@
   </div>
 </fieldset>
 <div class="nhsuk-radios nhsuk-radios--conditional show-checkbox nhsuk-u-margin-top-4">
-  <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-search-filter-4">
+  {% if content_type == "publications" %}
+    <div class="nhsuk-radios__conditional" id="conditional-publications">
+  {% else %}
+    <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-publications">
+  {% endif %}
     <h2 class="nhsuk-heading-xs">Publication type:</h2><div class="nhsuk-filter-clear " id="search-filter-hint">
       <a href="#">Clear filters</a>
     </div>

@@ -130,7 +130,7 @@ dmypy.json
 
 # local
 local.py
-/static
+/cms/static
 /media
 node_modules
 # Terraform

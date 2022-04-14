@@ -13,6 +13,21 @@ from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
 
+acceptable_sort_orders = [
+    "latest_revision_created_at",
+    "-latest_revision_created_at",
+    "first_published_at",
+    "-first_published_at",
+    "last_published_at",
+    "-last_published_at",
+    # "go_live_at", # worth considering for future use.
+    # "-go_live_at",
+]
+
+def validate_sort_order(sort_order):
+    if sort_order and sort_order.lower() in acceptable_sort_orders:
+        return sort_order.lower()
+    return None
 
 def search(request):
     """
@@ -26,7 +41,7 @@ def search(request):
     """
 
     query_string = request.GET.get("query", "")
-    search_ordering = request.GET.get("order", "-latest_revision_created_at")
+    search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
     date_from = request.GET.get("date_from", "")
     date_to = request.GET.get("date_to", "")
@@ -35,7 +50,11 @@ def search(request):
     search_results_count = 0
 
     def search(_class):
-        queryset = _class.objects.live().order_by(search_ordering)
+        queryset = _class.objects.live()
+
+        if search_ordering:
+            queryset = queryset.order_by(search_ordering)
+
         if date_from and date_to:
             queryset = queryset.filter(
                 latest_revision_created_at__range=[

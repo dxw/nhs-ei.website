@@ -1,104 +1,171 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-
 {% block content %}
-    <article class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-three-quarters last-publication">
-                <div class="nhsuk-review-date">
-                    <p class="nhsuk-body-s">
-                        <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
-                        <strong>Date last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }} &nbsp&nbsp| &nbsp&nbsp<a href="#see-all-updates">See all updates</a>
-                    </p>
-                </div>
-                <!-- <div class="nhsuk-body-s">
-                {{ self.first_published_at|date }} | Author: {{ self.author }}
-                </div> -->
-                <div class="nhsuk-u-reading-width">
-                    <div class="nhsuk-body-s">
-                        {% for category in self.categorypage_category_relationship.all %}
-                        <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-                        {% endfor %} <br>
-                        <strong>Content type:</strong>
-                        {% for publication_type in self.publication_publication_type_relationship.all %}
-                        <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="nhsuk-grid-column-one-quarter share-publication">
-                <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
-                    <svg version="1.1" id="doc" align="left" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 23.4 30.4" style="enable-background:new 0 0 23.4 30.4;" xml:space="preserve">
-                        <g id="a"></g>
-                        <g id="b"></g>
-                        <path d="M2.8,29.5c-0.2-0.1-0.5-0.1-0.7-0.2c-1-0.5-1.5-1.2-1.5-2.3c0-1.8,0-3.7,0-5.5c0-6,0-12.1,0-18.1c0-1.7,1.1-2.7,2.7-2.7
-                        c3.8,0,7.6,0,11.4,0c0.4,0,0.7,0.1,1,0.4c2.2,2.2,4.3,4.3,6.5,6.5c0.3,0.3,0.4,0.6,0.4,0.9c0,6.1,0,12.2,0,18.3
-                        c0,1.5-0.7,2.4-2.2,2.8c0,0,0,0,0,0L2.8,29.5L2.8,29.5z M14.2,2.3h-0.3c-3.5,0-7,0-10.5,0c-0.7,0-1,0.3-1,1c0,7.8,0,15.6,0,23.5
-                        c0,0.7,0.3,1,1,1c5.5,0,11,0,16.6,0c0.7,0,1-0.3,1-1c0-5.8,0-11.6,0-17.4V9.1c-0.1,0-0.2,0-0.3,0c-1.3,0-2.6,0-3.9,0
-                        c-1.3,0-2.3-0.9-2.5-2.1c0-0.2,0-0.5,0-0.7C14.2,5,14.2,3.7,14.2,2.3L14.2,2.3z M15.9,3.6c0,1,0,2,0,3c0,0.5,0.4,0.8,0.9,0.8
-                        c0.9,0,1.9,0,2.8,0c0,0,0.1,0,0.1,0C18.4,6.1,17.1,4.9,15.9,3.6L15.9,3.6z"/>
-                        <path d="M11.6,12.6c1.7,0,3.3,0,5,0c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.3-0.5,0.5-0.8,0.5c-1.6,0-3.1,0-4.7,0c-1.8,0-3.5,0-5.3,0
-                        c-0.7,0-1.1-0.6-0.8-1.2c0.2-0.4,0.5-0.5,0.9-0.5C8.3,12.6,10,12.6,11.6,12.6L11.6,12.6z"/>
-                        <path d="M11.7,16c1.7,0,3.3,0,5,0c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.4-0.5,0.5-0.8,0.5c-1.5,0-3,0-4.6,0c-1.8,0-3.6,0-5.4,0
-                        c-0.7,0-1.1-0.6-0.8-1.2C5.9,16.1,6.2,16,6.6,16C8.3,16,10,16,11.7,16L11.7,16z"/>
-                        <path d="M11.6,21.1c-1.7,0-3.3,0-5,0c-0.7,0-1.1-0.6-0.8-1.2c0.2-0.3,0.5-0.5,0.8-0.5c1.7,0,3.5,0,5.2,0c1.6,0,3.2,0,4.8,0
-                        c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.4-0.5,0.5-0.8,0.5C14.9,21.1,13.3,21.1,11.6,21.1L11.6,21.1z"/>
-                        <path d="M9.9,24.4c-1.1,0-2.2,0-3.3,0c-0.5,0-0.9-0.3-0.9-0.8c0-0.5,0.4-0.9,0.9-0.9c2.2,0,4.4,0,6.6,0c0.7,0,1.1,0.6,0.8,1.2
-                        c-0.2,0.4-0.4,0.5-0.8,0.5C12.2,24.4,11,24.4,9.9,24.4L9.9,24.4z"/>
-                    </svg>
-                    Download
-                </button><br>
-                <a href="mailto:?subject={{ self.title|urlencode }}&body={{ self.title|urlencode }}%3A%20{{ self.full_url|urlencode }}">
-                    <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
-                        <svg version="1.1" id="share" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.4 512">
-                            <path d="M375.12,512c-8.28-2.35-16.94-3.81-24.77-7.19-37.25-16.03-57.39-54.5-49.89-94.69,
-                            .59-3.18-.26-4.37-2.73-5.77-49.63-28.21-99.24-56.45-148.78-84.82-3.15-1.8-5-1.61-7.73,
-                            .78-25.97,22.78-62.96,27.44-93.81,12.04C16.36,316.86-2.81,284.04,.34,249.76c3.14-34.28,
-                            20.8-59.31,52.6-72.41,31.77-13.09,61.68-7.67,88.32,14.27,2.18,1.79,3.69,3.16,6.84,1.36,
-                            50.83-29.13,101.73-58.12,152.23-86.91-.46-8.55-1.5-16.83-1.24-25.06,1.23-39.79,32.8-74.55,
-                            72.24-80.05,1.29-.18,2.54-.63,3.81-.96,6,0,12,0,18,0,.94,.3,1.85,.73,2.81,.87,36.5,5.29,
-                            65.88,33.29,72.11,68.75,6.51,37.11-10.87,73.3-43.68,90.95-32.55,17.52-72.46,11.94-99.43-13.87-1.16-1.11-2.37-2.18-3.7-3.4-51.55,
-                            29.38-102.84,58.61-154.17,87.87,4.95,16.84,4.75,33.26,.06,49.71,51.61,29.4,102.91,58.63,154.96,88.29,
-                            1.19-1.56,2.03-3.07,3.23-4.19,20.17-18.73,44.03-26.47,71.22-22.71,39.02,5.4,70.46,39.14,72.61,77.21,
-                            2.42,42.87-23.24,79.17-63.44,89.67-4.16,1.09-8.38,1.91-12.57,2.86h-18Z"/>
-                        </svg>
-                        Email this document
-                    </button>
-                </a>
-            </div>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters last-publication">
+      <div class="nhsuk-review-date">
+        <p class="nhsuk-body-s">
+          <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
+          <strong>Date Last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }} &nbsp&nbsp| &nbsp&nbsp<a href="#see-all-updates">See all updates</a>
+        </p>
+      </div>
+      <!-- <div class="nhsuk-body-s">
+        {{ self.first_published_at|date }} | Author: {{ self.author }}
+      </div> -->
+      <div class="nhsuk-u-reading-width">
+        <div class="nhsuk-body-s">
+          {% for category in self.categorypage_category_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+          {% endfor %} <br>
+          <strong>Content type:</strong> Publication (guidance)
+          {% for publication_type in self.publication_publication_type_relationship.all %}
+            <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
+          {% endfor %}
         </div>
-        <hr>
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter share-publication">
+      <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
+      <svg version="1.1" id="doc" align="left" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 23.4 30.4" style="enable-background:new 0 0 23.4 30.4;" xml:space="preserve">
+      <g id="a"></g><g id="b"><g><path d="M2.8,29.5c-0.2-0.1-0.5-0.1-0.7-0.2c-1-0.5-1.5-1.2-1.5-2.3c0-1.8,0-3.7,0-5.5c0-6,0-12.1,0-18.1c0-1.7,1.1-2.7,2.7-2.7
+      c3.8,0,7.6,0,11.4,0c0.4,0,0.7,0.1,1,0.4c2.2,2.2,4.3,4.3,6.5,6.5c0.3,0.3,0.4,0.6,0.4,0.9c0,6.1,0,12.2,0,18.3
+      c0,1.5-0.7,2.4-2.2,2.8c0,0,0,0,0,0L2.8,29.5L2.8,29.5z M14.2,2.3h-0.3c-3.5,0-7,0-10.5,0c-0.7,0-1,0.3-1,1c0,7.8,0,15.6,0,23.5
+      c0,0.7,0.3,1,1,1c5.5,0,11,0,16.6,0c0.7,0,1-0.3,1-1c0-5.8,0-11.6,0-17.4V9.1c-0.1,0-0.2,0-0.3,0c-1.3,0-2.6,0-3.9,0
+      c-1.3,0-2.3-0.9-2.5-2.1c0-0.2,0-0.5,0-0.7C14.2,5,14.2,3.7,14.2,2.3L14.2,2.3z M15.9,3.6c0,1,0,2,0,3c0,0.5,0.4,0.8,0.9,0.8
+      c0.9,0,1.9,0,2.8,0c0,0,0.1,0,0.1,0C18.4,6.1,17.1,4.9,15.9,3.6L15.9,3.6z"/>
+      <path d="M11.6,12.6c1.7,0,3.3,0,5,0c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.3-0.5,0.5-0.8,0.5c-1.6,0-3.1,0-4.7,0c-1.8,0-3.5,0-5.3,0
+        c-0.7,0-1.1-0.6-0.8-1.2c0.2-0.4,0.5-0.5,0.9-0.5C8.3,12.6,10,12.6,11.6,12.6L11.6,12.6z"/>
+        <path d="M11.7,16c1.7,0,3.3,0,5,0c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.4-0.5,0.5-0.8,0.5c-1.5,0-3,0-4.6,0c-1.8,0-3.6,0-5.4,0
+          c-0.7,0-1.1-0.6-0.8-1.2C5.9,16.1,6.2,16,6.6,16C8.3,16,10,16,11.7,16L11.7,16z"/>
+          <path d="M11.6,21.1c-1.7,0-3.3,0-5,0c-0.7,0-1.1-0.6-0.8-1.2c0.2-0.3,0.5-0.5,0.8-0.5c1.7,0,3.5,0,5.2,0c1.6,0,3.2,0,4.8,0
+            c0.7,0,1.1,0.6,0.8,1.2c-0.2,0.4-0.5,0.5-0.8,0.5C14.9,21.1,13.3,21.1,11.6,21.1L11.6,21.1z"/>
+            <path d="M9.9,24.4c-1.1,0-2.2,0-3.3,0c-0.5,0-0.9-0.3-0.9-0.8c0-0.5,0.4-0.9,0.9-0.9c2.2,0,4.4,0,6.6,0c0.7,0,1.1,0.6,0.8,1.2
+              c-0.2,0.4-0.4,0.5-0.8,0.5C12.2,24.4,11,24.4,9.9,24.4L9.9,24.4z"/>
+            </g>
+          </g>
+        </svg>Download as a PDF</button><br>
+        <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
+        <svg version="1.1" id="share" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.4 512"><path d="M375.12,512c-8.28-2.35-16.94-3.81-24.77-7.19-37.25-16.03-57.39-54.5-49.89-94.69,.59-3.18-.26-4.37-2.73-5.77-49.63-28.21-99.24-56.45-148.78-84.82-3.15-1.8-5-1.61-7.73,.78-25.97,22.78-62.96,27.44-93.81,12.04C16.36,316.86-2.81,284.04,.34,249.76c3.14-34.28,20.8-59.31,52.6-72.41,31.77-13.09,61.68-7.67,88.32,14.27,2.18,1.79,3.69,3.16,6.84,1.36,50.83-29.13,101.73-58.12,152.23-86.91-.46-8.55-1.5-16.83-1.24-25.06,1.23-39.79,32.8-74.55,72.24-80.05,1.29-.18,2.54-.63,3.81-.96,6,0,12,0,18,0,.94,.3,1.85,.73,2.81,.87,36.5,5.29,65.88,33.29,72.11,68.75,6.51,37.11-10.87,73.3-43.68,90.95-32.55,17.52-72.46,11.94-99.43-13.87-1.16-1.11-2.37-2.18-3.7-3.4-51.55,29.38-102.84,58.61-154.17,87.87,4.95,16.84,4.75,33.26,.06,49.71,51.61,29.4,102.91,58.63,154.96,88.29,1.19-1.56,2.03-3.07,3.23-4.19,20.17-18.73,44.03-26.47,71.22-22.71,39.02,5.4,70.46,39.14,72.61,77.21,2.42,42.87-23.24,79.17-63.44,89.67-4.16,1.09-8.38,1.91-12.57,2.86h-18Z"/></svg>
+        Share this document
+        </button>
+      </div>
+    </div>
+    <hr>
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
         <h1>{{ self.title }}</h1>
-        <div id="content">{{ self.body|richtext }}</div>
+        {{ self.body|richtext }}
         {% if self.publication_publication_type_relationship %}
-            <div class="nhsuk-review-date">
-                <p class="nhsuk-body-s">
-                    <a name="see-all-updates"></a>
-                    Date published: {{ self.first_published_at|date:'d M Y' }}<br>
-                    Date last updated: {{ self.latest_revision_created_at|date:'d M Y' }}
-                </p>
+        </div>
+      </div>
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
+          <nav>
+            <h2>Content</h2>
+            <a href="" class="current_page_item">Scope and purpose</a>
+            <a href="">Preparing for roving and mobile vaccination</a>
+            <a href="">Roving and mobile operating models</a>
+            <a href="">Vaccination of children and young people</a>
+            <a href="">Additional considerations for all roving
+            and mobile models</a>
+            <a href="">Related content</a>
+          </nav>
+        </div>
+        <div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
+          <h2>Scope and purpose</h2>
+          <p>This standard operating procedure (SOP) describes how to operate roving and mobile
+            vaccination models. These models enable the administration of COVID-19 vaccines at identified
+            locations outside of vaccination ‘base’ sites: vaccination centres; hospital hubs; designated
+            PCN-led sites; and designated community pharmacy-led sites. They include care homes,
+            vaccination for housebound patients, other residential settings or settings of multiple occupancy, temporary vaccination clinics (e.g. pop-ups), vaccination buses and drive-through clinics.
+            <p>The aim of roving and mobile models is to improve access and maximise vaccine uptake in
+            communities or among groups where uptake is low.</p>
+            <div>
+              <h2>General guidance and advice</h2>
+              <p>This SOP must be read in conjunction with:</p>
+              <p>For Phase 3: Joint Committee on Vaccination and Immunisation (JCVI) regarding a COVID-19
+              booster vaccine programme for winter 2021 to 2022 (published 14 September 2021).</p>
+              <p>For the evergreen offer:</p>
+              <ul>
+                <li>JCVI guidance defining eligible cohorts from December 2020 and April 2021.</li>
+                <li>The Green Book, particularly chapter 14a and chapter 2, and the UK Health Security Agency’s
+                COVID-19 vaccination programme webpage.</li>
+                <li>Vaccine-specific guidance should be followed. COVID-19 vaccines have different
+                  characteristics with specific handling requirements which are a condition of temporary
+                  authorisation under Regulation 174 of the Human Medicines Regulations 2012. Vaccine-specific
+                SOPs are on the Specialist Pharmacy Service website.</li>
+                <li>Maximising vaccine uptake in underserved communities: a framework for systems, sites and
+                  local authorities leading vaccination delivery provides a problem-solving framework, best
+                  practice and practical guidance for implementing a range of interventions to ensure equitable
+                access.</li>
+                <li>Legal mechanisms for administration of COVID-19 vaccine.</li>
+                <li>JCVI guidance on vaccinating children aged 12 to 15 years (3 September).</li>
+              </ul>
             </div>
-            <!-- <div class="nhsuk-body-s">
-                {{ self.first_published_at|date }} | Author: {{ self.author }}
-            </div> -->
-            <div class="nhsuk-u-reading-width">
-                <div class="nhsuk-body-s">
-                    Topics:
-                    {% for category in self.categorypage_category_relationship.all %}
-                    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-                    {% endfor %} <br>
-                    Publication Type:
-                    {% for publication_type in self.publication_publication_type_relationship.all %}
-                    <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
-                    {% endfor %}
-                </div>
+            <hr>
+            <div id="see-all-updates" class="nhsuk-review-date last-publication">
+              <p class="nhsei-body-s">
+                <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
+                <strong>Date Last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
+              </p>
+              <details class="nhsuk-details">
+              <summary class="nhsuk-details__summary">
+              <span class="nhsuk-details__summary-text">
+                Show all updates
+              </span>
+              </summary>
+              <div class="nhsuk-details__text">
+                <h2>Page updates</h2>
+                <h3>30 November 2021</h3>
+                <p>Added a new section on standard operating procedures for primary care. Made corrections to paragraph 3 of the ‘community transmission’ section in line with new government guidance. Minor updates to protocols.</p>
+                <h3>13 November 2021</h3>
+                <p>Foreword updated with an introduction from David Fitzgerald, programme director for the NHS Cancer programme. Information added following the launch of ‘Help us, help you’ campaign. Update to statistics (page 3) of people who have started cancer treatment since the pandemic began.</p>
+                <h3>4 August 2021</h3>
+                <p>Investing in our cancer workforce: Update to costings following recently published Government guidance. (Pg 3, paragraph 4).
+                <p>Help us, Help you: Change of web address (Pg 6, paragraph 7).</p>
+                <p>Quality of life metric: Updated version following publication of National Cancer Report (pg 19).</p>
+                <p>Patient shaping services: Patient and public forum: Update to contact details (pg 14, paragraph 6).</p>
+              </div>
+              </details>
             </div>
-
-        {% endif %}
-
-        {% for block in self.documents %}
-            {% include_block block %}
-        {% endfor %}
-    </article>
-{% endblock content %}
+            <hr>
+            <div>
+              <h2>For the evergreen offer:</h2>
+              <ul>
+                <li>JCVI guidance defining eligible cohorts from December 2020 and April 2021.</li>
+                <li>The Green Book, particularly chapter 14a and chapter 2, and the UK Health Security Agency’s
+                COVID-19 vaccination programme webpage.</li>
+                <li>Vaccine-specific guidance should be followed. COVID-19 vaccines have different
+                  characteristics with specific handling requirements which are a condition of temporary
+                  authorisation under Regulation 174 of the Human Medicines Regulations 2012. Vaccine-specific
+                SOPs are on the Specialist Pharmacy Service website.</li>
+                <li>Maximising vaccine uptake in underserved communities: a framework for systems, sites and
+                  local authorities leading vaccination delivery provides a problem-solving framework, best
+                  practice and practical guidance for implementing a range of interventions to ensure equitable
+                access.</li>
+                <li>Legal mechanisms for administration of COVID-19 vaccine.</li>
+                <li>JCVI guidance on vaccinating children aged 12 to 15 years (3 September).</li>
+              </ul>
+            </div>
+            <hr>
+            <div class="related-content">
+              <h2>Related content</h2>
+              <ul>
+                <li><a href="">Scope and purpose</a></li>
+                <li><a href="">Preparing for roving and mobile vaccination</a></li>
+                <li><a href="">Roving and mobile operating models</a></li>
+                <li><a href="">Vaccination of children and young people</a></li>
+                <li><a href="">Additional considerations for all roving
+                and mobile models</a></li>
+                <li><a href="">Related content</a></li>
+              </ul>
+            </div>
+            <hr>
+          </div>
+        </div>
+      {% endif %}
+      {% for block in self.documents %}
+        {% include_block block %}
+      {% endfor %}
+    {% endblock content %}

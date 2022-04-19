@@ -23,10 +23,10 @@
 
   <div class="nhsuk-grid-row full-width">
   <div class="nhsuk-header__menu nhsuk-width-container">
-    <div id="toggle-menu" aria-controls="header-navigation"aria-label="Open menu"><span class="burger-menu-text">MENU</span>
-      <button id="toggle-menu" aria-controls="header-navigation" class="burger-button" aria-label="Open menu">
-    </button>
-    </div>
+    <a href="{% url 'browse' %}" id="toggle-menu" aria-controls="header-navigation" aria-label="Open menu">
+      <span class="burger-menu-text">MENU</span>
+      <button class="burger-button"></button>
+    </a>
   </div>
   </div>
   {% include 'partials/megamenu/megamenu.html' %}

@@ -1,39 +1,124 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-
 {% block body_class %}template-basepage{% endblock body_class %}
-
 {% block content %}
-
-<div class="nhsuk-width-container">
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-            <h1>{{ self.title }}</h1>
-        </div>
-    </div>
-
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-            {% for block in self.body %}
-                {% include_block block %}
-            {% endfor %}
-        </div>
-        <div class="nhsuk-grid-column-one-third">
-            {% if children %}
-            <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this section" aria-labbeledby="sideNav">
-                <h2 id="sideNav" class="nhsuk-heading-s">Pages in this section</h2>
-                <ol class="nhsuk-contents-list__list">
-                    {% for child in children %}
-                    <li class="nhsuk-contents-list__item">
-                        <a class="nhsuk-contents-list__link" href="{{ child.url }}">{{ child }}</a>
-                    </li>
-                    {% endfor %}
-
-                </ol>
-            </nav>
-            {% endif %}
-        </div>
-    </div>
-
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+  </div>
 </div>
-{% endblock content %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
+    <nav>
+      <h3 href="#" class="parent_page_item"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 595.28 595.28" style="enable-background:new 0 0 595.28 595.28;" xml:space="preserve">
+<g>
+  <path d="M382.61,101.28c11.6,3.99,18.7,13.48,26.2,22.19c5.93,6.88,5.15,18.14-0.57,25.29c-1.35,1.69-2.89,3.24-4.43,4.78
+    c-46.92,46.93-93.84,93.86-140.79,140.76c-1.07,1.07-2.46,1.81-3.9,2.85c1.76,1.85,2.78,2.95,3.84,4.01
+    c47.28,47.29,94.57,94.58,141.84,141.88c8.43,8.43,10.99,18.84,4.69,27.28c-5.79,7.77-13.03,14.79-20.73,20.7
+    c-7.24,5.55-17,3.91-24.16-1.97c-1.08-0.89-2.13-1.84-3.12-2.83c-57.15-57.13-114.3-114.26-171.44-171.41
+    c-8.54-8.54-10.4-18.55-5.03-27.78c1.27-2.17,3.01-4.13,4.8-5.93c57.29-57.35,114.58-114.71,172.04-171.89
+    c3.38-3.37,8.17-5.32,12.31-7.93C376.98,101.28,379.79,101.28,382.61,101.28z"/>
+</g>
+</svg>Mental health</h3>
+      <a href="#" class="current_page_item ">{{ self.title }}</a>
+      <a href="">Preparing for roving and mobile vaccination</a>
+      <a href="">Roving and mobile operating models</a>
+      <a href="">Vaccination of children and young people</a>
+      <a href="">Additional considerations for all roving
+      and mobile models</a>
+      <a href="">Related content</a>
+    </nav>
+  </div>
+  <div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
+    <h1>{{ self.title }}</h1>
+    <p>This standard operating procedure (SOP) describes how to operate roving and mobile
+      vaccination models. These models enable the administration of COVID-19 vaccines at identified
+      locations outside of vaccination ‘base’ sites: vaccination centres; hospital hubs; designated
+      PCN-led sites; and designated community pharmacy-led sites. They include care homes,
+      vaccination for housebound patients, other residential settings or settings of multiple occupancy, temporary vaccination clinics (e.g. pop-ups), vaccination buses and drive-through clinics.
+      <p>The aim of roving and mobile models is to improve access and maximise vaccine uptake in
+      communities or among groups where uptake is low.</p>
+      <div>
+        <h2>General guidance and advice</h2>
+        <p>This SOP must be read in conjunction with:</p>
+        <p>For Phase 3: Joint Committee on Vaccination and Immunisation (JCVI) regarding a COVID-19
+        booster vaccine programme for winter 2021 to 2022 (published 14 September 2021).</p>
+        <p>For the evergreen offer:</p>
+        <ul>
+          <li>JCVI guidance defining eligible cohorts from December 2020 and April 2021.</li>
+          <li>The Green Book, particularly chapter 14a and chapter 2, and the UK Health Security Agency’s
+          COVID-19 vaccination programme webpage.</li>
+          <li>Vaccine-specific guidance should be followed. COVID-19 vaccines have different
+            characteristics with specific handling requirements which are a condition of temporary
+            authorisation under Regulation 174 of the Human Medicines Regulations 2012. Vaccine-specific
+          SOPs are on the Specialist Pharmacy Service website.</li>
+          <li>Maximising vaccine uptake in underserved communities: a framework for systems, sites and
+            local authorities leading vaccination delivery provides a problem-solving framework, best
+            practice and practical guidance for implementing a range of interventions to ensure equitable
+          access.</li>
+          <li>Legal mechanisms for administration of COVID-19 vaccine.</li>
+          <li>JCVI guidance on vaccinating children aged 12 to 15 years (3 September).</li>
+        </ul>
+      </div>
+      <hr>
+      <div id="see-all-updates" class="nhsuk-review-date last-publication">
+        <p class="nhsei-body-s">
+          <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
+          <strong>Date Last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
+        </p>
+        <details class="nhsuk-details">
+        <summary class="nhsuk-details__summary">
+        <span class="nhsuk-details__summary-text">
+          Show all updates
+        </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <h2>Page updates</h2>
+          <h3>30 November 2021</h3>
+          <p>Added a new section on standard operating procedures for primary care. Made corrections to paragraph 3 of the ‘community transmission’ section in line with new government guidance. Minor updates to protocols.</p>
+          <h3>13 November 2021</h3>
+          <p>Foreword updated with an introduction from David Fitzgerald, programme director for the NHS Cancer programme. Information added following the launch of ‘Help us, help you’ campaign. Update to statistics (page 3) of people who have started cancer treatment since the pandemic began.</p>
+          <h3>4 August 2021</h3>
+          <p>Investing in our cancer workforce: Update to costings following recently published Government guidance. (Pg 3, paragraph 4).
+            <p>Help us, Help you: Change of web address (Pg 6, paragraph 7).</p>
+            <p>Quality of life metric: Updated version following publication of National Cancer Report (pg 19).</p>
+            <p>Patient shaping services: Patient and public forum: Update to contact details (pg 14, paragraph 6).</p>
+          </div>
+          </details>
+        </div>
+        <hr>
+        <div>
+          <h2>For the evergreen offer:</h2>
+          <ul>
+            <li>JCVI guidance defining eligible cohorts from December 2020 and April 2021.</li>
+            <li>The Green Book, particularly chapter 14a and chapter 2, and the UK Health Security Agency’s
+            COVID-19 vaccination programme webpage.</li>
+            <li>Vaccine-specific guidance should be followed. COVID-19 vaccines have different
+              characteristics with specific handling requirements which are a condition of temporary
+              authorisation under Regulation 174 of the Human Medicines Regulations 2012. Vaccine-specific
+            SOPs are on the Specialist Pharmacy Service website.</li>
+            <li>Maximising vaccine uptake in underserved communities: a framework for systems, sites and
+              local authorities leading vaccination delivery provides a problem-solving framework, best
+              practice and practical guidance for implementing a range of interventions to ensure equitable
+            access.</li>
+            <li>Legal mechanisms for administration of COVID-19 vaccine.</li>
+            <li>JCVI guidance on vaccinating children aged 12 to 15 years (3 September).</li>
+          </ul>
+        </div>
+        <hr>
+        <div class="related-content">
+          <h2>Related content</h2>
+          <ul>
+            <li><a href="">Scope and purpose</a></li>
+            <li><a href="">Preparing for roving and mobile vaccination</a></li>
+            <li><a href="">Roving and mobile operating models</a></li>
+            <li><a href="">Vaccination of children and young people</a></li>
+            <li><a href="">Additional considerations for all roving
+            and mobile models</a></li>
+            <li><a href="">Related content</a></li>
+          </ul>
+        </div>
+        <hr>
+      </div>
+    </div>
+  {% endblock content %}

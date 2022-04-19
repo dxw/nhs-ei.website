@@ -126,6 +126,16 @@ class TestSearchWithFilters(TestCase):
 
         # TODO filter and date range without start/end dates, see test above
 
+    def test_sort_orders(self):
+        response = self.client.get("/search/?query=e&order=first_published_at")
+        self.assertContains(response, "Abiogenesis corneal diagnostician")
+        response = self.client.get("/search/?query=e&order=-first_published_at")
+        self.assertNotContains(response, "Abiogenesis corneal diagnostician")
+
+    def test_invalid_sort_order(self):
+        # passing an invalid order should be just like no order
+        response = self.client.get("/search/?query=e&order=not_a_valid_order")
+        self.assertContains(response, "Abiogenesis corneal diagnostician")
 
 class TestPagination(TestCase):
     fixtures = ["fixtures/menu-fixtures.json"]

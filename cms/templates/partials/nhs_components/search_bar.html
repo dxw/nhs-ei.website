@@ -7,7 +7,6 @@
   </button>
   <div class="nhsuk-header__search-wrap" id="wrap-search">
     <form class="nhsuk-header__search-form" id="search" action="{% url 'search' %}" method="get" role="search">
-      {% csrf_token %}
       <label class="nhsuk-u-visually-hidden" for="search-field">Search the NHS England and Improvement website</label>
       {% comment %} <div class="autocomplete-container" id="autocomplete-container"></div> {% endcomment %}
       <input class="nhsuk-search__input" id="search-field" name="query" type="search" placeholder="Search" autocomplete="off"{% if query_string %} value="{{ query_string }}"{% endif %} required>
@@ -26,9 +25,3 @@
     </form>
   </div>
 </div>
-
-
-
-
-
-

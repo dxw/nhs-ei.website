@@ -26,24 +26,3 @@ document.getElementById("toggle-menu").addEventListener("click", function (e) {
     e.preventDefault();
     toggle(document.getElementById("mega-menu"));
 }, false);
-
-document.addEventListener("DOMContentLoaded", () => {
-    if (location.hash.replace('#', '') === "open") {
-        toggle(document.getElementById("mega-menu"))
-    }
-});
-
-/* ******************** Mega Menu ******************** */
-
-document.addEventListener("DOMContentLoaded", () => {
-    const toggleMenu = document.getElementsByClassName("toggle-menu-expand");
-
-    for (const link of toggleMenu) {
-        link.addEventListener("click", (event) => {
-            // Add listener here
-            // if (Number(event.target.getAttribute("data-depth")) <= 2) {
-            //     event.preventDefault();
-            // }
-        });
-    }
-});

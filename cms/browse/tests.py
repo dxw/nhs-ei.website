@@ -50,7 +50,7 @@ class TestBrowseUnit(TestCase):
         self.assertIsNotNone(soup.find(class_="browse__root-pane"))
 
         link_list = soup.findAll(class_="browse__link")
-        self.assertEqual(16, len(link_list))
+        self.assertEqual(23, len(link_list))
 
     def test_programme(self):
         response = self.client.get("/browse/cancer/")

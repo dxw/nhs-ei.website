@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load frontend_tags wagtailcore_tags browse_tags %}
+{% load frontend_tags wagtailcore_tags browse_tags menu_tags %}
 
 
 {% block breadcrumb %}
@@ -14,7 +14,7 @@
     <div class="browse {% if leaf_items|length > 0 %} mobile_menu {% else %}browse--two-columns{% endif %}">
     {# programmes start #}
       <div id="root" class="browse__root-pane">
-        <h2 class="nhsuk-visually-hidden" tabindex="-1">All categories</h2>
+        <h2>Programmes</h2>
         {% for item in programmes %}
           <ul class="browse__list">
             <li>
@@ -24,6 +24,8 @@
             </li>
           </ul>
         {% endfor %}
+        <h2>Corporate</h2>
+        {% flat_menu handle="corporate" template="partials/corporate_links.html" %}
       </div>
     {# programmes end #}
 

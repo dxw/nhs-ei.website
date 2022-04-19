@@ -50,6 +50,10 @@ def search(request):
     search_results_count = 0
 
     def search(_class):
+
+        start_date = date_from or "1900-01-01"
+        end_date = date_to or datetime.max
+
         queryset = _class.objects.live()
 
         if search_ordering:
@@ -58,19 +62,19 @@ def search(request):
         if date_from and date_to:
             queryset = queryset.filter(
                 latest_revision_created_at__range=[
-                    date_from,
-                    date_to,
+                    start_date,
+                    end_date,
                 ]
             )
         elif date_from:
             queryset = queryset.filter(
-                latest_revision_created_at__range=[date_from, datetime.max]
+                latest_revision_created_at__range=[start_date, end_date]
             )
         elif date_to:
             queryset = queryset.filter(
                 latest_revision_created_at__range=[
-                    "1900-01-01",
-                    date_to,
+                    start_date,
+                    end_date,
                 ]
             )
         return queryset.search(query_string)

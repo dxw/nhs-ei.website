@@ -13,6 +13,8 @@ from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
 
+import calendar
+
 acceptable_sort_orders = [
     "latest_revision_created_at",
     "-latest_revision_created_at",
@@ -24,7 +26,41 @@ acceptable_sort_orders = [
     # "-go_live_at",
 ]
 
-def validate_sort_order(sort_order):
+
+class NotANumberError(Exception):
+    """Only catch when we can't parse dates, not other ValueErrors"""
+
+    pass
+
+
+def as_int(i):
+    """Get a number for a number-like string, but:
+    * tolerate no value
+    * raise a custom error for easier trapping downstream"""
+    try:
+        if i:
+            return int(i)
+        return None
+    except ValueError as ex:
+        raise NotANumberError from ex
+
+def parse_date(day, month, year, before):
+    """Given user-generated strings probably containing a date, get a datetime for them.
+    If it's just a year or year and month, choose the end of that datetime."""
+    try:
+        year_num = as_int(year)
+        if not year_num:
+            return None
+        month_num = as_int(month) or (1 if before else 12)
+        _, last_day_of_month = calendar.monthrange(year_num, month_num)
+        day_num = as_int(day) or (1 if before else last_day_of_month)
+        return datetime(year=year_num, month=month_num, day=day_num)
+
+    except NotANumberError:
+        return None
+
+
+def validated_sort_order(sort_order):
     if sort_order and sort_order.lower() in acceptable_sort_orders:
         return sort_order.lower()
     return None
@@ -40,9 +76,22 @@ def search(request):
     date_to=2020-11-29
     """
 
+
+
+    def get_date(before=True):
+        when = "before" if before else "after"
+        return parse_date(
+            day = request.GET.get(f"published-{when}-day"),
+            month = request.GET.get(f"published-{when}-month"),
+            year = request.GET.get(f"published-{when}-year"),
+            before = before,
+        )
+
     query_string = request.GET.get("query", "")
     search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
+    date_from = get_date(before=True)
+    date_to = get_date(before=False)
     date_from = request.GET.get("date_from", "")
     date_to = request.GET.get("date_to", "")
 

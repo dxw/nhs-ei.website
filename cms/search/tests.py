@@ -1,11 +1,26 @@
+from socket import PACKET_BROADCAST
 from bs4 import BeautifulSoup
 from django.test import TestCase
 from wagtail.contrib.search_promotions.models import SearchPromotion
 from wagtail.search.models import Query
 import lxml.html
 
+from cms.search.views import parse_date
+
 from cms.pages.models import Page, BasePage
 
+
+class TestDateHandling(TestCase):
+    def test_dates(self):
+        self.assertEqual(parse_date(year='', month='', day='', before=True), None)
+        self.assertEqual(parse_date(year='2000', month='badger', day='3', before=True), None)
+        self.assertEqual(parse_date(year='badger', month='3', day='3', before=True), None)
+        self.assertEqual(parse_date(year='2000', month='2', day='', before=False).day, 29)
+        self.assertEqual(parse_date(year='2000', month='2' ,day='', before=True).day, 1)
+        self.assertEqual(parse_date(year='2000', month='', day='', before=False).month, 12)
+        self.assertEqual(parse_date(year='2000', month='', day='', before=True).month, 1)
+        self.assertEqual(parse_date(year='2000', month='', day='', before=False).day, 31)
+        self.assertEqual(parse_date(year='2000', month='', day='', before=True).day, 1)
 
 class TestSearch(TestCase):
     def test_simple_search(self):

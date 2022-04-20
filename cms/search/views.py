@@ -44,16 +44,17 @@ def as_int(i):
     except ValueError as ex:
         raise NotANumberError from ex
 
-def parse_date(day, month, year, before):
+
+def parse_date(year, month, day, before):
     """Given user-generated strings probably containing a date, get a datetime for them.
     If it's just a year or year and month, choose the end of that datetime."""
     try:
         year_num = as_int(year)
         if not year_num:
             return None
-        month_num = as_int(month) or (1 if before else 12)
+        month_num = as_int(month) or (12 if before else 1)
         _, last_day_of_month = calendar.monthrange(year_num, month_num)
-        day_num = as_int(day) or (1 if before else last_day_of_month)
+        day_num = as_int(day) or (last_day_of_month if before else 1)
         return datetime(year=year_num, month=month_num, day=day_num)
 
     except NotANumberError:
@@ -76,31 +77,30 @@ def search(request):
     date_to=2020-11-29
     """
 
-
-
     def get_date(before=True):
         when = "before" if before else "after"
         return parse_date(
-            day = request.GET.get(f"published-{when}-day"),
-            month = request.GET.get(f"published-{when}-month"),
-            year = request.GET.get(f"published-{when}-year"),
-            before = before,
+            day=request.GET.get(f"{when}-day"),
+            month=request.GET.get(f"{when}-month"),
+            year=request.GET.get(f"{when}-year"),
+            before=before,
         )
 
     query_string = request.GET.get("query", "")
     search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
-    date_from = get_date(before=True)
-    date_to = get_date(before=False)
-    date_from = request.GET.get("date_from", "")
-    date_to = request.GET.get("date_to", "")
+    date_from = get_date(before=False)
+    date_to = get_date(before=True)
+
+    # date_from = request.GET.get("date_from", "")
+    # date_to = request.GET.get("date_to", "")
 
     page = int(request.GET.get("page", 1))
     search_results_count = 0
 
     def search(_class):
 
-        start_date = date_from or "1900-01-01"
+        start_date = date_from or datetime.min
         end_date = date_to or datetime.max
 
         queryset = _class.objects.live()
@@ -108,18 +108,7 @@ def search(request):
         if search_ordering:
             queryset = queryset.order_by(search_ordering)
 
-        if date_from and date_to:
-            queryset = queryset.filter(
-                latest_revision_created_at__range=[
-                    start_date,
-                    end_date,
-                ]
-            )
-        elif date_from:
-            queryset = queryset.filter(
-                latest_revision_created_at__range=[start_date, end_date]
-            )
-        elif date_to:
+        if date_from or date_to:
             queryset = queryset.filter(
                 latest_revision_created_at__range=[
                     start_date,

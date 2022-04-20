@@ -12,15 +12,29 @@ from cms.pages.models import Page, BasePage
 
 class TestDateHandling(TestCase):
     def test_dates(self):
-        self.assertEqual(parse_date(year='', month='', day='', before=True), None)
-        self.assertEqual(parse_date(year='2000', month='badger', day='3', before=True), None)
-        self.assertEqual(parse_date(year='badger', month='3', day='3', before=True), None)
-        self.assertEqual(parse_date(year='2000', month='2', day='', before=False).day, 29)
-        self.assertEqual(parse_date(year='2000', month='2' ,day='', before=True).day, 1)
-        self.assertEqual(parse_date(year='2000', month='', day='', before=False).month, 12)
-        self.assertEqual(parse_date(year='2000', month='', day='', before=True).month, 1)
-        self.assertEqual(parse_date(year='2000', month='', day='', before=False).day, 31)
-        self.assertEqual(parse_date(year='2000', month='', day='', before=True).day, 1)
+        self.assertEqual(parse_date(year="", month="", day="", before=True), None)
+        self.assertEqual(
+            parse_date(year="2000", month="badger", day="3", before=True), None
+        )
+        self.assertEqual(
+            parse_date(year="badger", month="3", day="3", before=True), None
+        )
+        # TODO self.assertEqual(parse_date(year='2000', month='2', day='31', before=True), None)
+        self.assertEqual(
+            parse_date(year="2000", month="2", day="", before=True).day, 29
+        )
+        self.assertEqual(
+            parse_date(year="2000", month="2", day="", before=False).day, 1
+        )
+        self.assertEqual(
+            parse_date(year="2000", month="", day="", before=True).month, 12
+        )
+        self.assertEqual(
+            parse_date(year="2000", month="", day="", before=False).month, 1
+        )
+        self.assertEqual(parse_date(year="2000", month="", day="", before=True).day, 31)
+        self.assertEqual(parse_date(year="2000", month="", day="", before=False).day, 1)
+
 
 class TestSearch(TestCase):
     def test_simple_search(self):
@@ -108,15 +122,15 @@ class TestSearchWithFilters(TestCase):
         self.assertContains(response, "Showing 1 to 10 of 48 results")
 
         response = self.client.get(
-            "/search/?query=e&content_type=all&date_from=2021-01-01&date_to=2021-12-31"
+            "/search/?query=e&content_type=all&after-year=2021&after-month=1&after-day=1&before-year=2021&before_month=12&before_day=31"
         )
         self.assertContains(response, "Showing 1 to 10 of 14 results")
 
-        response = self.client.get("/search/?query=e&date_from=&date_to=2021-06-01")
+        response = self.client.get("/search/?query=e&before-year=2021&before-month=06&before-day=01")
         self.assertContains(response, "Showing 1 to 10 of 40 results")
 
         response = self.client.get(
-            "/search/?query=e&content_type=all&date_from=2021-06-07"
+            "/search/?query=e&content_type=all&after-year=2021&after-month=6&after-day=07"
         )
         self.assertContains(response, "Showing 1 to 7 of 7 results")
 
@@ -135,7 +149,7 @@ class TestSearchWithFilters(TestCase):
 
     def test_type_and_date_filters(self):
         response = self.client.get(
-            "/search/?query=e&content_type=pages&date_from=2021-06-01&date_to=2021-12-31"
+            "/search/?query=e&content_type=pages&after-year=2021&after-month=6&before-year=2021"
         )
         self.assertContains(response, "Showing 1 to 4 of 4 results")
 

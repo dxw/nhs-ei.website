@@ -19,8 +19,13 @@
 
         <div class="nhsuk-review-date">
             <div class="nhsuk-body-s">
-            Published: {{ self.first_published_at|date:'d M Y' }}
+                Published: {{ self.first_published_at|date:'d M Y' }}
             </div>
+            {% if self.last_published_at != self.first_published_at %}
+            <div>
+                Updated on: {{ self.last_published_at|date:'d M Y' }}
+            </div>
+            {% endif %}
             {% comment %}
              | Author: {{ self.author }} <i>we are missing the ability to match ID to
                 a name</i>

@@ -23,7 +23,7 @@
 
   <div class="nhsuk-grid-row full-width">
   <div class="nhsuk-header__menu nhsuk-width-container">
-    <a href="{% url 'browse' %}" id="toggle-menu" aria-controls="header-navigation" aria-label="Open menu">
+    <a href="{% url 'browse' %}" {% if not menu_button_disable_toggle %}id="toggle-menu" {% endif %} aria-controls="header-navigation" aria-label="Open menu">
       <span class="burger-menu-text">Menu</span>
       <button class="burger-button"></button>
     </a>

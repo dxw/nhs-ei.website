@@ -115,13 +115,22 @@ Templates: cms/templates/partials/megamenu
       padding-left: 20px;
   }
 }
+
+#toggle-menu {
+  &:focus {
+    background: none;
+    box-shadow: none;
+  }
+}
+
 .burger-menu-text {
   font-weight: bold;
   top: -13px;
   color: white;
-  position:relative;
-}
-.burger-button,.burger-menu-text {
-  cursor:pointer;
+  position: relative;
+  text-transform: uppercase;
 }
 
+.burger-button {
+  cursor: pointer;
+}

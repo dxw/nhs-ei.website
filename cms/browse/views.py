@@ -59,6 +59,7 @@ def browse(request, programme, branch):
         request,
         "browse/browse.html",
         {
+            "menu_button_disable_toggle": True,
             "programme": programme,
             "branch": branch,
             "branch_title": branch_title,

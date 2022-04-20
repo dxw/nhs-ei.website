@@ -122,7 +122,7 @@ class TestSearchWithFilters(TestCase):
         self.assertContains(response, "Showing 1 to 10 of 48 results")
 
         response = self.client.get(
-            "/search/?query=e&content_type=all&after-year=2021&after-month=1&after-day=1&before-year=2021&before_month=12&before_day=31"
+            "/search/?query=e&content_type=all&after-year=2021&after-month=1&after-day=1&before-year=2021&before-month=12&before_day=31"
         )
         self.assertContains(response, "Showing 1 to 10 of 14 results")
 
@@ -154,6 +154,12 @@ class TestSearchWithFilters(TestCase):
         self.assertContains(response, "Showing 1 to 4 of 4 results")
 
         # TODO filter and date range without start/end dates, see test above
+
+    def test_same_day(self):
+        response = self.client.get("/search/?query=e&content_type=all&"+
+                                   "after-year=2021&after-month=11&after-day=13&"+
+                                   "before-year=2021&before-month=11&before-day=13")
+        self.assertContains(response, "Showing 1 to 1 of 1 results")
 
     def test_sort_orders(self):
         response = self.client.get("/search/?query=e&order=first_published_at")

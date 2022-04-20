@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.conf import settings
 
@@ -101,7 +101,7 @@ def search(request):
     def search(_class):
 
         start_date = date_from or datetime.min
-        end_date = date_to or datetime.max
+        end_date = date_to or datetime.max - timedelta(days=7)
 
         queryset = _class.objects.live()
 
@@ -112,7 +112,7 @@ def search(request):
             queryset = queryset.filter(
                 latest_revision_created_at__range=[
                     start_date,
-                    end_date,
+                    end_date + timedelta(days=1),
                 ]
             )
         return queryset.search(query_string)

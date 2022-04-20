@@ -114,8 +114,11 @@ class TestPost(TestCase):
 
         # review date
         # better to test these actual date objects as unittest I think, one for later
-        date_container = soup.select_one("main .nhsuk-review-date")
-        self.assertIn(date_container.text.strip()[:20], "Published: 04 Feb 2021")
+        published_date_container = soup.select_one("main .nhsuk-review-date div:nth-of-type(1)")
+        self.assertIn(published_date_container.text.strip(), "Published: 04 Feb 2021")
+
+        updated_date_container = soup.select_one("main .nhsuk-review-date div:nth-of-type(2)")
+        self.assertIn(updated_date_container.text.strip(), "Updated on: 25 Aug 2021")
 
         # taxonomy links
         category_1 = soup.select_one("main a:nth-of-type(1)")

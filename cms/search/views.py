@@ -110,7 +110,7 @@ def search(request):
 
         if date_from or date_to:
             queryset = queryset.filter(
-                latest_revision_created_at__range=[
+                first_published_at__range=[
                     start_date,
                     end_date + timedelta(days=1),
                 ]

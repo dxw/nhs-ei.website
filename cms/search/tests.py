@@ -163,9 +163,10 @@ class TestSearchWithFilters(TestCase):
 
     def test_sort_orders(self):
         response = self.client.get("/search/?query=e&order=first_published_at")
-        self.assertContains(response, "Abiogenesis corneal diagnostician")
+        self.assertContains(response, "Cerebrum cerebrum acrocyanosis")
+
         response = self.client.get("/search/?query=e&order=-first_published_at")
-        self.assertNotContains(response, "Abiogenesis corneal diagnostician")
+        self.assertNotContains(response, "Cerebrum cerebrum acrocyanosis")
 
     def test_invalid_sort_order(self):
         # passing an invalid order should be just like no order

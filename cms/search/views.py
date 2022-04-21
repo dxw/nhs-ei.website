@@ -66,6 +66,7 @@ def validated_sort_order(sort_order):
         return sort_order.lower()
     return None
 
+
 def search(request):
     """
     sample query

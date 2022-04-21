@@ -4,6 +4,7 @@ from django.test import TestCase
 from wagtail.contrib.search_promotions.models import SearchPromotion
 from wagtail.search.models import Query
 import lxml.html
+import re
 
 from cms.search.views import parse_date
 
@@ -110,56 +111,72 @@ class TestSearch(TestCase):
 
 
 class TestSearchWithFilters(TestCase):
+    def assertResultsRangeSummaryEquals(self, response, min, max, total):
+        expected = f"Showing {min} to {max} of {total} results"
+        match = re.search(
+            r"Showing (?:\d+ to \d+ of \d+|no) results", response.rendered_content
+        )
+        if match:
+            self.assertEquals(match.group(0), expected)
+        else:
+            self.assertEquals("<<No results text found.>>", expected)
 
     fixtures = ["fixtures/loadsa-pages.json"]
 
     def test_negative_page(self):
         response = self.client.get("/search/?query=e&page=-2")
-        self.assertContains(response, "Showing 21 to 30 of 48 results")
+        self.assertResultsRangeSummaryEquals(response, min=21, max=30, total=48)
 
     def test_date_range(self):
         response = self.client.get("/search/?query=e")
-        self.assertContains(response, "Showing 1 to 10 of 48 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=48)
 
         response = self.client.get(
             "/search/?query=e&content_type=all&after-year=2021&after-month=1&after-day=1&before-year=2021&before-month=12&before_day=31"
         )
-        self.assertContains(response, "Showing 1 to 10 of 14 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=14)
 
-        response = self.client.get("/search/?query=e&before-year=2021&before-month=06&before-day=01")
-        self.assertContains(response, "Showing 1 to 10 of 40 results")
+        response = self.client.get(
+            "/search/?query=e&before-year=2021&before-month=06&before-day=01"
+        )
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=40)
 
         response = self.client.get(
             "/search/?query=e&content_type=all&after-year=2021&after-month=6&after-day=07"
         )
-        self.assertContains(response, "Showing 1 to 7 of 7 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=7, total=7)
 
     def test_type_filters(self):
         response = self.client.get("/search/?query=e&content_type=pages")
-        self.assertContains(response, "Showing 1 to 10 of 10 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=10)
 
         response = self.client.get("/search/?query=e&content_type=news")
-        self.assertContains(response, "Showing 1 to 10 of 10 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=10)
 
         response = self.client.get("/search/?query=e&content_type=blogs")
-        self.assertContains(response, "Showing 1 to 9 of 9 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=9, total=9)
 
         response = self.client.get("/search/?query=e&content_type=publications")
-        self.assertContains(response, "Showing 1 to 8 of 8 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=8, total=8)
 
     def test_type_and_date_filters(self):
         response = self.client.get(
             "/search/?query=e&content_type=pages&after-year=2021&after-month=6&before-year=2021"
         )
-        self.assertContains(response, "Showing 1 to 4 of 4 results")
+        self.assertResultsRangeSummaryEquals(response, min=1, max=4, total=4)
 
-        # TODO filter and date range without start/end dates, see test above
+        response = self.client.get(
+            "/search/?query=e&content_type=pages&after-year=&after-month=&after-day=&before-year=&before-month=&before-day="
+        )
+        self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=10)
 
     def test_same_day(self):
-        response = self.client.get("/search/?query=e&content_type=all&"+
-                                   "after-year=2021&after-month=11&after-day=13&"+
-                                   "before-year=2021&before-month=11&before-day=13")
-        self.assertContains(response, "Showing 1 to 1 of 1 results")
+        response = self.client.get(
+            "/search/?query=e&content_type=all&"
+            + "after-year=2021&after-month=11&after-day=13&"
+            + "before-year=2021&before-month=11&before-day=13"
+        )
+        self.assertResultsRangeSummaryEquals(response, min=1, max=1, total=1)
 
     def test_sort_orders(self):
         response = self.client.get("/search/?query=e&order=first_published_at")
@@ -172,6 +189,7 @@ class TestSearchWithFilters(TestCase):
         # passing an invalid order should be just like no order
         response = self.client.get("/search/?query=e&order=not_a_valid_order")
         self.assertContains(response, "Abiogenesis corneal diagnostician")
+
 
 class TestPagination(TestCase):
     fixtures = ["fixtures/menu-fixtures.json"]
@@ -196,9 +214,10 @@ class TestPagination(TestCase):
         self.assertContains(response, "Previous")
         self.assertContains(response, "Next")
 
+
 class TestSearchBox(TestCase):
     def test_no_query(self):
         # If no query is provided, the search bar is empty (not None)
         response = self.client.get("/search/")
         root = lxml.html.fromstring(response.rendered_content)
-        self.assertEqual([''], root.xpath('//input[@id="search"]/@value'))
+        self.assertEqual([""], root.xpath('//input[@id="search"]/@value'))

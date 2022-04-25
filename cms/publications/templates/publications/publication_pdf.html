@@ -1,0 +1,40 @@
+{% load static wagtailcore_tags %}
+
+<html>
+    <title>{{ publication.title}}</title>
+</head>
+
+<body>
+
+    <header>
+        <p>"{{ publication.title }}", last revision {{ publication.latest_revision_created_at|date:"j/n/Y" }}</p>
+    </header>
+
+    <div class="nhs-logo-wrapper">
+        <img class="nhs-logo" src="{% static 'assets/logos/logo-nhs.svg' %}">
+    </div>
+
+    <main class="nhsuk-main-wrapper">
+
+        <h1>{{ publication.title }}</h1>
+
+        {% if publication.body %}
+
+            <div class="nhsuk-warning-callout">
+                <h3 class="nhsuk-warning-callout__label">
+                    Important<span class="nhsuk-u-visually-hidden">:</span>
+                </h3>
+                <p>This publication was last revised on {{ publication.latest_revision_created_at|date:"j/n/Y" }}, and may not be the latest version. For the latest revision, see <b>{{ publication.full_url }}</b>.</p>
+            </div>
+
+            {{ publication.body|richtext }}
+
+        {% else %}
+            <p>This publication is not available for download as a PDF. For the current version, see <b>{{publication.full_url }}</b>.</p>
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "wagtail.contrib.search_promotions",
+    "wagtail.contrib.routable_page",
     "wagtailnhsukfrontend",
     "wagtailnhsukfrontend.settings",
     # importer

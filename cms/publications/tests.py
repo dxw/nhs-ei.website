@@ -236,6 +236,15 @@ class TestPublication(TestCase):
             "/blog-index-page/",
         )
 
+    def test_publication_pdf(self):
+        """A publication can be downloaded as a PDF file"""
+        response = self.client.get("/publications-index-page/publication-one/pdf/")
+        self.assertEqual(response["content-type"], "application/pdf")
+        self.assertEqual(
+            response["content-disposition"],
+            'attachment;filename="publication-one_2021-02-05.pdf"',
+        )
+
 
 class TestTocModelSave(TestCase):
     fixtures = ["fixtures/testdata.json"]

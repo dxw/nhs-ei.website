@@ -1,0 +1,49 @@
+@import '../node_modules/nhsuk-frontend/packages/nhsuk';
+
+@page {
+    size: A4;
+    margin-top: 10mm;
+    margin-left: 10mm;
+    margin-right: 10mm;
+    margin-bottom: 40mm;
+
+    @bottom-right {
+        font-size: 0.8em;
+        content: "Page "counter(page) " of "counter(pages);
+    }
+
+    @bottom-left {
+        font-size: 0.8em;
+        content: string(headertext);
+    }
+}
+
+html,
+body,
+main {
+    background: none;
+}
+
+p {
+    font-size: 13pt;
+}
+
+.nhs-logo-wrapper {
+
+    text-align: right;
+
+    margin-bottom: 10mm;
+
+    .nhs-logo {
+
+        height: 10mm;
+    }
+
+}
+
+header {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    string-set: headertext content();
+}

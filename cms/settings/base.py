@@ -185,6 +185,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     PROJECT_DIR / "static",
+    PROJECT_DIR / "static_compiled",
     "node_modules",
 ]
 
@@ -194,7 +195,7 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = BASE_DIR / "compiledassets"
+STATIC_ROOT = BASE_DIR / "static_root"
 STATIC_URL = "/static/"
 
 # Wagtail settings

@@ -157,18 +157,16 @@ class TestPublication(TestCase):
         self.assertEqual(title, "Publication One")
 
         # page content
-        content = soup.select_one("main p").text.strip()
+        content = soup.select_one("#content p").text.strip()
         self.assertEqual(content, "Publication one content")
 
         # review date
         # better to test these actual date objects as unittest I think, one for later
         date_container = soup.select_one("main .nhsuk-review-date p")
-        self.assertIn(
-            date_container.text.strip()[:30], "Page first published: 04 Feb 2021"
-        )
+        self.assertIn(date_container.text.strip()[:27], "Date published: 04 Feb 2021")
 
         # taxonomy links
-        topic_1 = soup.select_one("main a:nth-of-type(1)")
+        topic_1 = soup.select_one("main .nhsuk-u-reading-width a")
         self.assertEqual(topic_1["href"], "/publications-index-page/?category=1")
         self.assertEqual(topic_1.text.strip(), "Category One")
 
@@ -207,18 +205,16 @@ class TestPublication(TestCase):
         self.assertEqual(title, "Publication Two")
 
         # page content
-        content = soup.select_one("main p").text.strip()
+        content = soup.select_one("#content p").text.strip()
         self.assertEqual(content, "Publication two content")
 
         # review date
         # better to test these actual date objects as unittest I think, one for later
         date_container = soup.select_one("main .nhsuk-review-date p")
-        self.assertIn(
-            date_container.text.strip()[:30], "Page first published: 04 Feb 2021"
-        )
+        self.assertIn(date_container.text.strip()[:27], "Date published: 04 Feb 2021")
 
         # taxonomy links
-        topic_1 = soup.select_one("main a:nth-of-type(1)")
+        topic_1 = soup.select_one("main .nhsuk-u-reading-width a")
         self.assertEqual(topic_1["href"], "/publications-index-page/?category=2")
         self.assertEqual(topic_1.text.strip(), "Category Two")
 

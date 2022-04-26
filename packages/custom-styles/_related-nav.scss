@@ -30,3 +30,62 @@
   list-style: none;
   padding-left: 0;
 }
+
+
+//related content
+.related-content {
+  ul{
+     position: relative;
+  }
+  ul li {
+    list-style-type: none!important;
+    padding-left: 10px;
+    &:before {
+      content:"—";
+      position: absolute;
+      left : 0;
+    }
+  }
+}
+.last-publication {
+  .nhsei-body-s {
+    margin-bottom:7px;
+  }
+  details {
+    font-size:16px;
+  }
+}
+// content bar
+
+button.nhsuk-button.nhsuk-button--secondary-grey {
+    width: 100%;
+    background-color: #E8EDEE;
+    padding: 5px;
+    border-radius: 0px;
+    color:$nhsuk-secondary-text-color;
+    border-left: 1px solid #707070;
+    border-right: 1px solid #707070;
+    border-top: 1px solid #707070;
+    font-weight: normal;
+    @media (min-width:740px){
+      font-size:17px;
+    }
+    position: relative;
+    svg#doc {
+      width: 20px;
+      vertical-align: middle;
+      padding-left: 0;
+      position: absolute;
+      left: 30px;
+      color: $nhsuk-secondary-button-color;
+    }
+    svg#share {
+      width: 20px;
+      vertical-align: middle;
+      padding-left: 0;
+      position: absolute;
+      left: 25px;
+    }
+}
+
+

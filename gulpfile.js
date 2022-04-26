@@ -8,7 +8,7 @@ const browserSync = require('browser-sync').create();
 /**
  * final place for front end css, js and assets
  */
-const assetsFolder = 'cms/static';
+const assetsFolder = 'cms/static_compiled';
 
 /* Remove all files from /cms/static/ */
 const cleanStatic = () => {

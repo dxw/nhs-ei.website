@@ -10,10 +10,7 @@ class PublicationPdfView(WeasyTemplateView):
     template_name = "publications/publication_pdf.html"
 
     pdf_stylesheets = [
-        settings.BASE_DIR
-        / "cms"
-        / settings.STATIC_URL.replace("/", "")
-        / "css/publication_pdf.css",
+        settings.BASE_DIR / "cms/static_compiled/css/publication_pdf.css",
     ]
 
     def get_context_data(self, **kwargs):

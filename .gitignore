@@ -130,7 +130,7 @@ dmypy.json
 
 # local
 local.py
-/cms/static
+/cms/static_compiled
 /media
 node_modules
 # Terraform
@@ -149,7 +149,7 @@ requirements.dev.txt
 .vscodecompiledassets
 .vscode
 *.swp
-compiledassets
+static_root
 .DS_Store
 requests_cache.sqlite
 backup_*

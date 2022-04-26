@@ -24,6 +24,8 @@ jobs:
       run: poetry install
     - name: Install JS dependencies
       run: sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - && npm install
+    - name: Compile assets
+      run: npm run build
     - name: Touch env
       run: touch ${GITHUB_WORKSPACE}/cms/settings/.env
         # - name: Setup DB

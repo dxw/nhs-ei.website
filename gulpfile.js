@@ -18,7 +18,7 @@ const cleanStatic = () => {
 
 /* Build the CSS from source packages without compression */
 const compileCSS = () => {
-  return gulp.src(['packages/nhsuk.scss', 'packages/custom-styles/_burger.scss'])
+  return gulp.src(['packages/nhsuk.scss', 'packages/publication_pdf.scss', 'packages/custom-styles/_burger.scss'])
     .pipe(sass())
     .pipe(gulp.dest(assetsFolder + '/css/'))
     .on('error', (err) => {
@@ -36,7 +36,7 @@ const compileCSS = () => {
  */
 
 const compressCSS = () => {
-  return gulp.src(['packages/nhsuk.scss', 'packages/custom-styles/_burger.scss' ])
+  return gulp.src(['packages/nhsuk.scss', 'packages/publication_pdf.scss', 'packages/custom-styles/_burger.scss'])
     .pipe(sass({
       outputStyle: 'compressed'
     }))

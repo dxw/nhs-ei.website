@@ -18,6 +18,9 @@ from wagtail.core.models import Page
 from cms.categories.models import Category, PublicationType, CategoryPage
 from cms.publications.blocks import PublicationsBlocks
 
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from cms.publications.views import PublicationPdfView
+
 
 class TOC(models.Model):
     anchor = models.TextField()
@@ -107,7 +110,14 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
-class Publication(CategoryPage):
+class Publication(RoutablePageMixin, CategoryPage):
+    @route(r"^pdf/$")
+    def pdf_view(self, request):
+
+        publication_pdf_view = PublicationPdfView.as_view()
+
+        return publication_pdf_view(request, publication=self)
+
     parent_page_types = ["publications.PublicationIndexPage"]
     """
     title already in the Page class

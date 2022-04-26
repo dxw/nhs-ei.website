@@ -139,3 +139,70 @@ a:visited {
     margin-bottom: 15px;
   }
 }
+
+
+//multi doc
+
+.nhsei-document-container {
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+.nhsei-document-container .attachment:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.nhsei-document-container .attachment {
+    position: relative;
+    margin: 30px 0;
+    padding: 15px 0 0 129px;
+}
+
+.nhsei-document-container .attachment .attachment-thumb {
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    margin-left: -124px;
+    padding-bottom: 15px;
+}
+
+.nhsei-document-container a:link {
+    color: #1d70b8;
+}
+
+.nhsei-document-container h3:first-child {
+  margin-top: 0;
+}
+
+.nhsei-document-container .attachment .attachment-details .metadata {
+    font-size: 14px;
+    line-height: 1.4285714286;
+}
+
+.nhsei-document-container .attachment .attachment-details p {
+    margin: 10px 0;
+}
+
+.nhsei-document-container .attachment .attachment-thumb img {
+    display: block;
+    width: 99px;
+    height: 140px;
+    background: #fff;
+    outline: 5px solid rgba(11,12,12,0.1);
+    box-shadow: 0 2px 2px rgb(11 12 12 / 40%);
+}
+.nhsei-document-container img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+#documents {
+  display:block;
+}
+
+.nhsei-document-container .attachment  {
+  display: block;
+  clear: both;
+}

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from django.conf import settings
 
@@ -13,6 +13,59 @@ from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
 
+import calendar
+
+acceptable_sort_orders = [
+    "latest_revision_created_at",
+    "-latest_revision_created_at",
+    "first_published_at",
+    "-first_published_at",
+    "last_published_at",
+    "-last_published_at",
+    # "go_live_at", # worth considering for future use.
+    # "-go_live_at",
+]
+
+
+class NotANumberError(Exception):
+    """Only catch when we can't parse dates, not other ValueErrors"""
+
+    pass
+
+
+def as_int(i):
+    """Get a number for a number-like string, but:
+    * tolerate no value
+    * raise a custom error for easier trapping downstream"""
+    try:
+        if i:
+            return int(i)
+        return None
+    except ValueError as ex:
+        raise NotANumberError from ex
+
+
+def parse_date(year, month, day, before):
+    """Given user-generated strings probably containing a date, get a datetime for them.
+    If it's just a year or year and month, choose the end of that datetime."""
+    try:
+        year_num = as_int(year)
+        if not year_num:
+            return None
+        month_num = as_int(month) or (12 if before else 1)
+        _, last_day_of_month = calendar.monthrange(year_num, month_num)
+        day_num = as_int(day) or (last_day_of_month if before else 1)
+        return datetime(year=year_num, month=month_num, day=day_num)
+
+    except NotANumberError:
+        return None
+
+
+def validated_sort_order(sort_order):
+    if sort_order and sort_order.lower() in acceptable_sort_orders:
+        return sort_order.lower()
+    return None
+
 
 def search(request):
     """
@@ -25,33 +78,43 @@ def search(request):
     date_to=2020-11-29
     """
 
+    def get_date(before=True):
+        when = "before" if before else "after"
+        return parse_date(
+            day=request.GET.get(f"{when}-day"),
+            month=request.GET.get(f"{when}-month"),
+            year=request.GET.get(f"{when}-year"),
+            before=before,
+        )
+
     query_string = request.GET.get("query", "")
-    search_ordering = request.GET.get("order", "-latest_revision_created_at")
+    search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
-    date_from = request.GET.get("date_from", "")
-    date_to = request.GET.get("date_to", "")
+    date_from = get_date(before=False)
+    date_to = get_date(before=True)
+
+    # date_from = request.GET.get("date_from", "")
+    # date_to = request.GET.get("date_to", "")
 
     page = int(request.GET.get("page", 1))
     search_results_count = 0
 
     def search(_class):
-        queryset = _class.objects.live().order_by(search_ordering)
-        if date_from and date_to:
+
+        start_date = date_from or datetime.min
+        end_date = date_to or datetime.max - timedelta(days=7)
+
+        queryset = _class.objects.live()
+
+        if search_ordering:
+            queryset = queryset.order_by(search_ordering)
+
+        if date_from or date_to:
             queryset = queryset.filter(
-                latest_revision_created_at__range=[
-                    date_from,
-                    date_to,
-                ]
-            )
-        elif date_from:
-            queryset = queryset.filter(
-                latest_revision_created_at__range=[date_from, datetime.max]
-            )
-        elif date_to:
-            queryset = queryset.filter(
-                latest_revision_created_at__range=[
-                    "1900-01-01",
-                    date_to,
+                # The time zone is set to suppress 'naive datetime' warnings
+                first_published_at__range=[
+                    start_date.replace(tzinfo=timezone.utc),
+                    end_date.replace(tzinfo=timezone.utc) + timedelta(days=1),
                 ]
             )
         return queryset.search(query_string)

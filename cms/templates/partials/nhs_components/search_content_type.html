@@ -1,58 +1,81 @@
-{# #}
-{#TODO: add functionality to make this interactive#}
-<form action="">
-  <input type="hidden" name="query" value="{{ query_string }}">
-  <fieldset class="nhsuk-fieldset">
-    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
-      <h1 class="nhsuk-fieldset__heading">Content type</h1>
-    </legend>
+  <div class="nhsuk-form-group">
+    <fieldset class="nhsuk-fieldset" aria-describedby="content_type-hint">
+      <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l filter-title nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-fieldset__heading nhsuk-heading-xs">
+        <button class="" type="button" aria-expanded="true" aria-controls="content type"> Content type:</button>
+      <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-select__icon filter-select__icon--up" aria-hidden="true" focusable="false"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
+    <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-select__icon filter-select__icon--down" aria-hidden="true" focusable="false"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
+    </h2>
+  </legend>
+  <div class="nhsuk-radios nhsuk-radios--conditional show-checkbox">
+    <div class="nhsuk-radios__item">
+      <input class="nhsuk-radios__input" id="content_type-1"  name="content_type" type="radio" value="pages" aria-expanded="false" {% if content_type == "pages" %}checked="true"{% endif %}>
+      <label class="nhsuk-label nhsuk-radios__label" for="content_type-1">
+        Webpage
+      </label>
+    </div>
+    <div class="nhsuk-radios__item">
+      <input class="nhsuk-radios__input" id="content_type-2" name="content_type" type="radio" value="news" aria-expanded="false" {% if content_type == "news" %}checked="true"{% endif %}>
+      <label class="nhsuk-label nhsuk-radios__label" for="content_type-2">
+        News
+      </label>
+    </div>
+    <div class="nhsuk-radios__item">
+      <input class="nhsuk-radios__input" id="content_type-3" name="content_type" type="radio" value="blogs" aria-expanded="true" {% if content_type == "blogs" %}checked="true"{% endif %}>
+      <label class="nhsuk-label nhsuk-radios__label" for="content_type-3">
+        Blogs
+      </label>
+    </div>
+    <div class="nhsuk-radios__item">
+      <input class="nhsuk-radios__input" id="content_type-4" name="content_type" type="radio" value="publications" aria-controls="conditional-publications" aria-expanded="true" {% if content_type == "publications" %}checked="true"{% endif %}>
+      <label class="nhsuk-label nhsuk-radios__label" for="content_type-4">
+        Publication
+      </label>
+    </div>
+  </div>
+</fieldset>
+{% comment %}
+<div class="nhsuk-radios nhsuk-radios--conditional show-checkbox nhsuk-u-margin-top-4">
+  {% if content_type == "publications" %}
+    <div class="nhsuk-radios__conditional" id="conditional-publications">
+  {% else %}
+    <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-publications">
+  {% endif %}
+    <h2 class="nhsuk-heading-xs">Publication type:</h2><div class="nhsuk-filter-clear " id="search-filter-hint">
+      <a href="#">Clear filters</a>
+    </div>
+    <div class="nhsuk-filter-selected" id="search-filter-hint">
+      1 Selected
+    </div>
     <div class="nhsuk-form-group">
-      <div class="nhsuk-radios">
-        <div class="nhsuk-radios__item">
-          <input class="nhsuk-radios__input" id="ct1" name="content_type" type="radio"
-          value="pages"{% if content_type == 'pages' %}checked{% endif %}>
-          <label class="nhsuk-label nhsuk-radios__label" for="ct1">Web page</label>
+      <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
+            Household goods
+          </label>
         </div>
-        <div class="nhsuk-radios__item">
-          <input class="nhsuk-radios__input" id="ct2" name="content_type" type="radio"
-          value="news"{% if content_type == 'news' %}checked{% endif %}>
-          <label class="nhsuk-label nhsuk-radios__label" for="ct2">News</label>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
+            Household goods
+          </label>
         </div>
-        <div class="nhsuk-radios__item">
-          <input class="nhsuk-radios__input" id="ct3" name="content_type" type="radio"
-          value="blogs"{% if content_type == 'blogs' %}checked{% endif %}>
-          <label class="nhsuk-label nhsuk-radios__label" for="ct3">Blog posts</label>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
+            Household goods
+          </label>
         </div>
-        <div class="nhsuk-radios__item">
-          <input class="nhsuk-radios__input" id="ct4" name="content_type" type="radio"
-          value="publications"{% if content_type == 'publications' %}checked{% endif %}>
-          <label class="nhsuk-label nhsuk-radios__label" for="ct4">Publications</label>
-        </div>
-        <div class="nhsuk-radios__item">
-          <input class="nhsuk-radios__input" id="ct5" name="content_type" type="radio" value="all"{% if not content_type %}checked{% endif %}>
-          <label class="nhsuk-label nhsuk-radios__label" for="ct5">All</label>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
+            Household goods
+          </label>
         </div>
       </div>
     </div>
-  </fieldset>
-  <fieldset class="nhsuk-fieldset">
-    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
-      <h1 class="nhsuk-fieldset__heading">Date</h1>
-    </legend>
-    <div class="nhsuk-form-group">
-      <div class="nhsuk-date-input">
-        <div class="nhsuk-form-group">
-          <label class="nhsuk-label nhsuk-date-input__label" for="date_from">From</label>
-          <input class="nhsuk-input nhsuk-date-input__input" id="date-from" name="date_from"
-          type="date" value={{date_from}}>
-        </div>
-        <div class="nhsuk-form-group">
-          <label class="nhsuk-label nhsuk-date-input__label" for="date_to">To</label>
-          <input class="nhsuk-input nhsuk-date-input__input" id="date-to" name="date_to"
-          type="date" value={{date_to}}>
-        </div>
-      </div>
-    </div>
-  </fieldset>
-  <button class="nhsuk-button" type="submit">Filter results</button>
-</form>
+  </div>
+</div>
+{% endcomment %}
+</div>

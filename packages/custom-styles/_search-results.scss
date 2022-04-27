@@ -97,37 +97,81 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
     padding: 20px;
     background-color:$color_nhsuk-white;
 }
-.nhsuk-list .nhsuk-panel.nhsei-panel-search-result {
+
+// filter
+.filter-title {
+  position: relative;
+  padding-right: 50px;
+  width:100%;
   margin: 0;
-  padding-left: 0;
-  padding-right: 0;
-  border-bottom: 1px solid $nhsuk-border-color;
-  position:relative;
-// search list tags
-  .search-meta, .tag_right {
-    font-size: 16px;
+  border-bottom: 1px solid black;
+  button {
+    z-index: 1;
+    background: none;
+    border: 0;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    color: black;
+    font-weight:700;
+    margin: 0;
+    font-size:19px;
   }
-  .tag_right {
-    @media (min-width:641px){
-      position: absolute;
-      right: 0;
-      bottom: 24px;
+}
+.filter-select__icon {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 9px;
+  width: 30px;
+  height: 40px;
+  fill: #0b0c0c;
+}
+[aria-expanded=true]~.filter-select__icon--up {
+    display: block;
+}
+[aria-expanded=false]~.dm-option-select__icon--down {
+    display: block;
+}
+
+.show-checkbox {
+  label {
+    font-size:17px;
+  }
+  h2 {
+    margin-bottom:0;
+    clear: both;
+    display: inline-block;
+  }
+  .nhsuk-radios__conditional {
+    margin-bottom: 16px;
+    margin-left:0;
+    padding-left:0px;
+    border: 0;
+    .nhsuk-form-group {
+      padding-left:25px;
+      margin-left:2px;
+      border-left: 2px solid #bfcad2;
     }
-    padding-top:20px;
-a {
-  margin-left: 1em;
-}
   }
 }
-
-.search-meta svg {
-    width: 16px;
-    height: 16px;
-    top: 2px;
-    position: relative;
-    margin: 0 5px 0 0;
+.nhsuk-filter-selected {
+  font-size:14px;
+  margin-bottom: 16px;
+  color:$nhsuk-secondary-text-color;
+}
+.nhsuk-filter-clear {
+  float: right;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 16px;
 }
 
-span.post-author {
-    padding-left: 20px;
+.filter-date-range {
+  label, input, #published-hint {
+    font-size:17px;
+  }
+  .published-label {
+    font-weight:bold;
+  }
 }

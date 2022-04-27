@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from django.conf import settings
 
@@ -111,9 +111,10 @@ def search(request):
 
         if date_from or date_to:
             queryset = queryset.filter(
+                # The time zone is set to suppress 'naive datetime' warnings
                 first_published_at__range=[
-                    start_date,
-                    end_date + timedelta(days=1),
+                    start_date.replace(tzinfo=timezone.utc),
+                    end_date.replace(tzinfo=timezone.utc) + timedelta(days=1),
                 ]
             )
         return queryset.search(query_string)

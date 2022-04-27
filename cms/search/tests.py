@@ -1,4 +1,3 @@
-from socket import PACKET_BROADCAST
 from bs4 import BeautifulSoup
 from django.test import TestCase
 from wagtail.contrib.search_promotions.models import SearchPromotion

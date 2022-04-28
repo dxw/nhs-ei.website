@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
-from cms.publications.models import Publication, TOC
+from cms.publications.models import Publication, PublicationIndexPage, TOC
 
 
 class TestPublicationIndexPage(TestCase):
@@ -245,32 +245,35 @@ class TestPublication(TestCase):
 class TestTocModelSave(TestCase):
     fixtures = ["fixtures/testdata.json"]
 
-    def test_parse_body(self):
+    def test_toc_links_on_webpage(self):
         # create a dummy content item
-        parent = Publication.objects.first()
+        parent = PublicationIndexPage.objects.first()
         page = Publication()
-        page.body = '<p data-block-key=\\"uss91\\"><h2>Header one</h2>Test this page for every possible block type</p><p data-block-key=\\"7p6df\\"><h2>Header two</h2>First block types are simple blocks e.g. they are not groups of blocks</p>","id": "8654000b-5337-43e4-9692-abcdaeb80ca4"'
+        page.body = '<h2 data-block-key="jaooc">a h2</h2><p data-block-key="47hga">not a h2</p><h2 data-block-key="4g0tt">another h2</h2><p data-block-key="1j3kd">still not a h2</p>'
         page.slug = "base-page"
         page.source = "root"
         page.title = "Test TOC Page"
         parent.add_child(instance=page)
-        # save it
+        # save it (when we save, this will generate the table of contents and add ids to the h2 tags)
         page.save()
 
+        response = self.client.get("/publications-index-page/base-page/")
+
         # load it again and check we have anchor tags
-        page = Publication.objects.get(title="Test TOC Page")
-        body = str(page.body)
+        body = str(response.content)
         soup = BeautifulSoup(body, "html.parser")
-        h2s = soup.find_all("h2")
-        self.assertEqual("header-one", h2s[0].get("id"))
-        self.assertEqual("header-two", h2s[1].get("id"))
+        h2s = [h2.get("id") for h2 in soup.find_all("h2")]
+        self.assertIn("a-h2", h2s)
+        self.assertIn("another-h2", h2s)
 
         # check the TOC table for anchors
-        tocs = TOC.objects.filter(page=page)
+        tocs = soup.select("#publication-toc a")
         self.assertEqual(2, len(tocs))
-        self.assertEqual("header-one", tocs[0].anchor)
-        self.assertEqual("Header one", tocs[0].text)
-        self.assertEqual("header-two", tocs[1].anchor)
-        self.assertEqual("Header two", tocs[1].text)
+        self.assertEqual("#a-h2", tocs[0].attrs["href"])
+        self.assertEqual("a h2", tocs[0].text)
+        self.assertEqual("#another-h2", tocs[1].attrs["href"])
+        self.assertEqual("another h2", tocs[1].text)
 
-    # TODO add toc-tags tests
+        # page content
+        content = soup.select_one("#content p").text.strip()
+        self.assertEqual(content, "not a h2")

@@ -1,4 +1,3 @@
-# These replace the rkh website links throughout the Importer
+import os
 
-SCRAPY = "http://nhs-ei.scrapy:8001/"
-STAGING = "http://localhost:8000/"
+SCRAPY = os.environ.get("SCRAPY_ENDPOINT", "http://nhs-ei.scrapy:8001/")

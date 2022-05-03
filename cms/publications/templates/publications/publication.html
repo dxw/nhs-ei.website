@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-{% load static wagtailuserbar frontend_tags publications_tags %}
+{% load static wagtailuserbar frontend_tags publications_tags wagtailroutablepage_tags %}
 
 {% block content %}
     <article class="nhsuk-width-container">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="nhsuk-grid-column-one-quarter share-publication">
-                <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
+                <a href="{% routablepageurl self "pdf_view" %}"><button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
                     <svg version="1.1" id="doc" align="left" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 23.4 30.4" style="enable-background:new 0 0 23.4 30.4;" xml:space="preserve">
                         <g id="a"></g>
@@ -49,7 +49,7 @@
                         c-0.2,0.4-0.4,0.5-0.8,0.5C12.2,24.4,11,24.4,9.9,24.4L9.9,24.4z"/>
                     </svg>
                     Download
-                </button><br>
+                </button></a><br>
                 <a href="mailto:?subject={{ self.title|urlencode }}&body={{ self.title|urlencode }}%3A%20{{ self.full_url|urlencode }}">
                     <button class="nhsuk-button nhsuk-button--secondary-grey" data-module="nhsuk-button">
                         <svg version="1.1" id="share" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.4 512">

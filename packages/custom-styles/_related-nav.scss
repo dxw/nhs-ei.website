@@ -69,3 +69,27 @@ button.nhsuk-button.nhsuk-button--secondary-grey {
     }
   }
 }
+
+//related content
+.related-content {
+  ul{
+     position: relative;
+  }
+  ul li {
+    list-style-type: none!important;
+    padding-left: 10px;
+    &:before {
+      content:"—";
+      position: absolute;
+      left : 0;
+    }
+  }
+}
+.last-publication {
+  .nhsei-body-s {
+    margin-bottom:7px;
+  }
+  details {
+    font-size:16px;
+  }
+}

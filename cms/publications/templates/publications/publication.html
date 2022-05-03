@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load static wagtailuserbar frontend_tags publications_tags %}
 
 {% block content %}
     <article class="nhsuk-width-container">
@@ -70,8 +71,41 @@
         </div>
         <hr>
         <h1>{{ self.title }}</h1>
-        <div id="content">{{ self.body|richtext }}</div>
         {% if self.publication_publication_type_relationship %}
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
+                <nav>
+                    {% get_toc page %}
+                    <!-- <a href="#related_contents">Related Content</a> -->
+                </nav>
+            </div>
+            <div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
+                <div id="content">{{ self.body|richtext }}</div>
+                <hr>
+                <div id="see-all-updates" class="nhsuk-review-date last-publication">
+                    <p class="nhsei-body-s">
+                        <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
+                        <strong>Date last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
+                    </p>
+                    <details class="nhsuk-details">
+                        <summary class="nhsuk-details__summary">
+                            <span class="nhsuk-details__summary-text">
+                            Show all updates
+                            </span>
+                        </summary>
+                        <div class="nhsuk-details__text">
+                        <!-- functionality to get this to work hasn't been worked out yet. To be implemented when this work has been done -->
+                        </div>
+                    </details>
+                </div>
+                <hr>
+                <!-- <div class="related-content"> -->
+                    <!-- <a name="related_contents"></a> -->
+                    <!-- <h2>Related content</h2> -->
+                    <!-- The related content feature hasn't be implemented yet - plug this in here once it has been done -->
+                <!-- </div> -->
+                <hr>
+            </div>
             <div class="nhsuk-review-date">
                 <p class="nhsuk-body-s">
                     <a name="see-all-updates"></a>

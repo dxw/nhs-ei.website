@@ -26,6 +26,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     zlib1g-dev \
     libwebp-dev \
     curl \
+    postgresql-client \
     python-dev \
     # WeasyPrint dependencies \
     python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0 \

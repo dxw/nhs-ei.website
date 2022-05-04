@@ -21,6 +21,34 @@ resource "azurerm_network_security_group" "default_aks_nodes" {
   tags                = local.default_tags
 }
 
+resource "azurerm_network_security_rule" "ingress_nginx_load_balancer_http" {
+  name                        = "ingress-nginx-load-balancer-http"
+  priority                    = 500
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "Internet"
+  destination_address_prefix  = data.kubernetes_service.ingress_nginx_load_balancer.status[0].load_balancer[0].ingress[0].ip
+  resource_group_name         = azurerm_resource_group.default.name
+  network_security_group_name = azurerm_network_security_group.default_aks_nodes.name
+}
+
+resource "azurerm_network_security_rule" "ingress_nginx_load_balancer_https" {
+  name                        = "ingress-nginx-load-balancer-https"
+  priority                    = 501
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "Internet"
+  destination_address_prefix  = data.kubernetes_service.ingress_nginx_load_balancer.status[0].load_balancer[0].ingress[0].ip
+  resource_group_name         = azurerm_resource_group.default.name
+  network_security_group_name = azurerm_network_security_group.default_aks_nodes.name
+}
+
 resource "azurerm_subnet_network_security_group_association" "default_aks_nodes" {
   subnet_id                 = azurerm_subnet.default_aks_nodes.id
   network_security_group_id = azurerm_network_security_group.default_aks_nodes.id

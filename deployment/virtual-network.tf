@@ -38,3 +38,15 @@ resource "azurerm_subnet_route_table_association" "default_aks_nodes" {
   subnet_id      = azurerm_subnet.default_aks_nodes.id
   route_table_id = azurerm_route_table.default_aks_nodes.id
 }
+
+resource "azurerm_private_dns_zone" "default_postgres_private_link" {
+  name                = "default-privatelink.postgres.database.azure.com"
+  resource_group_name = azurerm_resource_group.default.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "default_postgres_private_link" {
+  name                  = "default-postgres-private-link"
+  resource_group_name   = azurerm_resource_group.default.name
+  private_dns_zone_name = azurerm_private_dns_zone.default_postgres_private_link.name
+  virtual_network_id    = azurerm_virtual_network.default.id
+}

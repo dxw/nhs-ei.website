@@ -1,0 +1,38 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+jobs:
+  scrapy-run-all-imports:
+    image:
+      repository: "nhseiwebsite.azurecr.io/nhsei-scrapy"
+      tag: ""
+      imagePullPolicy: IfNotPresent
+    schedule: ""
+    command: [""]
+    args:
+    - ""
+    failedJobsHistoryLimit: 5
+    successfulJobsHistoryLimit: 5
+    concurrencyPolicy: Forbid
+    restartPolicy: OnFailure
+  publish-scheduled-pages:
+    image:
+      repository: "nhseiwebsite.azurecr.io/nhsei-website"
+      tag: ""
+      imagePullPolicy: IfNotPresent
+    schedule: ""
+    command: [""]
+    args:
+    - ""
+    env:
+      SCRAPY_ENDPOINT: ""
+      DATABASE_URL: ""
+      AZURE_CONNECTION_STRING: ""
+      AZURE_CONTAINER: ""
+      EMAIL_URL: ""
+      SERVER_EMAIL: ""
+      DEFAULT_FROM_EMAIL: ""
+      WAGTAIL_SEARCH_URLS: ""
+    failedJobsHistoryLimit: 5
+    successfulJobsHistoryLimit: 5
+    concurrencyPolicy: Forbid
+    restartPolicy: OnFailure

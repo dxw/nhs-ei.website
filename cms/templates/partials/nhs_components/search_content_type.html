@@ -46,21 +46,7 @@
     <div class="nhsuk-filter-selected" id="search-filter-hint">
       <span id="publication-count">0</span> selected
     </div>
-    <script>
-      function erase_checkboxes() {
-        var checked = document.querySelectorAll("input[name='publication_type']:checked");
-        checked.forEach(checkbox => checkbox.checked = false);
-        count_checkboxes();
-      }
 
-      function count_checkboxes(event=null) {
-        var checked = document.querySelectorAll("input[name='publication_type']:checked");
-        document.getElementById('publication-count').innerHTML = checked.length;
-      }
-
-      document.addEventListener("change", count_checkboxes);
-      count_checkboxes()
-    </script>
     <div class="nhsuk-form-group">
       <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
         {% for pub_type in publication_types %}
@@ -81,3 +67,18 @@
   </div>
 </div>
 </div>
+<script>
+  function erase_checkboxes() {
+    var checked = document.querySelectorAll("input[name='publication_type']:checked");
+    checked.forEach(checkbox => checkbox.checked = false);
+    count_checkboxes();
+  }
+
+  function count_checkboxes(event=null) {
+    var checked = document.querySelectorAll("input[name='publication_type']:checked");
+    document.getElementById('publication-count').innerHTML = checked.length;
+  }
+
+  document.addEventListener("change", count_checkboxes);
+  count_checkboxes()
+</script>

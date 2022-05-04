@@ -34,7 +34,6 @@
     </div>
   </div>
 </fieldset>
-{% comment %}
 <div class="nhsuk-radios nhsuk-radios--conditional show-checkbox nhsuk-u-margin-top-4">
   {% if content_type == "publications" %}
     <div class="nhsuk-radios__conditional" id="conditional-publications">
@@ -49,33 +48,19 @@
     </div>
     <div class="nhsuk-form-group">
       <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
+        {% for pub_type in publication_types %}
+
         <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
+          <input class="nhsuk-checkboxes__input" id="publication-type-{{pub_type.slug}}" name="publication_type" type="checkbox" value="{{pub_type.slug}}">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="publication-type-{{pub_type.slug}}">
+            {{pub_type.name}}
           </label>
         </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
+
+        {% endfor %}
+
       </div>
     </div>
   </div>
 </div>
-{% endcomment %}
 </div>

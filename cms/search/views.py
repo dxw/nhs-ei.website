@@ -11,6 +11,7 @@ from wagtail.search.models import Query
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
+from cms.publications.models import PublicationType
 
 from urllib.parse import urlparse, parse_qsl, urlencode
 
@@ -197,5 +198,6 @@ def search(request):
             "date_to": date_to,
             "min_result_index": min_result_index,
             "max_result_index": max_result_index,
+            "publication_types": PublicationType.objects.all(),
         },
     )

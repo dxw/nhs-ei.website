@@ -35,6 +35,11 @@ resource "helm_release" "web" {
     value = local.default_postgres_web_db_url
   }
 
+  set {
+    name  = "environment.wagtailsearch_urls"
+    value = "http://${data.kubernetes_service.elasticsearch.spec.0.cluster_ip}:9200"
+  }
+
   dynamic "set" {
     for_each = local.web_environment_variables
     content {

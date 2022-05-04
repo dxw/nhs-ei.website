@@ -4,6 +4,9 @@ locals {
   azure_region = var.azure_region
 
   virtual_network_address_space = var.virtual_network_address_space
+  acr_options                   = var.acr_options
+  web_image_tag                 = var.web_image_tag
+  web_environment_variables     = var.web_environment_variables
   aks_version                   = var.aks_version
   aks_nodes_address_cidr        = cidrsubnet(local.virtual_network_address_space, 8, 1)
   aks_vm_size                   = var.aks_vm_size

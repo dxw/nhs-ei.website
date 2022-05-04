@@ -16,6 +16,26 @@ variable "virtual_network_address_space" {
   default     = "10.0.0.0/16"
 }
 
+variable "acr_options" {
+  description = "Name and Resource group of existing ACR containing the web image"
+  type        = map(string)
+  default = {
+    name           = "nhseiwebsite"
+    resource_group = "nhsei-website-container"
+  }
+}
+
+variable "web_image_tag" {
+  description = "Tag of web image to deploy"
+  type        = string
+}
+
+variable "web_environment_variables" {
+  description = "Web environment variables"
+  type        = map(string)
+  default     = {}
+}
+
 variable "aks_version" {
   description = "Azure Kubenetes Service version"
   type        = string

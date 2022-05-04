@@ -1,3 +1,13 @@
 project                       = "nhsei"
 azure_region                  = "uksouth"
 virtual_network_address_space = "10.0.0.0/16"
+aks_version = "1.21.9"
+aks_vm_size = "Standard_DS2_v2"
+aks_node_counts = {
+  count = 2
+  min   = 1
+  max   = 4
+}
+aks_availability_zones = [1, 2, 3]
+aks_api_authorized_ip_ranges = []
+aks_api_allow_public = true

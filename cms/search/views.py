@@ -106,6 +106,7 @@ def search(request):
     query_string = request.GET.get("query", "")
     search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
+    publication_types = request.GET.getlist("publication_type")
     date_from = get_date(before=False)
     date_to = get_date(before=True)
 
@@ -199,5 +200,6 @@ def search(request):
             "min_result_index": min_result_index,
             "max_result_index": max_result_index,
             "publication_types": PublicationType.objects.all(),
+            "publication_types_checked": publication_types,
         },
     )

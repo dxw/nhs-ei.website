@@ -51,7 +51,9 @@
         {% for pub_type in publication_types %}
 
         <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="publication-type-{{pub_type.slug}}" name="publication_type" type="checkbox" value="{{pub_type.slug}}">
+          <input class="nhsuk-checkboxes__input" id="publication-type-{{pub_type.slug}}" name="publication_type" type="checkbox" value="{{pub_type.slug}}"
+            {% if pub_type.slug in publication_types_checked %}checked{% endif %}
+          >
           <label class="nhsuk-label nhsuk-checkboxes__label" for="publication-type-{{pub_type.slug}}">
             {{pub_type.name}}
           </label>

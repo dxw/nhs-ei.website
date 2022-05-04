@@ -35,6 +35,58 @@ class TestPagelessQuery(TestCase):
             "&kitten=yes&repeated=yes&repeated=yes&ocelot=no",
         )
 
+class PublicationFilters(TestCase):
+    fixtures = ["fixtures/publication_types.json"]
+
+    def test_a_publication_filter(self):
+        """Publication filters include Publications that are of the right type, even if they have other types"""
+        response = self.client.get(
+            "/search/?query=e&content_type=publications&publication_type=ocelot"
+        )
+        self.assertContains(response, "Ocelot Kitten")
+        self.assertNotContains(response, "Panther Kitten")
+        self.assertNotContains(response, "Puppies")
+        self.assertContains(response, "Panthelot")
+
+    def test_no_publication_filter(self):
+        "All publications appear if there is no publication type specified"
+        response = self.client.get(
+            "/search/?query=e&content_type=publications&publication_type="
+        )
+        self.assertContains(response, "Ocelot Kitten")
+        self.assertContains(response, "Panther Kitten")
+        self.assertContains(response, "Puppies")
+        self.assertContains(response, "Panthelot")
+
+    def test_malformed_publication_filter(self):
+        "All publications appear if there are no valid publication types"
+        response = self.client.get(
+            "/search/?query=e&content_type=publications&publication_type=stegosaurus"
+        )
+        self.assertContains(response, "Ocelot Kitten")
+        self.assertContains(response, "Panther Kitten")
+        self.assertContains(response, "Puppies")
+        self.assertContains(response, "Panthelot")
+
+    def test_combo_publication_filter(self):
+        "Both ocelots and panthers appear if selected, but not puppies"
+        response = self.client.get(
+            "/search/?query=e&content_type=publications&publication_type=ocelot&publication_type=panther"
+        )
+        self.assertContains(response, "Ocelot Kitten")
+        self.assertContains(response, "Panther Kitten")
+        self.assertNotContains(response, "Puppies")
+        self.assertContains(response, "Panthelot")
+
+    def test_publications_and_dates(self):
+        "Combining different search fields works correctly."
+        response = self.client.get(
+            "/search/?query=e&content_type=publications&publication_type=ocelot&before-year=2000"
+        )
+        self.assertNotContains(response, "Ocelot Kitten")
+        self.assertNotContains(response, "Panther Kitten")
+        self.assertContains(response, "Old Ocelot")
+
 
 class TestDateHandling(TestCase):
     def test_dates(self):
@@ -136,6 +188,8 @@ class TestSearch(TestCase):
 
 
 class TestSearchWithFilters(TestCase):
+    fixtures = ["fixtures/loadsa-pages.json"]
+
     def assertResultsRangeSummaryEquals(self, response, min, max, total):
         expected = f"Showing {min} to {max} of {total} results"
         match = re.search(
@@ -145,8 +199,6 @@ class TestSearchWithFilters(TestCase):
             self.assertEquals(match.group(0), expected)
         else:
             self.assertEquals("<<No results text found.>>", expected)
-
-    fixtures = ["fixtures/loadsa-pages.json"]
 
     def test_negative_page(self):
         response = self.client.get("/search/?query=e&page=-2")

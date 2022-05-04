@@ -41,18 +41,24 @@
     <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-publications">
   {% endif %}
     <h2 class="nhsuk-heading-xs">Publication type:</h2><div class="nhsuk-filter-clear " id="search-filter-hint">
-      <a href="#">Clear filters</a>
+      <a onclick="erase_checkboxes()" style="cursor:pointer">Clear filters</a>
     </div>
     <div class="nhsuk-filter-selected" id="search-filter-hint">
       <span id="publication-count">0</span> selected
     </div>
     <script>
-      function count_checkboxes(event=null) {
-        var checkboxes = document.querySelectorAll("input[name='publication_type']:checked");
-        document.getElementById('publication-count').innerHTML = checkboxes.length;
+      function erase_checkboxes() {
+        var checked = document.querySelectorAll("input[name='publication_type']:checked");
+        checked.forEach(checkbox => checkbox.checked = false);
+        count_checkboxes();
       }
-      document.addEventListener("change", count_checkboxes);
 
+      function count_checkboxes(event=null) {
+        var checked = document.querySelectorAll("input[name='publication_type']:checked");
+        document.getElementById('publication-count').innerHTML = checked.length;
+      }
+
+      document.addEventListener("change", count_checkboxes);
       count_checkboxes()
     </script>
     <div class="nhsuk-form-group">

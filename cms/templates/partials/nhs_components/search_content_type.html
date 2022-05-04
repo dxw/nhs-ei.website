@@ -44,8 +44,17 @@
       <a href="#">Clear filters</a>
     </div>
     <div class="nhsuk-filter-selected" id="search-filter-hint">
-      1 Selected
+      <span id="publication-count">0</span> selected
     </div>
+    <script>
+      function count_checkboxes(event=null) {
+        var checkboxes = document.querySelectorAll("input[name='publication_type']:checked");
+        document.getElementById('publication-count').innerHTML = checkboxes.length;
+      }
+      document.addEventListener("change", count_checkboxes);
+
+      count_checkboxes()
+    </script>
     <div class="nhsuk-form-group">
       <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
         {% for pub_type in publication_types %}

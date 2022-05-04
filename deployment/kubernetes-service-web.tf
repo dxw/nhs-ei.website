@@ -40,6 +40,11 @@ resource "helm_release" "web" {
     value = "http://${data.kubernetes_service.elasticsearch.spec.0.cluster_ip}:9200"
   }
 
+  set {
+    name  = "environment.scrapy_endpoint"
+    value = "http://${data.kubernetes_service.scrapy.spec.0.cluster_ip}:8001/"
+  }
+
   dynamic "set" {
     for_each = local.web_environment_variables
     content {

@@ -3,32 +3,29 @@
 
 {% block content %}
 <article class="nhsuk-width-container">
-
-    <div class="nhsuk-u-reading-width">
-        {% if self.categorypage_category_relationship %}
-        <div class="nhsuk-body-s">
-            Categories:
-            {% for category in self.categorypage_category_relationship.all %}
-            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <div class="nhsuk-review-date">
-            <div class="nhsuk-body-s">
-                Published: {{ self.first_published_at|date:'d M Y' }} <br>
-                Latest version: {{ self.latest_revision_created_at|date:'d M Y' }}
-            </div>
-              {% comment %}
-                <i>Author: {{ self.author }} we are missing
-                the ability to match ID to
-                a name</i>
-              {% endcomment %}
-        </div>
-
+  <div class="nhsuk-grid-row blog_page">
+    <div class="nhsuk-grid-column-two-thirds">
         <h1>{{ self.title }}</h1>
-        {{ self.body|richtext }}
-    </div>
+				<div class="nhsuk-review-date">
+					<div class="nhsuk-body-s">
+						<strong>Published:</strong> {{ self.first_published_at|date:'d M Y' }} <br>
+        		{% if self.categorypage_category_relationship %}
+         			<strong>Categories:</strong>
+            	{% for category in self.categorypage_category_relationship.all %}
+            		<a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            	{% endfor %}
+        		{% endif %}
+					</div>
+				</div>
+				{{ self.body|richtext }}
+			</div>
 
+			{% comment %}
+				<i>Author: {{ self.author }} we are missing
+				the ability to match ID to
+				a name</i>
+      {% endcomment %}
+    </div>
+	</div>
 </article>
 {% endblock content %}

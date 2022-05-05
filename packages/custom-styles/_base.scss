@@ -119,3 +119,18 @@ a:visited {
     margin-bottom: 15px;
   }
 }
+
+//blog
+.blog_page {
+  .nhsuk-image {
+    @media (min-width:741px){
+      margin-top: 25px;
+    }
+  }
+  .nhsuk-image__img {
+    display: block;
+    @media (min-width:741px){
+      width: 90%;
+    }
+  }
+}

@@ -20,7 +20,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="after-day">
             Day
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="after-day" name="after-day" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="after-day" name="after-day" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_from.day}}">
         </div>
       </div>
       <div class="nhsuk-date-input__item">
@@ -28,7 +28,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="after-month">
             Month
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="after-month" name="after-month" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="after-month" name="after-month" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_from.month}}">
         </div>
       </div>
       <div class="nhsuk-date-input__item">
@@ -36,7 +36,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="after-year">
             Year
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="after-year" name="after-year" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="after-year" name="after-year" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_from.year}}">
         </div>
       </div>
   </div>
@@ -53,7 +53,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="before-day">
             Day
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="before-day" name="before-day" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="before-day" name="before-day" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_to.day}}">
         </div>
       </div>
       <div class="nhsuk-date-input__item">
@@ -61,7 +61,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="before-month">
             Month
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="before-month" name="before-month" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="before-month" name="before-month" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_to.month}}">
         </div>
       </div>
       <div class="nhsuk-date-input__item">
@@ -69,7 +69,7 @@
           <label class="nhsuk-label nhsuk-date-input__label" for="before-year">
             Year
           </label>
-          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="before-year" name="before-year" type="text" pattern="[0-9]*" inputmode="numeric">
+          <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="before-year" name="before-year" type="text" pattern="[0-9]*" inputmode="numeric" value="{{date_to.year}}">
         </div>
       </div>
   </div>

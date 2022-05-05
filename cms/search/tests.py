@@ -171,6 +171,33 @@ class TestSearchWithFilters(TestCase):
         )
         self.assertResultsRangeSummaryEquals(response, min=1, max=7, total=7)
 
+    def test_date_range_remembers_full_date(self):
+        """Confirm that all the date fragments correctly correspond to each other"""
+        response = self.client.get(
+            "/search/?query=e&content_type=all&after-day=2&after-month=3&after-year=2004&before-day=5&before-month=6&before-year=2007"
+        )
+        root = lxml.html.fromstring(response.rendered_content)
+        self.assertEqual(root.xpath("//input[@id='after-year']/@value"), ["2004"])
+        self.assertEqual(root.xpath("//input[@id='after-month']/@value"), ["3"])
+        self.assertEqual(root.xpath("//input[@id='after-day']/@value"), ["2"])
+        self.assertEqual(root.xpath("//input[@id='before-year']/@value"), ["2007"])
+        self.assertEqual(root.xpath("//input[@id='before-month']/@value"), ["6"])
+        self.assertEqual(root.xpath("//input[@id='before-day']/@value"), ["5"])
+
+    def test_date_range_remembers_partial_date(self):
+        """If the dates were filled in before the user clicked the search button,
+        we fill in the dates afterwards. (Also demonstrates the differing date ranges)"""
+        response = self.client.get(
+            "/search/?query=e&content_type=all&after-year=2021&before-year=2022"
+        )
+        root = lxml.html.fromstring(response.rendered_content)
+        self.assertEqual(root.xpath("//input[@id='after-year']/@value"), ["2021"])
+        self.assertEqual(root.xpath("//input[@id='after-month']/@value"), ["1"])
+        self.assertEqual(root.xpath("//input[@id='after-day']/@value"), ["1"])
+        self.assertEqual(root.xpath("//input[@id='before-year']/@value"), ["2022"])
+        self.assertEqual(root.xpath("//input[@id='before-month']/@value"), ["12"])
+        self.assertEqual(root.xpath("//input[@id='before-day']/@value"), ["31"])
+
     def test_type_filters(self):
         response = self.client.get("/search/?query=e&content_type=pages")
         self.assertResultsRangeSummaryEquals(response, min=1, max=10, total=10)

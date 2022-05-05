@@ -5,7 +5,7 @@ from wagtail.search.models import Query
 import lxml.html
 import re
 
-from cms.search.views import parse_date
+from cms.search.views import pageless_query, parse_date
 
 from cms.pages.models import Page, BasePage
 
@@ -24,6 +24,16 @@ class TestSearchDescription(TestCase):
         response = self.client.get("/search/?query=e")
         self.assertContains(response, "search_description")
         self.assertNotContains(response, "blah")
+
+
+class TestPagelessQuery(TestCase):
+    def test_pageless_query(self):
+        self.assertEqual(
+            pageless_query(
+                "http://example/search/?kitten=yes&repeated=yes&repeated=yes&page=5&ocelot=no"
+            ),
+            "&kitten=yes&repeated=yes&repeated=yes&ocelot=no",
+        )
 
 
 class TestDateHandling(TestCase):

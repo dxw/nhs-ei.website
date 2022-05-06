@@ -10,6 +10,22 @@ from cms.search.views import parse_date
 from cms.pages.models import Page, BasePage
 
 
+class TestSearchDescription(TestCase):
+    def test_search_description_in_search(self):
+        """Search description is present and isn't shortened"""
+        BasePage.objects.create(
+            title="a page",
+            slug="a_page",
+            depth=1,
+            path="/a_page",
+            search_description="stuff " * 100 + "has a search_description",
+            body="blah blah blah",
+        )
+        response = self.client.get("/search/?query=e")
+        self.assertContains(response, "search_description")
+        self.assertNotContains(response, "blah")
+
+
 class TestDateHandling(TestCase):
     def test_dates(self):
         self.assertEqual(parse_date(year="", month="", day="", before=True), None)

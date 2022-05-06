@@ -71,6 +71,9 @@
         </div>
         <hr>
         <h1>{{ self.title }}</h1>
+        {% if self.search_description %}
+          <p>{{self.search_description}}</p>
+        {% endif %}
         {% if self.publication_publication_type_relationship %}
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">

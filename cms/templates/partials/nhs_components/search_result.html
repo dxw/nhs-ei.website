@@ -4,7 +4,11 @@
   <a href="{% pageurl result %}">{{ result.title|truncatewords:"16" }}</a>
 </h2>
 <div class="nhsuk-body-s">
-  {{ result.specific.body|truncatewords_html:"20"|richtext|striptags }}
+  {% if result.search_description %}
+    {{ result.search_description }}
+  {% else %}
+    {{ result.specific.body|truncatewords_html:"20"|richtext|striptags }}
+  {% endif %}
 </div>
 <div class="search-meta">
   <span class="search-result-content-type">

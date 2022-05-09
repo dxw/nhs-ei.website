@@ -199,3 +199,19 @@ Select 'Live logs'
 Select the pod from the drop down
 
 You can also select the link 'View in Log Analytics' to view historical logs
+
+#### Generating Azure Credentials for GitHub actions
+
+GitHub actions requires access to AKS to do a helm release
+
+To generate these, run:
+
+```
+az ad sp create-for-rbac \
+  -n "nhsei-<ENVIRONMENT>-default-resources-authentication" \
+  --role Contributor \
+  --scopes /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/nhsei-<ENVIRONMENT>-default \
+  --sdk-auth
+```
+
+Format the output into a single line before adding to GitHub actions

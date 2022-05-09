@@ -17,13 +17,13 @@ jobs:
       - name: Azure Container Registry login
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.AZURE_CLIENTID }}
-          password: ${{ secrets.AZURE_SECRET }}
-          registry: ${{ secrets.ACR_URL }}
+          username: ${{ secrets.TESTING_AZURE_ACR_CLIENTID }}
+          password: ${{ secrets.TESTING_AZURE_ACR_SECRET }}
+          registry: ${{ secrets.TESTING_ACR_URL }}
       - name: Prepare tags
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.ACR_URL }}/nhsei-website
+          DOCKER_IMAGE=${{ secrets.TESTING_ACR_URL }}/nhsei-website
           VERSION=edge
           if [[ $GITHUB_REF == refs/pull/* ]]; then
             VERSION=pr-${{ github.event.number }}
@@ -48,31 +48,15 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
-      - uses: azure/aks-set-context@v1
+      - uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          resource-group: ${{ secrets.AZURE_CLUSTER_RESOURCE_GROUP }}
-          cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
+          creds: ${{ secrets.TESTING_AZURE_CREDENTIALS }}
+      - uses: azure/aks-set-context@v2
+        with:
+          resource-group: ${{ secrets.TESTING_AZURE_CLUSTER_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.TESTING_AZURE_CLUSTER_NAME }}
       - uses: azure/setup-helm@v1
       - name: Install with Helm
         run: |
-          HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',' | sed 's/,$//g')"
-          ALLOWED_HOSTS="$(echo www.england.nhs.uk,${HOSTNAMES} | sed 's/,/\\,/g')"
-          helm upgrade --install nhsei-website deployment/helm/nhsei-website \
-            --set-string image.tag=${{ needs.build.outputs.deploy-version }} \
-            --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
-            --set-string imageCredentials.username=${{ secrets.AZURE_CLIENTID }} \
-            --set-string imageCredentials.password=${{ secrets.AZURE_SECRET }} \
-            --set ingress.tlshosts="{${HOSTNAMES}}" \
-            --set ingress.hostnames="{${HOSTNAMES}}" \
-            --set-string environment.allowed_hosts="${ALLOWED_HOSTS}" \
-            --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
-            --set-string environment.email_url="${{ secrets.EMAIL_URL }}" \
-            --set-string environment.default_from_email="${{ secrets.DEFAULT_FROM_EMAIL }}" \
-            --set-string environment.server_email="${{ secrets.SERVER_EMAIL }}" \
-            --set-string environment.azure_container="website-media" \
-            --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}" \
-            --set-string environment.wagtailsearch_urls="${{ secrets.WAGTAILSEARCH_URLS }}" \
-            --set-string environment.basic_auth_password="${{ secrets.BASIC_AUTH_PASSWORD }}" \
-            --set-string auth.secret=basic-auth \
-            --set-string auth.realm="Authentication required"
+          helm upgrade --reuse-values nhsei-testing-web deployment/helm/nhsei-website \
+            --set-string image.tag=${{ needs.build.outputs.deploy-version }}

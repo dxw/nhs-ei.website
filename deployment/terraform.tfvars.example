@@ -1,6 +1,9 @@
 project                       = "nhsei"
 azure_region                  = "uksouth"
 virtual_network_address_space = "10.0.0.0/16"
+custom_apex_domain            = "example.net"
+letsencrypt_email             = "hello@example.net"
+letsencrypt_server            = "https://acme-v02.api.letsencrypt.org/directory"
 acr_options = {
   name           = "nhseiwebsite"
   resource_group = "nhsei-website-container"

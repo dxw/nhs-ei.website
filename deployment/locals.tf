@@ -3,6 +3,10 @@ locals {
   prefix       = "${local.project}-${terraform.workspace}"
   azure_region = var.azure_region
 
+  custom_apex_domain = var.custom_apex_domain
+  letsencrypt_email  = var.letsencrypt_email
+  letsencrypt_server = var.letsencrypt_server
+
   virtual_network_address_space = var.virtual_network_address_space
   acr_options                   = var.acr_options
   web_image_tag                 = var.web_image_tag
@@ -27,6 +31,8 @@ locals {
   default_postgres_web_db_url    = "psql://${local.default_postgres_username}:${local.default_postgres_password}@${local.default_postgres_host}:${local.default_postgres_port}/${local.default_postgres_web_db}?sslmode=require"
   default_postgres_scrapy_db     = azurerm_postgresql_database.default_scrapy.name
   default_postgres_scrapy_db_url = "psql://${local.default_postgres_username}:${local.default_postgres_password}@${local.default_postgres_host}:${local.default_postgres_port}/${local.default_postgres_scrapy_db}?sslmode=require"
+
+  ingress_hostname     = "${local.prefix}-ingress.${local.azure_region}.cloudapp.azure.com"
 
   default_tags = {
     managedby : "terraform",

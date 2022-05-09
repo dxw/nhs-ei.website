@@ -10,6 +10,24 @@ variable "azure_region" {
   default     = "uksouth"
 }
 
+variable "custom_apex_domain" {
+  description = "Custom apex domain. This is the apex domain that will be used to genereate TLS certificates for the ingress. A DNS record must be created for each environment once the ingress has been launched - eg. <project>-ingress.<terraform-workspace>.<custom_apex_domain>"
+  type        = string
+  default     = ""
+}
+
+variable "letsencrypt_email" {
+  description = "Letsencrypt email"
+  type        = string
+  default     = ""
+}
+
+variable "letsencrypt_server" {
+  description = "Letsencrypt server"
+  type        = string
+  default     = "https://acme-v02.api.letsencrypt.org/directory"
+}
+
 variable "virtual_network_address_space" {
   description = "Virtual Network address space CIDR"
   type        = string

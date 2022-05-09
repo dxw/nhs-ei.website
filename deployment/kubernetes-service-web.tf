@@ -17,7 +17,23 @@ resource "helm_release" "web" {
 
   set {
     name  = "ingress.hostnames[0]"
-    value = "${local.prefix}-ingress.${local.azure_region}.cloudapp.azure.com"
+    value = local.ingress_hostname
+  }
+
+  dynamic "set" {
+    for_each = local.custom_apex_domain == "" ? [] : [0]
+    content {
+      name  = "ingress.hostnames[1]"
+      value = "${local.project}-ingress.${terraform.workspace}.${local.custom_apex_domain}"
+    }
+  }
+
+  dynamic "set" {
+    for_each = local.custom_apex_domain == "" ? [] : [0]
+    content {
+      name  = "ingress.tlshosts[0]"
+      value = "${local.project}-ingress.${terraform.workspace}.${local.custom_apex_domain}"
+    }
   }
 
   set {

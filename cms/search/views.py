@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-
 from django.conf import settings
 
 from cms.publications.models import Publication
@@ -13,7 +12,23 @@ from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
 
+from urllib.parse import urlparse, parse_qsl, urlencode
+
 import calendar
+
+
+def pageless_query(url):
+    """Return the query part of the URL without the page
+    e.g. 'http://server/search/?page=3&query=e'
+    returns &query=e
+
+    We prepend a & because this is going to get appended to search/?page=4 or similar
+    You may use request.build_absolute_uri() to get the URL
+    """
+    url_query = parse_qsl(urlparse(url).query)
+    url_query = [fragment for fragment in url_query if fragment[0] != "page"]
+    return "&" + urlencode(url_query)
+
 
 acceptable_sort_orders = [
     "latest_revision_created_at",
@@ -72,10 +87,10 @@ def search(request):
     sample query
     ?
     query=nursing&
-    order=pub_date_asc&
+    order=first_published_at&
     content_type=pages&
-    date_from=2020-11-01&
-    date_to=2020-11-29
+    before-year=2020&before_month=11&before_day=1&
+    after-year=2011&after_month=6&before_day=17
     """
 
     def get_date(before=True):
@@ -92,9 +107,6 @@ def search(request):
     search_type = request.GET.get("content_type", "")
     date_from = get_date(before=False)
     date_to = get_date(before=True)
-
-    # date_from = request.GET.get("date_from", "")
-    # date_to = request.GET.get("date_to", "")
 
     page = int(request.GET.get("page", 1))
     search_results_count = 0
@@ -149,9 +161,7 @@ def search(request):
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
 
-    search_params = "&query={}&order={}&content_type={}&date_from={}&date_to={}".format(
-        query_string, search_ordering, search_type, date_from, date_to
-    )
+    search_params = pageless_query(request.build_absolute_uri())
 
     # figure out the page results from - to numbers
     if page > 0:

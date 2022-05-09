@@ -1,9 +1,52 @@
-resource "azurerm_kubernetes_cluster" "cluster" {
-  name                = "${local.project}-k8s"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "${local.project}-k8s"
-  tags                = local.default_tags
+resource "azurerm_kubernetes_cluster" "default" {
+  name                = "${local.prefix}-default"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+
+  kubernetes_version = local.aks_version
+  dns_prefix         = "${local.prefix}-default"
+
+  role_based_access_control_enabled = true
+
+  default_node_pool {
+    name                = "default"
+    node_count          = local.aks_node_counts["count"]
+    min_count           = local.aks_node_counts["min"]
+    max_count           = local.aks_node_counts["max"]
+    vm_size             = local.aks_vm_size
+    type                = "VirtualMachineScaleSets"
+    enable_auto_scaling = true
+    zones               = local.aks_availability_zones
+    vnet_subnet_id      = azurerm_subnet.default_aks_nodes.id
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  aci_connector_linux {
+    subnet_name = azurerm_subnet.default_aks_nodes.name
+  }
+
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.default_aks_oms_agent.id
+  }
+
+  azure_policy_enabled             = false
+  http_application_routing_enabled = false
+
+  network_profile {
+    network_plugin     = "azure"
+    network_policy     = "calico"
+    network_mode       = "transparent"
+    outbound_type      = "loadBalancer"
+    load_balancer_sku  = "standard"
+    service_cidr       = cidrsubnet(local.virtual_network_address_space, 8, 0)
+    dns_service_ip     = cidrhost(cidrsubnet(local.virtual_network_address_space, 8, 0), 10)
+    docker_bridge_cidr = "172.17.0.0/16"
+  }
+
+  api_server_authorized_ip_ranges = local.aks_api_authorized_ip_ranges
 
   lifecycle {
     ignore_changes = [
@@ -11,41 +54,5 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     ]
   }
 
-  default_node_pool {
-    name                = "default"
-    node_count          = 2
-    vm_size             = "Standard_DS2_v2"
-    type                = "VirtualMachineScaleSets"
-    enable_auto_scaling = true
-    availability_zones  = [1, 2, 3]
-    min_count           = 1
-    max_count           = 4
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  addon_profile {
-    aci_connector_linux {
-      enabled = false
-    }
-
-    azure_policy {
-      enabled = false
-    }
-
-    http_application_routing {
-      enabled = false
-    }
-
-    kube_dashboard {
-      enabled = false
-    }
-
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = azurerm_log_analytics_workspace.oms.id
-    }
-  }
+  tags = local.default_tags
 }

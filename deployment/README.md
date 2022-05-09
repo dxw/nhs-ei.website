@@ -110,22 +110,92 @@ If everything looks good, answer `yes` and wait for the new infrastructure to be
 
 #### Connecting to the Kubernetes cluster
 
-The Terraform state file contains the details needed to connect to the cluster.
-The output is named `kube_config`.
+Install kubectl (The kubernetes cli):
 
-```j
-$ terraform output kube_config > ~/.nhsei-azurek8s
-$ export KUBECONFIG=~/.nhsei-azurek8s
+```
+$ brew install kubectl
 ```
 
-You should be able to run `kubectl` commands normally.
+Configure kubectl to connect to the Kubernetes cluster:
 
-## Things on Staging that aren't in Terraform yet
+```
+$ az aks get-credentials --resource-group <ResourceGroup> --name <AKSCluster>
+```
 
-### Create a valid certificate
-Manually: `kubectl create --edit -f https://cert-manager.io/docs/tutorials/acme/example/production-issuer.yaml` then do the things mentioned in https://docs.cert-manager.io/en/release-0.11/reference/clusterissuers.html
-This can probably be Terraformed with https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
+You should be able to run `kubectl` commands normally, eg:
 
-### Connect Postgresql securely
-Add a private endpoint. Terraform with
-https://github.com/hashicorp/terraform-provider-azurerm/blob/main/examples/private-endpoint/postgresql/main.tf
+```
+$ kubectl get pods -A
+```
+
+#### View the status of Scrapy
+
+Scrapy isn't publically accessable, so we need to use kubectl to port-forward from our local machines to the running service
+
+List the services to find the name of the scrapy service:
+
+```
+$ kubectl get services --namespace scrapy
+```
+
+Port forward to 8001:
+
+```
+$ kubectl port-forward --namespace scrapy service/<ScrapyServiceName> 8001:8001
+```
+
+Open http://localhost:8001 in your browser
+
+#### Accessing containers
+
+List the pods to find the one you wish to connect to:
+
+```
+$ kubectl list pods -A
+```
+
+or also specify the namespace to filter pods:
+
+```
+$ kubectl list pods --namespace web
+```
+
+Connect to one of the pods returned:
+
+```
+$ kubectl exec -ti --namespace web <PodName> -- /bin/bash
+```
+
+#### Accessing Postgres
+
+The postgres database can be accessed via the web service or scrapy service.
+
+Connect to one of the containers as described above.
+
+To run a shell in postgres, run:
+
+```
+./manage.py dbshell
+```
+
+#### Viewing logs
+
+The logs are accessable via the Azure portal
+
+Log in, and navigate to the Kubernetes service console
+
+Select the required kubernetes service
+
+Select 'Services and ingresses'
+
+Select either the web or scrapy service
+
+Select 'Pods'
+
+Select the Pod in the list
+
+Select 'Live logs'
+
+Select the pod from the drop down
+
+You can also select the link 'View in Log Analytics' to view historical logs

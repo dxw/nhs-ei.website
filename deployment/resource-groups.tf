@@ -1,13 +1,13 @@
-resource "azurerm_resource_group" "rg" {
-  name     = "${local.project}-k8s-resources"
-  location = var.location
+resource "azurerm_resource_group" "default" {
+  name     = "${local.prefix}-default"
+  location = local.azure_region
   tags     = local.default_tags
 }
 
-# Azure CDN needs a location to store metadata for the profile
-# not all regions are supported so we choose one here we know is
-resource "azurerm_resource_group" "cdn" {
-  name     = "${local.project}-cdn-resources"
+# Some resources can only be launched in North Europe (eg. CDN resources)
+# This resource group os for those resources
+resource "azurerm_resource_group" "northeurope" {
+  name     = "${local.prefix}-northeurope"
   location = "northeurope"
   tags     = local.default_tags
 }

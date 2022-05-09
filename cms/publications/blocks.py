@@ -41,6 +41,22 @@ class DocumentBlock(StructBlock):
     title = RichTextBlock(required=False)
     document = DocumentChooserBlock()
     summary = RichTextBlock(required=False)
+    extension_data = {
+        "pdf": ["PDF", "pdf.svg"],
+        "doc": ["MS Word Document", "doc.svg"],
+        "docx": ["MS Word Document", "doc.svg"],
+        "jpg": ["Image", "image.svg"],
+        "jpeg": ["Image", "image.svg"],
+        "gif": ["Image", "image.svg"],
+        "png": ["Image", "image.svg"],
+        "xls": ["Spreadsheet", "spread.svg"],
+        "xlsx": ["Spreadsheet", "spread.svg"],
+        "csv": ["Spreadsheet", "spread.svg"],
+        "tsv": ["Spreadsheet", "spread.svg"],
+        "zip": ["ZIP", "zip.svg"],
+        "ppt": ["Presentation", "ppt.svg"],
+        "pptx": ["Presentation", "ppt.svg"],
+    }
 
     class Meta:
         icon = "doc"
@@ -51,7 +67,9 @@ class DocumentBlock(StructBlock):
         context = super().get_context(value, parent_context)
         context["file_ext"] = value["document"].file_extension
         context["file_size"] = filesizeformat(value["document"].get_file_size())
-
+        context["ext_name"], context["ext_icon"] = self.extension_data.get(
+            context["file_ext"], ["File", "file.svg"]
+        )
         return context
 
 

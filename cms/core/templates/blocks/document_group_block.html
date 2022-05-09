@@ -1,6 +1,8 @@
 {% load wagtailcore_tags %}
-    <ul class="nhsuk-list">
+<section id="documents" class="nhsuk-u-margin-top-6">
+    <div class="nhsei-document-container">
 {% for block in value %}
-        {% include_block block %} <br>
+        {% include_block block %}
 {% endfor %}
-    </ul>
+    </div>
+</section>

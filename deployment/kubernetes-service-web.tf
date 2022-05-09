@@ -45,6 +45,16 @@ resource "helm_release" "web" {
     value = "http://${data.kubernetes_service.scrapy.spec.0.cluster_ip}:8001/"
   }
 
+  set {
+    name  = "environment.azure_connection_string"
+    value = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.default.name};AccountKey=${azurerm_storage_account.default.primary_access_key};EndpointSuffix=core.windows.net"
+  }
+
+  set {
+    name  = "environment.azure_container"
+    value = azurerm_storage_container.web_media.name
+  }
+
   dynamic "set" {
     for_each = local.web_environment_variables
     content {

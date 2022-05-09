@@ -16,6 +16,12 @@ variable "custom_apex_domain" {
   default     = ""
 }
 
+variable "cdn_hostname" {
+  description = "CDN Hostname"
+  type        = string
+  default     = ""
+}
+
 variable "letsencrypt_email" {
   description = "Letsencrypt email"
   type        = string

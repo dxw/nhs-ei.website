@@ -33,6 +33,8 @@ locals {
   default_postgres_scrapy_db_url = "psql://${local.default_postgres_username}:${local.default_postgres_password}@${local.default_postgres_host}:${local.default_postgres_port}/${local.default_postgres_scrapy_db}?sslmode=require"
 
   ingress_hostname     = "${local.prefix}-ingress.${local.azure_region}.cloudapp.azure.com"
+  cdn_origin_host_name = local.custom_apex_domain == "" ? local.ingress_hostname : "${local.project}-ingress.${terraform.workspace}.${local.custom_apex_domain}"
+  cdn_hostname         = var.cdn_hostname
 
   default_tags = {
     managedby : "terraform",

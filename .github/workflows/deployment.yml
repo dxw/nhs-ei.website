@@ -60,3 +60,7 @@ jobs:
         run: |
           helm upgrade --reuse-values --namespace web nhsei-testing-web deployment/helm/nhsei-website \
             --set-string image.tag=${{ needs.build.outputs.deploy-version }}
+      - name: Update pubish-scheduled-pages cron job image tag with Helm
+        run: |
+          helm upgrade --reuse-values --namespace cron-jobs nhsei-testing-cron-jobs deployment/helm/nhsei-cron-jobs \
+            --set-string jobs.publish-scheduled-pages.image.tag=${{ needs.build.outputs.deploy-version }}

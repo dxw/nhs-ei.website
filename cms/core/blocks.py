@@ -3,9 +3,11 @@ from wagtail.core.blocks import (
     StreamBlock,
     StructBlock,
     CharBlock,
+    ListBlock,
 )
 from wagtail.core.blocks.field_block import (
     RichTextBlock,
+    PageChooserBlock,
 )
 
 from wagtail.images.blocks import (
@@ -63,6 +65,19 @@ class PageHeadingBlock(StructBlock):
         template = "blocks/page_heading_block.html"
 
 
+class PromotedLinkBlock(StructBlock):
+    title = CharBlock()
+    image = ImageChooserBlock()
+    link = PageChooserBlock()
+
+
+class PromotedLinksBlock(StructBlock):
+    links = ListBlock(PromotedLinkBlock())
+
+    class Meta:
+        template = "blocks/promo_links_block.html"
+
+
 class CoreBlocks(StreamBlock):
     action_link = ActionLinkBlock(group="Base")
     care_card = CareCardBlock(group="Base")
@@ -81,6 +96,7 @@ class CoreBlocks(StreamBlock):
     promo = CardImageBlock(group="Base")
     promo_group = CardGroupBlock(group="Base")
     page_heading = PageHeadingBlock(group="Custom")
+    promoted_links = PromotedLinksBlock(group="Custom")
 
     recent_posts = cms.categories.blocks.RecentPostsBlock(group="Custom")
     text = RichTextBlock(

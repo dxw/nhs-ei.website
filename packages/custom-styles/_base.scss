@@ -155,3 +155,11 @@ a:visited {
     top:4px;
   }
 }
+
+.component-promos.has-three-items {
+  .nhsuk-image__img {
+     @media (min-width:740px) {
+      max-height:136px;
+    }
+  }
+}

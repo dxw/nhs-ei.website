@@ -1,0 +1,16 @@
+{% load wagtailimages_tags %}
+
+<div class="nhsuk-grid-row component-promos has-three-items">
+  {% for link in value.links %}
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        {% image link.image fill-400x150 class="nhsuk-image__img" %}
+      </figure>
+      <h3><a href="{{ link.link.url }}" class="nhsuk-body-m">{{ link.title }}</a><h3>
+    </div>
+    {% if forloop.counter|divisibleby:3 and not forloop.last %}
+      </div>
+      <div class="nhsuk-grid-row component-promos has-three-items">
+    {% endif %}
+  {% endfor %}
+</div>

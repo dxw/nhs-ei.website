@@ -1,11 +1,61 @@
 .template-homepage {
-    .featured-section {
-        background-color: $color_nhsuk-blue;
-        @include nhsuk-responsive-padding(6);
-        color: $color_nhsuk-white;
-        a{
-            color: $color_nhsuk-white;
+  .featured-section {
+    background-color: $color_nhsuk-blue;
+    @include nhsuk-responsive-padding(6);
+    color: $color_nhsuk-white;
+    a{
+      color: $color_nhsuk-white;
 
-        }
     }
+  }
 }
+
+.template-homepage {
+  .component-promos.has-three-items {
+    .nhsuk-image__img {
+       @media (min-width:740px) {
+        max-height:136px;
+      }
+    }
+  }
+  svg {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    position: relative;
+    margin: 0 5px 0 0;
+  }
+
+  span.post-author {
+      padding-left: 20px;
+  }
+  a.nhsuk-body-m {
+    color: $nhsuk-link-color;
+    @media (max-width:740px) {
+      font-size:19px;
+    }
+  }
+}
+
+.float-right {
+  float:right;
+}
+
+.has-three-items .blog-post {
+  @media (min-width:740px) {
+    border-right: 1px solid $nhsuk-border-color;
+  }
+  @media (max-width:740px) {
+    border-bottom: 1px solid $nhsuk-border-color;
+    display: block;
+  }
+  &:nth-last-child(2) {
+    border: none;
+  }
+  h3 {
+    @media (max-width:740px) {
+      margin-top: 32px;
+    }
+  }
+}
+

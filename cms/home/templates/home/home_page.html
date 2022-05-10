@@ -1,151 +1,142 @@
 {% extends "base.html" %}
 {% load static posts_tags publications_tags wagtailcore_tags wagtailimages_tags %}
-
 {% block body_class %}template-homepage{% endblock %}
-
-{% block outer_content %}
-  {% include "wagtailnhsukfrontend/hero.html" %}
-{% endblock%}
-
 {% block content %}
-
-<div class="nhsuk-width-container nhsuk-u-margin-top-6">
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-
-            <h1 class="nhsuk-u-visually-hidden">
-                NHS England and Improvement Homepage
-            </h1>
-
-            {% for block in self.body %}
-                {% include_block block %}
-            {% endfor %}
-
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1>Mental Health {{ self.title }}</h1>
+      <div class="nhsuk-review-date">
+        <p class="nhsuk-body-s">
+          Overview and description for this section so users know what they can expect to find here.
+          In lorem orci, dapibus quis orci condimentum, sagittis ultrices purus. Pellentesque suscipit aliquam massa, lacinia mollis nunc feugiat et. Praesent at gravida mi. Vivamus varius est quis rutrum rutrum.
+          Phasellus sit amet sagittis augue. In ultricies facilisis leo, ut ultricies dolor sollicitudin vitae. Quisque pretium sem eu mi iaculis blandit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        </p>
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2017/02/mental-health-and-dementia_400x267.jpg" alt="">
+      </figure>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row component-promos has-three-items">
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2017/02/cancer-02_1400x520.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">Children and young people</a><h3>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2017/03/ambulance-crew-1.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">Adults</a><h3>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2018/11/prim-care-hero.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">NHS-led Provider Collaboratives</a><h3>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row component-promos has-three-items">
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2017/02/cancer-02_1400x520.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">Improving Access to Psychological Therapies (IAPT)</a><h3>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2017/03/ambulance-crew-1.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">Case studies</a><h3>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://www.england.nhs.uk/wp-content/uploads/2018/11/prim-care-hero.jpg" alt="">
+      </figure>
+      <h3><a href="#" class="nhsuk-body-m">Dementia</a><h3>
+    </div>
+    <div class="nhsuk-grid-column-full">
+      <h4><a href="#" class="float-right nhsuk-body-m"">View all pages</a><h4>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row nhsuk-u-margin-top-6 post-component">
+    <div class="nhsuk-grid-column-full">
+      <h2>See the latest on mental health</h2>
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="blog-post">
+        <h3><a href="https://www.england.nhs.uk/blog/mental-health-tips-for-people-fleeing-conflict/">Improving the quality of mental health hospital treatment and support for autistic people</a></h3>
+        <div class="rich-text content">
+          <p>It is World Autism Acceptance Week and here, in the Improving Quality team in the national Learning Disability and Autism programme, we are again reflecting on the ways we can…</p>
         </div>
+        <div class="entry-meta group">
+          <strong>Published: </strong><time class="post-meta" datetime="2022-05-06">
+    6 May 2022    </time>
+          <br>
+          <strong>Content type:</strong> blog    
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path class="icon" d="M3.74 11.2A24.31 24.31 0 0 1 .39 11a.43.43 0 0 1-.3-.2.38.38 0 0 1-.09-.34c.22-.95.17-1.27 1.07-1.9s1.8-1 2.12-1.37A.78.78 0 0 0 3.27 6a3.17 3.17 0 0 1-.78-3.58A2.48 2.48 0 0 1 4.8 1.07a2.48 2.48 0 0 1 2.32 1.36 3 3 0 0 1 .27 1.2 3.56 3.56 0 0 0-2.82 2 4.32 4.32 0 0 0 .72 4.6c-.15.1-.33.2-.5.3-.34.22-.7.42-1.05.67zm-.15 3.55a.43.43 0 0 1-.3-.2.38.38 0 0 1-.07-.35c.22-.95.17-1.27 1.07-1.9s1.8-1 2.12-1.37a.78.78 0 0 0 .07-1.18 3.17 3.17 0 0 1-.78-3.58A2.48 2.48 0 0 1 8 4.8a2.48 2.48 0 0 1 2.32 1.37 3.17 3.17 0 0 1-.78 3.58.78.78 0 0 0 .07 1.18c.32.35 1.32.8 2.12 1.37s.85.95 1.07 1.9a.44.44 0 0 1-.07.35.43.43 0 0 1-.3.2 31.21 31.21 0 0 1-4.43.18 30.9 30.9 0 0 1-4.41-.18zm12.33-3.93a.43.43 0 0 1-.3.2 24.67 24.67 0 0 1-3.35.18c-.35-.25-.72-.45-1-.65a5.21 5.21 0 0 1-.52-.3 4.27 4.27 0 0 0 .7-4.6 3.52 3.52 0 0 0-2.8-2 3 3 0 0 1 .27-1.2 2.48 2.48 0 0 1 2.28-1.38 2.48 2.48 0 0 1 2.32 1.37A3.17 3.17 0 0 1 12.74 6a.78.78 0 0 0 .06 1.2c.32.35 1.32.8 2.12 1.37s.85.95 1.07 1.9a.44.44 0 0 1-.07.34z"></path></svg>
+          <a href="https://www.england.nhs.uk/author/dr-prathiba-chitsabesan/" title="Posts by Professor Prathiba Chitsabesan" class="author url fn" rel="author">Professor Prathiba Chitsabesan</a>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+      <h3><a class="nhsuk-body-m" href="https://www.england.nhs.uk/blog/mental-health-tips-for-people-fleeing-conflict/">Mental health clinically-led
+      review of standards</a></h3>
+      <div class="rich-text content">
+        <p>This report sets out the wide-ranging support received through the national consultation on the proposed new…</p>
+      </div>
+      <div class="entry-meta group">
+        <strong>Published: </strong><time class="post-meta" datetime="2022-05-06">
+    6 May 2022    </time>
+        <br>
+        <strong>Content type:</strong> blog
+    </div>
+  <hr>
+</div>
+</div>
+<div class="nhsuk-grid-row has-three-items">
+<div class="nhsuk-grid-column-one-third blog-post nhsuk-u-padding-bottom-6 ">
+    <h3><a class="nhsuk-body-m" href="https://www.england.nhs.uk/blog/mental-health-tips-for-people-fleeing-conflict/">Learning from across England</a></h3>
+    <div class="rich-text content">
+      <p>This report summarises the findings from a series of visits carried out by NHS England’s National Clinical Director…</p>
+    </div>
+    <div class="entry-meta group">
+      <strong>Published: </strong><time class="post-meta" datetime="2022-05-06">
+    6 May 2022    </time>
+      <br>
+      <strong>Content type:</strong> blog
+  </div>
+</div>
+<div class="nhsuk-grid-column-one-third blog-post nhsuk-u-padding-bottom-6">
+  <h3><a class="nhsuk-body-m" href="https://www.england.nhs.uk/blog/mental-health-tips-for-people-fleeing-conflict/">Mental health clinically-led</a></h3>
+  <div class="rich-text content">
+    <p>This report sets out the wide-ranging support received through the national consultation on the proposed new…</p>
+  </div>
+  <div class="entry-meta group">
+    <strong>Published: </strong><time class="post-meta" datetime="2022-05-06">
+    6 May 2022    </time>
+    <br>
+    <strong>Content type:</strong> blog
+</div>
+</div>
+<div class="nhsuk-grid-column-one-third blog-post nhsuk-u-padding-bottom-6">
+  <h3><a class="nhsuk-body-m" href="https://www.england.nhs.uk/blog/mental-health-tips-for-people-fleeing-conflict/">NHS treating patient</a></h3>
+  <div class="rich-text content">
+    <p>This report sets out the wide-ranging support received through the national consultation on the proposed new…</p>
+  </div>
+  <div class="entry-meta group">
+    <strong>Published: </strong><time class="post-meta" datetime="2022-05-06">
+    6 May 2022    </time>
+    <br>
+    <strong>Content type:</strong> blog
+</div>
+</div>
+<div class="nhsuk-grid-column-full nhsuk-u-margin-top-4">
+      <h4><a href="#" class="float-right nhsuk-body-m">View all the latest</a><h4>
     </div>
 </div>
-
-{% comment %} <section class="latest-publications-section">
-    <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <h2 class="nhsuk-heading-l">{{ self.all_publications_title }}</h2>
-                <p>{{ self.all_publications_sub_title|richtext }}</p>
-                <div class="nhsuk-grid-row">
-                    {% get_lastest_publications_columns 4 as publications %}
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for publication in publications.0 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ publication.url }}">
-                                            {{ publication.title }}</a>
-                                    </h2>
-                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
-                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
-                                      </span>
-                                    {% endfor %}
-                                    {% include 'partials/article-list-meta--publication.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for publication in publications.1 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ publication.url }}">
-                                            {{ publication.title }}</a>
-                                    </h2>
-                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
-                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
-                                      </span>
-                                    {% endfor %}
-                                    {% include 'partials/article-list-meta--publication.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                </div>
-                {% if self.all_publications_page %}
-                <a href="{{ self.all_publications_page.url }}">View all publications</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-
-<article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
-    <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <h2 class="nhsuk-u-visually-hidden">Highlights</h2>
-            </div>
-
-            <div class="nhsuk-grid-column-one-half">
-                {{ self.body|richtext }}
-            </div>
-            <div class="nhsuk-grid-column-one-half">
-                {% image self.body_image fill-800x600 %}
-            </div>
-        </div>
-    </div>
-</article>
-
-<section class="news-section">
-    <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
-                {% if self.all_news_sub_title %}
-                <p>{{ self.all_news_sub_title|richtext }}</p>
-                {% endif %}
-                <div class="nhsuk-grid-row">
-                    {% get_lastest_posts_columns 4 as posts %}
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for post in posts.0 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for post in posts.1 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                </div>
-                {% if self.all_news_page %}
-                <a href="{{ self.all_news_page.url }}">View all news</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-
-{% include 'partials/warning-callout.html' %} {% endcomment %}
-
 {% endblock content %}

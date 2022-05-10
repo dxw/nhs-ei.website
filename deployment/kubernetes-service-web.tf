@@ -47,27 +47,27 @@ resource "helm_release" "web" {
   }
 
   set {
-    name  = "environment.database_url"
+    name  = "environment.DATABASE_URL"
     value = local.default_postgres_web_db_url
   }
 
   set {
-    name  = "environment.wagtailsearch_urls"
+    name  = "environment.WAGTAILSEARCH_URLS"
     value = "http://${data.kubernetes_service.elasticsearch.spec.0.cluster_ip}:9200"
   }
 
   set {
-    name  = "environment.scrapy_endpoint"
+    name  = "environment.SCRAPY_ENDPOINT"
     value = "http://${data.kubernetes_service.scrapy.spec.0.cluster_ip}:8001/"
   }
 
   set {
-    name  = "environment.azure_connection_string"
+    name  = "environment.AZURE_CONNECTION_STRING"
     value = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.default.name};AccountKey=${azurerm_storage_account.default.primary_access_key};EndpointSuffix=core.windows.net"
   }
 
   set {
-    name  = "environment.azure_container"
+    name  = "environment.AZURE_CONTAINER"
     value = azurerm_storage_container.web_media.name
   }
 

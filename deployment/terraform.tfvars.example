@@ -11,11 +11,13 @@ acr_options = {
 }
 web_image_tag = "sha-123"
 web_environment_variables = {
-  email_url = "smtp://user@:password@localhost:25"
-  default_from_email = "web@example.com"
-  server_email = "web-server@example.com"
-  allowed_hosts = "example.com,example-2.com"
-  basic_auth_password = "secret"
+  EMAIL_URL = "smtp://user@:password@localhost:25"
+  DEFAULT_FROM_EMAIL = "web@example.com"
+  SERVER_EMAIL = "web-server@example.com"
+  ALLOWED_HOSTS = "example.com,example-2.com"
+  BASIC_AUTH_PASSWORD = "secret"
+}
+scrapy_environment_variables = {
 }
 aks_version = "1.21.9"
 aks_vm_size = "Standard_DS2_v2"

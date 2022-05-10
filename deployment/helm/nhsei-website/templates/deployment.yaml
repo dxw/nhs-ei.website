@@ -48,26 +48,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-            - name: ALLOWED_HOSTS
-              value: "{{ .Values.environment.allowed_hosts }}"
-            - name: SCRAPY_ENDPOINT
-              value: "{{ .Values.environment.scrapy_endpoint }}"
-            - name: DATABASE_URL
-              value: "{{ .Values.environment.database_url }}"
-            - name: AZURE_CONNECTION_STRING
-              value: "{{ .Values.environment.azure_connection_string }}"
-            - name: AZURE_CONTAINER
-              value: "{{ .Values.environment.azure_container }}"
-            - name: EMAIL_URL
-              value: "{{ .Values.environment.email_url }}"
-            - name: DEFAULT_FROM_EMAIL
-              value: "{{ .Values.environment.default_from_email }}"
-            - name: SERVER_EMAIL
-              value: "{{ .Values.environment.server_email }}"
-            - name: WAGTAILSEARCH_URLS
-              value: "{{ .Values.environment.wagtailsearch_urls }}"
-            - name: BASIC_AUTH_PASSWORD
-              value: "{{ .Values.environment.basic_auth_password }}"
+            {{- range $envKey, $envValue := .Values.environment }}
+            - name: {{ $envKey }}
+              value: $envValue
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

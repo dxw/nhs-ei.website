@@ -20,8 +20,16 @@ resource "helm_release" "scrapy" {
   }
 
   set {
-    name  = "environment.database_url"
+    name  = "environment.DATABASE_URL"
     value = local.default_postgres_scrapy_db_url
+  }
+
+  dynamic "set" {
+    for_each = local.scrapy_environment_variables
+    content {
+      name  = "environment.${set.key}"
+      value = set.value
+    }
   }
 }
 

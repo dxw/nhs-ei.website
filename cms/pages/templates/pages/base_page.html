@@ -4,36 +4,58 @@
 {% block body_class %}template-basepage{% endblock body_class %}
 
 {% block content %}
-
-<div class="nhsuk-width-container">
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-            <h1>{{ self.title }}</h1>
-        </div>
-    </div>
-
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-            {% for block in self.body %}
-                {% include_block block %}
-            {% endfor %}
-        </div>
-        <div class="nhsuk-grid-column-one-third">
-            {% if children %}
-            <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this section" aria-labbeledby="sideNav">
-                <h2 id="sideNav" class="nhsuk-heading-s">Pages in this section</h2>
-                <ol class="nhsuk-contents-list__list">
-                    {% for child in children %}
-                    <li class="nhsuk-contents-list__item">
-                        <a class="nhsuk-contents-list__link" href="{{ child.url }}">{{ child }}</a>
-                    </li>
-                    {% endfor %}
-
-                </ol>
-            </nav>
-            {% endif %}
-        </div>
-    </div>
-
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+  </div>
+</div>
+{% if children %}
+	<div class="nhsuk-grid-row">
+		<div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
+			<nav>
+				<h3 class="parent_page_item">
+					<a href="{{ self.get_parent.url  }}">
+						<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							viewBox="0 0 595.28 595.28" style="enable-background:new 0 0 595.28 595.28;" xml:space="preserve">
+							<g>
+								<path d="M382.61,101.28c11.6,3.99,18.7,13.48,26.2,22.19c5.93,6.88,5.15,18.14-0.57,25.29c-1.35,1.69-2.89,3.24-4.43,4.78
+									c-46.92,46.93-93.84,93.86-140.79,140.76c-1.07,1.07-2.46,1.81-3.9,2.85c1.76,1.85,2.78,2.95,3.84,4.01
+									c47.28,47.29,94.57,94.58,141.84,141.88c8.43,8.43,10.99,18.84,4.69,27.28c-5.79,7.77-13.03,14.79-20.73,20.7
+									c-7.24,5.55-17,3.91-24.16-1.97c-1.08-0.89-2.13-1.84-3.12-2.83c-57.15-57.13-114.3-114.26-171.44-171.41
+									c-8.54-8.54-10.4-18.55-5.03-27.78c1.27-2.17,3.01-4.13,4.8-5.93c57.29-57.35,114.58-114.71,172.04-171.89
+									c3.38-3.37,8.17-5.32,12.31-7.93C376.98,101.28,379.79,101.28,382.61,101.28z"/>
+							</g>
+						</svg>
+						{{ self.get_parent.title }}
+					</a>
+				</h3>
+				<a href="{{ self.title.url }}" class="current_page_item">{{ self.title }}</a>
+				{% for child in children %}
+					<a href="{{ child.url }}">{{ child }}</a>
+				{% endfor %}
+			</nav>
+		</div>
+	{% endif %}
+	<div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
+		<h1>{{ self.title }}</h1>
+		{{ self.body }}
+		<hr>
+		<div id="see-all-updates" class="nhsuk-review-date last-publication">
+			<p class="nhsei-body-s">
+					<strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
+					<strong>Date last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
+			</p>
+			<details class="nhsuk-details">
+					<summary class="nhsuk-details__summary">
+							<span class="nhsuk-details__summary-text">
+							Show all updates
+							</span>
+					</summary>
+					<div class="nhsuk-details__text">
+					<!-- functionality to get this to work hasn't been worked out yet. To be implemented when this work has been done -->
+				</div>
+			</details>
+		</div>
+		<hr>
+	</div>
 </div>
 {% endblock content %}

@@ -20,6 +20,14 @@ resource "helm_release" "cron_jobs" {
     value = local.default_postgres_scrapy_db_url
   }
 
+  dynamic "set" {
+    for_each = local.scrapy_environment_variables
+    content {
+      name  = "jobs.scrapy-run-all-imports.env.${set.key}"
+      value = set.value
+    }
+  }
+
   set {
     name  = "jobs.scrapy-run-all-imports.schedule"
     value = "0 18 * * *"
@@ -79,5 +87,13 @@ resource "helm_release" "cron_jobs" {
   set {
     name  = "jobs.publish-scheduled-pages.env.WAGTAIL_SEARCH_URLS"
     value = "http://${data.kubernetes_service.elasticsearch.spec.0.cluster_ip}:9200"
+  }
+
+  dynamic "set" {
+    for_each = local.web_environment_variables
+    content {
+      name  = "jobs.publish-scheduled-pages.env.${set.key}"
+      value = set.value
+    }
   }
 }

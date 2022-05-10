@@ -14,7 +14,6 @@ web_environment_variables = {
   email_url = "smtp://user@:password@localhost:25"
   default_from_email = "web@example.com"
   server_email = "web-server@example.com"
-  wagtail_search_urls = "http://elasticsearch:9200"
   allowed_hosts = "example.com,example-2.com"
   basic_auth_password = "secret"
 }

@@ -108,6 +108,62 @@ Now you can run:
 
 If everything looks good, answer `yes` and wait for the new infrastructure to be created.
 
+#### Terraform variables for infrastructures already launched
+
+There are 2 terraform variables that needs to be changed often, the `web_image_tag` and the `scrapy_image_tag`
+
+This is because the image tags are updated automatically when deployed via GitHub actions
+
+We need to get the value of these before running `terraform apply`, otherwise we risk rolling back, or deploying latest when it's not ready
+
+To get the image tag values, first list the helm releases:
+
+```
+helm list -A
+```
+
+From that list, find the name of the helm release, and it's namespace, and run the following to get the values:
+
+```
+helm get values --namespace <NAMESPACE> <NAME>
+```
+
+This will output all the values associated with the release, eg:
+
+```
+USER-SUPPLIED VALUES:
+environment:
+  # environment variables
+image:
+  tag: sha-1234567890123456789212345678931234567894
+# redacted ...
+```
+
+Copy the image tag into the terraform.tfvars file
+
+The rest of the values are stored in 1Password
+
+#### Adding environment variables to the services
+
+There are 2 terraform variables (maps) that can be updated to add, change or remove environment variables
+
+`web_environment_variables` and `scrapy_environment_variables`
+
+To add an environment variable, just append it to the map, eg:
+
+```
+web_environment_variables = {
+  EXISTING_ENVAR = "foo"
+  NEW_ENVAR      = "bar"
+}
+```
+
+Then run `terraform apply`
+
+This will apply to the service, and cron job
+
+Note: Take care not to accidently overwrite environment variables that are automatically added (eg. the `DATABASE_URL`). These can be found in the `kubernetes-service-web.tf` and `kubernetes-service-scrapy.tf` files. But if you wish, you can overwrite them, as the variable supplied environment variables are added after the ones automatically added.
+
 #### Connecting to the Kubernetes cluster
 
 Install kubectl (The kubernetes cli):

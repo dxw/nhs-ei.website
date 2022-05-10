@@ -51,7 +51,7 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.TESTING_AZURE_CREDENTIALS }}
-      - uses: azure/aks-set-context@v2
+      - uses: azure/aks-set-context@v2.0
         with:
           resource-group: ${{ secrets.TESTING_AZURE_CLUSTER_RESOURCE_GROUP }}
           cluster-name: ${{ secrets.TESTING_AZURE_CLUSTER_NAME }}

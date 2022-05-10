@@ -16,7 +16,7 @@ resource "helm_release" "scrapy" {
 
   set {
     name  = "image.tag"
-    value = "latest"
+    value = local.scrapy_image_tag
   }
 
   set {

@@ -60,6 +60,11 @@ variable "web_environment_variables" {
   default     = {}
 }
 
+variable "scrapy_image_tag" {
+  description = "Tag of scrapy image to deploy"
+  type        = string
+}
+
 variable "scrapy_environment_variables" {
   description = "Web environment variables"
   type        = map(string)

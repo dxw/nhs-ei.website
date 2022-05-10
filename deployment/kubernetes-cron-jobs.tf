@@ -12,7 +12,7 @@ resource "helm_release" "cron_jobs" {
   # scrapy run all imports
   set {
     name  = "jobs.scrapy-run-all-imports.image.tag"
-    value = "latest"
+    value = local.scrapy_image_tag
   }
 
   set {

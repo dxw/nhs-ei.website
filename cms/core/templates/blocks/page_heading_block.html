@@ -1,0 +1,18 @@
+{% load wagtailimages_tags %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    {% if self.text %}
+      <div>
+        <p class="nhsuk-body-s">{{ self.text }}</p>
+      </div>
+    {% endif %}
+  </div>
+  {% if self.image %}
+    <div class="nhsuk-grid-column-one-third">
+      <figure class="nhsuk-image">
+        {% image self.image width-600 class="nhsuk-image__img" %}
+      </figure>
+    </div>
+  {% endif %}
+</div>

@@ -1,9 +1,15 @@
 from wagtail.core.blocks import (
     RawHTMLBlock,
     StreamBlock,
+    StructBlock,
+    CharBlock,
 )
 from wagtail.core.blocks.field_block import (
     RichTextBlock,
+)
+
+from wagtail.images.blocks import (
+    ImageChooserBlock,
 )
 
 from wagtailnhsukfrontend.blocks import (
@@ -49,6 +55,14 @@ RICHTEXT_FEATURES_ALL = [
 ]
 
 
+class PageHeadingBlock(StructBlock):
+    text = RichTextBlock()
+    image = ImageChooserBlock(required=False)
+
+    class Meta:
+        template = "blocks/page_heading_block.html"
+
+
 class CoreBlocks(StreamBlock):
     action_link = ActionLinkBlock(group="Base")
     care_card = CareCardBlock(group="Base")
@@ -66,6 +80,7 @@ class CoreBlocks(StreamBlock):
     summary_list = SummaryListBlock(group="Base")
     promo = CardImageBlock(group="Base")
     promo_group = CardGroupBlock(group="Base")
+    page_heading = PageHeadingBlock(group="Custom")
 
     recent_posts = cms.categories.blocks.RecentPostsBlock(group="Custom")
     text = RichTextBlock(

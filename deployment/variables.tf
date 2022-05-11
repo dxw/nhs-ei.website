@@ -54,6 +54,12 @@ variable "web_image_tag" {
   type        = string
 }
 
+variable "web_replica_count" {
+  description = "Web deployment replica count"
+  type        = number
+  default     = 3
+}
+
 variable "web_environment_variables" {
   description = "Web environment variables"
   type        = map(string)
@@ -63,6 +69,12 @@ variable "web_environment_variables" {
 variable "scrapy_image_tag" {
   description = "Tag of scrapy image to deploy"
   type        = string
+}
+
+variable "scrapy_replica_count" {
+  description = "Web deployment replica count"
+  type        = number
+  default     = 3
 }
 
 variable "scrapy_environment_variables" {

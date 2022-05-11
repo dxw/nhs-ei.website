@@ -16,6 +16,11 @@ resource "helm_release" "web" {
   namespace = kubernetes_namespace.web.metadata.0.name
 
   set {
+    name  = "replicaCount"
+    value = local.web_replica_count
+  }
+
+  set {
     name  = "ingress.hostnames[0]"
     value = local.ingress_hostname
   }

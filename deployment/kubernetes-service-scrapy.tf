@@ -10,6 +10,11 @@ resource "helm_release" "scrapy" {
   namespace = kubernetes_namespace.scrapy.metadata.0.name
 
   set {
+    name  = "replicaCount"
+    value = local.scrapy_replica_count
+  }
+
+  set {
     name  = "imageCredentials.registry"
     value = data.azurerm_container_registry.web.login_server
   }

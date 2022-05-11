@@ -1,0 +1,15 @@
+This fixture contains a Publication Index Page with five pages
+
+Old Ocelot
+Ocelot Kitten
+Old Panther
+Panther Kitten
+Panthelot
+Puppies
+
+(carefully crafted to all contain an e)
+
+The Old pages have a first_published_at of 1970, the kittens of 2022
+The Ocelots and Panthers have publication types of Ocelot or Panther respectively
+The Panthalot is both an Ocelot and Panther, and first_published_at 2022.
+Puppies are neither an Ocelot nor a Panther, and is also first_published_at 2022.

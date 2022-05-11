@@ -34,7 +34,6 @@
     </div>
   </div>
 </fieldset>
-{% comment %}
 <div class="nhsuk-radios nhsuk-radios--conditional show-checkbox nhsuk-u-margin-top-4">
   {% if content_type == "publications" %}
     <div class="nhsuk-radios__conditional" id="conditional-publications">
@@ -42,40 +41,44 @@
     <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-publications">
   {% endif %}
     <h2 class="nhsuk-heading-xs">Publication type:</h2><div class="nhsuk-filter-clear " id="search-filter-hint">
-      <a href="#">Clear filters</a>
+      <a onclick="erase_checkboxes()" style="cursor:pointer">Clear filters</a>
     </div>
     <div class="nhsuk-filter-selected" id="search-filter-hint">
-      1 Selected
+      <span id="publication-count">0</span> selected
     </div>
+
     <div class="nhsuk-form-group">
       <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
+        {% for pub_type in publication_types %}
+
         <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
+          <input class="nhsuk-checkboxes__input" id="publication-type-{{pub_type.slug}}" name="publication_type" type="checkbox" value="{{pub_type.slug}}"
+            {% if pub_type.slug in publication_types_checked %}checked{% endif %}
+          >
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="publication-type-{{pub_type.slug}}">
+            {{pub_type.name}}
           </label>
         </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="search-filter-4" name="search-filter" type="checkbox" value="farm">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="search-filter-4">
-            Household goods
-          </label>
-        </div>
+
+        {% endfor %}
+
       </div>
     </div>
   </div>
 </div>
-{% endcomment %}
 </div>
+<script>
+  function erase_checkboxes() {
+    var checked = document.querySelectorAll("input[name='publication_type']:checked");
+    checked.forEach(checkbox => checkbox.checked = false);
+    count_checkboxes();
+  }
+
+  function count_checkboxes(event=null) {
+    var checked = document.querySelectorAll("input[name='publication_type']:checked");
+    document.getElementById('publication-count').innerHTML = checked.length;
+  }
+
+  document.addEventListener("change", count_checkboxes);
+  count_checkboxes()
+</script>

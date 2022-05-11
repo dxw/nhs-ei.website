@@ -4,6 +4,7 @@ from django.conf import settings
 from cms.publications.models import Publication
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
+from django.db.models import Q
 
 from wagtail.core.models import Page
 from wagtail.search.models import Query
@@ -11,6 +12,7 @@ from wagtail.search.models import Query
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage
+from cms.publications.models import PublicationType
 
 from urllib.parse import urlparse, parse_qsl, urlencode
 
@@ -105,6 +107,7 @@ def search(request):
     query_string = request.GET.get("query", "")
     search_ordering = validated_sort_order(request.GET.get("order", None))
     search_type = request.GET.get("content_type", "")
+    publication_type_slugs_to_include = request.GET.getlist("publication_type")
     date_from = get_date(before=False)
     date_to = get_date(before=True)
 
@@ -129,6 +132,22 @@ def search(request):
                     end_date.replace(tzinfo=timezone.utc) + timedelta(days=1),
                 ]
             )
+
+        publication_types = []
+        for publication_slug in publication_type_slugs_to_include:
+            # Handle the case where there's multiple conflicting types by counting them all
+            publication_types.extend(
+                PublicationType.objects.filter(slug=publication_slug)
+            )
+
+        if publication_types and search_type == "publications":
+            publication_filter = Q()
+            for publication_type in publication_types:
+                publication_filter = publication_filter | Q(
+                    publication_publication_type_relationship__publication_type=publication_type
+                )
+            queryset = queryset.filter(publication_filter)
+
         return queryset.search(query_string)
 
     # Search
@@ -197,5 +216,7 @@ def search(request):
             "date_to": date_to,
             "min_result_index": min_result_index,
             "max_result_index": max_result_index,
+            "publication_types": PublicationType.objects.all(),
+            "publication_types_checked": publication_type_slugs_to_include,
         },
     )

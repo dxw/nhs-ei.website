@@ -20,6 +20,7 @@ from cms.publications.blocks import PublicationsBlocks
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from cms.publications.views import PublicationPdfView
+from wagtail.search import index
 
 
 class TOC(models.Model):
@@ -111,6 +112,10 @@ class PublicationPublicationTypeRelationship(models.Model):
 
 
 class Publication(RoutablePageMixin, CategoryPage):
+    search_fields = CategoryPage.search_fields + [
+        index.FilterField("publication_type_id")
+    ]
+
     @route(r"^pdf/$")
     def pdf_view(self, request):
 

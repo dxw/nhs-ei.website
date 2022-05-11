@@ -10,6 +10,7 @@ acr_options = {
   resource_group = "nhsei-website-container"
 }
 web_image_tag = "sha-123"
+web_replica_count = 3
 web_environment_variables = {
   EMAIL_URL = "smtp://user@:password@localhost:25"
   DEFAULT_FROM_EMAIL = "web@example.com"
@@ -18,6 +19,7 @@ web_environment_variables = {
   BASIC_AUTH_PASSWORD = "secret"
 }
 scrapy_image_tag = "sha-123"
+scrapy_replica_count = 3
 scrapy_environment_variables = {
 }
 aks_version = "1.21.9"

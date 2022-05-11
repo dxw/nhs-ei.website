@@ -10,8 +10,10 @@ locals {
   virtual_network_address_space = var.virtual_network_address_space
   acr_options                   = var.acr_options
   web_image_tag                 = var.web_image_tag
+  web_replica_count             = var.web_replica_count
   web_environment_variables     = var.web_environment_variables
   scrapy_image_tag              = var.scrapy_image_tag
+  scrapy_replica_count          = var.scrapy_replica_count
   scrapy_environment_variables  = var.scrapy_environment_variables
   aks_version                   = var.aks_version
   aks_nodes_address_cidr        = cidrsubnet(local.virtual_network_address_space, 8, 1)

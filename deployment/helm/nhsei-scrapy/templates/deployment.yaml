@@ -51,7 +51,7 @@ spec:
           env:
             {{- range $envKey, $envValue := .Values.environment }}
             - name: {{ $envKey }}
-              value: $envValue
+              value: {{ $envValue }}
             {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

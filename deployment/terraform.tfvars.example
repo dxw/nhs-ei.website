@@ -17,6 +17,7 @@ web_environment_variables = {
   ALLOWED_HOSTS = "example.com,example-2.com"
   BASIC_AUTH_PASSWORD = "secret"
 }
+scrapy_image_tag = "sha-123"
 scrapy_environment_variables = {
 }
 aks_version = "1.21.9"

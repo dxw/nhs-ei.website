@@ -1,29 +1,43 @@
+{% load static wagtailcore_tags frontend_tags %}
 
-<div class="nhsuk-panel-with-label">
-  <h3 class="nhsuk-panel-with-label__label">{{ value.title }}</h3>
-  <div class="nhsuk-grid-row">
+<div class="nhsuk-u-margin-top-6 post-component category-latest" >
+  <div class="nhsuk-grid-row" >
     <div class="nhsuk-grid-column-full">
-      <div class="nhsuk-grid-row">
-        <ol class="nhsuk-list">
-          {% for item in queryset.posts %}
-          <li>
-            <article class="nhsuk-u-margin-bottom-4">
-              <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
-                <a href="{{item.record.url}}">
-                {{item.record.title}}</a>
-              </h2>
-              <span class="nhsuk-body-s">
-                <div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{item.record.blurb}}</div>
-              <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
-              <span class="nhsei-list-meta">Last updated
-              <time class="date" datetime="">{{ item.record.last_published_at|date:'d M Y' }}</time></span>
-              </span>
-            </article>
-          </li>
-          {% endfor %}
-        </ol>
-        <a href="/news/nhs-england-improvement/">View all -- TODO set categories???</a>
-      </div>
+      <h2>{{ value.title }}</h2>
     </div>
   </div>
+  <div class="nhsuk-grid-row">
+    {% for item in queryset.posts %}
+    {% if forloop.first %}
+      <div class="nhsuk-grid-column-two-thirds item-card">
+    {% else %}
+      <div class="nhsuk-grid-column-one-third item-card">
+    {% endif %}
+        <h3><a href="{{item.record.url}}">{{item.record.title}}</a></h3>
+        <div class="rich-text content">
+          <p>{{item.record.blurb}}</p>
+        </div>
+        <div class="entry-meta group">
+          <strong>Published: </strong><time class="post-meta" datetime="{{ item.record.last_published_at|date:'Y-m-d' }}">
+            {{ item.record.last_published_at|date:'d M Y' }}</time>
+          <br>
+          <strong>Content type:</strong> {% get_content_type_tag item.record %}
+          {% comment %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path class="icon" d="M3.74 11.2A24.31 24.31 0 0 1 .39 11a.43.43 0 0 1-.3-.2.38.38 0 0 1-.09-.34c.22-.95.17-1.27 1.07-1.9s1.8-1 2.12-1.37A.78.78 0 0 0 3.27 6a3.17 3.17 0 0 1-.78-3.58A2.48 2.48 0 0 1 4.8 1.07a2.48 2.48 0 0 1 2.32 1.36 3 3 0 0 1 .27 1.2 3.56 3.56 0 0 0-2.82 2 4.32 4.32 0 0 0 .72 4.6c-.15.1-.33.2-.5.3-.34.22-.7.42-1.05.67zm-.15 3.55a.43.43 0 0 1-.3-.2.38.38 0 0 1-.07-.35c.22-.95.17-1.27 1.07-1.9s1.8-1 2.12-1.37a.78.78 0 0 0 .07-1.18 3.17 3.17 0 0 1-.78-3.58A2.48 2.48 0 0 1 8 4.8a2.48 2.48 0 0 1 2.32 1.37 3.17 3.17 0 0 1-.78 3.58.78.78 0 0 0 .07 1.18c.32.35 1.32.8 2.12 1.37s.85.95 1.07 1.9a.44.44 0 0 1-.07.35.43.43 0 0 1-.3.2 31.21 31.21 0 0 1-4.43.18 30.9 30.9 0 0 1-4.41-.18zm12.33-3.93a.43.43 0 0 1-.3.2 24.67 24.67 0 0 1-3.35.18c-.35-.25-.72-.45-1-.65a5.21 5.21 0 0 1-.52-.3 4.27 4.27 0 0 0 .7-4.6 3.52 3.52 0 0 0-2.8-2 3 3 0 0 1 .27-1.2 2.48 2.48 0 0 1 2.28-1.38 2.48 2.48 0 0 1 2.32 1.37A3.17 3.17 0 0 1 12.74 6a.78.78 0 0 0 .06 1.2c.32.35 1.32.8 2.12 1.37s.85.95 1.07 1.9a.44.44 0 0 1-.07.34z"></path></svg>
+          <a href="https://www.england.nhs.uk/author/dr-prathiba-chitsabesan/" title="Posts by Professor Prathiba Chitsabesan" class="author url fn" rel="author">Professor Prathiba Chitsabesan</a>
+          {% endcomment %}
+        </div>
+      </div>
+      {% if forloop.counter|add:1|divisibleby:3 and not forloop.last %}
+        </div>
+        <hr>
+        <div class="nhsuk-grid-row">
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% if category and see_all_link %}
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-top-4">
+      <h4><a href="{% url 'category-detail' value.category.slug %}" class="float-right nhsuk-body-m">View all the latest</a><h4>
+    </div>
+  {% endif %}
 </div>

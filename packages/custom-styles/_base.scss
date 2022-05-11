@@ -163,3 +163,51 @@ a:visited {
     }
   }
 }
+
+.category-latest {
+
+  svg {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    position: relative;
+    margin: 0 5px 0 0;
+  }
+
+  span.post-author {
+      padding-left: 20px;
+  }
+  a.nhsuk-body-m {
+    color: $nhsuk-link-color;
+    @media (max-width:740px) {
+      font-size:19px;
+    }
+  }
+
+  .float-right {
+    float:right;
+  }
+
+  .item-card {
+    @media (min-width:740px) {
+      border-right: 1px solid $nhsuk-border-color;
+    }
+    @media (max-width:740px) {
+      border-bottom: 1px solid $nhsuk-border-color;
+      display: block;
+    }
+    &:last-child {
+      border: none;
+    }
+    h3 {
+      @media (max-width:740px) {
+        margin-top: 32px;
+      }
+    }
+  }
+
+  .nhsuk-grid-row{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

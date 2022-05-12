@@ -19,42 +19,24 @@ class TestComponentsPage(TestCase):
         response = self.client.get("/component-page/")
         soup = BeautifulSoup(response.content, "html.parser")
 
-        panel = soup.select_one("main .nhsuk-panel-with-label")
+        panel = soup.select_one("main .category-latest")
 
-        heading = panel.select_one("h3")
+        heading = panel.select_one("h2")
         self.assertEqual(heading.text, "Recent Posts")
 
-        # first list is the left side on desktop
-        first_list = panel.find_all("ol")[0]
-        first_list_item_1_link = first_list.select_one("li:nth-child(1) article h2 a")
+        items = panel.find_all("div", class_="item-card")
 
-        self.assertEqual(first_list_item_1_link["href"], "/post-index-page/post-two/")
-        self.assertEqual(first_list_item_1_link.text.strip(), "Post Two")
+        first_item = items[0]
+        first_item_link = first_item.select_one("a")
 
-        first_list_item_1_label = first_list.select_one(
-            "li:nth-child(1) article span span:nth-of-type(1)"
-        )
-        self.assertEqual(first_list_item_1_label.text.strip(), "News")
+        self.assertEqual(first_item_link["href"], "/post-index-page/post-two/")
+        self.assertEqual(first_item_link.text.strip(), "Post Two")
 
-        first_list_item_1_date = first_list.select_one(
-            "li:nth-child(1) article span span:nth-of-type(2) time"
-        )
-        self.assertGreater(len(first_list_item_1_date.text.split()), 0)
+        second_item = items[1]
+        second_item_link = second_item.select_one("a")
 
-        first_list_item_2_link = first_list.select_one("li:nth-child(2) article h2 a")
-
-        self.assertEqual(first_list_item_2_link["href"], "/post-index-page/post-one/")
-        self.assertEqual(first_list_item_2_link.text.strip(), "Post One")
-
-        first_list_item_2_label = first_list.select_one(
-            "li:nth-child(2) article span span:nth-of-type(1)"
-        )
-        self.assertEqual(first_list_item_2_label.text.strip(), "News")
-
-        first_list_item_2_date = first_list.select_one(
-            "li:nth-child(2) article span span:nth-of-type(2) time"
-        )
-        self.assertGreater(len(first_list_item_2_date.text.split()), 0)
+        self.assertEqual(second_item_link["href"], "/post-index-page/post-one/")
+        self.assertEqual(second_item_link.text.strip(), "Post One")
 
     def test_all_common_blocks(self):
         response = self.client.get("/base-page/")

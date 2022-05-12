@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='publication',
-            name='md_pcc_reference',
+            name='md_pac_reference',
             field=models.TextField(blank=True, verbose_name='PCC Reference'),
         ),
     ]

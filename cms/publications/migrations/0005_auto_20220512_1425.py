@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='publication',
-            name='md_pcc_reference',
+            name='md_pac_reference',
         ),
         migrations.AddField(
             model_name='publication',

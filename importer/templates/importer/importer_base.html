@@ -28,17 +28,17 @@
 <body class="container padding-xl text-component">
         <h3>Landing Pages</h3>
         {% for child in landing_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pac_reference }}</a></div>
         {% endfor %}
         <br>
         <h3>Component Pages</h3>
         {% for child in component_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pac_reference }}</a></div>
         {% endfor %}
         <br>
         <h3>Base Pages</h3>
         {% for child in base_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pac_reference }}</a></div>
         {% endfor %}
 
         {# Global javascript #}

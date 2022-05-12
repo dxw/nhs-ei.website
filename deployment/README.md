@@ -40,13 +40,13 @@ container_name       = [the name of the blob container]
 key                  = "terraform.tstate"
 ```
 
+##### Install local software
+
+Install the Azure CLI, Helm and tfenv:
+```
+$ brew install az helm tfenv
+```
 ##### Log into azure with the Azure CLI
-
-Install the azure cli:
-
-```
-$ brew install az
-```
 
 Log in to your account:
 
@@ -62,12 +62,6 @@ $ az account show
 
 ##### Initialise Terraform
 
-Install the Terraform version manager `tfenv`:
-
-```
-$ brew install tfenv
-```
-
 Install the required terraform version:
 
 ```
@@ -77,11 +71,14 @@ $ tfenv install
 Initialize Terraform to download the required Terraform modules and configure the remote state backend
 to use the settings you specified in the previous step.
 
+From within the `deployment` directory:
+
 `$ terraform init -backend-config=backend.vars`
 
 ##### Create a Terraform variables file
 
-Copy the `terraform.tfvars.example` to `terraform.tfvars` and modify the contents as required
+Copy the `terraform.tfvars.example` to `terraform.tfvars` and modify the contents as required.
+(Or copy from 1Password "NHSEI testing terraform.tfvars")
 
 If you do not wish to create the file, Terraform will ask you to provide the variables
 when you run it.
@@ -91,7 +88,7 @@ when you run it.
 Now Terraform has been initialised you can create a workspace. The workspace name is
 included in various resources such as the CDN, database, and load balancer.<br>
 Do not use a <prefix>-<workspace> combination that already exists unless you know what
-you are doing.
+you are doing. (You can get a list with `terraform workspace list`)
 
 `$ terraform workspace new staging`
 
@@ -100,6 +97,10 @@ Switch to the new workspace<br>
 
 Plan the changes<br>
 `$ terraform plan`
+
+(you'll need to have set up Kubernetes credentials, see later.)
+(Don't be too surprised if there are changes to helm_release.cron_jobs, .web and .scrapy if there's been releases and you've manually updated the
+sha to the most recent version -- Terraform doesn't know about the changes that Github Actions have caused.)
 
 Terraform will ask you to provide any variables not specified in an `*.auto.tfvars` file.
 Now you can run:
@@ -122,7 +123,7 @@ To get the image tag values, first list the helm releases:
 helm list -A
 ```
 
-From that list, find the name of the helm release, and it's namespace, and run the following to get the values:
+From that list, find the namespace of the helm release (the second column), and its name (the first), and run the following to get the values:
 
 ```
 helm get values --namespace <NAMESPACE> <NAME>
@@ -139,9 +140,12 @@ image:
 # redacted ...
 ```
 
-Copy the image tag into the terraform.tfvars file
+Copy the image tag into the terraform.tfvars file (including the 'sha-')
 
-The rest of the values are stored in 1Password
+The rest of the values are stored in 1Password.
+
+You should update these variables in terraform.tfvars before running, since they'll roll back to the version
+you've specified if there's been any changes to main.
 
 #### Adding environment variables to the services
 
@@ -162,7 +166,7 @@ Then run `terraform apply`
 
 This will apply to the service, and cron job
 
-Note: Take care not to accidently overwrite environment variables that are automatically added (eg. the `DATABASE_URL`). These can be found in the `kubernetes-service-web.tf` and `kubernetes-service-scrapy.tf` files. But if you wish, you can overwrite them, as the variable supplied environment variables are added after the ones automatically added.
+Note: Take care not to accidently overwrite environment variables that are automatically added (eg. the `DATABASE_URL`). These can be found in the `kubernetes-service-web.tf` and `kubernetes-service-scrapy.tf` files. But if you wish, you can overwrite them, as the variable supplied environment variables are added after the ones automatically added. (Note: These will show as differences on the terraform plan, because terraform doesn't know that Github Actions have been automatically updating the server.)
 
 #### Connecting to the Kubernetes cluster
 
@@ -177,6 +181,8 @@ Configure kubectl to connect to the Kubernetes cluster:
 ```
 $ az aks get-credentials --resource-group <ResourceGroup> --name <AKSCluster>
 ```
+
+(The AKSCluster is the name of the Kubernetes service in Azure and the resource group is its resource group, listed top-left)
 
 You should be able to run `kubectl` commands normally, eg:
 
@@ -207,13 +213,13 @@ Open http://localhost:8001 in your browser
 List the pods to find the one you wish to connect to:
 
 ```
-$ kubectl list pods -A
+$ kubectl get pods -A
 ```
 
 or also specify the namespace to filter pods:
 
 ```
-$ kubectl list pods --namespace web
+$ kubectl get pods --namespace web
 ```
 
 Connect to one of the pods returned:
@@ -236,7 +242,7 @@ To run a shell in postgres, run:
 
 #### Viewing logs
 
-The logs are accessable via the Azure portal
+The logs are accessible via the Azure portal
 
 Log in, and navigate to the Kubernetes service console
 
@@ -260,7 +266,7 @@ You can also select the link 'View in Log Analytics' to view historical logs
 
 GitHub actions requires access to AKS to do a helm release
 
-To generate these, run:
+To generate these for a new environment, run:
 
 ```
 az ad sp create-for-rbac \
@@ -270,4 +276,12 @@ az ad sp create-for-rbac \
   --sdk-auth
 ```
 
+The ENVIRONMENT is the Terraform workspace, and you can find the SUBSCRIPTION_ID in the Azure portal under the Subscription Service)
+
 Format the output into a single line before adding to GitHub actions
+
+##### Show Cronjobs
+
+`kubectl get cronjobs -A`
+
+(The cronjobs are in deployment/kubernetes-cron-jobs.tf)

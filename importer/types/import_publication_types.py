@@ -17,6 +17,13 @@ SOURCES = {
     "publication_types-improvement-hub": "Improvement Hub",
     "publication_types-non-executive-opportunities": "Non-executive " "opportunities",
     "publication_types-rightcare": "Right Care",
+    "publication_types-north-east-yorkshire": "North East and Yorkshire",
+    "publication_types-south": "South West",
+    "publication_types-london": "London",
+    "publication_types-east-of-england": "East of England",
+    "publication_types-midlands": "Midlands",
+    "publication_types-north-west": "North West",
+    "publication_types-south-east": "South East",
 }
 
 

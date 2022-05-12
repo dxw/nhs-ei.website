@@ -15,6 +15,13 @@ SOURCES = {
     "media-improvement-hub": "Improvement Hub",
     "media-non-executive-opportunities": "Non-executive opportunities",
     "media-rightcare": "Right Care",
+    "media-north-east-yorkshire": "North East and Yorkshire",
+    "media-south": "South West",
+    "media-london": "London",
+    "media-east-of-england": "East of England",
+    "media-midlands": "Midlands",
+    "media-north-west": "North West",
+    "media-south-east": "South East",
 }
 
 

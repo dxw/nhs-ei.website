@@ -606,6 +606,13 @@ class DocumentsBuilder:
             "publications-improvement-hub": "Improvement Hub",
             "publications-non-executive-opportunities": "Non-executive opportunities",
             "publications-rightcare": "Right Care",
+            "publications-north-east-yorkshire": "North East and Yorkshire",
+            "publications-south": "South West",
+            "publications-london": "London",
+            "publications-east-of-england": "East of England",
+            "publications-midlands": "Midlands",
+            "publications-north-west": "North West",
+            "publications-south-east": "South East",
         }
 
         # print(self.document)

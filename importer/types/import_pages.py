@@ -70,7 +70,7 @@ class PagesImporter(Importer, ABC):
                 "owner": "",
                 "description": "",
                 "gateway_ref": "",
-                "pcc_reference": "",
+                "pac_reference": "",
             }
             for item in page.get("model_fields"):
                 for k, v in item.items():
@@ -84,8 +84,7 @@ class PagesImporter(Importer, ABC):
             self("author", page.get("author"), obj)
             self("md_owner", model_fields["owner"], obj)
             self("md_description", model_fields["description"], obj)
-            self("md_gateway_ref", model_fields["gateway_ref"], obj)
-            self("md_pcc_reference", model_fields["pcc_reference"], obj)
+            self("md_pac_reference", model_fields["pac_reference"], obj)
 
             # start wordpress fields we can delete later
             self("parent", page.get("parent"), obj)

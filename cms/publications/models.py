@@ -11,6 +11,8 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     StreamFieldPanel,
+    ObjectList,
+    TabbedInterface,
 )
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
@@ -21,6 +23,7 @@ from cms.publications.blocks import PublicationsBlocks
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from cms.publications.views import PublicationPdfView
 from wagtail.search import index
+from cms.pages.mixins import MetadataMixin
 
 
 class TOC(models.Model):
@@ -111,7 +114,7 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
-class Publication(RoutablePageMixin, CategoryPage):
+class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
     search_fields = CategoryPage.search_fields + [
         index.FilterField("publication_type_id")
     ]
@@ -170,6 +173,15 @@ class Publication(RoutablePageMixin, CategoryPage):
             classname="collapsed collapsible",
         ),
     ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Content"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings"),
+            ObjectList(MetadataMixin.panels, heading="Metadata"),
+        ]
+    )
 
     def get_wp_api_link(self):
         wp_source = self.source.replace("pages-", "")

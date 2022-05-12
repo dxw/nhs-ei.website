@@ -1,20 +1,22 @@
 from urllib.parse import urlparse
 
 from django.db import models
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    MultiFieldPanel,
+    StreamFieldPanel,
+    ObjectList,
+    TabbedInterface,
+)
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 
 from cms.core.blocks import CoreBlocks
+from cms.pages.mixins import MetadataMixin
 
 
-class BasePage(Page):
+class BasePage(Page, MetadataMixin):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
-    # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField("Owner", blank=True)
-    md_description = models.TextField("Description", blank=True)
-    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
-    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     """
     title already in the Page class
@@ -49,16 +51,6 @@ class BasePage(Page):
         FieldPanel("excerpt"),
         MultiFieldPanel(
             [
-                FieldPanel("md_owner"),
-                FieldPanel("md_description"),
-                FieldPanel("md_gateway_ref"),
-                FieldPanel("md_pcc_reference"),
-            ],
-            heading="Meta Data",
-            classname="collapsed collapsible",
-        ),
-        MultiFieldPanel(
-            [
                 FieldPanel("wp_id"),
                 FieldPanel("author"),
                 FieldPanel("parent"),
@@ -77,6 +69,15 @@ class BasePage(Page):
             classname="collapsed collapsible",
         ),
     ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Content"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings"),
+            ObjectList(MetadataMixin.panels, heading="Metadata"),
+        ]
+    )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -110,17 +111,12 @@ class BasePage(Page):
         return self.get_prev_siblings().live().first()
 
 
-class LandingPage(Page):
+class LandingPage(Page, MetadataMixin):
     """
     a temporary holding page for wordpress pages of template=page-landing.php, page-blog-landing.php
     """
 
     # parent_page_types = ['home.HomePage'] # not sure about this yet
-    # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField("Owner", blank=True)
-    md_description = models.TextField("Description", blank=True)
-    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
-    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     # we may not need this???
     excerpt = models.TextField(blank=True)
@@ -150,16 +146,6 @@ class LandingPage(Page):
         FieldPanel("excerpt"),
         MultiFieldPanel(
             [
-                FieldPanel("md_owner"),
-                FieldPanel("md_description"),
-                FieldPanel("md_gateway_ref"),
-                FieldPanel("md_pcc_reference"),
-            ],
-            heading="Meta Data",
-            classname="collapsed collapsible",
-        ),
-        MultiFieldPanel(
-            [
                 FieldPanel("wp_id"),
                 FieldPanel("author"),
                 FieldPanel("parent"),
@@ -177,6 +163,15 @@ class LandingPage(Page):
             classname="collapsed collapsible",
         ),
     ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Content"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings"),
+            ObjectList(MetadataMixin.panels, heading="Metadata"),
+        ]
+    )
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -198,11 +193,6 @@ class ComponentsPage(Page):
     """
 
     # parent_page_types = ['home.HomePage'] # not sure about this yet
-    # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField("Owner", blank=True)
-    md_description = models.TextField("Description", blank=True)
-    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
-    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     """
     title already in the Page class
@@ -235,16 +225,6 @@ class ComponentsPage(Page):
         # StreamFieldPanel('body2'),
         StreamFieldPanel("body"),
         FieldPanel("excerpt"),
-        MultiFieldPanel(
-            [
-                FieldPanel("md_owner"),
-                FieldPanel("md_description"),
-                FieldPanel("md_gateway_ref"),
-                FieldPanel("md_pcc_reference"),
-            ],
-            heading="Meta Data",
-            classname="collapsed collapsible",
-        ),
         MultiFieldPanel(
             [
                 FieldPanel("wp_id"),

@@ -52,8 +52,7 @@ class Command(BaseCommand):
                 author=page.author,
                 md_owner=page.md_owner,
                 md_description=page.md_description,
-                md_gateway_ref=page.md_gateway_ref,
-                md_pcc_reference=page.md_pcc_reference,
+                md_pac_reference=page.md_pac_reference,
                 # start wordpress fields we can delete later
                 wp_id=page.wp_id,
                 parent=page.parent,

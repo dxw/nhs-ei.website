@@ -10,12 +10,10 @@ class MetadataMixin(models.Model):
 
     md_owner = models.TextField("Content Owner", blank=True)
     md_description = models.TextField("Description of content", blank=True)
-    md_gateway_ref = models.TextField("Gateway Reference", blank=True)
-    md_pcc_reference = models.TextField("PCC Reference", blank=True)
+    md_pac_reference = models.TextField("PAC Reference", blank=True)
 
     panels = [
         FieldPanel("md_owner"),
         FieldPanel("md_description"),
-        FieldPanel("md_gateway_ref"),
-        FieldPanel("md_pcc_reference"),
+        FieldPanel("md_pac_reference"),
     ]

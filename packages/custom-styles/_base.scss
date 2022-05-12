@@ -117,6 +117,7 @@ a:visited {
 .content_nav {
   nav a {
     margin-bottom: 15px;
+    font-size: 19px;
   }
 }
 
@@ -153,6 +154,12 @@ a:visited {
     position: absolute;
     left:-6px;
     top:4px;
+  }
+
+  a {
+    color: #000;
+    margin-bottom: 0 !important;
+    font-size: 23px !important;
   }
 }
 

@@ -23,6 +23,13 @@ POST_SOURCES_TO_CATEGORY_SOURCES = {
     "posts-improvement-hub": "categories-improvement-hub",
     "posts-non-executive-opportunities": "categories-non-executive" "-opportunities",
     "posts-rightcare": "categories-rightcare",
+    "posts-north-east-yorkshire": "North East and Yorkshire",
+    "posts-south": "South West",
+    "posts-london": "London",
+    "posts-east-of-england": "East of England",
+    "posts-midlands": "Midlands",
+    "posts-north-west": "North West",
+    "posts-south-east": "South East",
 }
 
 # so we can a post to a sub site and build out sub site post index pages

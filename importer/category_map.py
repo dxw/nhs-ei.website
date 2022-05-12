@@ -376,8 +376,8 @@ CATEGORY_MAP = {
         "1452": "severe-weather-advice",  # winter-news-and-advice
         "2876": "nhs-workforce",  # workforce
         "3771": "carers",  # young-carers
-        "3775": "innovation", # nhs-accelerated-access-collaborative
-        "3776": "statistics", # survey
+        "3775": "innovation",  # nhs-accelerated-access-collaborative
+        "3776": "statistics",  # survey
     },
     "categories-aac": {
         "10": "innovation",  # artificial-intelligence
@@ -398,6 +398,8 @@ CATEGORY_MAP = {
         "1": [],  # uncategorized
     },
     "categories-greenernhs": {
+        "13": ["greener-nhs", "sustainability"],  # greener-nhs
+        "12": ["greener-nhs", "sustainability"],  # greener-nhs, nested
         "9": "sustainability",  # net-zero
         "5": [],  # news-and-blogs
         "1": [],  # uncategorized
@@ -414,5 +416,36 @@ CATEGORY_MAP = {
         "3371": "london",
         "3372": "south-east",
         "3373": "south-west",
+    },
+    "categories-south": {
+        "191": "blogs",
+        "3": "news",
+    },
+    "categories-london": {
+        "11": "carers",  # care forum
+        "3": "news",
+    },
+    "categories-east-of-england": {
+        "13": [
+            "nursing",
+            "maternity-midwifery-and-neonatal",
+        ],  # nursing and midwifery
+        "3": "news",
+        "1": [],  # uncat
+    },
+    "categories-midlands": {
+        "3": "news",
+        "1": [],  # uncat
+    },
+    "categories-north-east-yorkshire": {
+        "3": "news",
+        "1": [],  # uncat
+    },
+    "categories-north-west": {
+        "2": "news",
+        "1": [],  # uncat
+    },
+    "categories-south-east": {
+        "1": "news",
     },
 }

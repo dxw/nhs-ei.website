@@ -2,7 +2,6 @@ from django.db import models
 from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
-    PageChooserPanel,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.fields import RichTextField
@@ -52,7 +51,7 @@ class ExtendedMainMenuItem(AbstractMainMenuItem):
     )
 
     panels = (
-        PageChooserPanel("link_page"),
+        FieldPanel("link_page"),
         FieldPanel("link_url"),
         FieldPanel("url_append"),
         FieldPanel("link_text"),

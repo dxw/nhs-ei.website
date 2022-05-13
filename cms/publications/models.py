@@ -10,7 +10,6 @@ from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
-    StreamFieldPanel,
     ObjectList,
     TabbedInterface,
 )
@@ -159,7 +158,7 @@ class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
             "categorypage_category_relationship", label="Publication Categories"
         ),
         FieldPanel("body"),
-        StreamFieldPanel("documents"),
+        FieldPanel("documents"),
         MultiFieldPanel(
             [
                 FieldPanel("wp_id"),

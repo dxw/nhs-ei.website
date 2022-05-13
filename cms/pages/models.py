@@ -4,7 +4,6 @@ from django.db import models
 from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
-    StreamFieldPanel,
     ObjectList,
     TabbedInterface,
 )
@@ -46,8 +45,7 @@ class BasePage(Page, MetadataMixin):
     author = models.CharField(max_length=255, blank=True)
 
     content_panels = Page.content_panels + [
-        # StreamFieldPanel('body2'),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("excerpt"),
         MultiFieldPanel(
             [
@@ -141,8 +139,7 @@ class LandingPage(Page, MetadataMixin):
     author = models.CharField(max_length=255, blank=True)
 
     content_panels = Page.content_panels + [
-        # StreamFieldPanel('body2'),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("excerpt"),
         MultiFieldPanel(
             [
@@ -222,8 +219,7 @@ class ComponentsPage(Page):
     author = models.CharField(max_length=255, blank=True)
 
     content_panels = Page.content_panels + [
-        # StreamFieldPanel('body2'),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         FieldPanel("excerpt"),
         MultiFieldPanel(
             [

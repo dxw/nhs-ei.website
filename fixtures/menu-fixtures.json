@@ -915,7 +915,7 @@
     ],
     "label": "Contact us",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:02:12.304Z",
     "uuid": "f5047c7e-198e-4dc4-bcf6-5a30a924af48",
     "user": [
@@ -959,7 +959,7 @@
     ],
     "label": "Cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:03:21.688Z",
     "uuid": "0d5c5296-6be0-41a6-9a95-56bbf6e55424",
     "user": [
@@ -1003,7 +1003,7 @@
     ],
     "label": "Cancer level 2",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:04:19.578Z",
     "uuid": "d2117251-651f-49f1-8048-21fd1eaffac9",
     "user": [
@@ -1047,7 +1047,7 @@
     ],
     "label": "Cancer level 3",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:04:38.798Z",
     "uuid": "b5017d46-255e-49bb-b82e-f2f7436ac5e1",
     "user": [
@@ -1091,7 +1091,7 @@
     ],
     "label": "Cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:17:31.511Z",
     "uuid": "24e36296-148c-4cba-9f61-efffe7222d24",
     "user": [
@@ -1135,7 +1135,7 @@
     ],
     "label": "Contact us",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:17:46.873Z",
     "uuid": "0c9e8231-44d2-4700-a373-f9a3f7056d97",
     "user": [
@@ -1179,7 +1179,7 @@
     ],
     "label": "Cancer level 2",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:18:09.650Z",
     "uuid": "fcca9009-1058-4367-9b4c-ad1522d8abb4",
     "user": [
@@ -1223,7 +1223,7 @@
     ],
     "label": "Cancer level 3",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:18:25.404Z",
     "uuid": "1634852e-1e52-4d3f-b843-01ccffb054b3",
     "user": [
@@ -1267,7 +1267,7 @@
     ],
     "label": "Cancer level 2",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T12:19:51.651Z",
     "uuid": "da113c3e-5d5e-4acc-84af-884e15972a35",
     "user": [
@@ -1311,7 +1311,7 @@
     ],
     "label": "About us",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:13:28.274Z",
     "uuid": "0e244240-7080-42d6-af62-7edf03cd4b60",
     "user": [
@@ -1355,7 +1355,7 @@
     ],
     "label": "News",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:16:45.240Z",
     "uuid": "26c3c231-d0f6-46e6-9ea3-e628c84f6cc1",
     "user": [
@@ -1399,7 +1399,7 @@
     ],
     "label": "Our work",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:27:16.597Z",
     "uuid": "75377b91-dcc5-4279-8722-9b112c45234d",
     "user": [
@@ -1443,7 +1443,7 @@
     ],
     "label": "Regional team",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:31:19.586Z",
     "uuid": "6a8e54df-c653-4d1c-a310-93c37ab52468",
     "user": [
@@ -1487,7 +1487,7 @@
     ],
     "label": "Get involved",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:32:05.647Z",
     "uuid": "168a3cc4-3762-4792-bec8-9557fb9c6dcc",
     "user": [
@@ -1531,7 +1531,7 @@
     ],
     "label": "Working for us",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:33:14.945Z",
     "uuid": "6ceb4a97-4976-4345-b610-05f2f2e3f4a4",
     "user": [
@@ -1663,7 +1663,7 @@
     ],
     "label": "Commissioning",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-15T15:46:37.560Z",
     "uuid": "6addfcaa-79dd-4c6d-9634-d73176b560c3",
     "user": [
@@ -1707,7 +1707,7 @@
     ],
     "label": "End of life care",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T09:00:22.114Z",
     "uuid": "adcfca1f-a846-4ac1-bd17-ee279befa98c",
     "user": [
@@ -1751,7 +1751,7 @@
     ],
     "label": "Diabetes",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T09:56:10.006Z",
     "uuid": "6fc44882-4b17-441e-93fc-42a958a13b6b",
     "user": [
@@ -1795,7 +1795,7 @@
     ],
     "label": "Digital Transformation",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:14:39.492Z",
     "uuid": "2d41c59a-7185-4ae0-8973-a84ac2a25b77",
     "user": [
@@ -1839,7 +1839,7 @@
     ],
     "label": "General Practice",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:17:09.491Z",
     "uuid": "0ed01dc0-6237-4011-b739-de24e11748a2",
     "user": [
@@ -1883,7 +1883,7 @@
     ],
     "label": "Integrated care",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:20:21.799Z",
     "uuid": "1299e02d-8b92-4d01-864b-895d895deaf7",
     "user": [
@@ -1927,7 +1927,7 @@
     ],
     "label": "Learning disabilities & autism",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:23:33.026Z",
     "uuid": "57aa76f2-cbbd-4dfe-bc2e-62437e31e770",
     "user": [
@@ -1971,7 +1971,7 @@
     ],
     "label": "Looking after our people",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:27:13.693Z",
     "uuid": "2b27128b-5dbc-42ef-9324-3f94a0718b25",
     "user": [
@@ -2015,7 +2015,7 @@
     ],
     "label": "Mental Health",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:29:04.366Z",
     "uuid": "ff56dc69-90e0-4b96-a50c-424671ac0e3c",
     "user": [
@@ -2059,7 +2059,7 @@
     ],
     "label": "Nursing, midwifery & care staff",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:32:33.807Z",
     "uuid": "46e926c1-58c7-4ac4-a8ce-f237e1998c0c",
     "user": [
@@ -2103,7 +2103,7 @@
     ],
     "label": "Patient safety",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:34:38.272Z",
     "uuid": "69802f1b-c2b9-429a-82c6-7d27a60237a7",
     "user": [
@@ -2147,7 +2147,7 @@
     ],
     "label": "Personalised Car",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:36:12.860Z",
     "uuid": "471819d0-06a9-43ef-a8fb-024d16901ccb",
     "user": [
@@ -2191,7 +2191,7 @@
     ],
     "label": "Statistic",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:38:53.359Z",
     "uuid": "a9b47da0-0f3c-49ff-96ee-77611a904ab4",
     "user": [
@@ -2235,7 +2235,7 @@
     ],
     "label": "Supporting our NHS people",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:40:07.209Z",
     "uuid": "4ab743ed-89e6-4da3-8947-1c470b972be2",
     "user": [
@@ -2279,7 +2279,7 @@
     ],
     "label": "Urgent and emergency care",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-16T10:49:07.464Z",
     "uuid": "ce6e2afb-ee19-4170-a904-589df81ba2e8",
     "user": [
@@ -2323,7 +2323,7 @@
     ],
     "label": "Cancer level 2",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T10:15:53.451Z",
     "uuid": "a6fdf781-7a55-406c-91d0-ceb1356d9556",
     "user": [
@@ -2367,7 +2367,7 @@
     ],
     "label": "Cancer level 3",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T10:16:07.415Z",
     "uuid": "72784623-40d2-4111-9f81-8ee2b62a2939",
     "user": [
@@ -2411,7 +2411,7 @@
     ],
     "label": "About cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T13:58:55.109Z",
     "uuid": "ceb54c44-203a-40bb-917c-cb67357a3528",
     "user": [
@@ -2455,7 +2455,7 @@
     ],
     "label": "About cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T13:59:10.212Z",
     "uuid": "7d3bb9c7-31d2-4712-a9bd-c5dc47108f57",
     "user": [
@@ -2499,7 +2499,7 @@
     ],
     "label": "Cancer drug fund",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T14:11:39.230Z",
     "uuid": "ae751870-504e-4f2b-a14c-6b34129a6a56",
     "user": [
@@ -2543,7 +2543,7 @@
     ],
     "label": "Case studies",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T14:12:13.034Z",
     "uuid": "46a00e77-63c8-41a6-ab6b-40ed079dc2ad",
     "user": [
@@ -2587,7 +2587,7 @@
     ],
     "label": "Earlier diagnosis",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T14:13:01.522Z",
     "uuid": "7bd91642-d3c5-4cc0-81a7-044b92179dab",
     "user": [
@@ -2631,7 +2631,7 @@
     ],
     "label": "Faster diagnosis",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T14:13:35.307Z",
     "uuid": "cda5cc49-ac2f-4d7b-bd49-c0fc0de432c6",
     "user": [
@@ -2675,7 +2675,7 @@
     ],
     "label": "High quality modern services",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-22T14:14:10.417Z",
     "uuid": "0cd78b9a-8a38-4d3a-b311-c9ebed51853e",
     "user": [
@@ -2719,7 +2719,7 @@
     ],
     "label": "Faster diagnosis",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-23T08:39:12.719Z",
     "uuid": "f066ffc6-1f5d-4555-a06d-5f83135f6a53",
     "user": [
@@ -2763,7 +2763,7 @@
     ],
     "label": "Earlier diagnosis",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-23T08:39:25.270Z",
     "uuid": "0eb7a921-5c69-49bc-8dc2-ccb1c3c93b18",
     "user": [
@@ -2807,7 +2807,7 @@
     ],
     "label": "Cancer drug fund",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-23T08:39:41.309Z",
     "uuid": "cad51813-e873-460d-aa6a-ab2c697bde06",
     "user": [
@@ -2851,7 +2851,7 @@
     ],
     "label": "About cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-23T08:39:57.677Z",
     "uuid": "96a0c7b0-422a-4d1f-9046-565cea455199",
     "user": [
@@ -2895,7 +2895,7 @@
     ],
     "label": "Cancer",
     "action": "wagtail.publish",
-    "data": null,
+      "data": {},
     "timestamp": "2022-03-28T13:08:15.949Z",
     "uuid": "90467907-0348-4933-9a22-54c486324b10",
     "user": [

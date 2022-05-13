@@ -134,7 +134,7 @@ class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
 
     # going to need to parse the html here to extract the text
     body = RichTextField(blank=True)
-    documents = StreamField(PublicationsBlocks, blank=True)
+    documents = StreamField(PublicationsBlocks, blank=True, use_json_field=True)
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.PositiveIntegerField(null=True, blank=True)

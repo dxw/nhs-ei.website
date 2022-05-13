@@ -26,7 +26,7 @@ class BasePage(Page, MetadataMixin):
     excerpt = models.TextField(blank=True)
     # going to need to parse the html here to extract the text
     # body = RichTextField(blank=True)
-    body = StreamField(CoreBlocks, blank=True)
+    body = StreamField(CoreBlocks, blank=True, use_json_field=True)
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.IntegerField(null=True, blank=True)
@@ -120,7 +120,7 @@ class LandingPage(Page, MetadataMixin):
     excerpt = models.TextField(blank=True)
     # going to need to parse the html here to extract the text
     # body = RichTextField(blank=True)
-    body = StreamField(CoreBlocks, blank=True)
+    body = StreamField(CoreBlocks, blank=True, use_json_field=True)
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.IntegerField(null=True, blank=True)
@@ -200,7 +200,7 @@ class ComponentsPage(Page):
     excerpt = models.TextField(blank=True)
     # going to need to parse the html here to extract the text
     # body = RichTextField(blank=True)
-    body = StreamField(CoreBlocks, blank=True)
+    body = StreamField(CoreBlocks, blank=True, use_json_field=True)
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.IntegerField(null=True, blank=True)

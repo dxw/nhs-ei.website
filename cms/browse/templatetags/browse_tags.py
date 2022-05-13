@@ -2,7 +2,7 @@ import logging
 
 from django import template
 from django.urls import reverse
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from cms.browse.views import fetch_page_by_slug
 from cms.settings.base import NHSEI_MAX_MENU_CAPTION_LENGTH

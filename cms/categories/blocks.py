@@ -4,8 +4,8 @@ import cms.posts.models
 import cms.blogs.models
 import cms.publications.models
 
-from wagtail.core.blocks import ChooserBlock, StructBlock, CharBlock
-from wagtail.core.blocks.field_block import (
+from wagtail.blocks import ChooserBlock, StructBlock, CharBlock
+from wagtail.blocks.field_block import (
     IntegerBlock,
     MultipleChoiceBlock,
     BooleanBlock,

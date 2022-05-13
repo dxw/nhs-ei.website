@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from django.http.response import Http404
 from django.test import TestCase
 from faker import Faker
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from cms.browse.templatetags.browse_tags import (
     get_caption,
@@ -141,7 +141,7 @@ class TestBrowseUnit(TestCase):
         with self.assertRaises(Http404) as e:
             fetch_page_by_slug("no such page")
 
-        with mock.patch("wagtail.core.models.Page.objects.filter") as page_patch:
+        with mock.patch("wagtail.models.Page.objects.filter") as page_patch:
             mock_page = mock.MagicMock(spec=Page)
             mock_page.slug = "slug"
 

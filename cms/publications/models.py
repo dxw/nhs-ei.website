@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.utils.text import slugify
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
@@ -14,8 +14,8 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 
 from cms.categories.models import Category, PublicationType, CategoryPage
 from cms.publications.blocks import PublicationsBlocks

@@ -10,7 +10,7 @@ from django.core.files import File
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
-from wagtail.core.models import Collection, Page
+from wagtail.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from cms.core.models import ParseList

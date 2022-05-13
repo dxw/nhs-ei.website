@@ -1,12 +1,12 @@
 from django.template.defaultfilters import filesizeformat
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     StructBlock,
     RawHTMLBlock,
     CharBlock,
     StreamBlock,
     ListBlock,
 )
-from wagtail.core.blocks.field_block import (
+from wagtail.blocks.field_block import (
     PageChooserBlock,
     RichTextBlock,
     URLBlock,

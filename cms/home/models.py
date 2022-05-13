@@ -1,7 +1,7 @@
 from cms.core.blocks import CoreBlocks
-from wagtail.core.models import Page
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.models import Page
+from wagtail.fields import StreamField
+from wagtail.admin.panels import StreamFieldPanel
 from wagtailnhsukfrontend.mixins import HeroMixin
 
 

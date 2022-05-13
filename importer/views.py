@@ -1,6 +1,6 @@
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from django.shortcuts import render
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 
 def importer_view(request):

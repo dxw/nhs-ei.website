@@ -3,7 +3,7 @@ import time
 from abc import ABC
 
 from dateutil import parser
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from cms.blogs.models import Blog, BlogIndexPage
 from .importer_cls import Importer

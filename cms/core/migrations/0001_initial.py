@@ -3,7 +3,7 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.core.fields
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='CoreSettings',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('alert_banner', wagtail.core.fields.RichTextField()),
+                ('alert_banner', wagtail.fields.RichTextField()),
                 ('is_visible', models.BooleanField(blank=True, default=False)),
                 ('header_extra', models.TextField(blank=True, null=True)),
                 ('footer_extra', models.TextField(blank=True, null=True)),

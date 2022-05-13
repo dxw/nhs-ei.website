@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.core.management.base import BaseCommand
 from faker import Faker
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from cms.blogs.models import Blog
 from cms.pages.models import BasePage

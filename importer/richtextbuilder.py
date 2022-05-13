@@ -7,9 +7,9 @@ from bs4 import BeautifulSoup
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.documents.models import Document
-from wagtail.core.models import Collection
+from wagtail.models import Collection
 from .httpcache import session
 
 logger = logging.getLogger("importer")

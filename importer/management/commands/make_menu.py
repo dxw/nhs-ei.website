@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from importer.menu_structure import menu_structure, new_pages
 from cms.pages.models import Page
 from importer.preserve import preserve
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailmenus.conf import settings
 from django.core.exceptions import ValidationError
 
@@ -50,7 +50,7 @@ def get_pages(flat_menu):
             for bit in url_bits:
                 try:
                     page = page.get_children().specific().get(slug=bit)
-                except Page.DoesNotExist:  # wagtail.core.models.DoesNotExist
+                except Page.DoesNotExist:  # wagtail.models.DoesNotExist
                     # things seem to get very wierd around what this exception is...
                     logger.warn(f"Unable to find page match for {bit} from page {page}")
                 else:

@@ -6,7 +6,7 @@ from io import BytesIO
 from dateutil import parser
 from django.core.files import File
 from django.core.files.images import ImageFile
-from wagtail.core.models import Collection
+from wagtail.models import Collection
 from wagtail.documents import get_document_model
 from wagtail.images import get_image_model
 

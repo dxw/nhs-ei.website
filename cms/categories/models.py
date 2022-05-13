@@ -1,6 +1,6 @@
 from django.db import models
 from modelcluster.fields import ParentalKey
-from wagtail.core.models import Page
+from wagtail.models import Page
 from django.template.defaultfilters import truncatechars
 import html
 import re

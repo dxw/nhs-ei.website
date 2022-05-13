@@ -1,11 +1,11 @@
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     RawHTMLBlock,
     StreamBlock,
     StructBlock,
     CharBlock,
     ListBlock,
 )
-from wagtail.core.blocks.field_block import (
+from wagtail.blocks.field_block import (
     RichTextBlock,
     PageChooserBlock,
 )

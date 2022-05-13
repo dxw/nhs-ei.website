@@ -2,7 +2,7 @@ import logging
 
 from django.http import Http404
 from django.shortcuts import render
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from cms.core.models import ExtendedMainMenuItem
 

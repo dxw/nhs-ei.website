@@ -1,12 +1,12 @@
 from django.db import models
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     PageChooserPanel,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import ClusterableModel, ParentalKey, Page
+from wagtail.fields import RichTextField
+from wagtail.models import ClusterableModel, ParentalKey, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtailmenus.models import AbstractMainMenuItem

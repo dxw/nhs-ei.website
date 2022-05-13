@@ -3,8 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 
 
@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
             name='Publication',
             fields=[
                 ('categorypage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='categories.categorypage')),
-                ('body', wagtail.core.fields.RichTextField(blank=True)),
-                ('documents', wagtail.core.fields.StreamField([('document_group', wagtail.core.blocks.StreamBlock([('document', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.RichTextBlock(required=False)), ('document', wagtail.documents.blocks.DocumentChooserBlock()), ('summary', wagtail.core.blocks.RichTextBlock(required=False))])), ('document_link', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.RichTextBlock(required=False)), ('external_url', wagtail.core.blocks.URLBlock(required=False)), ('page', wagtail.core.blocks.PageChooserBlock(required=False)), ('summary', wagtail.core.blocks.RichTextBlock(required=False))])), ('document_embed', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.RichTextBlock(required=False)), ('html', wagtail.core.blocks.RawHTMLBlock())])), ('free_text', wagtail.core.blocks.RichTextBlock())], group='Custom')), ('jump_menu', wagtail.core.blocks.StructBlock([('menu', wagtail.core.blocks.ListBlock(wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('menu_id', wagtail.core.blocks.CharBlock())])))], group='Custom')), ('named_anchor', wagtail.core.blocks.StructBlock([('anchor_id', wagtail.core.blocks.CharBlock()), ('heading', wagtail.core.blocks.CharBlock(required=False))], group='Custom'))], blank=True)),
+                ('body', wagtail.fields.RichTextField(blank=True)),
+                ('documents', wagtail.fields.StreamField([('document_group', wagtail.blocks.StreamBlock([('document', wagtail.blocks.StructBlock([('title', wagtail.blocks.RichTextBlock(required=False)), ('document', wagtail.documents.blocks.DocumentChooserBlock()), ('summary', wagtail.blocks.RichTextBlock(required=False))])), ('document_link', wagtail.blocks.StructBlock([('title', wagtail.blocks.RichTextBlock(required=False)), ('external_url', wagtail.blocks.URLBlock(required=False)), ('page', wagtail.blocks.PageChooserBlock(required=False)), ('summary', wagtail.blocks.RichTextBlock(required=False))])), ('document_embed', wagtail.blocks.StructBlock([('title', wagtail.blocks.RichTextBlock(required=False)), ('html', wagtail.blocks.RawHTMLBlock())])), ('free_text', wagtail.blocks.RichTextBlock())], group='Custom')), ('jump_menu', wagtail.blocks.StructBlock([('menu', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock()), ('menu_id', wagtail.blocks.CharBlock())])))], group='Custom')), ('named_anchor', wagtail.blocks.StructBlock([('anchor_id', wagtail.blocks.CharBlock()), ('heading', wagtail.blocks.CharBlock(required=False))], group='Custom'))], blank=True)),
                 ('wp_id', models.PositiveIntegerField(null=True)),
                 ('source', models.CharField(max_length=100, null=True)),
                 ('wp_slug', models.TextField(blank=True, null=True)),
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             name='PublicationIndexPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('body', wagtail.core.fields.RichTextField(blank=True)),
+                ('body', wagtail.fields.RichTextField(blank=True)),
             ],
             options={
                 'verbose_name': 'Publications Index Page',

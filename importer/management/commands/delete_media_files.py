@@ -3,7 +3,7 @@ import sys
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 from wagtail.documents.models import Document
-from wagtail.core.models import Collection
+from wagtail.models import Collection
 
 # the indiators from wordpress aren't nice so map them to better titles
 SOURCES = {

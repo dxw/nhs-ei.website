@@ -5,7 +5,7 @@ from cms.categories.models import (
 )
 from cms.posts.models import Post
 from cms.publications.models import Publication
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
     ModelAdminGroup,

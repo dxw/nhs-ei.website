@@ -1,15 +1,15 @@
 from urllib.parse import urlparse
 
 from django.db import models
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     StreamFieldPanel,
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 
 from cms.core.blocks import CoreBlocks
 from cms.pages.mixins import MetadataMixin

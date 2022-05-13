@@ -19,7 +19,6 @@ class TestSearchDescription(TestCase):
             depth=1,
             path="/a_page",
             search_description="stuff " * 100 + "has a search_description",
-            body="blah blah blah",
         )
         response = self.client.get("/search/?query=e")
         self.assertContains(response, "search_description")
@@ -34,6 +33,7 @@ class TestPagelessQuery(TestCase):
             ),
             "&kitten=yes&repeated=yes&repeated=yes&ocelot=no",
         )
+
 
 class PublicationFilters(TestCase):
     fixtures = ["fixtures/publication_types.json"]

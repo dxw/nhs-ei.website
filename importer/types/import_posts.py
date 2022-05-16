@@ -29,7 +29,7 @@ POST_SOURCES_TO_CATEGORY_SOURCES = {
     "posts-east-of-england": "categories-east-of-england",
     "posts-midlands": "categories-midlands",
     "posts-north-west": "categories-north-west",
-    "posts-south-east": "categories-south-west",
+    "posts-south-east": "categories-south-east",
 }
 
 # so we can a post to a sub site and build out sub site post index pages

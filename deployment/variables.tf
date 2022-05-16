@@ -57,7 +57,7 @@ variable "web_image_tag" {
 variable "web_replica_count" {
   description = "Web deployment replica count"
   type        = number
-  default     = 3
+  default     = 1
 }
 
 variable "web_environment_variables" {
@@ -74,7 +74,7 @@ variable "scrapy_image_tag" {
 variable "scrapy_replica_count" {
   description = "Web deployment replica count"
   type        = number
-  default     = 3
+  default     = 1
 }
 
 variable "scrapy_environment_variables" {

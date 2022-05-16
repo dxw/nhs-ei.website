@@ -23,13 +23,13 @@ POST_SOURCES_TO_CATEGORY_SOURCES = {
     "posts-improvement-hub": "categories-improvement-hub",
     "posts-non-executive-opportunities": "categories-non-executive" "-opportunities",
     "posts-rightcare": "categories-rightcare",
-    "posts-north-east-yorkshire": "North East and Yorkshire",
-    "posts-south": "South West",
-    "posts-london": "London",
-    "posts-east-of-england": "East of England",
-    "posts-midlands": "Midlands",
-    "posts-north-west": "North West",
-    "posts-south-east": "South East",
+    "posts-north-east-yorkshire": "categories-north-east-yorkshire",
+    "posts-south": "categories-south",
+    "posts-london": "categories-london",
+    "posts-east-of-england": "categories-east-of-england",
+    "posts-midlands": "categories-midlands",
+    "posts-north-west": "categories-north-west",
+    "posts-south-east": "categories-south-west",
 }
 
 # so we can a post to a sub site and build out sub site post index pages
@@ -42,6 +42,13 @@ POST_SOURCES = {
     "posts-improvement-hub": "Improvement Hub",
     "posts-non-executive-opportunities": "Non-executive opportunities",
     "posts-rightcare": "Right Care",
+    "posts-north-east-yorkshire": "North East and Yorkshire",
+    "posts-south": "South West",
+    "posts-london": "London",
+    "posts-east-of-england": "East of England",
+    "posts-midlands": "Midlands",
+    "posts-north-west": "North West",
+    "posts-south-east": "South East",
 }
 
 

@@ -52,6 +52,13 @@ PUBLICATION_SOURCES_TO_CATEGORY_SOURCES = {
     "publications-improvement-hub": "categories-improvement-hub",
     "publications-non-executive-opportunities": "categories-non-executive-opportunities",
     "publications-rightcare": "categories-rightcare",
+    "publications-north-east-yorkshire": "categories-north-east-yorkshire",
+    "publications-south": "categories-south",
+    "publications-london": "categories-london",
+    "publications-east-of-england": "categories-east-of-england",
+    "publications-midlands": "categories-midlands",
+    "publications-north-west": "categories-north-west",
+    "publications-south-east": "categories-south-east",
 }
 
 

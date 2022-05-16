@@ -3,6 +3,7 @@
 from wagtail.core import blocks
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
+from django.core.exceptions import ValidationError
 
 # ===============================
 # Looking for a RecentPostsBlock?
@@ -11,14 +12,36 @@ from wagtail.images.blocks import ImageChooserBlock
 # Not added a PromoBlock -- might already be in Base?
 # ===============================
 
+NHS_UK_URL = "https://nhs.uk"
 
-class VisitNhsukInfobarBlock(blocks.StaticBlock):
-    "wp_name: visit_nhsuk_infobar"
+
+def validate_nhsuk_url(value):
+    if not value.startswith(NHS_UK_URL):
+        raise ValidationError(f"URL does not start with {NHS_UK_URL}")
+
+
+class VisitNhsukInfobarBlock(blocks.StructBlock):
+    """
+    wp_name: visit_nhsuk_infobar
+    Note that the wp version has no fields, but we're adding a name
+    for the specific form of healthcare and a custom URL.
+    """
+
+    topic = blocks.CharBlock(
+        help_text='Fills in the sentence: "For any medical advice relating to _____ please visit nhs.uk". May be blank.',
+        required=False,
+    )
+    url = blocks.URLBlock(
+        help_text=f"URL user is guided to. Must start {NHS_UK_URL} .",
+        required=True,
+        default=NHS_UK_URL,
+        validators=[validate_nhsuk_url],
+    )
 
     class Meta:
         icon = "user"
         template = "blocks/acf/visit_nhsuk_infobar_block.html"
-        admin_text = "Recommends users find medical advice at nhs.uk"
+        help_text = "Recommends users find medical advice at nhs.uk"
 
 
 class TopicBlock(blocks.StructBlock):
@@ -107,7 +130,7 @@ class ArticleBlock(blocks.StructBlock):
     # background # wp:article_background; false
     # background-colour #wp:article_background_colour: "#e8edee"
     content = blocks.RichTextBlock()  # wp: article_content; full HTML
-    page = blocks.PageChooserBlock(required=False)  # wp: article_url, optional
+    page = blocks.PageChooserBlock()  # wp: article_url, optional
 
     class Meta:
         icon = "user"

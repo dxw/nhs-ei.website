@@ -116,7 +116,10 @@ class PublicationPublicationTypeRelationship(models.Model):
 
 class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
     search_fields = CategoryPage.search_fields + [
-        index.FilterField("publication_type_id")
+        # Not having this means we can't search on publication type.
+        # Having this produces a warning error and might be responsible for ElasticSearch crashes
+        # with an error message like https://github.com/wagtail/wagtail/issues/6483
+        # index.FilterField("publication_type_id")
     ]
 
     @route(r"^pdf/$")

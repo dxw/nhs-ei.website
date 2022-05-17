@@ -133,20 +133,23 @@ def search(request):
                 ]
             )
 
-        publication_types = []
-        for publication_slug in publication_type_slugs_to_include:
-            # Handle the case where there's multiple conflicting types by counting them all
-            publication_types.extend(
-                PublicationType.objects.filter(slug=publication_slug)
-            )
-
-        if publication_types and search_type == "publications":
-            publication_filter = Q()
-            for publication_type in publication_types:
-                publication_filter = publication_filter | Q(
-                    publication_publication_type_relationship__publication_type=publication_type
-                )
-            queryset = queryset.filter(publication_filter)
+        # Disabled publication type filtering to attempt to diagnose whether this is causing
+        # the ElasticSearch errors.
+        #
+        # publication_types = []
+        # for publication_slug in publication_type_slugs_to_include:
+        #     # Handle the case where there's multiple conflicting types by counting them all
+        #     publication_types.extend(
+        #         PublicationType.objects.filter(slug=publication_slug)
+        #     )
+        #
+        # if publication_types and search_type == "publications":
+        #     publication_filter = Q()
+        #     for publication_type in publication_types:
+        #         publication_filter = publication_filter | Q(
+        #             publication_publication_type_relationship__publication_type=publication_type
+        #         )
+        #     queryset = queryset.filter(publication_filter)
 
         return queryset.search(query_string)
 

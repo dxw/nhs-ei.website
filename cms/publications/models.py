@@ -1,5 +1,7 @@
 from urllib.parse import urlparse
 
+from datetime import datetime
+
 from bs4 import BeautifulSoup
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -114,6 +116,29 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
+class ChangelogEntry(models.Model):
+    change_date = models.DateTimeField(
+        "The time the changes were made", default=datetime.now
+    )
+    change_description = models.TextField("Description of the changes")
+
+    panels = [
+        FieldPanel("change_date"),
+        FieldPanel("change_description"),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class ChangelogEntryLink(ChangelogEntry):
+    publication = ParentalKey(
+        "publications.Publication",
+        on_delete=models.CASCADE,
+        related_name="changelog_entries",
+    )
+
+
 class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
     search_fields = CategoryPage.search_fields + [
         # Not having this means we can't search on publication type.
@@ -183,6 +208,12 @@ class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
             ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings"),
             ObjectList(MetadataMixin.panels, heading="Metadata"),
+            ObjectList(
+                [
+                    InlinePanel("changelog_entries"),
+                ],
+                heading="Changelog",
+            ),
         ]
     )
 

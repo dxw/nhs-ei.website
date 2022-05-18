@@ -132,6 +132,9 @@ class ChangelogEntry(models.Model):
 
 
 class ChangelogEntryLink(ChangelogEntry):
+    class Meta:
+        ordering = ["change_date"]
+
     publication = ParentalKey(
         "publications.Publication",
         on_delete=models.CASCADE,

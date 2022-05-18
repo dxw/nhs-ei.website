@@ -123,6 +123,7 @@
                         <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
                         <strong>Date last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
                     </p>
+                    {% if self.changelog_entries.all %}
                     <details class="nhsuk-details">
                         <summary class="nhsuk-details__summary">
                             <span class="nhsuk-details__summary-text">
@@ -130,9 +131,19 @@
                             </span>
                         </summary>
                         <div class="nhsuk-details__text">
-                        <!-- functionality to get this to work hasn't been worked out yet. To be implemented when this work has been done -->
+                            <table>
+
+                                {% for changelog_entry in self.changelog_entries.all %}
+                                    <tr>
+                                        <th scope="row">{{ changelog_entry.change_date }}</th>
+                                        <td>{{ changelog_entry.change_description }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                            </table>
                         </div>
                     </details>
+                    {% endif %}
                 </div>
 
             </div>

@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
+from cms.pages.models import ComponentsPage
+import json
 
 
 class TestComponentsPage(TestCase):
@@ -104,3 +106,23 @@ class TestComponentsPage(TestCase):
         self.assertEqual(
             warning_callout.find("p").string, "Warning callout block content"
         )
+
+    def test_mangle(self):
+        (page,) = ComponentsPage.objects.filter(slug="component-page")
+        breakpoint()
+
+        body = [
+            {
+                "type": "visit_nhsuk_infobar",
+                "value": {"url": "https://nhs.uk/kitten", "topic": "kitten"},
+            }
+        ]
+
+        page.body = json.dumps(body)
+        response = self.client.get("/component-page/")
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        heading = soup.select_one("main h1")
+
+        self.assertEqual(heading.text, "Component Page")
+        '[{"type": "recent_posts", "value": {"title": "Recent Posts", "type": ["post", "blog"], "num_posts": 6, "see_all_posts": true, "see_all_blogs": true}, "id": "5425d99f-d70e-472f-bde1-4ca6784fd13d"}, {"type": "text", "value": "<p>Test this page for the Recent Posts panel above</p>", "id": "ec8bd714-10a6-45a0-88be-0c61a03f2b38"}]',

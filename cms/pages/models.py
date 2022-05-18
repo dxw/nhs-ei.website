@@ -1,8 +1,10 @@
 from urllib.parse import urlparse
 
 from django.db import models
+from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel,
+    InlinePanel,
     MultiFieldPanel,
     StreamFieldPanel,
     ObjectList,
@@ -13,6 +15,20 @@ from wagtail.core.models import Page
 
 from cms.core.blocks import CoreBlocks
 from cms.pages.mixins import MetadataMixin
+from cms.changelog.models import ChangelogEntry
+
+
+class ChangelogEntryLink(ChangelogEntry):
+    """A class to relate a changelog.ChangelogEntry to a BasePage."""
+
+    class Meta:
+        ordering = ["change_date"]
+
+    page = ParentalKey(
+        "pages.BasePage",
+        on_delete=models.CASCADE,
+        related_name="changelog_entries",
+    )
 
 
 class BasePage(Page, MetadataMixin):
@@ -76,6 +92,12 @@ class BasePage(Page, MetadataMixin):
             ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings"),
             ObjectList(MetadataMixin.panels, heading="Metadata"),
+            ObjectList(
+                [
+                    InlinePanel("changelog_entries"),
+                ],
+                heading="Changelog",
+            ),
         ]
     )
 

@@ -24,6 +24,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from cms.publications.views import PublicationPdfView
 from wagtail.search import index
 from cms.pages.mixins import MetadataMixin
+from cms.changelog.models import ChangelogEntry
 
 
 class TOC(models.Model):
@@ -114,6 +115,19 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
+class ChangelogEntryLink(ChangelogEntry):
+    """A class to relate a changelog.ChangelogEntry to a Publication."""
+
+    class Meta:
+        ordering = ["change_date"]
+
+    publication = ParentalKey(
+        "publications.Publication",
+        on_delete=models.CASCADE,
+        related_name="changelog_entries",
+    )
+
+
 class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
     search_fields = CategoryPage.search_fields + [
         # Not having this means we can't search on publication type.
@@ -183,6 +197,12 @@ class Publication(RoutablePageMixin, MetadataMixin, CategoryPage):
             ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings"),
             ObjectList(MetadataMixin.panels, heading="Metadata"),
+            ObjectList(
+                [
+                    InlinePanel("changelog_entries"),
+                ],
+                heading="Changelog",
+            ),
         ]
     )
 

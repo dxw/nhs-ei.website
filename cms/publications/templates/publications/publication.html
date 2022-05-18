@@ -123,16 +123,7 @@
                         <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
                         <strong>Date last updated:</strong> {{ self.latest_revision_created_at|date:'d M Y' }}
                     </p>
-                    <details class="nhsuk-details">
-                        <summary class="nhsuk-details__summary">
-                            <span class="nhsuk-details__summary-text">
-                            Show all updates
-                            </span>
-                        </summary>
-                        <div class="nhsuk-details__text">
-                        <!-- functionality to get this to work hasn't been worked out yet. To be implemented when this work has been done -->
-                        </div>
-                    </details>
+                    {% include 'changelog/changelog.html' with changelog_entries=self.changelog_entries.all %}
                 </div>
 
             </div>

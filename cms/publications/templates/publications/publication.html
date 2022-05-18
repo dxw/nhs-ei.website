@@ -70,21 +70,54 @@
             </div>
         </div>
         <hr>
+
         <h1>{{ self.title }}</h1>
+
         {% if self.search_description %}
           <p>{{self.search_description}}</p>
         {% endif %}
-        {% if self.publication_publication_type_relationship %}
+
+        {% if self.body %}
+
         <div class="nhsuk-grid-row">
+
             <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
                 <nav>
                     {% get_toc page %}
+                    {% if self.documents %}<a href="#documents">Attached documents</a>{% endif %}
                     <!-- <a href="#related_contents">Related Content</a> -->
                 </nav>
             </div>
             <div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
+
                 <div id="content">{{ self.body|richtext }}</div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="nhsuk-grid-row">
+
+            <div class="nhsuk-grid-column-full">
+
+                {% if self.documents %}
+
                 <hr>
+
+                <div id="documents">
+                    <h2>Attached documents</h2>
+
+                    {% for block in self.documents %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+
+                {% endif %}
+
+                <hr>
+
                 <div id="see-all-updates" class="nhsuk-review-date last-publication">
                     <p class="nhsei-body-s">
                         <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
@@ -101,41 +134,17 @@
                         </div>
                     </details>
                 </div>
-                <hr>
+
+            </div>
+        </div>
                 <!-- <div class="related-content"> -->
                     <!-- <a name="related_contents"></a> -->
                     <!-- <h2>Related content</h2> -->
                     <!-- The related content feature hasn't be implemented yet - plug this in here once it has been done -->
                 <!-- </div> -->
-                <hr>
-            </div>
-            <div class="nhsuk-review-date">
-                <p class="nhsuk-body-s">
-                    <a name="see-all-updates"></a>
-                    Date published: {{ self.first_published_at|date:'d M Y' }}<br>
-                    Date last updated: {{ self.latest_revision_created_at|date:'d M Y' }}
-                </p>
-            </div>
             <!-- <div class="nhsuk-body-s">
                 {{ self.first_published_at|date }} | Author: {{ self.author }}
             </div> -->
-            <div class="nhsuk-u-reading-width">
-                <div class="nhsuk-body-s">
-                    Topics:
-                    {% for category in self.categorypage_category_relationship.all %}
-                    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-                    {% endfor %} <br>
-                    Publication Type:
-                    {% for publication_type in self.publication_publication_type_relationship.all %}
-                    <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
-                    {% endfor %}
-                </div>
-            </div>
 
-        {% endif %}
-
-        {% for block in self.documents %}
-            {% include_block block %}
-        {% endfor %}
     </article>
 {% endblock content %}

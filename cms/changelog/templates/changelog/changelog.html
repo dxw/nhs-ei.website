@@ -1,0 +1,21 @@
+{% if changelog_entries %}
+    <details class="nhsuk-details">
+        <summary class="nhsuk-details__summary">
+            <span class="nhsuk-details__summary-text">
+            Show all updates
+            </span>
+        </summary>
+        <div class="nhsuk-details__text">
+            <table>
+
+                {% for changelog_entry in changelog_entries %}
+                    <tr>
+                        <th scope="row">{{ changelog_entry.change_date }}</th>
+                        <td>{{ changelog_entry.change_description }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </details>
+{% endif %}

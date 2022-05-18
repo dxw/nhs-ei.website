@@ -1,7 +1,5 @@
 from urllib.parse import urlparse
 
-from datetime import datetime
-
 from bs4 import BeautifulSoup
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
@@ -26,6 +24,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from cms.publications.views import PublicationPdfView
 from wagtail.search import index
 from cms.pages.mixins import MetadataMixin
+from cms.changelog.models import ChangelogEntry
 
 
 class TOC(models.Model):
@@ -116,22 +115,9 @@ class PublicationPublicationTypeRelationship(models.Model):
     )
 
 
-class ChangelogEntry(models.Model):
-    change_date = models.DateTimeField(
-        "The time the changes were made", default=datetime.now
-    )
-    change_description = models.TextField("Description of the changes")
-
-    panels = [
-        FieldPanel("change_date"),
-        FieldPanel("change_description"),
-    ]
-
-    class Meta:
-        abstract = True
-
-
 class ChangelogEntryLink(ChangelogEntry):
+    """A class to relate a changelog.ChangelogEntry to a Publication."""
+
     class Meta:
         ordering = ["change_date"]
 

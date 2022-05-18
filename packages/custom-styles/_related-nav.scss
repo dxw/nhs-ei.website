@@ -42,7 +42,8 @@ button.nhsuk-button.nhsuk-button--secondary-grey {
   border-left: 1px solid #707070;
   border-right: 1px solid #707070;
   border-top: 1px solid #707070;
-  font-weight: normal;
+  font-weight: bold;
+  border-radius: 5px;
   @media (min-width:740px){
     font-size:17px;
   }

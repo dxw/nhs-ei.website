@@ -1,32 +1,21 @@
 {% extends "base.html" %}
 {% load static posts_tags publications_tags wagtailcore_tags wagtailimages_tags %}
-
 {% block body_class %}template-homepage{% endblock %}
-
 {% block outer_content %}
-  {% include "wagtailnhsukfrontend/hero.html" %}
+    {% include "wagtailnhsukfrontend/hero.html" %}
 {% endblock%}
-
 {% block content %}
-
-<div class="nhsuk-width-container nhsuk-u-margin-top-6">
-    <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-row nhsuk-u-margin-top-6">
         <div class="nhsuk-grid-column-full">
-
             <h1 class="nhsuk-u-visually-hidden">
-                NHS England and Improvement Homepage
+            NHS England and Improvement Homepage
             </h1>
-
             {% for block in self.body %}
                 {% include_block block %}
             {% endfor %}
-
         </div>
     </div>
-</div>
-
-{% comment %} <section class="latest-publications-section">
-    <div class="nhsuk-width-container">
+    {% comment %} <section class="latest-publications-section">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-heading-l">{{ self.all_publications_title }}</h2>
@@ -36,57 +25,53 @@
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for publication in publications.0 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                <li>
+                                    <article class="nhsei-article-list">
+                                        <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ publication.url }}">
-                                            {{ publication.title }}</a>
-                                    </h2>
-                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
-                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
-                                      </span>
-                                    {% endfor %}
-                                    {% include 'partials/article-list-meta--publication.html' %}
-                                </article>
-                            </li>
+                                        {{ publication.title }}</a>
+                                        </h2>
+                                        {% for publication_type in publication.publication_publication_type_relationship.all %}
+                                            <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
+                                            </span>
+                                        {% endfor %}
+                                        {% include 'partials/article-list-meta--publication.html' %}
+                                    </article>
+                                </li>
                             {% endfor %}
                         </ol>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for publication in publications.1 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                <li>
+                                    <article class="nhsei-article-list">
+                                        <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ publication.url }}">
-                                            {{ publication.title }}</a>
-                                    </h2>
-                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
-                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
-                                      </span>
-                                    {% endfor %}
-                                    {% include 'partials/article-list-meta--publication.html' %}
-                                </article>
-                            </li>
+                                        {{ publication.title }}</a>
+                                        </h2>
+                                        {% for publication_type in publication.publication_publication_type_relationship.all %}
+                                            <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
+                                            </span>
+                                        {% endfor %}
+                                        {% include 'partials/article-list-meta--publication.html' %}
+                                    </article>
+                                </li>
                             {% endfor %}
                         </ol>
                     </div>
                 </div>
                 {% if self.all_publications_page %}
-                <a href="{{ self.all_publications_page.url }}">View all publications</a>
+                    <a href="{{ self.all_publications_page.url }}">View all publications</a>
                 {% endif %}
             </div>
         </div>
-    </div>
-</section>
-
-<article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
-    <div class="nhsuk-width-container">
+    </section>
+    <article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-u-visually-hidden">Highlights</h2>
             </div>
-
             <div class="nhsuk-grid-column-one-half">
                 {{ self.body|richtext }}
             </div>
@@ -94,58 +79,52 @@
                 {% image self.body_image fill-800x600 %}
             </div>
         </div>
-    </div>
-</article>
-
-<section class="news-section">
-    <div class="nhsuk-width-container">
+    </article>
+    <section class="news-section">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
                 {% if self.all_news_sub_title %}
-                <p>{{ self.all_news_sub_title|richtext }}</p>
+                    <p>{{ self.all_news_sub_title|richtext }}</p>
                 {% endif %}
                 <div class="nhsuk-grid-row">
                     {% get_lastest_posts_columns 4 as posts %}
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for post in posts.0 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                <li>
+                                    <article class="nhsei-article-list">
+                                        <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
+                                        {{ post.title }}</a>
+                                        </h2>
+                                        {% include 'partials/article-list-meta--news.html' %}
+                                    </article>
+                                </li>
                             {% endfor %}
                         </ol>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for post in posts.1 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                <li>
+                                    <article class="nhsei-article-list">
+                                        <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
+                                        {{ post.title }}</a>
+                                        </h2>
+                                        {% include 'partials/article-list-meta--news.html' %}
+                                    </article>
+                                </li>
                             {% endfor %}
                         </ol>
                     </div>
                 </div>
                 {% if self.all_news_page %}
-                <a href="{{ self.all_news_page.url }}">View all news</a>
+                    <a href="{{ self.all_news_page.url }}">View all news</a>
                 {% endif %}
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 {% include 'partials/warning-callout.html' %} {% endcomment %}
-
 {% endblock content %}

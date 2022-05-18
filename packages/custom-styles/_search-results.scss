@@ -58,7 +58,7 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
 .nhsuk-list {
   .nhsuk-panel.nhsei-panel-search-result {
     @include nhsuk-responsive-margin(3, 'top');
-    @include nhsuk-responsive-padding(4);
+    padding: 16px 0;
   }
 }
 
@@ -174,4 +174,9 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
   .published-label {
     font-weight:bold;
   }
+}
+
+.full-width {
+  margin-left:0px;
+  margin-bottom:0px;
 }

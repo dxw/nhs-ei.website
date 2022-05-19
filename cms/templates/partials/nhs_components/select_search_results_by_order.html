@@ -12,12 +12,12 @@
       <div class="nhsuk-row nhsuk-u-margin-botom-3">
         <select class="nhsuk-select" id="publish_date" name="order"
           onchange="this.form.submit()">
-          <option value=""{% if not order %} selected{% endif %}>Most relevant</option>
-          <option value="-latest_revision_created_at"{% if order == '-latest_revision_created_at' %} selected{% endif %}>Recently updated</option>
-          <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Recently published</option>
+          <option value=""{% if not order %} selected{% endif %}>Relevance</option>
+          <option value="-latest_revision_created_at"{% if order == '-latest_revision_created_at' %} selected{% endif %}>Newest (updated)</option>
+          {# <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Newest (published)</option> #}
 
-          <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Least recently updated</option>
-          <option value="first_published_at"{% if order == 'first_published_at' %} selected{% endif %}>Least recently published</option>
+          <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Oldest (updated)</option>
+          {# <option value="first_published_at"{% if order == 'first_published_at' %} selected{% endif %}>Oldest (published)</option> #}
         </select>
       </div>
     </div>

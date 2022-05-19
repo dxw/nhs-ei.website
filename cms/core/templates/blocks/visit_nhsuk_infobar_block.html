@@ -1,0 +1,4 @@
+{% load wagtailcore_tags  %}
+<div class="nhs-banner">
+  <span><strong>For any medical advice {% if value.topic %}relating to {{value.topic}}{% endif %} please visit <a href="{{value.url}}">NHS.uk</a></strong></span>
+</div>

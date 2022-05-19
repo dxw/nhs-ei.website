@@ -218,3 +218,38 @@ a:visited {
     flex-wrap: wrap;
   }
 }
+
+
+.nhsuk-grid-row {
+    margin-left:0px;
+    margin-right:0px;
+}
+
+
+.nhsuk-grid-column-two-thirds, .nhsuk-grid-column-full, .nhsuk-grid-column-one-third, .nhsuk-grid-column-three-quarters {
+    padding-right:16px;
+    padding-left:0;
+}
+
+//landing page
+
+.item-card:nth-of-type(2), .item-card:nth-of-type(3) {
+  @media (min-width:740px) {
+    padding-left:16px;
+  }
+}
+
+.item-card {
+  @media (max-width:740px) {
+    padding-bottom:32px;
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+

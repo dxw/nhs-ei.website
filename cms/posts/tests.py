@@ -30,7 +30,7 @@ class TestPostIndexPage(TestCase):
         soup = BeautifulSoup(response.content, "html.parser")
 
         post_newest = soup.select_one(
-            "main .nhsuk-width-container:nth-child(3) .nhsuk-panel:nth-of-type(1)"
+            "main .nhsuk-width-container:nth-child(1) .nhsuk-panel:nth-of-type(1)"
         )
 
         # heading
@@ -61,7 +61,7 @@ class TestPostIndexPage(TestCase):
         )
 
         post_oldest = soup.select_one(
-            "main .nhsuk-width-container:nth-child(3) .nhsuk-panel:nth-of-type(2)"
+            "main .nhsuk-width-container:nth-child(1) .nhsuk-panel:nth-of-type(2)"
         )
 
         # heading
@@ -115,7 +115,9 @@ class TestPost(TestCase):
         # review date
         # better to test these actual date objects as unittest I think, one for later
         published_date_container = soup.select_one("main .nhsuk-body-s")
-        self.assertIn(published_date_container.text.strip()[:22], "Published: 04 Feb 2021")
+        self.assertIn(
+            published_date_container.text.strip()[:22], "Published: 04 Feb 2021"
+        )
 
         # taxonomy links
         category_1 = soup.select_one("main a:nth-of-type(1)")

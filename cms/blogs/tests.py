@@ -31,7 +31,7 @@ class TestBlogIndexPage(TestCase):
         soup = BeautifulSoup(response.content, "html.parser")
 
         blog_newest = soup.select_one(
-            "main .nhsuk-width-container:nth-child(3) .nhsuk-panel:nth-of-type(1)"
+            "main .nhsuk-width-container:nth-child(1) .nhsuk-panel:nth-of-type(1)"
         )
 
         # heading
@@ -62,7 +62,7 @@ class TestBlogIndexPage(TestCase):
         )
 
         blog_oldest = soup.select_one(
-            "main .nhsuk-width-container:nth-child(3) .nhsuk-panel:nth-of-type(2)"
+            "main .nhsuk-width-container:nth-child(1) .nhsuk-panel:nth-of-type(2)"
         )
 
         # heading

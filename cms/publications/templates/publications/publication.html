@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load static wagtailuserbar frontend_tags publications_tags wagtailroutablepage_tags %}
-
 {% block content %}
-    <article class="nhsuk-width-container">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-three-quarters last-publication">
                 <div class="nhsuk-review-date">
@@ -70,17 +68,12 @@
             </div>
         </div>
         <hr>
-
         <h1>{{ self.title }}</h1>
-
         {% if self.search_description %}
           <p>{{self.search_description}}</p>
         {% endif %}
-
         {% if self.body %}
-
         <div class="nhsuk-grid-row">
-
             <div class="nhsuk-grid-column-one-third nhsuk-u-margin-top-4 content_nav">
                 <nav>
                     {% get_toc page %}
@@ -89,35 +82,22 @@
                 </nav>
             </div>
             <div class="nhsuk-grid-column-two-thirds nhsuk-u-margin-top-4">
-
                 <div id="content">{{ self.body|richtext }}</div>
-
             </div>
-
         </div>
-
         {% endif %}
-
         <div class="nhsuk-grid-row">
-
             <div class="nhsuk-grid-column-full">
-
                 {% if self.documents %}
-
                 <hr>
-
                 <div id="documents">
                     <h2>Attached documents</h2>
-
                     {% for block in self.documents %}
                         {% include_block block %}
                     {% endfor %}
                 </div>
-
                 {% endif %}
-
                 <hr>
-
                 <div id="see-all-updates" class="nhsuk-review-date last-publication">
                     <p class="nhsei-body-s">
                         <strong>Date published:</strong> {{ self.first_published_at|date:'d M Y' }}<br>
@@ -125,7 +105,6 @@
                     </p>
                     {% include 'changelog/changelog.html' with changelog_entries=self.changelog_entries.all %}
                 </div>
-
             </div>
         </div>
                 <!-- <div class="related-content"> -->
@@ -136,6 +115,4 @@
             <!-- <div class="nhsuk-body-s">
                 {{ self.first_published_at|date }} | Author: {{ self.author }}
             </div> -->
-
-    </article>
-{% endblock content %}
+                {% endblock content %}

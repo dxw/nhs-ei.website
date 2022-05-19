@@ -4,6 +4,32 @@ from cms.blogs.models import Blog, BlogIndexPage
 from cms.core.templatetags.frontend_tags import breadcrumb
 from cms.pages.models import Page
 from importer.preserve import preserve
+from cms.core.blocks import validate_nhsuk_url
+from django.core.exceptions import ValidationError
+
+
+class TestVisitNhsukInfobarValidation(TestCase):
+    def test_validations(self):
+        with self.assertRaises(ValidationError):
+            validate_nhsuk_url("not_a_url")
+        with self.assertRaises(ValidationError):
+            validate_nhsuk_url("http://nhs.uk/not_a_https_url")
+        with self.assertRaises(ValidationError):
+            validate_nhsuk_url("https://england.nhs.uk/has_subdomain")
+        with self.assertRaises(ValidationError):
+            validate_nhsuk_url(
+                "https://nhs.uk"
+            )  # theoretically, this could be nhs.uk.evildomain.io
+
+        try:
+            validate_nhsuk_url("https://nhs.uk/kittens")
+        except ValidationError as e:
+            self.fail(f"Expected no validation error: /kittens {e}")
+
+        try:
+            validate_nhsuk_url("https://nhs.uk/")
+        except ValidationError as e:
+            self.fail(f"Expected no validation error: / {e}")
 
 
 class TestInitialImporterDatePreservation(TestCase):

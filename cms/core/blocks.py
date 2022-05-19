@@ -59,7 +59,7 @@ RICHTEXT_FEATURES_ALL = [
     "blockquote",
 ]
 
-NHS_UK_URL = "https://nhs.uk"
+NHS_UK_URL = "https://nhs.uk/"
 
 
 def validate_nhsuk_url(value):

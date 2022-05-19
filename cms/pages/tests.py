@@ -104,3 +104,14 @@ class TestComponentsPage(TestCase):
         self.assertEqual(
             warning_callout.find("p").string, "Warning callout block content"
         )
+
+    def test_nhsuk_banner(self):
+        response = self.client.get("/base-page/")
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        banner = soup.select_one(".nhs-banner")
+        self.assertEquals(
+            "For any medical advice relating to kittens please visit NHS.uk",
+            banner.text.strip(),
+        )
+        self.assertIn("https://nhs.uk/kittens", str(banner))

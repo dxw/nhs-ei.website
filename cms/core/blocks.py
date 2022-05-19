@@ -4,6 +4,7 @@ from wagtail.core.blocks import (
     StructBlock,
     CharBlock,
     ListBlock,
+    URLBlock,
 )
 from wagtail.core.blocks.field_block import (
     RichTextBlock,
@@ -31,6 +32,8 @@ from wagtailnhsukfrontend.blocks import (
     SummaryListBlock,
 )
 
+from django.core.exceptions import ValidationError
+
 import cms.categories.blocks
 
 RICHTEXT_FEATURES_ALL = [
@@ -55,6 +58,37 @@ RICHTEXT_FEATURES_ALL = [
     "strikethrough",
     "blockquote",
 ]
+
+NHS_UK_URL = "https://nhs.uk"
+
+
+def validate_nhsuk_url(value):
+    if not value.startswith(NHS_UK_URL):
+        raise ValidationError(f"URL does not start with {NHS_UK_URL}")
+
+
+class VisitNhsukInfobarBlock(StructBlock):
+    """
+    wp_name: visit_nhsuk_infobar
+    Note that the wp version has no fields, but we're adding a name
+    for the specific form of healthcare and a custom URL.
+    """
+
+    topic = CharBlock(
+        help_text='Fills in the sentence: "For any medical advice relating to _____ please visit nhs.uk". May be blank.',
+        required=False,
+    )
+    url = URLBlock(
+        help_text=f"URL user is guided to. Must start {NHS_UK_URL} .",
+        required=True,
+        default=NHS_UK_URL,
+        validators=[validate_nhsuk_url],
+    )
+
+    class Meta:
+        icon = "user"
+        template = "blocks/visit_nhsuk_infobar_block.html"
+        help_text = "Recommends users find medical advice at nhs.uk"
 
 
 class PageHeadingBlock(StructBlock):
@@ -97,6 +131,7 @@ class CoreBlocks(StreamBlock):
     promo_group = CardGroupBlock(group="Base")
     page_heading = PageHeadingBlock(group="Custom")
     promoted_links = PromotedLinksBlock(group="Custom")
+    visit_nhsuk = VisitNhsukInfobarBlock(group="Custom")
 
     recent_posts = cms.categories.blocks.RecentPostsBlock(group="Custom")
     text = RichTextBlock(
@@ -109,7 +144,7 @@ class CoreBlocks(StreamBlock):
         features=RICHTEXT_FEATURES_ALL,
     )
     html = RawHTMLBlock(
-        group="custom",
+        group="Custom",
         help_text="""
             Use this block to add raw html
         """,

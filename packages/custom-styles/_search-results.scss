@@ -180,3 +180,39 @@ fieldset.sort_by_nhsuk-fieldset.nhsuk-fieldset {
   margin-left:0px;
   margin-bottom:0px;
 }
+
+
+
+.nhsuk-list .nhsuk-panel.nhsei-panel-search-result {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: 1px solid $nhsuk-border-color;
+  position:relative;
+// search list tags
+  .search-meta, .tag_right {
+    font-size: 16px;
+  }
+  .tag_right {
+    @media (min-width:641px){
+      position: absolute;
+      right: 0;
+      bottom: 24px;
+      width: 60%;
+      text-align: right;
+    }
+    padding-top:20px;
+  }
+}
+
+.search-meta svg {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    position: relative;
+    margin: 0 5px 0 0;
+}
+
+span.post-author {
+    padding-left: 20px;
+}

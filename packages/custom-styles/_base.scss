@@ -58,6 +58,7 @@
   width: 100%;
 }
 .nhsuk-main-wrapper {
+  padding-top: 0px;
   background-color: white;
 }
 
@@ -72,7 +73,6 @@
 }
 
 .nhsuk-footer__list.nhsie-footer-menu {
-  border-bottom: 1px solid $color_nhsuk-grey-1;
   @include nhsuk-responsive-padding(4, "bottom");
   @include nhsuk-responsive-margin(4, "bottom");
 

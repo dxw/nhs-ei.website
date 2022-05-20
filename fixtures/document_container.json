@@ -1,0 +1,714 @@
+[
+{
+  "model": "wagtailcore.locale",
+  "pk": 1,
+  "fields": {
+    "language_code": "en"
+  }
+},
+{
+  "model": "wagtailcore.site",
+  "fields": {
+    "hostname": "localhost",
+    "port": 80,
+    "site_name": "",
+    "root_page": 3,
+    "is_default_site": true
+  }
+},
+{
+  "model": "wagtailcore.collection",
+  "pk": 1,
+  "fields": {
+    "path": "0001",
+    "depth": 1,
+    "numchild": 0,
+    "name": "Root"
+  }
+},
+{
+  "model": "wagtailcore.workflowpage",
+  "pk": 1,
+  "fields": {
+    "workflow": 1
+  }
+},
+{
+  "model": "wagtailcore.workflowtask",
+  "pk": 1,
+  "fields": {
+    "sort_order": 0,
+    "workflow": 1,
+    "task": 1
+  }
+},
+{
+  "model": "wagtailcore.workflow",
+  "pk": 1,
+  "fields": {
+    "name": "Moderators approval",
+    "active": true
+  }
+},
+{
+  "model": "wagtailmenus.mainmenu",
+  "pk": 1,
+  "fields": {
+    "site": [
+      "localhost",
+      80
+    ],
+    "max_levels": 2
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 1,
+  "fields": {
+    "name": "pdf",
+    "slug": "pdf"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 2,
+  "fields": {
+    "name": "word",
+    "slug": "word"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 3,
+  "fields": {
+    "name": "what",
+    "slug": "what"
+  }
+},
+{
+  "model": "taggit.taggeditem",
+  "pk": 1,
+  "fields": {
+    "tag": 1,
+    "content_type": [
+      "wagtaildocs",
+      "document"
+    ],
+    "object_id": 1
+  }
+},
+{
+  "model": "taggit.taggeditem",
+  "pk": 2,
+  "fields": {
+    "tag": 2,
+    "content_type": [
+      "wagtaildocs",
+      "document"
+    ],
+    "object_id": 2
+  }
+},
+{
+  "model": "taggit.taggeditem",
+  "pk": 3,
+  "fields": {
+    "tag": 3,
+    "content_type": [
+      "wagtaildocs",
+      "document"
+    ],
+    "object_id": 3
+  }
+},
+{
+  "model": "wagtailcore.task",
+  "pk": 1,
+  "fields": {
+    "name": "Moderators approval",
+    "content_type": [
+      "wagtailcore",
+      "groupapprovaltask"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "core.coresettings",
+  "pk": 1,
+  "fields": {
+    "site": [
+      "localhost",
+      80
+    ],
+    "alert_banner": "",
+    "is_visible": false,
+    "header_extra": null,
+    "footer_extra": null
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Moderators",
+    "permissions": [
+      [
+        "access_admin",
+        "wagtailadmin",
+        "admin"
+      ],
+      [
+        "add_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "change_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "delete_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "add_image",
+        "wagtailimages",
+        "image"
+      ],
+      [
+        "change_image",
+        "wagtailimages",
+        "image"
+      ],
+      [
+        "delete_image",
+        "wagtailimages",
+        "image"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Editors",
+    "permissions": [
+      [
+        "access_admin",
+        "wagtailadmin",
+        "admin"
+      ],
+      [
+        "add_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "change_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "delete_document",
+        "wagtaildocs",
+        "document"
+      ],
+      [
+        "add_image",
+        "wagtailimages",
+        "image"
+      ],
+      [
+        "change_image",
+        "wagtailimages",
+        "image"
+      ],
+      [
+        "delete_image",
+        "wagtailimages",
+        "image"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$hz1wG9AZyGpX6QCG3zCrNf$kzWS49rWyDd68swKJmUfeQ+bmiiT5xbbOzldn7haE1c=",
+    "last_login": "2022-05-20T14:03:40.478Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-05-20T14:03:20.975Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "wagtailcore.pagesubscription",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "page": 4,
+    "comment_notifications": true
+  }
+},
+{
+  "model": "wagtailcore.pagesubscription",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "page": 5,
+    "comment_notifications": true
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 1,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publicationindexpage"
+    ],
+    "label": "Pub Index Page",
+    "action": "wagtail.create",
+    "data_json": "\"\"",
+    "timestamp": "2022-05-20T14:03:56.431Z",
+    "uuid": "d6ee2d0c-1a06-40bf-a40b-e25a47ea6078",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 4,
+    "revision": null
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 2,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publicationindexpage"
+    ],
+    "label": "Pub Index Page",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-05-20T14:03:56.772Z",
+    "uuid": "d6ee2d0c-1a06-40bf-a40b-e25a47ea6078",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 4,
+    "revision": 1
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 3,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication With Attachments",
+    "action": "wagtail.create",
+    "data_json": "\"\"",
+    "timestamp": "2022-05-20T14:09:39.668Z",
+    "uuid": "f3de87a6-e05e-4560-84b8-8f1101f7ba90",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 5,
+    "revision": null
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 4,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication With Attachments",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-05-20T14:09:39.970Z",
+    "uuid": "f3de87a6-e05e-4560-84b8-8f1101f7ba90",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 5,
+    "revision": 2
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 5,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication With Attachments",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-05-20T14:11:07.407Z",
+    "uuid": "dc3a4df4-6360-4d8b-b93a-be5dd1cbbc89",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 5,
+    "revision": 3
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 6,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication With Attachments",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-05-20T14:11:07.558Z",
+    "uuid": "dc3a4df4-6360-4d8b-b93a-be5dd1cbbc89",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 5,
+    "revision": 3
+  }
+},
+{
+  "model": "wagtailcore.groupapprovaltask",
+  "pk": 1,
+  "fields": {
+    "task_ptr": 1,
+    "groups": [
+      [
+        "Moderators"
+      ]
+    ]
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 1,
+  "fields": {
+    "page": 4,
+    "submitted_for_moderation": false,
+    "created_at": "2022-05-20T14:03:56.501Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 4, \"path\": \"000100010001\", \"depth\": 3, \"numchild\": 0, \"translation_key\": \"1cb536ce-2bc0-4f2b-8a01-de2e947d033b\", \"locale\": 1, \"title\": \"Pub Index Page\", \"draft_title\": \"Pub Index Page\", \"slug\": \"pub-index-page\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/pub-index-page/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"alias_of\": null, \"body\": \"\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 2,
+  "fields": {
+    "page": 5,
+    "submitted_for_moderation": false,
+    "created_at": "2022-05-20T14:09:39.774Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"translation_key\": \"9e97fd25-932d-43a9-9c1f-07fd671ea125\", \"locale\": 1, \"title\": \"Publication With Attachments\", \"draft_title\": \"Publication With Attachments\", \"slug\": \"publication-with-attachments\", \"content_type\": 22, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/pub-index-page/publication-with-attachments/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": null, \"last_published_at\": null, \"latest_revision_created_at\": null, \"live_revision\": null, \"alias_of\": null, \"md_owner\": \"\", \"md_description\": \"\", \"md_pac_reference\": \"\", \"body\": \"<p data-block-key=\\\"apwrc\\\">This is the body.</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"96afr\\\\\\\">1a Document Link: External Url 1a</p>\\\", \\\"external_url\\\": \\\"http://placekitten.com\\\", \\\"page\\\": null, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"q7vw3\\\\\\\">1b Summary: PlaceKitten 1b</p>\\\"}, \\\"id\\\": \\\"a6c9fe6f-3070-4f17-8de5-c63d0cd3c3fe\\\"}], \\\"id\\\": \\\"793cb931-bd50-4a3e-bcda-8ac23dcca620\\\"}, {\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"96afr\\\\\\\">2a Document Link: Internal Page 2a</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 3, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"q7vw3\\\\\\\">2b Summary: Home 2b</p>\\\"}, \\\"id\\\": \\\"75591bfe-59ce-4283-af5e-54f8f475e3ed\\\"}, {\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"ckraw\\\\\\\">3a pdf 3a</p>\\\", \\\"document\\\": 1, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"imxwn\\\\\\\">3b Summary: pdf 3b</p>\\\"}, \\\"id\\\": \\\"ba9e3ecc-6c34-4ff8-862e-3d1329ea6ab7\\\"}, {\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"ckraw\\\\\\\">4a Word Document 4a</p>\\\", \\\"document\\\": 2, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"imxwn\\\\\\\">4b Summary: docx 4b</p>\\\"}, \\\"id\\\": \\\"4a36cf28-bfd3-4276-923a-8903a925cf8d\\\"}], \\\"id\\\": \\\"2c9679a2-6cb5-454c-890f-b5a9eb9a6cdd\\\"}]\", \"wp_id\": null, \"source\": null, \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"wagtail_admin_comments\": [], \"categorypage_category_relationship\": [], \"publication_publication_type_relationship\": [], \"changelog_entries\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 3,
+  "fields": {
+    "page": 5,
+    "submitted_for_moderation": false,
+    "created_at": "2022-05-20T14:11:07.317Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 5, \"path\": \"0001000100010001\", \"depth\": 4, \"numchild\": 0, \"translation_key\": \"9e97fd25-932d-43a9-9c1f-07fd671ea125\", \"locale\": 1, \"title\": \"Publication With Attachments\", \"draft_title\": \"Publication With Attachments\", \"slug\": \"publication-with-attachments\", \"content_type\": 22, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/pub-index-page/publication-with-attachments/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-05-20T14:09:39.894Z\", \"last_published_at\": \"2022-05-20T14:09:39.894Z\", \"latest_revision_created_at\": \"2022-05-20T14:09:39.774Z\", \"live_revision\": 2, \"alias_of\": null, \"md_owner\": \"\", \"md_description\": \"\", \"md_pac_reference\": \"\", \"body\": \"<p data-block-key=\\\"apwrc\\\">This is the body.</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"96afr\\\\\\\">1a Document Link: External Url 1a</p>\\\", \\\"external_url\\\": \\\"http://placekitten.com\\\", \\\"page\\\": null, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"q7vw3\\\\\\\">1b Summary: PlaceKitten 1b</p>\\\"}, \\\"id\\\": \\\"a6c9fe6f-3070-4f17-8de5-c63d0cd3c3fe\\\"}], \\\"id\\\": \\\"793cb931-bd50-4a3e-bcda-8ac23dcca620\\\"}, {\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"96afr\\\\\\\">2a Document Link: Internal Page 2a</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 3, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"q7vw3\\\\\\\">2b Summary: Home 2b</p>\\\"}, \\\"id\\\": \\\"75591bfe-59ce-4283-af5e-54f8f475e3ed\\\"}, {\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"ckraw\\\\\\\">3a pdf 3a</p>\\\", \\\"document\\\": 1, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"imxwn\\\\\\\">3b Summary: pdf 3b</p>\\\"}, \\\"id\\\": \\\"ba9e3ecc-6c34-4ff8-862e-3d1329ea6ab7\\\"}, {\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"ckraw\\\\\\\">4a Word Document 4a</p>\\\", \\\"document\\\": 2, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"imxwn\\\\\\\">4b Summary: docx 4b</p>\\\"}, \\\"id\\\": \\\"4a36cf28-bfd3-4276-923a-8903a925cf8d\\\"}, {\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p data-block-key=\\\\\\\"uwqxk\\\\\\\">5a Unknown 5b</p>\\\", \\\"document\\\": 3, \\\"summary\\\": \\\"<p data-block-key=\\\\\\\"bmmfq\\\\\\\">5b Summary: No-one Knows 5b</p>\\\"}, \\\"id\\\": \\\"303ecb1e-47a0-4fc7-b6ff-8a0dd4862472\\\"}], \\\"id\\\": \\\"2c9679a2-6cb5-454c-890f-b5a9eb9a6cdd\\\"}]\", \"wp_id\": null, \"source\": null, \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"wagtail_admin_comments\": [], \"categorypage_category_relationship\": [], \"publication_publication_type_relationship\": [], \"changelog_entries\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.page",
+  "pk": 1,
+  "fields": {
+    "path": "0001",
+    "depth": 1,
+    "numchild": 1,
+    "translation_key": "f63fd860-f188-495e-bfe2-365302d30633",
+    "locale": 1,
+    "title": "Root",
+    "draft_title": "Root",
+    "slug": "root",
+    "content_type": [
+      "wagtailcore",
+      "page"
+    ],
+    "live": true,
+    "has_unpublished_changes": false,
+    "url_path": "/",
+    "owner": null,
+    "seo_title": "",
+    "show_in_menus": false,
+    "search_description": "",
+    "go_live_at": null,
+    "expire_at": null,
+    "expired": false,
+    "locked": false,
+    "locked_at": null,
+    "locked_by": null,
+    "first_published_at": null,
+    "last_published_at": null,
+    "latest_revision_created_at": null,
+    "live_revision": null,
+    "alias_of": null
+  }
+},
+{
+  "model": "wagtailcore.page",
+  "pk": 3,
+  "fields": {
+    "path": "00010001",
+    "depth": 2,
+    "numchild": 1,
+    "translation_key": "fa975a8e-6013-4ab6-b403-0d3372ed0869",
+    "locale": 1,
+    "title": "Home",
+    "draft_title": "Home",
+    "slug": "home",
+    "content_type": [
+      "home",
+      "homepage"
+    ],
+    "live": true,
+    "has_unpublished_changes": false,
+    "url_path": "/home/",
+    "owner": null,
+    "seo_title": "",
+    "show_in_menus": false,
+    "search_description": "",
+    "go_live_at": null,
+    "expire_at": null,
+    "expired": false,
+    "locked": false,
+    "locked_at": null,
+    "locked_by": null,
+    "first_published_at": null,
+    "last_published_at": null,
+    "latest_revision_created_at": null,
+    "live_revision": null,
+    "alias_of": null
+  }
+},
+{
+  "model": "wagtailcore.page",
+  "pk": 4,
+  "fields": {
+    "path": "000100010001",
+    "depth": 3,
+    "numchild": 1,
+    "translation_key": "1cb536ce-2bc0-4f2b-8a01-de2e947d033b",
+    "locale": 1,
+    "title": "Pub Index Page",
+    "draft_title": "Pub Index Page",
+    "slug": "pub-index-page",
+    "content_type": [
+      "publications",
+      "publicationindexpage"
+    ],
+    "live": true,
+    "has_unpublished_changes": false,
+    "url_path": "/home/pub-index-page/",
+    "owner": [
+      "admin"
+    ],
+    "seo_title": "",
+    "show_in_menus": false,
+    "search_description": "",
+    "go_live_at": null,
+    "expire_at": null,
+    "expired": false,
+    "locked": false,
+    "locked_at": null,
+    "locked_by": null,
+    "first_published_at": "2022-05-20T14:03:56.672Z",
+    "last_published_at": "2022-05-20T14:03:56.672Z",
+    "latest_revision_created_at": "2022-05-20T14:03:56.501Z",
+    "live_revision": 1,
+    "alias_of": null
+  }
+},
+{
+  "model": "wagtailcore.page",
+  "pk": 5,
+  "fields": {
+    "path": "0001000100010001",
+    "depth": 4,
+    "numchild": 0,
+    "translation_key": "9e97fd25-932d-43a9-9c1f-07fd671ea125",
+    "locale": 1,
+    "title": "Publication With Attachments",
+    "draft_title": "Publication With Attachments",
+    "slug": "publication-with-attachments",
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "live": true,
+    "has_unpublished_changes": false,
+    "url_path": "/home/pub-index-page/publication-with-attachments/",
+    "owner": [
+      "admin"
+    ],
+    "seo_title": "",
+    "show_in_menus": false,
+    "search_description": "",
+    "go_live_at": null,
+    "expire_at": null,
+    "expired": false,
+    "locked": false,
+    "locked_at": null,
+    "locked_by": null,
+    "first_published_at": "2022-05-20T14:09:39.894Z",
+    "last_published_at": "2022-05-20T14:11:07.478Z",
+    "latest_revision_created_at": "2022-05-20T14:11:07.317Z",
+    "live_revision": 3,
+    "alias_of": null
+  }
+},
+{
+  "model": "wagtaildocs.document",
+  "pk": 1,
+  "fields": {
+    "collection": 1,
+    "title": "PDF Title",
+    "file": "documents/pdf.pdf",
+    "created_at": "2022-05-20T14:07:47.767Z",
+    "uploaded_by_user": [
+      "admin"
+    ],
+    "file_size": 2,
+    "file_hash": "6fcf9dfbd479ed82697fee719b9f8c610a11ff2a"
+  }
+},
+{
+  "model": "wagtaildocs.document",
+  "pk": 2,
+  "fields": {
+    "collection": 1,
+    "title": "Word Doc",
+    "file": "documents/word.docx",
+    "created_at": "2022-05-20T14:09:27.707Z",
+    "uploaded_by_user": [
+      "admin"
+    ],
+    "file_size": 2,
+    "file_hash": "6fcf9dfbd479ed82697fee719b9f8c610a11ff2a"
+  }
+},
+{
+  "model": "wagtaildocs.document",
+  "pk": 3,
+  "fields": {
+    "collection": 1,
+    "title": "Unknown File",
+    "file": "documents/what.is.this",
+    "created_at": "2022-05-20T14:10:53.218Z",
+    "uploaded_by_user": [
+      "admin"
+    ],
+    "file_size": 2,
+    "file_hash": "6fcf9dfbd479ed82697fee719b9f8c610a11ff2a"
+  }
+},
+{
+  "model": "wagtailusers.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "submitted_notifications": true,
+    "approved_notifications": true,
+    "rejected_notifications": true,
+    "updated_comments_notifications": true,
+    "preferred_language": "",
+    "current_time_zone": "",
+    "avatar": ""
+  }
+},
+{
+  "model": "publications.publication",
+  "pk": 5,
+  "fields": {
+    "categorypage_ptr": 5,
+    "md_owner": "",
+    "md_description": "",
+    "md_pac_reference": "",
+    "body": "<p data-block-key=\"apwrc\">This is the body.</p>",
+    "documents": "[{\"type\": \"document_group\", \"value\": [{\"type\": \"document_link\", \"value\": {\"title\": \"<p data-block-key=\\\"96afr\\\">1a Document Link: External Url 1a</p>\", \"external_url\": \"http://placekitten.com\", \"page\": null, \"summary\": \"<p data-block-key=\\\"q7vw3\\\">1b Summary: PlaceKitten 1b</p>\"}, \"id\": \"a6c9fe6f-3070-4f17-8de5-c63d0cd3c3fe\"}], \"id\": \"793cb931-bd50-4a3e-bcda-8ac23dcca620\"}, {\"type\": \"document_group\", \"value\": [{\"type\": \"document_link\", \"value\": {\"title\": \"<p data-block-key=\\\"96afr\\\">2a Document Link: Internal Page 2a</p>\", \"external_url\": \"\", \"page\": 3, \"summary\": \"<p data-block-key=\\\"q7vw3\\\">2b Summary: Home 2b</p>\"}, \"id\": \"75591bfe-59ce-4283-af5e-54f8f475e3ed\"}, {\"type\": \"document\", \"value\": {\"title\": \"<p data-block-key=\\\"ckraw\\\">3a pdf 3a</p>\", \"document\": 1, \"summary\": \"<p data-block-key=\\\"imxwn\\\">3b Summary: pdf 3b</p>\"}, \"id\": \"ba9e3ecc-6c34-4ff8-862e-3d1329ea6ab7\"}, {\"type\": \"document\", \"value\": {\"title\": \"<p data-block-key=\\\"ckraw\\\">4a Word Document 4a</p>\", \"document\": 2, \"summary\": \"<p data-block-key=\\\"imxwn\\\">4b Summary: docx 4b</p>\"}, \"id\": \"4a36cf28-bfd3-4276-923a-8903a925cf8d\"}, {\"type\": \"document\", \"value\": {\"title\": \"<p data-block-key=\\\"uwqxk\\\">5a Unknown 5b</p>\", \"document\": 3, \"summary\": \"<p data-block-key=\\\"bmmfq\\\">5b Summary: No-one Knows 5b</p>\"}, \"id\": \"303ecb1e-47a0-4fc7-b6ff-8a0dd4862472\"}], \"id\": \"2c9679a2-6cb5-454c-890f-b5a9eb9a6cdd\"}]",
+    "wp_id": null,
+    "source": null,
+    "wp_slug": "",
+    "wp_link": "",
+    "component_fields": "",
+    "author": ""
+  }
+},
+{
+  "model": "publications.publicationindexpage",
+  "pk": 4,
+  "fields": {
+    "page_ptr": 4,
+    "body": ""
+  }
+},
+{
+  "model": "categories.categorypage",
+  "pk": 5,
+  "fields": {
+    "page_ptr": 5
+  }
+},
+{
+  "model": "home.homepage",
+  "pk": 3,
+  "fields": {
+    "page_ptr": 3,
+    "hero_text": "",
+    "hero_heading": "",
+    "hero_image": null,
+    "body": "[]"
+  }
+}
+]

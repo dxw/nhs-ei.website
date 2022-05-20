@@ -169,23 +169,24 @@ class Parser:
 
         # then add any content fields if a field block has been used
         # AFAIK these are always after the body
-        if page.content_fields:
-            content_fields = ast.literal_eval(page.content_fields)
-            for field in content_fields:
-                keys = field.keys()
-                for key in keys:
-                    if (
-                        key == "default_template_hidden_text_blocks"
-                        and field["default_template_hidden_text_blocks"] != "False"
-                    ):
-                        # if len(page.content_fields) > 0:
-                        content_fields = self.make_expander_group_block(
-                            page.content_fields, page
-                        )
-                        for content_field in content_fields:
-                            body.append(content_field)
 
-                        # body.append(content_blocks)
+        # if page.content_fields:
+        #     content_fields = ast.literal_eval(page.content_fields)
+        #     for field in content_fields:
+        #         keys = field.keys()
+        #         for key in keys:
+        #             if (
+        #                 key == "default_template_hidden_text_blocks"
+        #                 and field["default_template_hidden_text_blocks"] != "False"
+        #             ):
+        #                 # if len(page.content_fields) > 0:
+        #                 content_fields = self.make_expander_group_block(
+        #                     page.content_fields, page
+        #                 )
+        #                 for content_field in content_fields:
+        #                     body.append(content_field)
+
+        #                 # body.append(content_blocks)
 
         # print(body)
         # sys.exit()

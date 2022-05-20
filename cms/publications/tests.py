@@ -43,7 +43,6 @@ class TestDocumentContainer(TestCase):
         self.assertIn("link.svg", self.external_url)
         self.assertNotIn('"span class="type"', self.external_url)
         self.assertNotIn("bytes", self.external_url)
-        self.assertIn("external", self.external_url)
 
 
 class TestPublicationIndexPage(TestCase):

@@ -5,7 +5,7 @@
      <img alt="" src="{% static 'img/link.svg' %}"></a>
    </div>
    <div class="attachment-details">
-     <h3 class="title"><a href="{% if value.external_url %}{{value.external_url}}{% else %}{{value.page.url}}{% endif %}">{{value.title}}</a>{% if value.external_url %}(external){% endif %}</h3>
+     <h3 class="title"><a href="{% if value.external_url %}{{value.external_url}}{% else %}{{value.page.url}}{% endif %}">{{value.title}}</a></h3>
      {% if value.summary %}<p>{{value.summary}}</p>{% endif %}
    </div>
  </section>

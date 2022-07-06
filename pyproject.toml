@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = ">=3.7,<=3.9.7"
 python-dateutil = "^2.8.1"
-lxml = "^4.6.5"
+lxml = "^4.9.1"
 Django = "^3.2"
 wagtail = "2.16.2"
 # Before updating wagtail-nhsuk-frontend, check to see if the npm package nhs-frontend also needs updating.
